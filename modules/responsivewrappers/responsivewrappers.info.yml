@@ -1,0 +1,17 @@
+name: Responsive wrappers
+description: Add responsive bootstrap wrappers.
+type: module
+package: filter
+# core: 8.x
+
+# Information added by Drupal.org packaging script on 2017-01-03
+# version: '8.x-1.x-dev'
+# core: '8.x'
+# project: 'responsivewrappers'
+# datestamp: 1483443244
+
+# Information added by Drupal.org packaging script on 2017-01-11
+version: '8.x-1.1'
+core: '8.x'
+project: 'responsivewrappers'
+datestamp: 1484132586
