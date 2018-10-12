@@ -1,0 +1,8 @@
+default:
+  label: 'Default'
+  file: assets/vendor/jcarousel/skins/default/jcarousel-default.css
+
+tango:
+  label: 'Tango'
+  file: assets/vendor/jcarousel/skins/tango/jcarousel-tango.css
+  weight: 1

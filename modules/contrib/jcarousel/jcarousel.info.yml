@@ -1,0 +1,14 @@
+name: jCarousel
+type: module
+description: Create jQuery-based carousel rotators.
+package: User interface
+configure: jcarousel.config
+# core: 8.x
+dependencies:
+  - views
+
+# Information added by Drupal.org packaging script on 2017-04-13
+version: '8.x-4.0'
+core: '8.x'
+project: 'jcarousel'
+datestamp: 1492072745
