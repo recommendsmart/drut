@@ -12,4 +12,17 @@
             }
         }
     }
+    "type": "package",
+    "package": {
+        "name": "fortawesome/font-awesome",
+        "version": "5.4.1",
+        "type": "drupal-library",
+        "dist": {
+        "url": "https://github.com/FortAwesome/Font-Awesome/archive/5.4.1.zip",
+           "type": "zip"
+        },
+           "require": {
+              "composer/installers": "^1.2.0"
+        }
+    }	
 }
