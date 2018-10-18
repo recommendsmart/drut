@@ -4,19 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-    "content-hash": "e64d8398c963abb6a608286320ff0d0c",
-=======
-    "content-hash": "1cc458df6095c606d5a601f0bf3dde4a",
->>>>>>> 
-=======
-    "content-hash": "286fcc6751636d857a92f47aaf060b60",
->>>>>>> 
-=======
-    "content-hash": "94bf01b07adca25d4a63682412c92b0b",
->>>>>>> 
+    "content-hash": "a0801998756e78c58e20eafa01f49cd5",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -1039,6 +1027,71 @@
             "support": {
                 "source": "http://cgit.drupalcode.org/backup_migrate",
                 "issues": "https://www.drupal.org/project/issues/backup_migrate"
+            }
+        },
+        {
+            "name": "drupal/bootstrap",
+            "version": "3.13.0",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupal.org/project/bootstrap",
+                "reference": "8.x-3.13"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/bootstrap-8.x-3.13.zip",
+                "reference": "8.x-3.13",
+                "shasum": "a75f0cd8e8b115282b419ca143d7810be1a4f5f3"
+            },
+            "require": {
+                "drupal/core": "~8.0"
+            },
+            "type": "drupal-theme",
+            "extra": {
+                "branch-alias": {
+                    "dev-3.x": "3.x-dev"
+                },
+                "drupal": {
+                    "version": "8.x-3.13",
+                    "datestamp": "1536786480",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Mark Carver (markcarver)",
+                    "homepage": "https://www.drupal.org/u/markcarver",
+                    "role": "Maintainer"
+                },
+                {
+                    "name": "John McCormick (neardark)",
+                    "homepage": "https://www.drupal.org/u/neardark",
+                    "role": "Co-maintainer"
+                },
+                {
+                    "name": "Fabiano Sant'Ana (wundo)",
+                    "homepage": "https://www.drupal.org/u/wundo",
+                    "role": "Co-maintainer"
+                },
+                {
+                    "name": "wundo",
+                    "homepage": "https://www.drupal.org/user/25523"
+                }
+            ],
+            "description": "Built to use Bootstrap, a sleek, intuitive, and powerful front-end framework for faster and easier web development.",
+            "homepage": "https://www.drupal.org/project/bootstrap",
+            "support": {
+                "source": "http://cgit.drupalcode.org/bootstrap",
+                "docs": "https://drupal-bootstrap.org",
+                "issues": "https://www.drupal.org/project/issues/bootstrap",
+                "irc": "irc://irc.freenode.org/drupal-bootstrap"
             }
         },
         {
@@ -2399,8 +2452,7 @@
             "homepage": "https://www.drupal.org/project/floating_block",
             "support": {
                 "source": "http://cgit.drupalcode.org/floating_block"
-            },
-            "time": "2016-01-14T09:00:00+00:00"
+            }
         },
         {
             "name": "drupal/fontawesome",
@@ -3248,8 +3300,7 @@
             "homepage": "https://www.drupal.org/project/notify",
             "support": {
                 "source": "http://cgit.drupalcode.org/notify"
-            },
-            "time": "2018-04-04T12:30:31+00:00"
+            }
         },
         {
             "name": "drupal/page_manager",
@@ -4768,62 +4819,106 @@
             }
         },
         {
-            "name": "drupal/webforms",
-            "version": "dev-0.x",
+            "name": "drupal/webform",
+            "version": "5.0.0-rc22",
             "source": {
                 "type": "git",
-                "url": "https://git.drupal.org/project/webforms",
-                "reference": "3d499c56ed31907f09f007ac7023a06757a9fdcc"
+                "url": "https://git.drupal.org/project/webform",
+                "reference": "8.x-5.0-rc22"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/webform-8.x-5.0-rc22.zip",
+                "reference": "8.x-5.0-rc22",
+                "shasum": "1027a7444bafc779b6b8a114915ccb4403db51b0"
             },
             "require": {
                 "drupal/core": "*"
             },
+            "require-dev": {
+                "drupal/address": "~1.4",
+                "drupal/devel": "*",
+                "drupal/token": "~1.3",
+                "drupal/webform_access": "*",
+                "drupal/webform_node": "*",
+                "drupal/webform_scheduled_email": "*",
+                "drupal/webform_ui": "*"
+            },
             "type": "drupal-module",
             "extra": {
                 "branch-alias": {
-                    "dev-0.x": "0.x-dev"
+                    "dev-5.x": "5.x-dev"
                 },
                 "drupal": {
-                    "version": "8.x-0.x-dev",
-                    "datestamp": "1460105341",
+                    "version": "8.x-5.0-rc22",
+                    "datestamp": "1538482685",
                     "security-coverage": {
                         "status": "not-covered",
-                        "message": "Project has not opted into security advisory coverage!"
+                        "message": "RC releases are not covered by Drupal security advisories."
+                    }
+                },
+                "drush": {
+                    "services": {
+                        "drush.services.yml": "^9"
                     }
                 }
             },
             "notification-url": "https://packages.drupal.org/8/downloads",
             "license": [
-                "GPL-2.0-or-later"
+                "GPL-2.0+"
             ],
             "authors": [
                 {
-                    "name": "AndreyMaximov",
-                    "homepage": "https://www.drupal.org/user/1024156"
+                    "name": "Jacob Rockowitz (jrockowitz)",
+                    "homepage": "https://www.drupal.org/u/jrockowitz",
+                    "role": "Maintainer"
                 },
                 {
-                    "name": "andrii.tiupa",
-                    "homepage": "https://www.drupal.org/user/2932651"
+                    "name": "Alexander Trotsenko (bucefal91)",
+                    "homepage": "https://www.drupal.org/u/bucefal91",
+                    "role": "Co-maintainer"
                 },
                 {
-                    "name": "danylevskyi",
-                    "homepage": "https://www.drupal.org/user/322039"
+                    "name": "bucefal91",
+                    "homepage": "https://www.drupal.org/user/504128"
+                },
+                {
+                    "name": "fenstrat",
+                    "homepage": "https://www.drupal.org/user/362649"
+                },
+                {
+                    "name": "jrockowitz",
+                    "homepage": "https://www.drupal.org/user/371407"
                 },
                 {
                     "name": "podarok",
                     "homepage": "https://www.drupal.org/user/116002"
                 },
                 {
+                    "name": "quicksketch",
+                    "homepage": "https://www.drupal.org/user/35821"
+                },
+                {
                     "name": "sanchiz",
                     "homepage": "https://www.drupal.org/user/1671246"
+                },
+                {
+                    "name": "tedbow",
+                    "homepage": "https://www.drupal.org/user/240860"
+                },
+                {
+                    "name": "torotil",
+                    "homepage": "https://www.drupal.org/user/865256"
                 }
             ],
-            "description": "Performs specific alters of default Drupal behavior",
-            "homepage": "https://www.drupal.org/project/webforms",
+            "description": "Enables the creation of webforms and questionnaires.",
+            "homepage": "https://drupal.org/project/webform",
             "support": {
-                "source": "http://cgit.drupalcode.org/webforms"
-            },
-            "time": "2016-04-08T08:53:45+00:00"
+                "source": "http://cgit.drupalcode.org/webform",
+                "issues": "https://www.drupal.org/project/issues/webform?version=8.x",
+                "docs": "https://www.drupal.org/docs/8/modules/webform",
+                "forum": "https://drupal.stackexchange.com/questions/tagged/webform"
+            }
         },
         {
             "name": "easyrdf/easyrdf",
@@ -8975,10 +9070,10 @@
         "drupal/floating_block": 20,
         "drupal/smtp": 10,
         "drupal/views_data_export": 10,
-        "drupal/webforms": 20,
         "drupal/inlinejs": 15,
         "drupal/exclude_node_title": 10,
         "drupal/menu_item_visibility": 20,
+        "drupal/webform": 5,
         "behat/mink": 20,
         "behat/mink-selenium2-driver": 20
     },
