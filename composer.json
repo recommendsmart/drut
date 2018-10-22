@@ -31,7 +31,7 @@
         "drupal/libraries": "^3.0@alpha",
         "drupal/masquerade": "^2.0@beta",
         "drupal/floating_block": "1.x-dev",
-        "drupal/fontawesome": "^2.7",
+        "drupal/fontawesome": "^2.8",
         "drupal/redirect": "^1.2",
         "drupal/search_api": "^1.10",
         "drupal/simple_responsive_table": "^2.2",
@@ -60,7 +60,8 @@
         "drupal/webform": "^5.0@RC",
         "drupal/bootstrap": "^3.13",
         "drupal/bootstrap_layouts": "^5.1",
-        "drupal/chosen": "^2.6"
+        "drupal/chosen": "^2.6",
+        "drupal/entity_reference_revisions": "^1.6"
     },
     "replace": {
         "drupal/core": "^8.6"
