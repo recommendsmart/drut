@@ -58,7 +58,9 @@
         "drupal/token": "^1.5",
         "fortawesome/font-awesome": "^4.7",
         "drupal/webform": "^5.0@RC",
-        "drupal/bootstrap": "^3.13"
+        "drupal/bootstrap": "^3.13",
+        "drupal/bootstrap_layouts": "^5.1",
+        "drupal/chosen": "^2.6"
     },
     "replace": {
         "drupal/core": "^8.6"
