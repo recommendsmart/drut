@@ -61,7 +61,9 @@
         "drupal/bootstrap": "^3.13",
         "drupal/bootstrap_layouts": "^5.1",
         "drupal/chosen": "^2.6",
-        "drupal/entity_reference_revisions": "^1.6"
+        "drupal/entity_reference_revisions": "^1.6",
+        "drupal/embed": "^1.0",
+        "drupal/entity_embed": "^1.0@beta"
     },
     "replace": {
         "drupal/core": "^8.6"
