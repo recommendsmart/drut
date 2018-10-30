@@ -29,6 +29,7 @@ use Drupal\Core\Field\BaseFieldDefinition;
  *     "event" = "Drupal\commerce_store\Event\StoreEvent",
  *     "storage" = "Drupal\commerce_store\StoreStorage",
  *     "access" = "Drupal\entity\EntityAccessControlHandler",
+ *     "query_access" = "Drupal\entity\QueryAccess\QueryAccessHandler",
  *     "permission_provider" = "Drupal\entity\EntityPermissionProvider",
  *     "view_builder" = "Drupal\Core\Entity\EntityViewBuilder",
  *     "list_builder" = "Drupal\commerce_store\StoreListBuilder",
@@ -294,6 +295,17 @@ class Store extends ContentEntityBase implements StoreInterface {
       ])
       ->setDisplayConfigurable('view', TRUE)
       ->setDisplayConfigurable('form', TRUE);
+
+    $fields['path'] = BaseFieldDefinition::create('path')
+      ->setLabel(t('URL alias'))
+      ->setDescription(t('The store URL alias.'))
+      ->setTranslatable(TRUE)
+      ->setDisplayOptions('form', [
+        'type' => 'path',
+        'weight' => 30,
+      ])
+      ->setDisplayConfigurable('form', TRUE)
+      ->setCustomStorage(TRUE);
 
     return $fields;
   }

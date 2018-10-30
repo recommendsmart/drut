@@ -208,8 +208,10 @@ function commerce_order_post_update_7() {
  */
 function commerce_order_post_update_8() {
   $field = FieldStorageConfig::loadByName('profile', 'address');
-  $field->setLocked(FALSE);
-  $field->save();
+  if ($field) {
+    $field->setLocked(FALSE);
+    $field->save();
+  }
 }
 
 /**
@@ -228,7 +230,7 @@ function commerce_order_post_update_9() {
       $order_type = $order_type_storage->load($order_item_type->getOrderTypeId());
       // If the role can update the order type, then it can also manage the
       // order items of this bundle.
-      if ($role->hasPermission("update {$order_type->id()} commerce_order")) {
+      if ($order_type && $role->hasPermission("update {$order_type->id()} commerce_order")) {
         $role->grantPermission("manage {$order_item_type->id()} commerce_order_item");
       }
     }

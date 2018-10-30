@@ -10,8 +10,8 @@ dependencies:
   - drupal:big_pipe_test
   - drupal:dynamic_page_cache
 
-# Information added by Drupal.org packaging script on 2018-08-29
-version: '8.x-2.9'
+# Information added by Drupal.org packaging script on 2018-10-15
+version: '8.x-2.10'
 core: '8.x'
 project: 'commerce'
-datestamp: 1535555896
+datestamp: 1539610091
