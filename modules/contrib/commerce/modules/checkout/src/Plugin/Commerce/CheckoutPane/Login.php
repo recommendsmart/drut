@@ -9,7 +9,6 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Url;
-use Drupal\Core\Link;
 use Drupal\user\UserAuthInterface;
 use Drupal\user\UserInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -215,8 +214,9 @@ class Login extends CheckoutPaneBase implements CheckoutPaneInterface, Container
       '#op' => 'login',
     ];
     $pane_form['returning_customer']['forgot_password'] = [
-      '#type' => 'markup',
-      '#markup' => Link::createFromRoute($this->t('Forgot password?'), 'user.pass')->toString(),
+      '#type' => 'link',
+      '#title' => $this->t('Forgot password?'),
+      '#url' => Url::fromRoute('user.pass'),
     ];
 
     $pane_form['guest'] = [
