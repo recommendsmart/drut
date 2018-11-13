@@ -13,6 +13,42 @@
   var $document = $(document);
 
   /**
+   * Finds the first available and visible focusable input element.
+   *
+   * This is abstracted from the main code below so sub-themes can override
+   * this method to return their own element if desired.
+   *
+   * @param {Modal} modal
+   *   The Bootstrap modal instance.
+   *
+   * @return {jQuery}
+   *   A jQuery object containing the element that should be focused. Note: if
+   *   this object contains multiple elements, only the first visible one will
+   *   be used.
+   */
+  Bootstrap.modalFindFocusableElement = function (modal) {
+    return modal.$dialogBody.find(':input,:button,.btn');
+  };
+
+  $document.on('shown.bs.modal', function (e) {
+    var $modal = $(e.target);
+    var modal = $modal.data('bs.modal');
+
+    // Focus the first input element found.
+    if (modal && modal.options.focusInput) {
+      var $focusable = Bootstrap.modalFindFocusableElement(modal);
+      if ($focusable && $focusable[0]) {
+        var $input = $focusable.filter(':visible:first').focus();
+
+        // Select text if input is text.
+        if (modal.options.selectText && $input.is(':text')) {
+          $input[0].setSelectionRange(0, $input[0].value.length)
+        }
+      }
+    }
+  });
+
+  /**
    * Only process this once.
    */
   Bootstrap.once('modal', function (settings) {
@@ -47,6 +83,8 @@
       Modal.DEFAULTS = $.extend({}, BootstrapModal.DEFAULTS, {
         animation: !!settings.modal_animation,
         backdrop: settings.modal_backdrop === 'static' ? 'static' : !!settings.modal_backdrop,
+        focusInput: !!settings.modal_focus_input,
+        selectText: !!settings.modal_select_text,
         keyboard: !!settings.modal_keyboard,
         show: !!settings.modal_show,
         size: settings.modal_size
@@ -90,6 +128,11 @@
           var $this   = $(this);
           var data    = $this.data('bs.modal');
           var initialize = false;
+
+          // Immediately return if there's no instance to invoke a valid method.
+          if (!data && method && method !== 'open') {
+            return;
+          }
 
           options = $.extend({}, Modal.DEFAULTS, data && data.options, $this.data(), options);
           if (!data) {

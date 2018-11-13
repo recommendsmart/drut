@@ -127,18 +127,58 @@
            */
           createButtons: function () {
             this.$footer.find('.modal-buttons').remove();
+
+            // jQuery UI supports both objects and arrays. Unfortunately
+            // developers have misunderstood and abused this by simply placing
+            // the objects that should be in an array inside an object with
+            // arbitrary keys (likely to target specific buttons as a hack).
             var buttons = this.options.dialogOptions && this.options.dialogOptions.buttons || [];
+            if (!Array.isArray(buttons)) {
+              var array = [];
+              for (var k in buttons) {
+                // Support the proper object values: label => click callback.
+                if (typeof buttons[k] === 'function') {
+                  array.push({
+                    label: k,
+                    click: buttons[k],
+                  });
+                }
+                // Support nested objects, but log a warning.
+                else if (buttons[k].text || buttons[k].label) {
+                  Bootstrap.warn('Malformed jQuery UI dialog button: @key. The button object should be inside an array.', {
+                    '@key': k
+                  });
+                  array.push(buttons[k]);
+                }
+                else {
+                  Bootstrap.unsupported('button', k, buttons[k]);
+                }
+              }
+              buttons = array;
+            }
+
             if (buttons.length) {
               var $buttons = $('<div class="modal-buttons"/>').appendTo(this.$footer);
               for (var i = 0, l = buttons.length; i < l; i++) {
                 var button = buttons[i];
                 var $button = $(Drupal.theme('bootstrapModalDialogButton', button));
-                if (typeof button.click === 'function') {
-                  $button.on('click', button.click);
+
+                // Invoke the "create" method for jQuery UI buttons.
+                if (typeof button.create === 'function') {
+                  button.create.call($button[0]);
                 }
+
+                // Bind the "click" method for jQuery UI buttons to the modal.
+                if (typeof button.click === 'function') {
+                  $button.on('click', button.click.bind(this.$element));
+                }
+
                 $buttons.append($button);
               }
             }
+
+            // Toggle footer visibility based on whether it has child elements.
+            this.$footer[this.$footer.children()[0] ? 'show' : 'hide']();
           },
 
           /**
@@ -157,14 +197,6 @@
             // This is necessary in case dialog.ajax.js decides to add buttons.
             if (!this.$footer[0]) {
               this.$footer = $(Drupal.theme('bootstrapModalFooter', {}, true)).insertAfter(this.$dialogBody);
-            }
-
-            // Create buttons.
-            this.createButtons();
-
-            // Hide the footer if there are no children.
-            if (!this.$footer.children()[0]) {
-              this.$footer.hide();
             }
 
             // Now call the parent init method.
@@ -220,6 +252,16 @@
                 if (value) {
                   dialogOptions[prop] = value;
                   styles[prop] = value;
+
+                  // If there's a defined height of some kind, enforce the modal
+                  // to use flex (on modern browsers). This will ensure that
+                  // the core autoResize calculations don't cause the content
+                  // to overflow.
+                  if (options.autoResize && (prop === 'height' || prop === 'maxHeight')) {
+                    styles.display = 'flex';
+                    styles.flexDirection = 'column';
+                    this.$dialogBody.css('overflow', 'scroll');
+                  }
                 }
               }
             }
@@ -249,6 +291,11 @@
               delete options.dialogClass;
             }
 
+            // Add jQuery UI classes to elements in case developers target them
+            // in callbacks.
+            for (var k in classesMap) {
+              this.$element.find('.' + classesMap[k]).addClass(k);
+            }
 
             // Bind events.
             var events = [
@@ -263,6 +310,12 @@
               var event = events[i].toLowerCase();
               if (options[event] === void 0 || typeof options[event] !== 'function') continue;
               this.$element.on('dialog' + event, options[event]);
+            }
+
+            // Support title attribute on the modal.
+            var title;
+            if ((options.title === null || options.title === void 0) && (title = this.$element.attr('title'))) {
+              options.title = title;
             }
 
             // Handle the reset of the options.
@@ -403,6 +456,9 @@
 
             // Merge in the cloned mapped options.
             $.extend(true, this.options, this.mapDialogOptions(clone.options));
+
+            // Update buttons.
+            this.createButtons();
           },
 
           position: function(position) {
@@ -457,15 +513,28 @@
         var icon = '';
         var iconPosition = button.iconPosition || 'beginning';
         iconPosition = (iconPosition === 'end' && !rtl) || (iconPosition === 'beginning' && rtl) ? 'after' : 'before';
-        if (button.icon) {
+
+        // Handle Bootstrap icons differently.
+        if (button.bootstrapIcon) {
+          icon = Drupal.theme('icon', 'bootstrap', button.icon);
+        }
+        // Otherwise, assume it's a jQuery UI icon.
+        // @todo Map jQuery UI icons to Bootstrap icons?
+        else if (button.icon) {
           var iconAttributes = Attributes.create()
             .addClass(['ui-icon', button.icon])
             .set('aria-hidden', 'true');
           icon = '<span' + iconAttributes + '></span>';
         }
 
-        // Value.
-        var value = button.text;
+        // Label. Note: jQuery UI dialog has an inconsistency where it uses
+        // "text" instead of "label", so both need to be supported.
+        var value = button.label || button.text;
+
+        // Show/hide label.
+        if (icon && ((button.showLabel !== void 0 && !button.showLabel) || (button.text !== void 0 && !button.text))) {
+          value = '<span' + Attributes.create().addClass('sr-only') + '>' + value + '</span>';
+        }
         attributes.set('value', iconPosition === 'before' ? icon + value : value + icon);
 
         // Handle disabled.
@@ -476,6 +545,9 @@
         }
         if (button['class']) {
           attributes.addClass(button['class']);
+        }
+        if (button.primary) {
+          attributes.addClass('btn-primary');
         }
 
         return Drupal.theme('button', attributes);
