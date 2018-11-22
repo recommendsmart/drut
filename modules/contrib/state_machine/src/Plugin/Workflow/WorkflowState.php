@@ -8,7 +8,7 @@ namespace Drupal\state_machine\Plugin\Workflow;
 class WorkflowState {
 
   /**
-   * The state id.
+   * The state ID.
    *
    * @var string
    */
@@ -25,7 +25,7 @@ class WorkflowState {
    * Constructs a new WorkflowState object.
    *
    * @param string $id
-   *   The state id.
+   *   The state ID.
    * @param string $label
    *   The state label.
    */
@@ -35,10 +35,10 @@ class WorkflowState {
   }
 
   /**
-   * Gets the id.
+   * Gets the ID.
    *
    * @return string
-   *   The id.
+   *   The ID.
    */
   public function getId() {
     return $this->id;
@@ -55,10 +55,11 @@ class WorkflowState {
   }
 
   /**
-   * Returns the string representation of the workflow state.
+   * Gets the string representation of the workflow state.
    *
    * @return string
-  */
+   *   The string representation of the workflow state.
+   */
   public function __toString() {
     return $this->getLabel();
   }

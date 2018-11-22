@@ -7,13 +7,14 @@ namespace Drupal\state_machine\Guard;
  */
 interface GuardFactoryInterface {
 
- /**
-   * Gets the instantiated guards for the given group id.
+  /**
+   * Gets the instantiated guards for the given group ID.
    *
    * @param string $group_id
-   *   The group id.
+   *   The group ID.
    *
    * @return \Drupal\state_machine\Guard\GuardInterface[]
+   *   The instantiated guards.
    */
   public function get($group_id);
 

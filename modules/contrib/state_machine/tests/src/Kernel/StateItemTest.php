@@ -2,9 +2,7 @@
 
 namespace Drupal\Tests\state_machine\Kernel;
 
-use Drupal\entity_test\Entity\EntityTest;
-use Drupal\field\Entity\FieldConfig;
-use Drupal\field\Entity\FieldStorageConfig;
+use Drupal\entity_test\Entity\EntityTestWithBundle;
 use Drupal\KernelTests\KernelTestBase;
 
 /**
@@ -16,65 +14,82 @@ class StateItemTest extends KernelTestBase {
   /**
    * {@inheritdoc}
    */
-  public static $modules = ['entity_test', 'state_machine', 'field', 'user', 'state_machine_test'];
+  public static $modules = [
+    'entity_test',
+    'field',
+    'user',
+    'state_machine',
+    'state_machine_test',
+  ];
 
+  /**
+   * {@inheritdoc}
+   */
   protected function setUp() {
     parent::setUp();
 
-    $this->installEntitySchema('entity_test');
     $this->installEntitySchema('user');
+    $this->installEntitySchema('entity_test_with_bundle');
+    $this->installConfig(['state_machine_test']);
+  }
 
-    $field_storage = FieldStorageConfig::create([
-      'field_name' => 'test_state',
-      'entity_type' => 'entity_test',
-      'type' => 'state',
-    ]);
-    $field_storage->save();
-
-    $field = FieldConfig::create([
-      'field_name' => 'test_state',
-      'entity_type' => 'entity_test',
-      'bundle' => 'entity_test',
-      'settings' => [
-        'workflow' => 'default',
-      ],
-    ]);
-    $field->save();
+  /**
+   * @covers ::applyTransitionById
+   * @expectedException \InvalidArgumentException
+   */
+  public function testInvalidTransitionApply() {
+    $entity = EntityTestWithBundle::create(['type' => 'first']);
+    /** @var \Drupal\state_machine\Plugin\Field\FieldType\StateItemInterface $state_item */
+    $state_item = $entity->get('field_state')->first();
+    $state_item->applyTransitionById('INVALID');
   }
 
   /**
    * @dataProvider providerTestField
    */
   public function testField($initial_state, $allowed_transitions, $invalid_new_state, $valid_transition, $expected_new_state) {
-    $entity = EntityTest::create(['test_state' => ['value' => $initial_state]]);
-    // Ensure that the first state of a workflow is chosen automatically.
-    $this->assertEquals($initial_state, $entity->test_state->value);
-    $this->assertFalse($entity->test_state->isEmpty());
+    $entity = EntityTestWithBundle::create([
+      'type' => 'second',
+      'field_state' => $initial_state,
+    ]);
+    $this->assertEquals($initial_state, $entity->get('field_state')->value);
 
-    $result = $entity->test_state->first()->getTransitions();
-    $this->assertCount(count($allowed_transitions), $result);
-    $this->assertEquals($allowed_transitions, array_keys($result));
-
+    /** @var \Drupal\state_machine\Plugin\Field\FieldType\StateItemInterface $state_item */
+    $state_item = $entity->get('field_state')->first();
+    // Confirm that the transitions are correct.
+    $transitions = $state_item->getTransitions();
+    $this->assertCount(count($allowed_transitions), $transitions);
+    $this->assertEquals($allowed_transitions, array_keys($transitions));
+    // Confirm that invalid states are recognized.
     if ($invalid_new_state) {
-      $entity->test_state->value = $invalid_new_state;
-      $this->assertFalse($entity->test_state->first()->isValid());
+      $state_item->value = $invalid_new_state;
+      $this->assertEquals($initial_state, $state_item->getOriginalId());
+      $this->assertEquals($invalid_new_state, $state_item->getId());
+      $this->assertFalse($state_item->isValid());
     }
 
-    /** @var \Drupal\state_machine\WorkflowManagerInterface $workflow_manager */
-    $workflow_manager = \Drupal::service('plugin.manager.workflow');
-    /** @var \Drupal\state_machine\Plugin\Workflow\Workflow $workflow */
-    $workflow = $workflow_manager->createInstance('default');
-    $transition = $workflow->getTransition($valid_transition);
-    $entity->test_state->first()->applyTransition($transition);
-    $this->assertEquals($expected_new_state, $entity->test_state->value);
+    $state_item->applyTransitionById($valid_transition);
+    $this->assertEquals($initial_state, $state_item->getOriginalId());
+    $this->assertEquals($expected_new_state, $state_item->getId());
+    $this->assertTrue($state_item->isValid());
   }
 
+  /**
+   * Data provider for ::testField.
+   *
+   * @return array
+   *   A list of testField function arguments.
+   */
   public function providerTestField() {
     $data = [];
-    $data['new->fulfillment'] = ['new', ['create', 'cancel'], 'completed', 'create', 'fulfillment'];
+    $data['new->validation'] = ['new', ['create', 'cancel'], 'fulfillment', 'create', 'validation'];
     $data['new->canceled'] = ['new', ['create', 'cancel'], 'completed', 'cancel', 'canceled'];
-    $data['fulfillment->completed'] = ['fulfillment', ['fulfill', 'cancel'], 'new', 'fulfill', 'completed'];
-    // A transition to canceled is forbidden by the FulfillmentGuard.
+    // The workflow defines validation->fulfillment and validation->canceled
+    // transitions, but the second one is forbidden by the GenericGuard.
+    $data['validation->fulfillment'] = ['validation', ['validate'], 'completed', 'validate', 'fulfillment'];
+    // The workflow defines fulfillment->completed and fulfillment->canceled
+    // transitions, but the second one is forbidden by the FulfillmentGuard.
+    $data['fulfillment->completed'] = ['fulfillment', ['fulfill'], 'new', 'fulfill', 'completed'];
 
     return $data;
   }
@@ -83,15 +98,24 @@ class StateItemTest extends KernelTestBase {
    * @dataProvider providerSettableOptions
    */
   public function testSettableOptions($initial_state, $available_options) {
-    $entity = EntityTest::create(['test_state' => ['value' => $initial_state]]);
-    $this->assertEquals($initial_state, $entity->test_state->value);
+    $entity = EntityTestWithBundle::create([
+      'type' => 'second',
+      'field_state' => $initial_state,
+    ]);
+    $this->assertEquals($initial_state, $entity->get('field_state')->value);
     // An invalid state should not have any settable options.
-    $this->assertEquals($available_options, $entity->test_state->get(0)->getSettableOptions());
+    $this->assertEquals($available_options, $entity->get('field_state')->first()->getSettableOptions());
   }
 
+  /**
+   * Data provider for ::providerSettableOptions.
+   *
+   * @return array
+   *   A list of providerSettableOptions function arguments.
+   */
   public function providerSettableOptions() {
     $data = [];
-    $data['new'] = ['new', ['canceled' => 'Canceled', 'fulfillment' => 'Fulfilment', 'new' => 'New']];
+    $data['new'] = ['new', ['canceled' => 'Canceled', 'validation' => 'Validation', 'new' => 'New']];
     $data['invalid'] = ['invalid', []];
 
     return $data;

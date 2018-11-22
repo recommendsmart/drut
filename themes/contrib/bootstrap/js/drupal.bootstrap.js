@@ -115,47 +115,12 @@
 
     // Determine existing plugin constructor.
     var constructor = $.fn[id] && $.fn[id].Constructor || $.fn[id];
-    var proto = constructor.prototype;
-
-    var obj = callback.apply(constructor, [this.settings]);
-    if (!$.isPlainObject(obj)) {
-      return this.fatal('Returned value from callback is not a plain object that can be used to extend the jQuery plugin "@id": @obj', {'@obj':  obj});
+    var plugin = callback.apply(constructor, [this.settings]);
+    if (!$.isPlainObject(plugin)) {
+      return this.fatal('Returned value from callback is not a plain object that can be used to extend the jQuery plugin "@id": @obj', {'@obj':  plugin});
     }
 
-    // Add a jQuery UI like option getter/setter method.
-    var option = this.option;
-    if (proto.option === void(0)) {
-      proto.option = function () {
-        return option.apply(this, arguments);
-      };
-    }
-
-    // Handle prototype properties separately.
-    if (obj.prototype !== void 0) {
-      for (var key in obj.prototype) {
-        if (!obj.prototype.hasOwnProperty(key)) continue;
-        var value = obj.prototype[key];
-        if (typeof value === 'function') {
-          proto[key] = this.superWrapper(proto[key] || function () {}, value);
-        }
-        else {
-          proto[key] = $.isPlainObject(value) ? $.extend(true, {}, proto[key], value) : value;
-        }
-      }
-    }
-    delete obj.prototype;
-
-    // Handle static properties.
-    for (key in obj) {
-      if (!obj.hasOwnProperty(key)) continue;
-      value = obj[key];
-      if (typeof value === 'function') {
-        constructor[key] = this.superWrapper(constructor[key] || function () {}, value);
-      }
-      else {
-        constructor[key] = $.isPlainObject(value) ? $.extend(true, {}, constructor[key], value) : value;
-      }
-    }
+    this.wrapPluginConstructor(constructor, plugin, true);
 
     return $.fn[id];
   };
@@ -214,6 +179,40 @@
     return _.pick(args[0], _.intersection.apply(_, _.map(args, function (obj) {
       return Object.keys(obj);
     })));
+  };
+
+  /**
+   * Normalizes an object's values.
+   *
+   * @param {Object} obj
+   *   The object to normalize.
+   *
+   * @return {Object}
+   *   The normalized object.
+   */
+  Bootstrap.normalizeObject = function (obj) {
+    if (!$.isPlainObject(obj)) {
+      return obj;
+    }
+
+    for (var k in obj) {
+      if (typeof obj[k] === 'string') {
+        if (obj[k] === 'true') {
+          obj[k] = true;
+        }
+        else if (obj[k] === 'false') {
+          obj[k] = false;
+        }
+        else if (obj[k].match(/^[\d-.]$/)) {
+          obj[k] = parseFloat(obj[k]);
+        }
+      }
+      else if ($.isPlainObject(obj[k])) {
+        obj[k] = Bootstrap.normalizeObject(obj[k]);
+      }
+    }
+
+    return obj;
   };
 
   /**
@@ -344,6 +343,8 @@
       return this.fatal('Returned value from callback is not a usable function to replace a jQuery plugin "@id": @plugin', {'@id': id, '@plugin': plugin});
     }
 
+    this.wrapPluginConstructor(constructor, plugin);
+
     // Add a ".noConflict()" helper method.
     this.pluginNoConflict(id, plugin, noConflict);
 
@@ -461,7 +462,7 @@
     }
     var tmp = document.createElement('DIV');
     tmp.innerHTML = html;
-    return (tmp.textContent || tmp.innerText || '').replace(/^[\s\n\t]*|[\s\n\t]*$/g, '');
+    return (tmp.textContent || tmp.innerText || '').replace(/^[\s\n\t]*|[\s\n\t]*$/, '');
   };
 
   /**
@@ -493,6 +494,57 @@
   Bootstrap.warn = function (message, args) {
     if (this.settings.dev && console.warn) {
       console.warn(Drupal.formatString(message, args));
+    }
+  };
+
+  /**
+   * Wraps a plugin with common functionality.
+   *
+   * @param {Function} constructor
+   *   A plugin constructor being wrapped.
+   * @param {Object|Function} plugin
+   *   The plugin being wrapped.
+   * @param {Boolean} [extend = false]
+   *   Whether to add super extensibility.
+   */
+  Bootstrap.wrapPluginConstructor = function (constructor, plugin, extend) {
+    var proto = constructor.prototype;
+
+    // Add a jQuery UI like option getter/setter method.
+    var option = this.option;
+    if (proto.option === void(0)) {
+      proto.option = function () {
+        return option.apply(this, arguments);
+      };
+    }
+
+    if (extend) {
+      // Handle prototype properties separately.
+      if (plugin.prototype !== void 0) {
+        for (var key in plugin.prototype) {
+          if (!plugin.prototype.hasOwnProperty(key)) continue;
+          var value = plugin.prototype[key];
+          if (typeof value === 'function') {
+            proto[key] = this.superWrapper(proto[key] || function () {}, value);
+          }
+          else {
+            proto[key] = $.isPlainObject(value) ? $.extend(true, {}, proto[key], value) : value;
+          }
+        }
+      }
+      delete plugin.prototype;
+
+      // Handle static properties.
+      for (key in plugin) {
+        if (!plugin.hasOwnProperty(key)) continue;
+        value = plugin[key];
+        if (typeof value === 'function') {
+          constructor[key] = this.superWrapper(constructor[key] || function () {}, value);
+        }
+        else {
+          constructor[key] = $.isPlainObject(value) ? $.extend(true, {}, constructor[key], value) : value;
+        }
+      }
     }
   };
 

@@ -2,9 +2,7 @@
 
 namespace Drupal\Tests\state_machine\Kernel;
 
-use Drupal\entity_test\Entity\EntityTest;
-use Drupal\field\Entity\FieldConfig;
-use Drupal\field\Entity\FieldStorageConfig;
+use Drupal\entity_test\Entity\EntityTestWithBundle;
 use Drupal\KernelTests\KernelTestBase;
 
 /**
@@ -19,9 +17,9 @@ class WorkflowTransitionEventTest extends KernelTestBase {
    */
   public static $modules = [
     'entity_test',
-    'state_machine',
     'field',
     'user',
+    'state_machine',
     'state_machine_test',
   ];
 
@@ -31,49 +29,46 @@ class WorkflowTransitionEventTest extends KernelTestBase {
   protected function setUp() {
     parent::setUp();
 
-    $this->installEntitySchema('entity_test');
     $this->installEntitySchema('user');
-
-    $field_storage = FieldStorageConfig::create([
-      'field_name' => 'test_state',
-      'entity_type' => 'entity_test',
-      'type' => 'state',
-    ]);
-    $field_storage->save();
-
-    $field = FieldConfig::create([
-      'field_name' => 'test_state',
-      'entity_type' => 'entity_test',
-      'bundle' => 'entity_test',
-      'settings' => [
-        'workflow' => 'default',
-      ],
-    ]);
-    $field->save();
+    $this->installEntitySchema('entity_test_with_bundle');
+    $this->installConfig(['state_machine_test']);
   }
 
   /**
    * Tests the transition event.
    */
   public function testTransitionEvent() {
-    $entity = EntityTest::create([
+    $entity = EntityTestWithBundle::create([
+      'type' => 'first',
       'name' => 'Test entity',
-      'test_state' => ['value' => 'new'],
+      'field_state' => 'new',
     ]);
     $entity->save();
 
-    /** @var \Drupal\state_machine\WorkflowManagerInterface $workflow_manager */
-    $workflow_manager = \Drupal::service('plugin.manager.workflow');
-    /** @var \Drupal\state_machine\Plugin\Workflow\Workflow $workflow */
-    $workflow = $workflow_manager->createInstance('default');
-    $transition = $workflow->getTransition('cancel');
-    $entity->test_state->first()->applyTransition($transition);
+    $entity->get('field_state')->first()->applyTransitionById('create');
     $entity->save();
 
-    $messages = drupal_get_messages();
+    $messages = \Drupal::messenger()->all();
     $message = reset($messages);
-    $this->assertEquals('Test entity was Canceled at pre-transition (workflow: default).', (string) $message[0]);
-    $this->assertEquals('Test entity was Canceled at post-transition (workflow: default).', (string) $message[1]);
+    $this->assertCount(6, $message);
+    $this->assertEquals('Test entity (field_state) - Fulfillment at pre-transition (workflow: default).', (string) $message[0]);
+    $this->assertEquals('Test entity (field_state) - Fulfillment at group pre-transition (workflow: default).', (string) $message[1]);
+    $this->assertEquals('Test entity (field_state) - Fulfillment at generic pre-transition (workflow: default).', (string) $message[2]);
+    $this->assertEquals('Test entity (field_state) - Fulfillment at post-transition (workflow: default).', (string) $message[3]);
+    $this->assertEquals('Test entity (field_state) - Fulfillment at group post-transition (workflow: default).', (string) $message[4]);
+    $this->assertEquals('Test entity (field_state) - Fulfillment at generic post-transition (workflow: default).', (string) $message[5]);
+
+    \Drupal::messenger()->deleteAll();
+    $entity->get('field_state')->first()->applyTransitionById('fulfill');
+    $entity->save();
+
+    $messages = \Drupal::messenger()->all();
+    $message = reset($messages);
+    $this->assertCount(4, $message);
+    $this->assertEquals('Test entity (field_state) - Completed at group pre-transition (workflow: default).', (string) $message[0]);
+    $this->assertEquals('Test entity (field_state) - Completed at generic pre-transition (workflow: default).', (string) $message[1]);
+    $this->assertEquals('Test entity (field_state) - Completed at group post-transition (workflow: default).', (string) $message[2]);
+    $this->assertEquals('Test entity (field_state) - Completed at generic post-transition (workflow: default).', (string) $message[3]);
   }
 
 }

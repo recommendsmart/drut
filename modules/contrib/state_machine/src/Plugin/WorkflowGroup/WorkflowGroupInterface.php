@@ -24,12 +24,12 @@ interface WorkflowGroupInterface {
   public function getLabel();
 
   /**
-   * Gets the entity type id.
+   * Gets the entity type ID.
    *
    * For example, "node" if all workflows in the group are used on content.
    *
    * @return string
-   *   The entity type id.
+   *   The entity type ID.
    */
   public function getEntityTypeId();
 

@@ -37,15 +37,15 @@ interface WorkflowInterface {
    * Gets the workflow states.
    *
    * @return \Drupal\state_machine\Plugin\Workflow\WorkflowState[]
-   *   The states.
+   *   The states, keyed by state ID.
    */
   public function getStates();
 
   /**
-   * Gets a workflow state with the given id.
+   * Gets a workflow state with the given ID.
    *
    * @param string $id
-   *   The state id.
+   *   The state ID.
    *
    * @return \Drupal\state_machine\Plugin\Workflow\WorkflowState|null
    *   The requested state, or NULL if not found.
@@ -56,15 +56,15 @@ interface WorkflowInterface {
    * Gets the workflow transitions.
    *
    * @return \Drupal\state_machine\Plugin\Workflow\WorkflowTransition[]
-   *   The transitions.
+   *   The transitions, keyed by transition ID.
    */
   public function getTransitions();
 
   /**
-   * Gets a workflow transition with the given id.
+   * Gets a workflow transition with the given ID.
    *
    * @param string $id
-   *   The transition id.
+   *   The transition ID.
    *
    * @return \Drupal\state_machine\Plugin\Workflow\WorkflowTransition|null
    *   The requested transition, or NULL if not found.
@@ -72,29 +72,29 @@ interface WorkflowInterface {
   public function getTransition($id);
 
   /**
-   * Gets the possible workflow transitions for the given state id.
+   * Gets the possible workflow transitions for the given state ID.
    *
    * Note that a possible transition might not be allowed (because of a guard
    * returning false).
    *
    * @param string $state_id
-   *   The state id.
+   *   The state ID.
    *
    * @return \Drupal\state_machine\Plugin\Workflow\WorkflowTransition[]
-   *   The possible transitions.
+   *   The possible transitions, keyed by transition ID.
    */
   public function getPossibleTransitions($state_id);
 
   /**
-   * Gets the allowed workflow transitions for the given state id.
+   * Gets the allowed workflow transitions for the given state ID.
    *
    * @param string $state_id
-   *   The state id.
+   *   The state ID.
    * @param \Drupal\Core\Entity\EntityInterface $entity
    *   The parent entity.
    *
    * @return \Drupal\state_machine\Plugin\Workflow\WorkflowTransition[]
-   *   The allowed transitions.
+   *   The allowed transitions, keyed by transition ID.
    */
   public function getAllowedTransitions($state_id, EntityInterface $entity);
 

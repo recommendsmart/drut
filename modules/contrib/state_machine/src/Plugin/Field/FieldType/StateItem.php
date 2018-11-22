@@ -10,6 +10,7 @@ use Drupal\Core\TypedData\DataDefinition;
 use Drupal\Core\TypedData\OptionsProviderInterface;
 use Drupal\Core\Validation\Plugin\Validation\Constraint\AllowedValuesConstraint;
 use Drupal\state_machine\Event\WorkflowTransitionEvent;
+use Drupal\state_machine\Plugin\Workflow\WorkflowState;
 use Drupal\state_machine\Plugin\Workflow\WorkflowTransition;
 
 /**
@@ -26,18 +27,18 @@ use Drupal\state_machine\Plugin\Workflow\WorkflowTransition;
 class StateItem extends FieldItemBase implements StateItemInterface, OptionsProviderInterface {
 
   /**
-   * A cache of loaded workflows, keyed by field definition hash.
+   * A cache of loaded workflows, keyed by workflow ID.
    *
    * @var array
    */
   protected static $workflows = [];
 
   /**
-   * The initial value, used to validate state changes.
+   * The original value, used to validate state changes.
    *
    * @var string
    */
-  protected $initialValue;
+  protected $originalValue;
 
   /**
    * {@inheritdoc}
@@ -138,14 +139,14 @@ class StateItem extends FieldItemBase implements StateItemInterface, OptionsProv
    * {@inheritdoc}
    */
   public function setValue($values, $notify = TRUE) {
-    if (empty($this->initialValue)) {
+    if (empty($this->originalValue)) {
       // If no array is given, then the method received just the state value.
       if (isset($values) && !is_array($values)) {
         $values = ['value' => $values];
       }
-      // Track the initial field value to allow isValid() to validate changes
+      // Track the original field value to allow isValid() to validate changes
       // and to react to transitions.
-      $this->initialValue = $values['value'];
+      $this->originalValue = $values['value'];
     }
     parent::setValue($values, $notify);
   }
@@ -154,7 +155,7 @@ class StateItem extends FieldItemBase implements StateItemInterface, OptionsProv
    * {@inheritdoc}
    */
   public function isValid() {
-    $allowed_states = $this->getAllowedStates($this->initialValue);
+    $allowed_states = $this->getAllowedStates($this->originalValue);
     return isset($allowed_states[$this->value]);
   }
 
@@ -174,7 +175,7 @@ class StateItem extends FieldItemBase implements StateItemInterface, OptionsProv
       // The workflow is not known yet, the field is probably being created.
       return [];
     }
-    $state_labels = array_map(function ($state) {
+    $state_labels = array_map(function (WorkflowState $state) {
       return $state->getLabel();
     }, $workflow->getStates());
 
@@ -196,7 +197,7 @@ class StateItem extends FieldItemBase implements StateItemInterface, OptionsProv
     $field_name = $this->getFieldDefinition()->getName();
     $value = $this->getEntity()->get($field_name)->value;
     $allowed_states = $this->getAllowedStates($value);
-    $state_labels = array_map(function ($state) {
+    $state_labels = array_map(function (WorkflowState $state) {
       return $state->getLabel();
     }, $allowed_states);
 
@@ -207,7 +208,7 @@ class StateItem extends FieldItemBase implements StateItemInterface, OptionsProv
    * Gets the next allowed states for the given field value.
    *
    * @param string $value
-   *   The field value, representing the state id.
+   *   The field value, representing the state ID.
    *
    * @return \Drupal\state_machine\Plugin\Workflow\WorkflowState[]
    *   The allowed states.
@@ -236,13 +237,33 @@ class StateItem extends FieldItemBase implements StateItemInterface, OptionsProv
    * {@inheritdoc}
    */
   public function getWorkflow() {
-    $field_definition = $this->getFieldDefinition();
-    $definition_id = spl_object_hash($field_definition);
-    if (!isset(static::$workflows[$definition_id])) {
-      static::$workflows[$definition_id] = $this->loadWorkflow();
+    if ($callback = $this->getSetting('workflow_callback')) {
+      $workflow_id = call_user_func($callback, $this->getEntity());
+    }
+    else {
+      $workflow_id = $this->getSetting('workflow');
     }
 
-    return static::$workflows[$definition_id];
+    if (!empty($workflow_id) && !isset(static::$workflows[$workflow_id])) {
+      $workflow_manager = \Drupal::service('plugin.manager.workflow');
+      static::$workflows[$workflow_id] = $workflow_manager->createInstance($workflow_id);
+    }
+
+    return isset(static::$workflows[$workflow_id]) ? static::$workflows[$workflow_id] : FALSE;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getOriginalId() {
+    return $this->originalValue;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getId() {
+    return $this->value;
   }
 
   /**
@@ -279,32 +300,25 @@ class StateItem extends FieldItemBase implements StateItemInterface, OptionsProv
   }
 
   /**
-   * Loads the workflow used by the current field.
-   *
-   * @return \Drupal\state_machine\Plugin\Workflow\WorkflowInterface|false
-   *   The workflow, or FALSE if unknown at this time.
+   * {@inheritdoc}
    */
-  protected function loadWorkflow() {
-    if ($callback = $this->getSetting('workflow_callback')) {
-      $workflow_id = call_user_func($callback, $this->getEntity());
+  public function applyTransitionById($transition_id) {
+    $transition = NULL;
+    if ($workflow = $this->getWorkflow()) {
+      $transition = $workflow->getTransition($transition_id);
     }
-    else {
-      $workflow_id = $this->getSetting('workflow');
-    }
-    $workflow = FALSE;
-    if (!empty($workflow_id)) {
-      $workflow_manager = \Drupal::service('plugin.manager.workflow');
-      $workflow = $workflow_manager->createInstance($workflow_id);
+    if (!$transition) {
+      throw new \InvalidArgumentException(sprintf('Unknown transition ID "%s".', $transition_id));
     }
 
-    return $workflow;
+    $this->applyTransition($transition);
   }
 
   /**
    * {@inheritdoc}
    */
   public function preSave() {
-    if ($this->value != $this->initialValue) {
+    if ($this->value != $this->originalValue) {
       $this->dispatchTransitionEvent('pre_transition');
     }
   }
@@ -313,10 +327,10 @@ class StateItem extends FieldItemBase implements StateItemInterface, OptionsProv
    * {@inheritdoc}
    */
   public function postSave($update) {
-    if ($this->value != $this->initialValue) {
+    if ($this->value != $this->originalValue) {
       $this->dispatchTransitionEvent('post_transition');
     }
-    $this->initialValue = $this->value;
+    $this->originalValue = $this->value;
   }
 
   /**
@@ -326,17 +340,26 @@ class StateItem extends FieldItemBase implements StateItemInterface, OptionsProv
    *   The phase: pre_transition OR post_transition.
    */
   protected function dispatchTransitionEvent($phase) {
-    $from_state = $this->getWorkflow()->getState($this->initialValue);
-    $to_state = $this->getWorkflow()->getState($this->value);
     /** @var \Drupal\state_machine\Plugin\Workflow\WorkflowInterface $workflow */
     $workflow = $this->getWorkflow();
-    $transition = $workflow->findTransition($this->initialValue, $this->value);
+    $transition = $workflow->findTransition($this->originalValue, $this->value);
     if ($transition) {
-      // For example: 'commerce_order.place.pre_transition'.
-      $event_id = $workflow->getGroup() . '.' . $transition->getId() . '.' . $phase;
-      $event = new WorkflowTransitionEvent($from_state, $to_state, $workflow, $this->getEntity());
+      $field_name = $this->getFieldDefinition()->getName();
+      $group_id = $workflow->getGroup();
+      $transition_id = $transition->getId();
       $event_dispatcher = \Drupal::getContainer()->get('event_dispatcher');
-      $event_dispatcher->dispatch($event_id, $event);
+      $event = new WorkflowTransitionEvent($transition, $workflow, $this->getEntity(), $field_name);
+      $events = [
+        // For example: 'commerce_order.place.pre_transition'.
+        $group_id . '.' . $transition_id . '.' . $phase,
+        // For example: 'commerce_order.pre_transition'.
+        $group_id . '.' . $phase,
+        // For example: 'state_machine.pre_transition'.
+        'state_machine.' . $phase,
+      ];
+      foreach ($events as $event_id) {
+        $event_dispatcher->dispatch($event_id, $event);
+      }
     }
   }
 

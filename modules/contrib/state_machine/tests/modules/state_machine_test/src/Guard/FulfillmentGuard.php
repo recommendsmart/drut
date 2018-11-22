@@ -14,7 +14,7 @@ class FulfillmentGuard implements GuardInterface {
    */
   public function allowed(WorkflowTransition $transition, WorkflowInterface $workflow, EntityInterface $entity) {
     // Don't allow entities in fulfillment to be cancelled.
-    if ($transition->getId() == 'cancel' && $entity->test_state->first()->value == 'fulfillment') {
+    if ($transition->getId() == 'cancel' && $entity->field_state->first()->value == 'fulfillment') {
       return FALSE;
     }
   }

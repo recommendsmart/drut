@@ -2,63 +2,85 @@
 
 namespace Drupal\state_machine\Form;
 
-use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
-class StateTransitionForm extends FormBase {
-
-  /**
-   * The entity type manager.
-   *
-   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
-   */
-  protected $entityTypeManager;
+class StateTransitionForm extends FormBase implements StateTransitionFormInterface {
 
   /**
    * The entity.
    *
-   * @var \Drupal\Core\Entity\FieldableEntityInterface
+   * @var \Drupal\Core\Entity\ContentEntityInterface
    */
   protected $entity;
 
   /**
-   * Constructs a new StateTransitionForm object.
+   * The state field name.
    *
-   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
-   *    The entity type manager.
+   * @var string
    */
-  public function __construct(EntityTypeManagerInterface $entity_type_manager) {
-    $this->entityTypeManager = $entity_type_manager;
+  protected $fieldName;
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getEntity() {
+    return $this->entity;
   }
 
   /**
    * {@inheritdoc}
    */
-  public static function create(ContainerInterface $container) {
-    return new static(
-      $container->get('entity_type.manager')
-    );
+  public function setEntity(ContentEntityInterface $entity) {
+    $this->entity = $entity;
+    return $this;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getFieldName() {
+    return $this->fieldName;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function setFieldName($field_name) {
+    $this->fieldName = $field_name;
+    return $this;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getBaseFormId() {
+    return 'state_machine_transition_form';
   }
 
   /**
    * {@inheritdoc}
    */
   public function getFormId() {
-    return 'state_machine_state_transition_form';
+    $entity = $this->getEntity();
+    if (!$entity) {
+      throw new \RuntimeException('No entity provided to StateTransitionForm.');
+    }
+    // Example ID: "state_machine_transition_form_commerce_order_state_1".
+    $form_id = $this->getBaseFormId();
+    $form_id .= '_' . $entity->getEntityTypeId() . '_' . $this->fieldName;
+    $form_id .= '_' . $entity->id();
+
+    return $form_id;
   }
 
   /**
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
-    $field_name = $form_state->get('field_name');
-    $entity_type = $form_state->get('entity_type');
-    $entity_id = $form_state->get('entity_id');
-    $this->entity = $this->entityTypeManager->getStorage($entity_type)->load($entity_id);
     /** @var \Drupal\state_machine\Plugin\Field\FieldType\StateItemInterface $state_item */
-    $state_item = $this->entity->get($field_name)->first();
+    $state_item = $this->entity->get($this->fieldName)->first();
 
     $form['actions'] = [
       '#type' => 'container',
@@ -80,7 +102,7 @@ class StateTransitionForm extends FormBase {
   public function submitForm(array &$form, FormStateInterface $form_state) {
     $triggering_element = $form_state->getTriggeringElement();
     /** @var \Drupal\state_machine\Plugin\Field\FieldType\StateItemInterface $state_item */
-    $state_item = $this->entity->get($form_state->get('field_name'))->first();
+    $state_item = $this->entity->get($this->fieldName)->first();
     $state_item->applyTransition($triggering_element['#transition']);
     $this->entity->save();
   }

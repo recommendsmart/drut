@@ -9,7 +9,7 @@ use Drupal\state_machine\DependencyInjection\Compiler\GuardsPass;
 /**
  * Registers the guard compiler pass.
  */
-class StateMachineServiceProvider implements ServiceProviderInterface  {
+class StateMachineServiceProvider implements ServiceProviderInterface {
 
   /**
    * {@inheritdoc}

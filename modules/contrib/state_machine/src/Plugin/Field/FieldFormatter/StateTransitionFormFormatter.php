@@ -2,6 +2,7 @@
 
 namespace Drupal\state_machine\Plugin\Field\FieldFormatter;
 
+use Drupal\Core\DependencyInjection\ClassResolverInterface;
 use Drupal\Core\Field\FieldDefinitionInterface;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\FormatterBase;
@@ -23,6 +24,13 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  * )
  */
 class StateTransitionFormFormatter extends FormatterBase implements ContainerFactoryPluginInterface {
+
+  /**
+   * The class resolver.
+   *
+   * @var \Drupal\Core\DependencyInjection\ClassResolverInterface
+   */
+  protected $classResolver;
 
   /**
    * The form builder.
@@ -48,12 +56,15 @@ class StateTransitionFormFormatter extends FormatterBase implements ContainerFac
    *   The view mode.
    * @param array $third_party_settings
    *   Any third party settings.
+   * @param \Drupal\Core\DependencyInjection\ClassResolverInterface $class_resolver
+   *   The class resolver.
    * @param \Drupal\Core\Form\FormBuilderInterface $form_builder
    *   The form builder.
    */
-  public function __construct($plugin_id, $plugin_definition, FieldDefinitionInterface $field_definition, array $settings, $label, $view_mode, array $third_party_settings, FormBuilderInterface $form_builder) {
+  public function __construct($plugin_id, $plugin_definition, FieldDefinitionInterface $field_definition, array $settings, $label, $view_mode, array $third_party_settings, ClassResolverInterface $class_resolver, FormBuilderInterface $form_builder) {
     parent::__construct($plugin_id, $plugin_definition, $field_definition, $settings, $label, $view_mode, $third_party_settings);
 
+    $this->classResolver = $class_resolver;
     $this->formBuilder = $form_builder;
   }
 
@@ -69,6 +80,7 @@ class StateTransitionFormFormatter extends FormatterBase implements ContainerFac
       $configuration['label'],
       $configuration['view_mode'],
       $configuration['third_party_settings'],
+      $container->get('class_resolver'),
       $container->get('form_builder')
     );
   }
@@ -82,15 +94,15 @@ class StateTransitionFormFormatter extends FormatterBase implements ContainerFac
       return [];
     }
 
-    $form_state = (new FormState())->setFormState([
-      'entity_type' => $items->getEntity()->getEntityTypeId(),
-      'entity_id' => $items->getEntity()->id(),
-      'field_name' => $items->getFieldDefinition()->getName()
-    ]);
+    /** @var \Drupal\state_machine\Form\StateTransitionFormInterface $form_object */
+    $form_object = $this->classResolver->getInstanceFromDefinition(StateTransitionForm::class);
+    $form_object->setEntity($items->getEntity());
+    $form_object->setFieldName($items->getFieldDefinition()->getName());
+    $form_state = new FormState();
     // $elements needs a value for each delta. State fields can't be multivalue,
     // so it's safe to hardcode 0.
     $elements = [];
-    $elements[0] = $this->formBuilder->buildForm(StateTransitionForm::class, $form_state);
+    $elements[0] = $this->formBuilder->buildForm($form_object, $form_state);
 
     return $elements;
   }

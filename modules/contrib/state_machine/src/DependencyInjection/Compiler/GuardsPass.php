@@ -17,12 +17,21 @@ class GuardsPass implements CompilerPassInterface {
    */
   public function process(ContainerBuilder $container) {
     $guards = [];
+    $priorities = [];
     foreach ($container->findTaggedServiceIds('state_machine.guard') as $id => $attributes) {
       if (empty($attributes[0]['group'])) {
-        continue;
+        // Guards without a specified group should be invoked for all of them.
+        $attributes[0]['group'] = '_generic';
       }
 
-      $guards[$attributes[0]['group']][] = $id;
+      $group_id = $attributes[0]['group'];
+      $guards[$group_id][$id] = $id;
+      $priorities[$group_id][$id] = isset($attributes[0]['priority']) ? $attributes[0]['priority'] : 0;
+    }
+
+    // Sort the guards by priority.
+    foreach ($priorities as $group_id => $services) {
+      array_multisort($priorities[$group_id], SORT_DESC, $guards[$group_id]);
     }
 
     $definition = $container->getDefinition('state_machine.guard_factory');

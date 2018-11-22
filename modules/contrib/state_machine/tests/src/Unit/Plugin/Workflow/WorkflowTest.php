@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\Tests\state_machine\Unit {
+namespace Drupal\Tests\state_machine\Unit\Plugin\Workflow;
 
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\state_machine\Guard\GuardFactoryInterface;
@@ -231,14 +231,26 @@ class WorkflowTest extends UnitTestCase {
     $this->assertEquals($transition, $workflow->findTransition('draft', 'review'));
     $this->assertNull($workflow->findTransition('foo', 'bar'));
   }
-}
 
 }
 
-namespace Drupal\state_machine\Plugin\Workflow {
-  if (!function_exists('t')) {
-    function t($string, array $args = []) {
-      return strtr($string, $args);
-    }
+namespace Drupal\state_machine\Plugin\Workflow;
+
+if (!function_exists('t')) {
+
+  /**
+   * Mocks the t() function.
+   *
+   * @param string $string
+   *   A string containing the English text to translate.
+   * @param array $args
+   *   (optional) An associative array of replacements to make after translation.
+   *
+   * @return string
+   *   The translated string.
+   */
+  function t($string, array $args = []) {
+    return strtr($string, $args);
   }
+
 }

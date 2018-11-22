@@ -17,7 +17,7 @@ class GuardFactory implements GuardFactoryInterface {
   protected $container;
 
   /**
-   * The guard service ids, grouped by workflow group id.
+   * The guard service ids, grouped by workflow group ID.
    *
    * @var string[]
    */
@@ -29,7 +29,7 @@ class GuardFactory implements GuardFactoryInterface {
    * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
    *   The service container.
    * @param string[] $guard_service_ids
-   *   The guard service ids, grouped by workflow group id
+   *   The guard service IDs, grouped by workflow group ID.
    */
   public function __construct(ContainerInterface $container, array $guard_service_ids) {
     $this->container = $container;
@@ -40,12 +40,16 @@ class GuardFactory implements GuardFactoryInterface {
    * {@inheritdoc}
    */
   public function get($group_id) {
-    if (!isset($this->guardServiceIds[$group_id])) {
-      return [];
+    $service_ids = [];
+    if (isset($this->guardServiceIds[$group_id])) {
+      $service_ids = array_merge($service_ids, $this->guardServiceIds[$group_id]);
+    }
+    if (isset($this->guardServiceIds['_generic'])) {
+      $service_ids = array_merge($service_ids, $this->guardServiceIds['_generic']);
     }
 
     $guards = [];
-    foreach ($this->guardServiceIds[$group_id] as $service_id) {
+    foreach ($service_ids as $service_id) {
       $guards[] = $this->container->get($service_id);
     }
 

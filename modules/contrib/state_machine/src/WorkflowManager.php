@@ -5,6 +5,7 @@ namespace Drupal\state_machine;
 use Drupal\Component\Plugin\Exception\PluginException;
 use Drupal\Core\Cache\CacheBackendInterface;
 use Drupal\Core\Extension\ModuleHandlerInterface;
+use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Plugin\DefaultPluginManager;
 use Drupal\Core\Plugin\Discovery\ContainerDerivativeDiscoveryDecorator;
 use Drupal\Core\Plugin\Discovery\YamlDiscovery;
@@ -51,6 +52,7 @@ class WorkflowManager extends DefaultPluginManager implements WorkflowManagerInt
     $this->moduleHandler = $module_handler;
     $this->setCacheBackend($cache_backend, 'workflow', ['workflow']);
     $this->groupManager = $group_manager;
+    $this->alterInfo('workflows');
   }
 
   /**
@@ -68,7 +70,7 @@ class WorkflowManager extends DefaultPluginManager implements WorkflowManagerInt
   /**
    * {@inheritdoc}
    */
-  public function createInstance($plugin_id, array $configuration = array()) {
+  public function createInstance($plugin_id, array $configuration = []) {
     $plugin_definition = $this->getDefinition($plugin_id);
     if (empty($plugin_definition['group'])) {
       throw new PluginException(sprintf('The workflow %s must define the group property.', $plugin_id));
@@ -76,7 +78,7 @@ class WorkflowManager extends DefaultPluginManager implements WorkflowManagerInt
     $group_definition = $this->groupManager->getDefinition($plugin_definition['group']);
     $plugin_class = $group_definition['workflow_class'];
 
-    if (is_subclass_of($plugin_class, 'Drupal\Core\Plugin\ContainerFactoryPluginInterface')) {
+    if (is_subclass_of($plugin_class, ContainerFactoryPluginInterface::class)) {
       return $plugin_class::create(\Drupal::getContainer(), $configuration, $plugin_id, $plugin_definition);
     }
     else {
@@ -116,6 +118,12 @@ class WorkflowManager extends DefaultPluginManager implements WorkflowManagerInt
       $to_state = $transition_definition['to'];
       if (!isset($definition['states'][$to_state])) {
         throw new PluginException(sprintf('The workflow transition %s specified an invalid "to" property.', $transition_id));
+      }
+      // Don't allow transitions to the same state.
+      foreach ($transition_definition['from'] as $from_state) {
+        if ($from_state == $transition_definition['to']) {
+          throw new PluginException(sprintf('Invalid workflow transition %s: the "from" and "to" properties cannot overlap.', $transition_id));
+        }
       }
     }
   }
@@ -160,13 +168,13 @@ class WorkflowManager extends DefaultPluginManager implements WorkflowManagerInt
   }
 
   /**
-   * Gets a list of group labels for the given entity type id.
+   * Gets a list of group labels for the given entity type ID.
    *
    * @param string $entity_type_id
-   *   The entity type id.
+   *   The entity type ID.
    *
    * @return array
-   *   A list of groups labels keyed by id.
+   *   A list of groups labels keyed by ID.
    */
   protected function getGroupLabels($entity_type_id = NULL) {
     $group_definitions = $this->groupManager->getDefinitionsByEntityType($entity_type_id);

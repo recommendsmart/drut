@@ -2,6 +2,7 @@
 
 namespace Drupal\state_machine\Plugin\views\filter;
 
+use Drupal\Component\Utility\SortArray;
 use Drupal\Core\Entity\EntityFieldManagerInterface;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
@@ -87,7 +88,7 @@ class State extends InOperator {
           $weight++;
         }
       }
-      uasort($states, array('Drupal\Component\Utility\SortArray', 'sortByWeightElement'));
+      uasort($states, [SortArray::class, 'sortByWeightElement']);
 
       $this->valueOptions = array_map(function ($state) {
         return $state['label'];
@@ -128,8 +129,8 @@ class State extends InOperator {
    *   The workflows.
    */
   protected function getWorkflows(EntityTypeInterface $entity_type, $field_name) {
-    // Only the StoreItem knows which workflow it's using. This requires us
-    // to create an entity for each bundle in order to get the store field.
+    // Only the StateItem knows which workflow it's using. This requires us
+    // to create an entity for each bundle in order to get the state field.
     $storage = $this->entityTypeManager->getStorage($entity_type->id());
     $bundles = $this->getBundles($entity_type, $field_name);
     $workflows = [];

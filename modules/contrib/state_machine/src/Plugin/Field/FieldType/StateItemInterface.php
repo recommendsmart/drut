@@ -19,6 +19,27 @@ interface StateItemInterface extends FieldItemInterface {
   public function getWorkflow();
 
   /**
+   * Gets the original state ID.
+   *
+   * If the state ID has been changed after the entity was constructed/loaded,
+   * the original ID will hold the previous value.
+   *
+   * Use this as an alternative to getting the state ID from $entity->original.
+   *
+   * @return string
+   *   The original state ID.
+   */
+  public function getOriginalId();
+
+  /**
+   * Gets the current state ID.
+   *
+   * @return string
+   *   The current state ID.
+   */
+  public function getId();
+
+  /**
    * Gets the label of the current state.
    *
    * @return string
@@ -30,7 +51,7 @@ interface StateItemInterface extends FieldItemInterface {
    * Gets the allowed transitions for the current state.
    *
    * @return \Drupal\state_machine\Plugin\Workflow\WorkflowTransition[]
-   *   The allowed transitions.
+   *   The allowed transitions, keyed by transition ID.
    */
   public function getTransitions();
 
@@ -41,6 +62,17 @@ interface StateItemInterface extends FieldItemInterface {
    *   The transition to apply.
    */
   public function applyTransition(WorkflowTransition $transition);
+
+  /**
+   * Applies a transition with the given ID, changing the current state.
+   *
+   * @param string $transition_id
+   *   The transition ID.
+   *
+   * @throws \InvalidArgumentException
+   *   Thrown when no matching transition was found.
+   */
+  public function applyTransitionById($transition_id);
 
   /**
    * Gets whether the current state is valid.

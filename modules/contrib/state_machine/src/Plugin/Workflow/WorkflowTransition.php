@@ -8,7 +8,7 @@ namespace Drupal\state_machine\Plugin\Workflow;
 class WorkflowTransition {
 
   /**
-   * The transition id.
+   * The transition ID.
    *
    * @var string
    */
@@ -39,7 +39,7 @@ class WorkflowTransition {
    * Constructs a new WorkflowTransition object.
    *
    * @param string $id
-   *   The transition id.
+   *   The transition ID.
    * @param string $label
    *   The transition label.
    * @param \Drupal\state_machine\Plugin\Workflow\WorkflowState[] $from_states
@@ -55,10 +55,10 @@ class WorkflowTransition {
   }
 
   /**
-   * Gets the id.
+   * Gets the ID.
    *
    * @return string
-   *   The id.
+   *   The ID.
    */
   public function getId() {
     return $this->id;

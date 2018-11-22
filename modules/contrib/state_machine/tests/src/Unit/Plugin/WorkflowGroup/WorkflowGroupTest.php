@@ -2,6 +2,7 @@
 
 namespace Drupal\Tests\state_machine\Unit\Plugin\WorkflowGroup;
 
+use Drupal\state_machine\Plugin\Workflow\Workflow;
 use Drupal\state_machine\Plugin\WorkflowGroup\WorkflowGroup;
 use Drupal\Tests\UnitTestCase;
 
@@ -27,8 +28,8 @@ class WorkflowGroupTest extends UnitTestCase {
     'id' => 'entity_test',
     'label' => 'Entity Test',
     'entity_type' => 'entity_test',
-    'class' => 'Drupal\state_machine\Plugin\WorkflowGroup\WorkflowGroup',
-    'workflow_class' => '\Drupal\state_machine\Plugin\Workflow\Workflow',
+    'class' => WorkflowGroup::class,
+    'workflow_class' => Workflow::class,
     'provider' => 'state_machine_test',
   ];
 

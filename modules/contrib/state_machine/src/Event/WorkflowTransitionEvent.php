@@ -4,7 +4,7 @@ namespace Drupal\state_machine\Event;
 
 use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\state_machine\Plugin\Workflow\WorkflowInterface;
-use Drupal\state_machine\Plugin\Workflow\WorkflowState;
+use Drupal\state_machine\Plugin\Workflow\WorkflowTransition;
 use Symfony\Component\EventDispatcher\Event;
 
 /**
@@ -13,18 +13,11 @@ use Symfony\Component\EventDispatcher\Event;
 class WorkflowTransitionEvent extends Event {
 
   /**
-   * The "from" state.
+   * The transition.
    *
-   * @var \Drupal\state_machine\Plugin\Workflow\WorkflowState
+   * @var \Drupal\state_machine\Plugin\Workflow\WorkflowTransition
    */
-  protected $fromState;
-
-  /**
-   * The "to" state.
-   *
-   * @var \Drupal\state_machine\Plugin\Workflow\WorkflowState
-   */
-  protected $toState;
+  protected $transition;
 
   /**
    * The workflow.
@@ -41,42 +34,39 @@ class WorkflowTransitionEvent extends Event {
   protected $entity;
 
   /**
+   * The state field name.
+   *
+   * @var string
+   */
+  protected $fieldName;
+
+  /**
    * Constructs a new WorkflowTransitionEvent object.
    *
-   * @param \Drupal\state_machine\Plugin\Workflow\WorkflowState $from_state
-   *   The "from" state.
-   * @param \Drupal\state_machine\Plugin\Workflow\WorkflowState $to_state
-   *   The "to" state.
+   * @param \Drupal\state_machine\Plugin\Workflow\WorkflowTransition $transition
+   *   The transition.
    * @param \Drupal\state_machine\Plugin\Workflow\WorkflowInterface $workflow
    *   The workflow.
    * @param \Drupal\Core\Entity\ContentEntityInterface $entity
    *   The entity.
+   * @param string $field_name
+   *   The state field name.
    */
-  public function __construct(WorkflowState $from_state, WorkflowState $to_state, WorkflowInterface $workflow, ContentEntityInterface $entity) {
-    $this->fromState = $from_state;
-    $this->toState = $to_state;
+  public function __construct(WorkflowTransition $transition, WorkflowInterface $workflow, ContentEntityInterface $entity, $field_name) {
+    $this->transition = $transition;
     $this->workflow = $workflow;
     $this->entity = $entity;
+    $this->fieldName = $field_name;
   }
 
   /**
-   * Gets the "from" state.
+   * Gets the transition.
    *
-   * @return \Drupal\state_machine\Plugin\Workflow\WorkflowState
-   *   The "from" state.
+   * @return \Drupal\state_machine\Plugin\Workflow\WorkflowTransition
+   *   The transition.
    */
-  public function getFromState() {
-    return $this->fromState;
-  }
-
-  /**
-   * Gets the "to" state.
-   *
-   * @return \Drupal\state_machine\Plugin\Workflow\WorkflowState
-   *   The "to" state.
-   */
-  public function getToState() {
-    return $this->toState;
+  public function getTransition() {
+    return $this->transition;
   }
 
   /**
@@ -97,6 +87,53 @@ class WorkflowTransitionEvent extends Event {
    */
   public function getEntity() {
     return $this->entity;
+  }
+
+  /**
+   * Gets the state field name.
+   *
+   * @return string
+   *   The state field name.
+   */
+  public function getFieldName() {
+    return $this->fieldName;
+  }
+
+  /**
+   * Gets the state field.
+   *
+   * @return \Drupal\state_machine\Plugin\Field\FieldType\StateItemInterface
+   *   The state field.
+   */
+  public function getField() {
+    /** @var \Drupal\state_machine\Plugin\Field\FieldType\StateItemInterface $field */
+    $field = $this->entity->get($this->fieldName)->first();
+    return $field;
+  }
+
+  /**
+   * Gets the "from" state.
+   *
+   * @deprecated
+   *
+   * @return \Drupal\state_machine\Plugin\Workflow\WorkflowState
+   *   The "from" state.
+   */
+  public function getFromState() {
+    $original_id = $this->getField()->getOriginalId();
+    return $this->workflow->getState($original_id);
+  }
+
+  /**
+   * Gets the "to" state.
+   *
+   * @deprecated
+   *
+   * @return \Drupal\state_machine\Plugin\Workflow\WorkflowState
+   *   The "to" state.
+   */
+  public function getToState() {
+    return $this->transition->getToState();
   }
 
 }
