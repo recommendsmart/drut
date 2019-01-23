@@ -69,7 +69,7 @@
         "drupal/commerce_payment": "^2.11",
         "drupal/state_machine": "^1.0@RC",
         "drupal/feeds": "^3.0@alpha",
-        "drupal/login_emailusername": "^1.1"
+        "drupal/super_login": "^1.2"
     },
     "replace": {
         "drupal/core": "^8.6"
