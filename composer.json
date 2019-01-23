@@ -57,7 +57,7 @@
         "drupal/token": "^1.5",
         "fortawesome/font-awesome": "^4.7",
         "drupal/webform": "^5.0@RC",
-        "drupal/bootstrap": "^3.16",
+        "drupal/bootstrap": "^3.17",
         "drupal/bootstrap_layouts": "^5.1",
         "drupal/chosen": "^2.6",
         "drupal/embed": "^1.0",
@@ -68,7 +68,8 @@
         "drupal/commerce_store": "^2.11",
         "drupal/commerce_payment": "^2.11",
         "drupal/state_machine": "^1.0@RC",
-        "drupal/feeds": "^3.0@alpha"
+        "drupal/feeds": "^3.0@alpha",
+        "drupal/login_emailusername": "^1.1"
     },
     "replace": {
         "drupal/core": "^8.6"
