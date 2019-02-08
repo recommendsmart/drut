@@ -2452,21 +2452,21 @@
     },
     {
         "name": "drupal/ctools",
-        "version": "3.0.0",
-        "version_normalized": "3.0.0.0",
+        "version": "3.1.0",
+        "version_normalized": "3.1.0.0",
         "source": {
             "type": "git",
             "url": "https://git.drupal.org/project/ctools",
-            "reference": "8.x-3.0"
+            "reference": "8.x-3.1"
         },
         "dist": {
             "type": "zip",
-            "url": "https://ftp.drupal.org/files/projects/ctools-8.x-3.0.zip",
-            "reference": "8.x-3.0",
-            "shasum": "302e869ecd1e59fe55663673999fee2ccac5daa8"
+            "url": "https://ftp.drupal.org/files/projects/ctools-8.x-3.1.zip",
+            "reference": "8.x-3.1",
+            "shasum": "7056df469624ec3943c62ebe613dbfcb3171dcd1"
         },
         "require": {
-            "drupal/core": "~8.0"
+            "drupal/core": "^8.5"
         },
         "type": "drupal-module",
         "extra": {
@@ -2474,8 +2474,8 @@
                 "dev-3.x": "3.x-dev"
             },
             "drupal": {
-                "version": "8.x-3.0",
-                "datestamp": "1493401742",
+                "version": "8.x-3.1",
+                "datestamp": "1549603381",
                 "security-coverage": {
                     "status": "covered",
                     "message": "Covered by Drupal's security advisory policy"
@@ -3384,21 +3384,21 @@
     },
     {
         "name": "drupal/google_analytics",
-        "version": "2.3.0",
-        "version_normalized": "2.3.0.0",
+        "version": "3.0.0",
+        "version_normalized": "3.0.0.0",
         "source": {
             "type": "git",
             "url": "https://git.drupal.org/project/google_analytics",
-            "reference": "8.x-2.3"
+            "reference": "8.x-3.0"
         },
         "dist": {
             "type": "zip",
-            "url": "https://ftp.drupal.org/files/projects/google_analytics-8.x-2.3.zip",
-            "reference": "8.x-2.3",
-            "shasum": "9ea88a81925ba538d9fa7ac6ce4f1598e5ee48e4"
+            "url": "https://ftp.drupal.org/files/projects/google_analytics-8.x-3.0.zip",
+            "reference": "8.x-3.0",
+            "shasum": "18179854152cae44be2a5ed5de5550bc6e131c70"
         },
         "require": {
-            "drupal/core": "~8.0"
+            "drupal/core": "~8.5"
         },
         "require-dev": {
             "drupal/php": "*",
@@ -3407,11 +3407,11 @@
         "type": "drupal-module",
         "extra": {
             "branch-alias": {
-                "dev-2.x": "2.x-dev"
+                "dev-3.x": "3.x-dev"
             },
             "drupal": {
-                "version": "8.x-2.3",
-                "datestamp": "1531469021",
+                "version": "8.x-3.0",
+                "datestamp": "1548968580",
                 "security-coverage": {
                     "status": "covered",
                     "message": "Covered by Drupal's security advisory policy"
@@ -3436,7 +3436,7 @@
         "description": "Allows your site to be tracked by Google Analytics by adding a Javascript tracking code to every page.",
         "homepage": "https://www.drupal.org/project/google_analytics",
         "support": {
-            "source": "http://git.drupal.org/project/google_analytics.git",
+            "source": "https://git.drupal.org/project/google_analytics.git",
             "issues": "https://www.drupal.org/project/issues/google_analytics"
         }
     },
@@ -3885,18 +3885,18 @@
     },
     {
         "name": "drupal/menu_breadcrumb",
-        "version": "1.7.0",
-        "version_normalized": "1.7.0.0",
+        "version": "1.8.0",
+        "version_normalized": "1.8.0.0",
         "source": {
             "type": "git",
             "url": "https://git.drupal.org/project/menu_breadcrumb",
-            "reference": "8.x-1.7"
+            "reference": "8.x-1.8"
         },
         "dist": {
             "type": "zip",
-            "url": "https://ftp.drupal.org/files/projects/menu_breadcrumb-8.x-1.7.zip",
-            "reference": "8.x-1.7",
-            "shasum": "998c7908bd411afe745f91c725b39483e6dd693f"
+            "url": "https://ftp.drupal.org/files/projects/menu_breadcrumb-8.x-1.8.zip",
+            "reference": "8.x-1.8",
+            "shasum": "db3aee3edd5e34a750297709d74b61c0c7c432f7"
         },
         "require": {
             "drupal/core": "~8.0"
@@ -3907,8 +3907,8 @@
                 "dev-1.x": "1.x-dev"
             },
             "drupal": {
-                "version": "8.x-1.7",
-                "datestamp": "1539197280",
+                "version": "8.x-1.8",
+                "datestamp": "1549606384",
                 "security-coverage": {
                     "status": "covered",
                     "message": "Covered by Drupal's security advisory policy"
@@ -4248,6 +4248,64 @@
             "source": "https://git.drupal.org/project/page_manager.git",
             "issues": "https://www.drupal.org/project/issues/page_manager",
             "irc": "irc://irc.freenode.org/drupal-contribute"
+        }
+    },
+    {
+        "name": "drupal/panelbutton",
+        "version": "1.2.0",
+        "version_normalized": "1.2.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/panelbutton",
+            "reference": "8.x-1.2"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/panelbutton-8.x-1.2.zip",
+            "reference": "8.x-1.2",
+            "shasum": "804be638634af892a225ce1f9cf255b9b5652f78"
+        },
+        "require": {
+            "drupal/core": "*"
+        },
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-1.x": "1.x-dev"
+            },
+            "drupal": {
+                "version": "8.x-1.2",
+                "datestamp": "1549536780",
+                "security-coverage": {
+                    "status": "covered",
+                    "message": "Covered by Drupal's security advisory policy"
+                }
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packages.drupal.org/8/downloads",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "authors": [
+            {
+                "name": "Kevin Quillen (kevinquillen)",
+                "homepage": "https://www.drupal.org/u/kevinquillen",
+                "role": "Maintainer"
+            },
+            {
+                "name": "kevinquillen",
+                "homepage": "https://www.drupal.org/user/317279"
+            }
+        ],
+        "description": "Adds the Panel Button plugin to CKEditor. This plugin is a utility plugin that is required by certain user-facing CKEditor plugins.",
+        "homepage": "http://drupal.org/project/panelbutton",
+        "keywords": [
+            "Drupal"
+        ],
+        "support": {
+            "source": "http://cgit.drupalcode.org/panelbutton",
+            "issues": "http://drupal.org/project/issues/panelbutton"
         }
     },
     {
@@ -4719,6 +4777,63 @@
         "homepage": "https://www.drupal.org/project/responsivewrappers",
         "support": {
             "source": "http://cgit.drupalcode.org/responsivewrappers"
+        }
+    },
+    {
+        "name": "drupal/role_expire",
+        "version": "1.1.0",
+        "version_normalized": "1.1.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupal.org/project/role_expire",
+            "reference": "8.x-1.1"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/role_expire-8.x-1.1.zip",
+            "reference": "8.x-1.1",
+            "shasum": "dd332a88446cb768ba138ab7484cc9304e22c9c7"
+        },
+        "require": {
+            "drupal/core": "~8.0"
+        },
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-1.x": "1.x-dev"
+            },
+            "drupal": {
+                "version": "8.x-1.1",
+                "datestamp": "1549568880",
+                "security-coverage": {
+                    "status": "covered",
+                    "message": "Covered by Drupal's security advisory policy"
+                }
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packages.drupal.org/8/downloads",
+        "license": [
+            "GPL-2.0-or-later"
+        ],
+        "authors": [
+            {
+                "name": "bdziewierz",
+                "homepage": "https://www.drupal.org/user/37286"
+            },
+            {
+                "name": "rcodina",
+                "homepage": "https://www.drupal.org/user/2635031"
+            },
+            {
+                "name": "stewsnooze",
+                "homepage": "https://www.drupal.org/user/243255"
+            }
+        ],
+        "description": "Enables user roles to expire on given time and day.",
+        "homepage": "https://www.drupal.org/project/role_expire",
+        "support": {
+            "source": "http://cgit.drupalcode.org/role_expire"
         }
     },
     {
