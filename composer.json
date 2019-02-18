@@ -71,7 +71,8 @@
         "drupal/feeds": "^3.0@alpha",
         "drupal/super_login": "^1.2",
         "drupal/panelbutton": "^1.2",
-        "drupal/role_expire": "^1.1"
+        "drupal/role_expire": "^1.1",
+        "drupal/field_permissions": "^1.0@RC"
     },
     "replace": {
         "drupal/core": "^8.6"
