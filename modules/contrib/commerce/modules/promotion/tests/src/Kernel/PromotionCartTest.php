@@ -6,7 +6,7 @@ use Drupal\commerce_price\Price;
 use Drupal\commerce_product\Entity\Product;
 use Drupal\commerce_product\Entity\ProductVariation;
 use Drupal\commerce_promotion\Entity\Promotion;
-use Drupal\Tests\commerce_cart\Kernel\CartManagerTestTrait;
+use Drupal\Tests\commerce_cart\Traits\CartManagerTestTrait;
 use Drupal\Tests\commerce\Kernel\CommerceKernelTestBase;
 
 /**
@@ -66,14 +66,13 @@ class PromotionCartTest extends CommerceKernelTestBase {
       'commerce_promotion',
     ]);
     $this->installSchema('commerce_promotion', ['commerce_promotion_usage']);
+    $this->installCommerceCart();
   }
 
   /**
    * Tests adding a product with a promotion to the cart.
    */
   public function testPromotionCart() {
-    $this->installCommerceCart();
-
     $variation = ProductVariation::create([
       'type' => 'default',
       'sku' => strtolower($this->randomMachineName()),

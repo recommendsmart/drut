@@ -2,12 +2,9 @@
 
 namespace Drupal\commerce_order\EventSubscriber;
 
+use Drupal\commerce\MailHandlerInterface;
 use Drupal\commerce_order\OrderTotalSummaryInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
-use Drupal\Core\Language\LanguageManagerInterface;
-use Drupal\Core\Mail\MailManagerInterface;
-use Drupal\Core\Render\RenderContext;
-use Drupal\Core\Render\Renderer;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\state_machine\Event\WorkflowTransitionEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -20,11 +17,18 @@ class OrderReceiptSubscriber implements EventSubscriberInterface {
   use StringTranslationTrait;
 
   /**
-   * The order type entity storage.
+   * The entity type manager.
    *
-   * @var \Drupal\Core\Entity\EntityStorageInterface
+   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
    */
-  protected $orderTypeStorage;
+  protected $entityTypeManager;
+
+  /**
+   * The mail handler.
+   *
+   * @var \Drupal\commerce\MailHandlerInterface
+   */
+  protected $mailHandler;
 
   /**
    * The order total summary.
@@ -34,54 +38,27 @@ class OrderReceiptSubscriber implements EventSubscriberInterface {
   protected $orderTotalSummary;
 
   /**
-   * The entity view builder for profiles.
-   *
-   * @var \Drupal\profile\ProfileViewBuilder
-   */
-  protected $profileViewBuilder;
-
-  /**
-   * The language manager.
-   *
-   * @var \Drupal\Core\Language\LanguageManagerInterface
-   */
-  protected $languageManager;
-
-  /**
-   * The mail manager.
-   *
-   * @var \Drupal\Core\Mail\MailManagerInterface
-   */
-  protected $mailManager;
-
-  /**
-   * The renderer.
-   *
-   * @var \Drupal\Core\Render\RendererInterface
-   */
-  protected $renderer;
-
-  /**
    * Constructs a new OrderReceiptSubscriber object.
    *
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
    *   The entity type manager.
-   * @param \Drupal\Core\Language\LanguageManagerInterface $language_manager
-   *   The language manager.
-   * @param \Drupal\Core\Mail\MailManagerInterface $mail_manager
-   *   The mail manager.
+   * @param \Drupal\commerce\MailHandlerInterface $mail_handler
+   *   The mail handler.
    * @param \Drupal\commerce_order\OrderTotalSummaryInterface $order_total_summary
    *   The order total summary.
-   * @param \Drupal\Core\Render\Renderer $renderer
-   *   The renderer.
    */
-  public function __construct(EntityTypeManagerInterface $entity_type_manager, LanguageManagerInterface $language_manager, MailManagerInterface $mail_manager, OrderTotalSummaryInterface $order_total_summary, Renderer $renderer) {
-    $this->orderTypeStorage = $entity_type_manager->getStorage('commerce_order_type');
+  public function __construct(EntityTypeManagerInterface $entity_type_manager, MailHandlerInterface $mail_handler, OrderTotalSummaryInterface $order_total_summary) {
+    $this->entityTypeManager = $entity_type_manager;
+    $this->mailHandler = $mail_handler;
     $this->orderTotalSummary = $order_total_summary;
-    $this->profileViewBuilder = $entity_type_manager->getViewBuilder('profile');
-    $this->languageManager = $language_manager;
-    $this->mailManager = $mail_manager;
-    $this->renderer = $renderer;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function getSubscribedEvents() {
+    $events = ['commerce_order.place.post_transition' => ['sendOrderReceipt', -100]];
+    return $events;
   }
 
   /**
@@ -93,8 +70,9 @@ class OrderReceiptSubscriber implements EventSubscriberInterface {
   public function sendOrderReceipt(WorkflowTransitionEvent $event) {
     /** @var \Drupal\commerce_order\Entity\OrderInterface $order */
     $order = $event->getEntity();
+    $order_type_storage = $this->entityTypeManager->getStorage('commerce_order_type');
     /** @var \Drupal\commerce_order\Entity\OrderTypeInterface $order_type */
-    $order_type = $this->orderTypeStorage->load($order->bundle());
+    $order_type = $order_type_storage->load($order->bundle());
     if (!$order_type->shouldSendReceipt()) {
       return;
     }
@@ -104,49 +82,27 @@ class OrderReceiptSubscriber implements EventSubscriberInterface {
       return;
     }
 
-    $params = [
-      'headers' => [
-        'Content-Type' => 'text/html; charset=UTF-8;',
-        'Content-Transfer-Encoding' => '8Bit',
-      ],
-      'from' => $order->getStore()->getEmail(),
-      'subject' => $this->t('Order #@number confirmed', ['@number' => $order->getOrderNumber()]),
-      'order' => $order,
-    ];
-    if ($receipt_bcc = $order_type->getReceiptBcc()) {
-      $params['headers']['Bcc'] = $receipt_bcc;
-    }
-
-    $build = [
+    $subject = $this->t('Order #@number confirmed', ['@number' => $order->getOrderNumber()]);
+    $body = [
       '#theme' => 'commerce_order_receipt',
       '#order_entity' => $order,
       '#totals' => $this->orderTotalSummary->buildTotals($order),
     ];
     if ($billing_profile = $order->getBillingProfile()) {
-      $build['#billing_information'] = $this->profileViewBuilder->view($billing_profile);
+      $profile_view_builder = $this->entityTypeManager->getViewBuilder('profile');;
+      $body['#billing_information'] = $profile_view_builder->view($billing_profile);
     }
-    $params['body'] = $this->renderer->executeInRenderContext(new RenderContext(), function () use ($build) {
-      return $this->renderer->render($build);
-    });
-
-    // Replicated logic from EmailAction and contact's MailHandler.
+    $params = [
+      'id' => 'order_receipt',
+      'from' => $order->getStore()->getEmail(),
+      'bcc' => $order_type->getReceiptBcc(),
+      'order' => $order,
+    ];
     $customer = $order->getCustomer();
     if ($customer->isAuthenticated()) {
-      $langcode = $customer->getPreferredLangcode();
+      $params['langcode'] = $customer->getPreferredLangcode();
     }
-    else {
-      $langcode = $this->languageManager->getDefaultLanguage()->getId();
-    }
-
-    $this->mailManager->mail('commerce_order', 'receipt', $to, $langcode, $params);
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public static function getSubscribedEvents() {
-    $events = ['commerce_order.place.post_transition' => ['sendOrderReceipt', -100]];
-    return $events;
+    $this->mailHandler->sendMail($to, $subject, $body, $params);
   }
 
 }

@@ -41,6 +41,7 @@
 	"ko": "Coreeg",
 	"hr": "Croateg",
 	"ksh": "Cwleneg",
+	"ku": "Cwrdeg",
 	"ckb": "Cwrdeg Sorani",
 	"cy": "Cymraeg",
 	"km": "Chmereg",
@@ -90,6 +91,7 @@
 	"yo": "Iorwba",
 	"nl": "Iseldireg",
 	"is": "Islandeg",
+	"jv": "Jafanaeg",
 	"ja": "Japaneeg",
 	"dyo": "Jola-Fonyi",
 	"kkj": "Kako",
@@ -120,6 +122,7 @@
 	"ms": "Maleieg",
 	"mt": "Malteg",
 	"gv": "Manaweg",
+	"mi": "Maori",
 	"mr": "Marathi",
 	"mas": "Masai",
 	"mzn": "Masanderani",
@@ -211,8 +214,10 @@
 	"th": "Thai",
 	"ug": "Uighur",
 	"wae": "Walsereg",
+	"wa": "Walwneg",
 	"uk": "Wcreineg",
 	"wo": "Woloff",
 	"ur": "Wrdw",
-	"uz": "Wsbeceg"
+	"uz": "Wsbeceg",
+	"xh": "Xhosa"
 }

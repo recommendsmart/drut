@@ -4,6 +4,7 @@ namespace Drupal\Tests\commerce_cart\Kernel;
 
 use Drupal\Component\Render\FormattableMarkup;
 use Drupal\Tests\commerce\Kernel\CommerceKernelTestBase;
+use Drupal\Tests\commerce_cart\Traits\CartManagerTestTrait;
 
 /**
  * Tests the unsetting of the cart flag when order is placed.
@@ -55,6 +56,8 @@ class CartOrderPlacedTest extends CommerceKernelTestBase {
     $this->installEntitySchema('commerce_order_item');
     $this->installConfig('commerce_order');
     $this->installConfig('commerce_product');
+    $this->installCommerceCart();
+
     $this->createUser();
 
     // Create a product variation.
@@ -86,8 +89,6 @@ class CartOrderPlacedTest extends CommerceKernelTestBase {
    * Tests that a draft order is no longer a cart once placed.
    */
   public function testCartOrderPlaced() {
-    $this->installCommerceCart();
-
     $this->store = $this->createStore();
     $cart_order = $this->container->get('commerce_cart.cart_provider')->createCart('default', $this->store, $this->user);
     $this->cartManager = $this->container->get('commerce_cart.cart_manager');
@@ -95,8 +96,7 @@ class CartOrderPlacedTest extends CommerceKernelTestBase {
 
     $this->assertNotEmpty($cart_order->cart->value);
 
-    $workflow = $cart_order->getState()->getWorkflow();
-    $cart_order->getState()->applyTransition($workflow->getTransition('place'));
+    $cart_order->getState()->applyTransitionById('place');
     $cart_order->save();
 
     $cart_order = $this->reloadEntity($cart_order);
@@ -121,7 +121,7 @@ class CartOrderPlacedTest extends CommerceKernelTestBase {
    */
   protected function createEntity($entity_type, array $values) {
     /** @var \Drupal\Core\Entity\EntityStorageInterface $storage */
-    $storage = \Drupal::service('entity_type.manager')->getStorage($entity_type);
+    $storage = $this->container->get('entity_type.manager')->getStorage($entity_type);
     $entity = $storage->create($values);
     $status = $entity->save();
     $this->assertEquals(SAVED_NEW, $status, new FormattableMarkup('Created %label entity %type.', [

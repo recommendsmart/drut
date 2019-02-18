@@ -105,19 +105,19 @@ class OrderReceiptTest extends CommerceKernelTestBase {
    * Tests the order receipt.
    */
   public function testOrderReceipt() {
-    $transition = $this->order->getState()->getTransitions();
     $this->order->setOrderNumber('2017/01');
-    $this->order->getState()->applyTransition($transition['place']);
+    $this->order->getState()->applyTransitionById('place');
     $this->order->save();
 
-    $mails = $this->getMails();
-    $this->assertEquals(1, count($mails));
+    $emails = $this->getMails();
+    $this->assertCount(1, $emails);
 
-    $the_email = reset($mails);
-    $this->assertEquals('text/html; charset=UTF-8;', $the_email['headers']['Content-Type']);
-    $this->assertEquals('8Bit', $the_email['headers']['Content-Transfer-Encoding']);
-    $this->assertEquals('Order #2017/01 confirmed', $the_email['subject']);
-    $this->assertEmpty(isset($the_email['headers']['Bcc']));
+    $email = reset($emails);
+    $this->assertEquals('text/html; charset=UTF-8;', $email['headers']['Content-Type']);
+    $this->assertEquals('8Bit', $email['headers']['Content-Transfer-Encoding']);
+    $this->assertEquals('Order #2017/01 confirmed', $email['subject']);
+    $this->assertContains('Thank you for your order!', $email['body']);
+    $this->assertFalse(isset($the_email['headers']['Bcc']));
   }
 
   /**
@@ -128,12 +128,10 @@ class OrderReceiptTest extends CommerceKernelTestBase {
     $order_type->setSendReceipt(FALSE);
     $order_type->save();
 
-    $transition = $this->order->getState()->getTransitions();
-    $this->order->getState()->applyTransition($transition['place']);
+    $this->order->getState()->applyTransitionById('place');
     $this->order->save();
 
-    $mails = $this->getMails();
-    $this->assertEquals(0, count($mails));
+    $this->assertCount(0, $this->getMails());
   }
 
   /**
@@ -144,15 +142,14 @@ class OrderReceiptTest extends CommerceKernelTestBase {
     $order_type->setReceiptBcc('bcc@example.com');
     $order_type->save();
 
-    $transition = $this->order->getState()->getTransitions();
-    $this->order->getState()->applyTransition($transition['place']);
+    $this->order->getState()->applyTransitionById('place');
     $this->order->save();
 
-    $mails = $this->getMails();
-    $this->assertEquals(1, count($mails));
+    $emails = $this->getMails();
+    $this->assertCount(1, $emails);
 
-    $the_email = reset($mails);
-    $this->assertEquals('bcc@example.com', $the_email['headers']['Bcc']);
+    $email = reset($emails);
+    $this->assertEquals('bcc@example.com', $email['headers']['Bcc']);
   }
 
 }

@@ -71,7 +71,7 @@ class ProductAdminTest extends ProductBrowserTestBase {
     }
     $this->submitForm($edit, 'Save');
 
-    \Drupal::service('entity_type.manager')->getStorage('commerce_product')->resetCache([$product->id()]);
+    $this->container->get('entity_type.manager')->getStorage('commerce_product')->resetCache([$product->id()]);
     $product = Product::load($product->id());
     $this->assertEquals($product->getTitle(), $title, 'The product title successfully updated.');
     $this->assertFieldValues($product->getStores(), $this->stores, 'Updated product has the correct associated stores.');
@@ -91,7 +91,7 @@ class ProductAdminTest extends ProductBrowserTestBase {
     $this->assertSession()->pageTextContains(t('This action cannot be undone.'));
     $this->submitForm([], 'Delete');
 
-    \Drupal::service('entity_type.manager')->getStorage('commerce_product')->resetCache();
+    $this->container->get('entity_type.manager')->getStorage('commerce_product')->resetCache();
     $product_exists = (bool) Product::load($product->id());
     $this->assertEmpty($product_exists, 'The new product has been deleted from the database.');
   }
@@ -259,7 +259,7 @@ class ProductAdminTest extends ProductBrowserTestBase {
     $this->assertEquals($product->id(), $variation->getProductId());
     $this->assertEquals($variation_sku, $variation->getSku());
 
-    \Drupal::service('entity_type.manager')->getStorage('commerce_product')->resetCache([$product->id()]);
+    $this->container->get('entity_type.manager')->getStorage('commerce_product')->resetCache([$product->id()]);
     $product = Product::load($product->id());
     $this->assertTrue($product->hasVariation($variation));
   }
@@ -294,7 +294,7 @@ class ProductAdminTest extends ProductBrowserTestBase {
     $this->submitForm($variations_edit, 'Save');
     $this->assertSession()->addressEquals($variation->toUrl('collection'));
 
-    \Drupal::service('entity_type.manager')->getStorage('commerce_product_variation')->resetCache([$variation->id()]);
+    $this->container->get('entity_type.manager')->getStorage('commerce_product_variation')->resetCache([$variation->id()]);
     $variation = ProductVariation::load($variation->id());
     $this->assertEquals($variation->getSku(), $new_sku);
     $this->assertEquals($variation->getPrice()->getNumber(), $new_price_amount);
@@ -342,7 +342,7 @@ class ProductAdminTest extends ProductBrowserTestBase {
     $variation = ProductVariation::load($expected_variation_id);
     $this->assertEquals($variation->getSku(), $new_sku);
     $this->assertEquals($variation->getPrice()->getNumber(), '12.00');
-    $this->assertTrue($variation->isActive());
+    $this->assertTrue($variation->isPublished());
   }
 
   /**
@@ -367,7 +367,7 @@ class ProductAdminTest extends ProductBrowserTestBase {
     $this->submitForm([], 'Delete');
     $this->assertSession()->addressEquals($variation->toUrl('collection'));
 
-    \Drupal::service('entity_type.manager')->getStorage('commerce_product_variation')->resetCache();
+    $this->container->get('entity_type.manager')->getStorage('commerce_product_variation')->resetCache();
     $variation_exists = (bool) ProductVariation::load($variation->id());
     $this->assertEmpty($variation_exists, 'The new variation has been deleted from the database.');
   }
@@ -425,6 +425,10 @@ class ProductAdminTest extends ProductBrowserTestBase {
     $this->assertEquals(1, $variation->id());
     $this->assertEquals($sku, $variation->getSku());
     $this->assertEquals(new Price('199.99', 'USD'), $variation->getPrice());
+
+    // The variation collection page should be inaccessible.
+    $this->drupalGet($variation->toUrl('collection'));
+    $this->assertSession()->statusCodeEquals('403');
   }
 
 }

@@ -2,16 +2,15 @@
 
 namespace Drupal\commerce_payment\Plugin\Commerce\CheckoutPane;
 
+use Drupal\commerce\InlineFormManager;
 use Drupal\commerce_checkout\Plugin\Commerce\CheckoutFlow\CheckoutFlowInterface;
 use Drupal\commerce_checkout\Plugin\Commerce\CheckoutPane\CheckoutPaneBase;
 use Drupal\commerce_payment\PaymentOption;
 use Drupal\commerce_payment\PaymentOptionsBuilderInterface;
 use Drupal\commerce_payment\Plugin\Commerce\PaymentGateway\SupportsStoredPaymentMethodsInterface;
-use Drupal\Component\Utility\Html;
 use Drupal\Component\Utility\NestedArray;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Url;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -41,11 +40,11 @@ class PaymentInformation extends CheckoutPaneBase {
   protected $currentUser;
 
   /**
-   * The messenger.
+   * The inline form manager.
    *
-   * @var \Drupal\Core\Messenger\MessengerInterface
+   * @var \Drupal\commerce\InlineFormManager
    */
-  protected $messenger;
+  protected $inlineFormManager;
 
   /**
    * The payment options builder.
@@ -69,16 +68,16 @@ class PaymentInformation extends CheckoutPaneBase {
    *   The entity type manager.
    * @param \Drupal\Core\Session\AccountInterface $current_user
    *   The current user.
-   * @param \Drupal\Core\Messenger\MessengerInterface $messenger
-   *   The messenger.
+   * @param \Drupal\commerce\InlineFormManager $inline_form_manager
+   *   The inline form manager.
    * @param \Drupal\commerce_payment\PaymentOptionsBuilderInterface $payment_options_builder
    *   The payment options builder.
    */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, CheckoutFlowInterface $checkout_flow, EntityTypeManagerInterface $entity_type_manager, AccountInterface $current_user, MessengerInterface $messenger, PaymentOptionsBuilderInterface $payment_options_builder) {
+  public function __construct(array $configuration, $plugin_id, $plugin_definition, CheckoutFlowInterface $checkout_flow, EntityTypeManagerInterface $entity_type_manager, AccountInterface $current_user, InlineFormManager $inline_form_manager, PaymentOptionsBuilderInterface $payment_options_builder) {
     parent::__construct($configuration, $plugin_id, $plugin_definition, $checkout_flow, $entity_type_manager);
 
     $this->currentUser = $current_user;
-    $this->messenger = $messenger;
+    $this->inlineFormManager = $inline_form_manager;
     $this->paymentOptionsBuilder = $payment_options_builder;
   }
 
@@ -93,7 +92,7 @@ class PaymentInformation extends CheckoutPaneBase {
       $checkout_flow,
       $container->get('entity_type.manager'),
       $container->get('current_user'),
-      $container->get('messenger'),
+      $container->get('plugin.manager.commerce_inline_form'),
       $container->get('commerce_payment.options_builder')
     );
   }
@@ -158,14 +157,10 @@ class PaymentInformation extends CheckoutPaneBase {
     $payment_gateways = $payment_gateway_storage->loadMultipleForOrder($this->order);
     // Can't proceed without any payment gateways.
     if (empty($payment_gateways)) {
-      $this->messenger->addError($this->noPaymentGatewayErrorMessage());
+      $this->messenger()->addError($this->noPaymentGatewayErrorMessage());
       return $pane_form;
     }
 
-    // Prepare the form for ajax.
-    $pane_form['#wrapper_id'] = Html::getUniqueId('payment-information-wrapper');
-    $pane_form['#prefix'] = '<div id="' . $pane_form['#wrapper_id'] . '">';
-    $pane_form['#suffix'] = '</div>';
     // Core bug #1988968 doesn't allow the payment method add form JS to depend
     // on an external library, so the libraries need to be preloaded here.
     foreach ($payment_gateways as $payment_gateway) {
@@ -194,7 +189,7 @@ class PaymentInformation extends CheckoutPaneBase {
       '#default_value' => $default_option->getId(),
       '#ajax' => [
         'callback' => [get_class($this), 'ajaxRefresh'],
-        'wrapper' => $pane_form['#wrapper_id'],
+        'wrapper' => $pane_form['#id'],
       ],
       '#access' => count($options) > 1,
     ];
@@ -245,12 +240,15 @@ class PaymentInformation extends CheckoutPaneBase {
       'uid' => $this->order->getCustomerId(),
       'billing_profile' => $this->order->getBillingProfile(),
     ]);
+    $inline_form = $this->inlineFormManager->createInstance('payment_gateway_form', [
+      'operation' => 'add-payment-method',
+    ], $payment_method);
 
     $pane_form['add_payment_method'] = [
-      '#type' => 'commerce_payment_gateway_form',
-      '#operation' => 'add-payment-method',
-      '#default_value' => $payment_method,
+      '#parents' => array_merge($pane_form['#parents'], ['add_payment_method']),
+      '#inline_form' => $inline_form,
     ];
+    $pane_form['add_payment_method'] = $inline_form->buildInlineForm($pane_form['add_payment_method'], $form_state);
 
     return $pane_form;
   }
@@ -267,7 +265,6 @@ class PaymentInformation extends CheckoutPaneBase {
    *   The modified pane form.
    */
   protected function buildBillingProfileForm(array $pane_form, FormStateInterface $form_state) {
-    $store = $this->order->getStore();
     $billing_profile = $this->order->getBillingProfile();
     if (!$billing_profile) {
       $billing_profile = $this->entityTypeManager->getStorage('profile')->create([
@@ -275,13 +272,15 @@ class PaymentInformation extends CheckoutPaneBase {
         'type' => 'customer',
       ]);
     }
+    $inline_form = $this->inlineFormManager->createInstance('customer_profile', [
+      'available_countries' => $this->order->getStore()->getBillingCountries(),
+    ], $billing_profile);
 
     $pane_form['billing_information'] = [
-      '#type' => 'commerce_profile_select',
-      '#default_value' => $billing_profile,
-      '#default_country' => $store->getAddress()->getCountryCode(),
-      '#available_countries' => $store->getBillingCountries(),
+      '#parents' => array_merge($pane_form['#parents'], ['billing_information']),
+      '#inline_form' => $inline_form,
     ];
+    $pane_form['billing_information'] = $inline_form->buildInlineForm($pane_form['billing_information'], $form_state);
 
     return $pane_form;
   }
@@ -313,9 +312,16 @@ class PaymentInformation extends CheckoutPaneBase {
    * {@inheritdoc}
    */
   public function submitPaneForm(array &$pane_form, FormStateInterface $form_state, array &$complete_form) {
-    if ($this->order->isPaid() || $this->order->getTotalPrice()->isZero()) {
-      $this->order->setBillingProfile($pane_form['billing_information']['#profile']);
-      return;
+    $billing_profile = NULL;
+    if (isset($pane_form['billing_information'])) {
+      /** @var \Drupal\commerce\Plugin\Commerce\InlineForm\EntityInlineFormInterface $inline_form */
+      $inline_form = $pane_form['billing_information']['#inline_form'];
+      /** @var \Drupal\profile\Entity\ProfileInterface $billing_profile */
+      $billing_profile = $inline_form->getEntity();
+      if ($this->order->isPaid() || $this->order->getTotalPrice()->isZero()) {
+        $this->order->setBillingProfile($billing_profile);
+        return;
+      }
     }
 
     $values = $form_state->getValue($pane_form['#parents']);
@@ -331,8 +337,10 @@ class PaymentInformation extends CheckoutPaneBase {
 
     if ($payment_gateway->getPlugin() instanceof SupportsStoredPaymentMethodsInterface) {
       if (!empty($selected_option->getPaymentMethodTypeId())) {
+        /** @var \Drupal\commerce\Plugin\Commerce\InlineForm\EntityInlineFormInterface $inline_form */
+        $inline_form = $pane_form['add_payment_method']['#inline_form'];
         // The payment method was just created.
-        $payment_method = $values['add_payment_method'];
+        $payment_method = $inline_form->getEntity();
       }
       else {
         /** @var \Drupal\commerce_payment\PaymentMethodStorageInterface $payment_method_storage */
@@ -348,7 +356,7 @@ class PaymentInformation extends CheckoutPaneBase {
     else {
       $this->order->set('payment_gateway', $payment_gateway);
       $this->order->set('payment_method', NULL);
-      $this->order->setBillingProfile($pane_form['billing_information']['#profile']);
+      $this->order->setBillingProfile($billing_profile);
     }
   }
 

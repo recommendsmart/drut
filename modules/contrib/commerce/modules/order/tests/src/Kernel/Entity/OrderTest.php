@@ -253,7 +253,7 @@ class OrderTest extends CommerceKernelTestBase {
     $this->assertEquals(new Price('-10.00', 'USD'), $order->getBalance());
     $this->assertTrue($order->isPaid());
 
-    $this->assertEquals('completed', $order->getState()->value);
+    $this->assertEquals('completed', $order->getState()->getId());
 
     // Confirm that free orders are considered paid after placement.
     $order->addAdjustment(new Adjustment([
@@ -426,6 +426,37 @@ class OrderTest extends CommerceKernelTestBase {
   }
 
   /**
+   * Tests the generation of the 'placed' and 'completed' timestamps.
+   */
+  public function testTimestamps() {
+    /** @var \Drupal\commerce_order\Entity\OrderItemInterface $order_item */
+    $order_item = OrderItem::create([
+      'type' => 'test',
+      'quantity' => '2',
+      'unit_price' => new Price('2.00', 'USD'),
+    ]);
+    $order_item->save();
+
+    /** @var \Drupal\commerce_order\Entity\OrderInterface $order */
+    $order = Order::create([
+      'type' => 'default',
+      'store_id' => $this->store->id(),
+      'order_items' => [$order_item],
+      'state' => 'draft',
+    ]);
+    $order->save();
+    $order = $this->reloadEntity($order);
+
+    $this->assertNull($order->getPlacedTime());
+    $this->assertNull($order->getCompletedTime());
+    // Transitioning the order out of the draft state should set the timestamps.
+    $order->getState()->applyTransitionById('place');
+    $order->save();
+    $this->assertEquals($order->getPlacedTime(), \Drupal::time()->getRequestTime());
+    $this->assertEquals($order->getCompletedTime(), \Drupal::time()->getRequestTime());
+  }
+
+  /**
    * Tests the order with order items using different currencies.
    *
    * @covers ::getSubtotalPrice
@@ -433,7 +464,7 @@ class OrderTest extends CommerceKernelTestBase {
    * @covers ::getTotalPrice
    */
   public function testMultipleCurrencies() {
-    $currency_importer = \Drupal::service('commerce_price.currency_importer');
+    $currency_importer = $this->container->get('commerce_price.currency_importer');
     $currency_importer->import('EUR');
 
     $usd_order_item = OrderItem::create([

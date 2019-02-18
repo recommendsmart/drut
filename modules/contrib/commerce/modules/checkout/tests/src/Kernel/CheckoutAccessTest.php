@@ -9,7 +9,7 @@ use Drupal\commerce_product\Entity\ProductVariation;
 use Drupal\commerce_store\StoreCreationTrait;
 use Drupal\Core\Url;
 use Drupal\Tests\commerce\Kernel\CommerceKernelTestBase;
-use Drupal\Tests\commerce_cart\Kernel\CartManagerTestTrait;
+use Drupal\Tests\commerce_cart\Traits\CartManagerTestTrait;
 use Drupal\user\UserInterface;
 use Symfony\Cmf\Component\Routing\RouteObjectInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -141,7 +141,7 @@ class CheckoutAccessTest extends CommerceKernelTestBase {
   public function testCanceledOrderCheckout() {
     $user1 = $this->createUser([], ['access checkout']);
     $order = $this->createOrder($user1);
-    $order->getState()->applyTransition($order->getState()->getTransitions()['cancel']);
+    $order->getState()->applyTransitionById('cancel');
     $request = $this->createRequest($order);
     $this->assertFalse($this->accessManager->checkRequest($request, $user1));
   }

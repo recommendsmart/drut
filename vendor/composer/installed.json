@@ -293,17 +293,17 @@
     },
     {
         "name": "commerceguys/addressing",
-        "version": "v1.0.1",
-        "version_normalized": "1.0.1.0",
+        "version": "v1.0.2",
+        "version_normalized": "1.0.2.0",
         "source": {
             "type": "git",
             "url": "https://github.com/commerceguys/addressing.git",
-            "reference": "de46cb4a002f9014c44cfcb1dcf18df8105e8239"
+            "reference": "f23ce2596ccfb47bcdaa9d14fbf9b4f699dc3d4b"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/commerceguys/addressing/zipball/de46cb4a002f9014c44cfcb1dcf18df8105e8239",
-            "reference": "de46cb4a002f9014c44cfcb1dcf18df8105e8239",
+            "url": "https://api.github.com/repos/commerceguys/addressing/zipball/f23ce2596ccfb47bcdaa9d14fbf9b4f699dc3d4b",
+            "reference": "f23ce2596ccfb47bcdaa9d14fbf9b4f699dc3d4b",
             "shasum": ""
         },
         "require": {
@@ -319,7 +319,7 @@
         "suggest": {
             "symfony/validator": "to validate addresses"
         },
-        "time": "2018-08-17T14:27:22+00:00",
+        "time": "2018-10-21T23:38:05+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -354,17 +354,17 @@
     },
     {
         "name": "commerceguys/intl",
-        "version": "v1.0.1",
-        "version_normalized": "1.0.1.0",
+        "version": "v1.0.2",
+        "version_normalized": "1.0.2.0",
         "source": {
             "type": "git",
             "url": "https://github.com/commerceguys/intl.git",
-            "reference": "22156e447530d6ebd387bfee51ef1ae2c70a5ff0"
+            "reference": "65148707b317808082aac6e5e266047f11d95ead"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/commerceguys/intl/zipball/22156e447530d6ebd387bfee51ef1ae2c70a5ff0",
-            "reference": "22156e447530d6ebd387bfee51ef1ae2c70a5ff0",
+            "url": "https://api.github.com/repos/commerceguys/intl/zipball/65148707b317808082aac6e5e266047f11d95ead",
+            "reference": "65148707b317808082aac6e5e266047f11d95ead",
             "shasum": ""
         },
         "require": {
@@ -374,7 +374,7 @@
             "mikey179/vfsstream": "1.*",
             "phpunit/phpunit": "~4.0"
         },
-        "time": "2018-06-21T14:03:04+00:00",
+        "time": "2018-10-22T13:02:28+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -1973,18 +1973,18 @@
     },
     {
         "name": "drupal/commerce",
-        "version": "2.11.0",
-        "version_normalized": "2.11.0.0",
+        "version": "2.12.0",
+        "version_normalized": "2.12.0.0",
         "source": {
             "type": "git",
             "url": "https://git.drupal.org/project/commerce",
-            "reference": "8.x-2.11"
+            "reference": "8.x-2.12"
         },
         "dist": {
             "type": "zip",
-            "url": "https://ftp.drupal.org/files/projects/commerce-8.x-2.11.zip",
-            "reference": "8.x-2.11",
-            "shasum": "869af588072115ced037ab6b0d2bb70caf30c771"
+            "url": "https://ftp.drupal.org/files/projects/commerce-8.x-2.12.zip",
+            "reference": "8.x-2.12",
+            "shasum": "d8e2a5cabf49f5ebd5fc83d0fd3d54d7eeebe095"
         },
         "require": {
             "commerceguys/intl": "^1.0.0",
@@ -1994,7 +1994,7 @@
             "drupal/entity_reference_revisions": "~1.0",
             "drupal/inline_entity_form": "^1.0-rc1",
             "drupal/profile": "~1.0",
-            "drupal/state_machine": "~1.0"
+            "drupal/state_machine": "^1.0-rc1"
         },
         "require-dev": {
             "drupal/commerce_cart": "*",
@@ -2013,8 +2013,8 @@
                 "dev-2.x": "2.x-dev"
             },
             "drupal": {
-                "version": "8.x-2.11",
-                "datestamp": "1541002980",
+                "version": "8.x-2.12",
+                "datestamp": "1550075661",
                 "security-coverage": {
                     "status": "covered",
                     "message": "Covered by Drupal's security advisory policy"
@@ -2052,8 +2052,8 @@
     },
     {
         "name": "drupal/commerce_order",
-        "version": "2.11.0",
-        "version_normalized": "2.11.0.0",
+        "version": "2.12.0",
+        "version_normalized": "2.12.0.0",
         "require": {
             "drupal/commerce": "self.version",
             "drupal/commerce_price": "*",
@@ -2069,8 +2069,8 @@
                 "dev-2.x": "2.x-dev"
             },
             "drupal": {
-                "version": "8.x-2.11",
-                "datestamp": "1541002980",
+                "version": "8.x-2.12",
+                "datestamp": "1550075661",
                 "security-coverage": {
                     "status": "covered",
                     "message": "Covered by Drupal's security advisory policy"
@@ -2107,8 +2107,8 @@
     },
     {
         "name": "drupal/commerce_payment",
-        "version": "2.11.0",
-        "version_normalized": "2.11.0.0",
+        "version": "2.12.0",
+        "version_normalized": "2.12.0.0",
         "require": {
             "drupal/commerce": "self.version",
             "drupal/commerce_order": "*",
@@ -2121,8 +2121,8 @@
                 "dev-2.x": "2.x-dev"
             },
             "drupal": {
-                "version": "8.x-2.11",
-                "datestamp": "1541002980",
+                "version": "8.x-2.12",
+                "datestamp": "1550075661",
                 "security-coverage": {
                     "status": "covered",
                     "message": "Covered by Drupal's security advisory policy"
@@ -2222,8 +2222,8 @@
     },
     {
         "name": "drupal/commerce_price",
-        "version": "2.11.0",
-        "version_normalized": "2.11.0.0",
+        "version": "2.12.0",
+        "version_normalized": "2.12.0.0",
         "require": {
             "drupal/commerce": "self.version",
             "drupal/core": "~8.0"
@@ -2234,8 +2234,8 @@
                 "dev-2.x": "2.x-dev"
             },
             "drupal": {
-                "version": "8.x-2.11",
-                "datestamp": "1541002980",
+                "version": "8.x-2.12",
+                "datestamp": "1550075661",
                 "security-coverage": {
                     "status": "covered",
                     "message": "Covered by Drupal's security advisory policy"
@@ -2351,8 +2351,8 @@
     },
     {
         "name": "drupal/commerce_store",
-        "version": "2.11.0",
-        "version_normalized": "2.11.0.0",
+        "version": "2.12.0",
+        "version_normalized": "2.12.0.0",
         "require": {
             "drupal/commerce": "self.version",
             "drupal/commerce_price": "*",
@@ -2364,8 +2364,8 @@
                 "dev-2.x": "2.x-dev"
             },
             "drupal": {
-                "version": "8.x-2.11",
-                "datestamp": "1541002980",
+                "version": "8.x-2.12",
+                "datestamp": "1550075661",
                 "security-coverage": {
                     "status": "covered",
                     "message": "Covered by Drupal's security advisory policy"
@@ -3372,18 +3372,18 @@
     },
     {
         "name": "drupal/fontawesome",
-        "version": "2.9.0",
-        "version_normalized": "2.9.0.0",
+        "version": "2.11.0",
+        "version_normalized": "2.11.0.0",
         "source": {
             "type": "git",
             "url": "https://git.drupal.org/project/fontawesome",
-            "reference": "8.x-2.9"
+            "reference": "8.x-2.11"
         },
         "dist": {
             "type": "zip",
-            "url": "https://ftp.drupal.org/files/projects/fontawesome-8.x-2.9.zip",
-            "reference": "8.x-2.9",
-            "shasum": "f536ef94ff4f27ff2c5589f1b6c994bfc9baeae7"
+            "url": "https://ftp.drupal.org/files/projects/fontawesome-8.x-2.11.zip",
+            "reference": "8.x-2.11",
+            "shasum": "b09ffea10f7e2f9d15bc3326c5d05cbc76d57fba"
         },
         "require": {
             "drupal/core": "~8.0"
@@ -3394,8 +3394,8 @@
                 "dev-2.x": "2.x-dev"
             },
             "drupal": {
-                "version": "8.x-2.9",
-                "datestamp": "1541188681",
+                "version": "8.x-2.11",
+                "datestamp": "1550073481",
                 "security-coverage": {
                     "status": "covered",
                     "message": "Covered by Drupal's security advisory policy"
@@ -3420,14 +3420,6 @@
             {
                 "name": "RobLoach",
                 "homepage": "https://www.drupal.org/user/61114"
-            },
-            {
-                "name": "cosmicdreams",
-                "homepage": "https://www.drupal.org/user/42579"
-            },
-            {
-                "name": "geerlingguy",
-                "homepage": "https://www.drupal.org/user/389011"
             },
             {
                 "name": "inders",

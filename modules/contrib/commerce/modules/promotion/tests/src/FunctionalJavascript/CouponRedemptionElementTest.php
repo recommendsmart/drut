@@ -6,17 +6,14 @@ use Drupal\commerce_order\Entity\OrderItem;
 use Drupal\commerce_order\Entity\OrderItemType;
 use Drupal\commerce_price\Price;
 use Drupal\Core\Url;
-use Drupal\Tests\commerce\Functional\CommerceBrowserTestBase;
-use Drupal\Tests\commerce\FunctionalJavascript\JavascriptTestTrait;
+use Drupal\Tests\commerce\FunctionalJavascript\CommerceWebDriverTestBase;
 
 /**
  * Tests the coupon redemption form element.
  *
  * @group commerce
  */
-class CouponRedemptionElementTest extends CommerceBrowserTestBase {
-
-  use JavascriptTestTrait;
+class CouponRedemptionElementTest extends CommerceWebDriverTestBase {
 
   /**
    * The cart order to test against.
@@ -106,14 +103,13 @@ class CouponRedemptionElementTest extends CommerceBrowserTestBase {
   /**
    * Tests redeeming a single coupon.
    *
-   * @see commerce_promotion_test_form_views_form_commerce_cart_form_default_alter
+   * @see commerce_promotion_test_form_views_form_commerce_cart_form_default_alter()
    */
   public function testSingleCouponRedemption() {
     $coupons = $this->promotion->getCoupons();
     $coupon = reset($coupons);
 
     $this->drupalGet(Url::fromRoute('commerce_cart.page', [], ['query' => ['coupon_cardinality' => 1]]));
-    $this->assertSession()->pageTextContains('Enter your coupon code to redeem a promotion.');
     // Empty coupon.
     $this->getSession()->getPage()->pressButton('Apply coupon');
     $this->waitForAjaxToFinish();
@@ -144,7 +140,7 @@ class CouponRedemptionElementTest extends CommerceBrowserTestBase {
   /**
    * Tests redeeming coupon on the cart form, with multiple coupons allowed.
    *
-   * @see commerce_promotion_test_form_views_form_commerce_cart_form_default_alter
+   * @see commerce_promotion_test_form_views_form_commerce_cart_form_default_alter()
    */
   public function testMultipleCouponRedemption() {
     $coupons = $this->promotion->getCoupons();
@@ -165,7 +161,8 @@ class CouponRedemptionElementTest extends CommerceBrowserTestBase {
     $this->getSession()->getPage()->fillField('Coupon code', $first_coupon->getCode());
     $this->getSession()->getPage()->pressButton('Apply coupon');
     $this->waitForAjaxToFinish();
-    $this->assertSession()->pageTextContains('The provided coupon code is invalid');
+    $this->assertSession()->pageTextNotContains('The provided coupon code is invalid');
+    $this->assertSession()->pageTextContains($first_coupon->getCode());
 
     // Second coupon.
     $this->getSession()->getPage()->fillField('Coupon code', $second_coupon->getCode());

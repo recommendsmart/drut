@@ -8,17 +8,13 @@ use Drupal\commerce_product\Entity\ProductVariation;
 use Drupal\commerce_product\Entity\ProductVariationType;
 use Drupal\Core\Entity\Entity\EntityFormDisplay;
 use Drupal\language\Entity\ConfigurableLanguage;
-use Drupal\Tests\commerce\FunctionalJavascript\JavascriptTestTrait;
-use Drupal\Tests\commerce_cart\Functional\CartBrowserTestBase;
 
 /**
  * Tests the add to cart form for multilingual.
  *
  * @group commerce
  */
-class AddToCartMultilingualTest extends CartBrowserTestBase {
-
-  use JavascriptTestTrait;
+class AddToCartMultilingualTest extends CartWebDriverTestBase {
 
   /**
    * The variations to test with.
@@ -156,7 +152,7 @@ class AddToCartMultilingualTest extends CartBrowserTestBase {
     // Enable translation for the product and ensure the change is picked up.
     $this->container->get('content_translation.manager')->setEnabled('commerce_product', $this->variation->bundle(), TRUE);
     $this->container->get('content_translation.manager')->setEnabled('commerce_product_variation', $this->variation->bundle(), TRUE);
-    $this->container->get('entity.manager')->clearCachedDefinitions();
+    $this->container->get('entity_type.manager')->clearCachedDefinitions();
     $this->container->get('router.builder')->rebuild();
     $this->container->get('entity.definition_update_manager')->applyUpdates();
 

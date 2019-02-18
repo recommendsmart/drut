@@ -46,6 +46,7 @@ function commerce_order_theme($existing, $type, $theme, $path) {
     ],
     'commerce_order_total_summary' => [
       'variables' => [
+        'order_entity' => NULL,
         'totals' => NULL,
       ],
     ],
@@ -183,21 +184,6 @@ function commerce_order_add_order_items_field(OrderTypeInterface $order_type) {
 function commerce_order_views_data_alter(array &$data) {
   $data['commerce_order']['store_id']['field']['id'] = 'commerce_store';
   $data['commerce_order']['state']['filter']['id'] = 'state_machine_state';
-}
-
-/**
- * Implements hook_mail().
- *
- * Captures the outgoing mail and sets appropriate message body and headers.
- */
-function commerce_order_mail($key, &$message, $params) {
-  if (isset($params['headers'])) {
-    $message['headers'] = array_merge($message['headers'], $params['headers']);
-  }
-
-  $message['from'] = $params['from'];
-  $message['subject'] = $params['subject'];
-  $message['body'][] = $params['body'];
 }
 
 /**

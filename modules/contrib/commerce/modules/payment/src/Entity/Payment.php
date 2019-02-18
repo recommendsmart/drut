@@ -162,8 +162,11 @@ class Payment extends ContentEntityBase implements PaymentInterface {
    */
   public function getBalance() {
     if ($amount = $this->getAmount()) {
-      $refunded_amount = $this->getRefundedAmount();
-      return $amount->subtract($refunded_amount);
+      $balance = $amount;
+      if ($refunded_amount = $this->getRefundedAmount()) {
+        $balance = $balance->subtract($refunded_amount);
+      }
+      return $balance;
     }
   }
 
@@ -297,8 +300,8 @@ class Payment extends ContentEntityBase implements PaymentInterface {
       $this->setRefundedAmount($refunded_amount);
     }
     // Maintain the authorized and completed timestamps.
-    $state = $this->getState()->value;
-    $original_state = isset($this->original) ? $this->original->getState()->value : '';
+    $state = $this->getState()->getId();
+    $original_state = isset($this->original) ? $this->original->getState()->getId() : '';
     if ($state == 'authorization' && $original_state != 'authorization') {
       if (empty($this->getAuthorizedTime())) {
         $this->setAuthorizedTime(\Drupal::time()->getRequestTime());

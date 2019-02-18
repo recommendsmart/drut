@@ -14,8 +14,8 @@ config_devel:
     - core.entity_view_mode.commerce_product_variation.summary
     - views.view.commerce_checkout_order_summary
 
-# Information added by Drupal.org packaging script on 2018-10-31
-version: '8.x-2.11'
+# Information added by Drupal.org packaging script on 2019-02-12
+version: '8.x-2.12'
 core: '8.x'
 project: 'commerce'
-datestamp: 1541002987
+datestamp: 1550007789
