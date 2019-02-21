@@ -30,7 +30,7 @@
         "drupal/libraries": "^3.0@alpha",
         "drupal/masquerade": "^2.0@beta",
         "drupal/floating_block": "1.x-dev",
-        "drupal/fontawesome": "^2.11",
+        "drupal/fontawesome": "^2.12",
         "drupal/redirect": "^1.2",
         "drupal/search_api": "^1.11",
         "drupal/simple_responsive_table": "^2.2",

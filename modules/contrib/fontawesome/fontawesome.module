@@ -391,7 +391,7 @@ function fontawesome_icon_bundles() {
  */
 function fontawesome_get_metadata_filepath() {
   // Attempt to load the icons from the local library's metadata if possible.
-  $metadataFile = drupal_realpath(DRUPAL_ROOT . '/libraries/fontawesome/metadata/icons.yml');
+  $metadataFile = \Drupal::service('file_system')->realpath(DRUPAL_ROOT . '/libraries/fontawesome/metadata/icons.yml');
   // If we can't load the local file, use the included module icons file.
   if (!file_exists($metadataFile)) {
     $metadataFile = drupal_get_path('module', 'fontawesome') . '/metadata/icons.yml';
