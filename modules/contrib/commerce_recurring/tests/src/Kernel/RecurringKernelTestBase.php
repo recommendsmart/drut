@@ -72,6 +72,7 @@ abstract class RecurringKernelTestBase extends CommerceKernelTestBase {
   protected function setUp() {
     parent::setUp();
 
+    $this->installEntitySchema('profile');
     $this->installEntitySchema('commerce_order');
     $this->installEntitySchema('commerce_order_item');
     $this->installEntitySchema('commerce_payment');
@@ -97,9 +98,13 @@ abstract class RecurringKernelTestBase extends CommerceKernelTestBase {
       'billingType' => BillingSchedule::BILLING_TYPE_POSTPAID,
       'plugin' => 'fixed',
       'configuration' => [
+        'trial_interval' => [
+          'number' => '10',
+          'unit' => 'day',
+        ],
         'interval' => [
           'number' => '1',
-          'unit' => 'hour',
+          'unit' => 'month',
         ],
       ],
     ]);

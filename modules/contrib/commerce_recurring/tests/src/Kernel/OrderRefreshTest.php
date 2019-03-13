@@ -42,10 +42,10 @@ class OrderRefreshTest extends RecurringKernelTestBase {
       'title' => $this->variation->getOrderItemTitle(),
       'unit_price' => new Price('2', 'USD'),
       'state' => 'active',
-      'starts' => strtotime('2017-02-24 17:00'),
+      'starts' => strtotime('2019-02-01 00:00'),
     ]);
     $subscription->save();
-    $order = $this->recurringOrderManager->ensureOrder($subscription);
+    $order = $this->recurringOrderManager->startRecurring($subscription);
     $this->assertEquals(new Price('2', 'USD'), $order->getTotalPrice());
 
     $subscription->setUnitPrice(new Price('3', 'USD'));
@@ -58,11 +58,10 @@ class OrderRefreshTest extends RecurringKernelTestBase {
     // Confirm that the order is canceled on refresh if no charges remain.
     $this->billingSchedule->setBillingType(BillingScheduleInterface::BILLING_TYPE_PREPAID);
     $this->billingSchedule->save();
-    $subscription->setState('canceled');
-    $subscription->save();
+    $subscription->cancel()->save();
     $order->save();
 
-    $this->assertEquals('canceled', $order->getState()->value);
+    $this->assertEquals('canceled', $order->getState()->getId());
     $this->assertEmpty($order->getItems());
   }
 

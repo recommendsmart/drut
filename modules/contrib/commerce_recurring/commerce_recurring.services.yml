@@ -6,7 +6,7 @@ services:
 
   commerce_recurring.event_subscriber.order_subscriber:
     class: \Drupal\commerce_recurring\EventSubscriber\OrderSubscriber
-    arguments: ['@entity_type.manager', '@commerce_recurring.order_manager']
+    arguments: ['@entity_type.manager', '@commerce_recurring.order_manager', '@datetime.time']
     tags:
       - { name: event_subscriber }
 
@@ -24,7 +24,7 @@ services:
 
   commerce_recurring.cron:
     class: \Drupal\commerce_recurring\Cron
-    arguments: ['@entity_type.manager', '@datetime.time']
+    arguments: ['@entity_type.manager', '@commerce_recurring.order_manager', '@datetime.time']
 
   commerce_recurring.order_manager:
     class: \Drupal\commerce_recurring\RecurringOrderManager

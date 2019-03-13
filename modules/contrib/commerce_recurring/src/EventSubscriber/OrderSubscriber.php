@@ -3,6 +3,7 @@
 namespace Drupal\commerce_recurring\EventSubscriber;
 
 use Drupal\commerce_recurring\RecurringOrderManagerInterface;
+use Drupal\Component\Datetime\TimeInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\state_machine\Event\WorkflowTransitionEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -24,16 +25,26 @@ class OrderSubscriber implements EventSubscriberInterface {
   protected $recurringOrderManager;
 
   /**
+   * The time.
+   *
+   * @var \Drupal\Component\Datetime\TimeInterface
+   */
+  protected $time;
+
+  /**
    * Constructs a new OrderSubscriber object.
    *
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
    *   The entity type manager.
    * @param \Drupal\commerce_recurring\RecurringOrderManagerInterface $recurring_order_manager
    *   The recurring order manager.
+   * @param \Drupal\Component\Datetime\TimeInterface $time
+   *   The time.
    */
-  public function __construct(EntityTypeManagerInterface $entity_type_manager, RecurringOrderManagerInterface $recurring_order_manager) {
+  public function __construct(EntityTypeManagerInterface $entity_type_manager, RecurringOrderManagerInterface $recurring_order_manager, TimeInterface $time) {
     $this->entityTypeManager = $entity_type_manager;
     $this->recurringOrderManager = $recurring_order_manager;
+    $this->time = $time;
   }
 
   /**
@@ -60,9 +71,7 @@ class OrderSubscriber implements EventSubscriberInterface {
       return;
     }
     $payment_method = $order->get('payment_method')->entity;
-    if (empty($payment_method)) {
-      return;
-    }
+    $start_time = $this->time->getRequestTime();
 
     foreach ($order->getItems() as $order_item) {
       $purchased_entity = $order_item->getPurchasedEntity();
@@ -74,15 +83,37 @@ class OrderSubscriber implements EventSubscriberInterface {
       if ($subscription_type_item->isEmpty() || $billing_schedule_item->isEmpty()) {
         continue;
       }
+      /** @var \Drupal\commerce_recurring\Entity\BillingScheduleInterface $billing_schedule */
+      $billing_schedule = $billing_schedule_item->entity;
+      // If the trial is not allowed and no payment method was collected, we
+      // cannot proceed to the subscription creation.
+      if (!$billing_schedule->getPlugin()->allowTrials() && empty($payment_method)) {
+        continue;
+      }
 
       $subscription = $subscription_storage->createFromOrderItem($order_item, [
         'type' => $subscription_type_item->target_plugin_id,
-        'billing_schedule' => $billing_schedule_item->entity,
-        'payment_method' => $payment_method,
-        'state' => 'active',
+        'billing_schedule' => $billing_schedule,
       ]);
-      $subscription->save();
-      $this->recurringOrderManager->ensureOrder($subscription);
+
+      // Set the payment method if known, it's not required to start a free
+      // trial if it wasn't collected.
+      if (!empty($payment_method)) {
+        $subscription->setPaymentMethod($payment_method);
+      }
+
+      if ($billing_schedule->getPlugin()->allowTrials()) {
+        $subscription->setState('trial');
+        $subscription->setTrialStartTime($start_time);
+        $subscription->save();
+        $this->recurringOrderManager->startTrial($subscription);
+      }
+      else {
+        $subscription->setState('active');
+        $subscription->setStartTime($start_time);
+        $subscription->save();
+        $this->recurringOrderManager->startRecurring($subscription);
+      }
     }
   }
 
@@ -113,13 +144,17 @@ class OrderSubscriber implements EventSubscriberInterface {
       }
 
       /** @var \Drupal\commerce_recurring\Entity\SubscriptionInterface[] $subscriptions */
-      $subscriptions = $subscription_storage->loadByProperties([
-        'initial_order' => $order->id(),
-        'state' => 'active',
-      ]);
-      foreach ($subscriptions as $subscription) {
-        $subscription->setState('canceled');
-        $subscription->save();
+      $query = $subscription_storage->getQuery();
+      $query
+        ->condition('initial_order', $order->id())
+        ->condition('state', ['trial', 'active'], 'IN');
+      $result = $query->execute();
+      if ($result) {
+        $subscriptions = $subscription_storage->loadMultiple($result);
+        foreach ($subscriptions as $subscription) {
+          $subscription->getState()->applyTransitionById('cancel');
+          $subscription->save();
+        }
       }
     }
   }

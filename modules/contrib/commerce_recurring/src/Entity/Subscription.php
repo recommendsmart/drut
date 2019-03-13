@@ -6,6 +6,7 @@ use Drupal\commerce\PurchasableEntityInterface;
 use Drupal\commerce_order\Entity\OrderInterface;
 use Drupal\commerce_payment\Entity\PaymentMethodInterface;
 use Drupal\commerce_price\Price;
+use Drupal\commerce_recurring\ScheduledChange;
 use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\Core\Entity\ContentEntityBase;
 use Drupal\Core\Entity\EntityMalformedException;
@@ -283,6 +284,30 @@ class Subscription extends ContentEntityBase implements SubscriptionInterface {
   /**
    * {@inheritdoc}
    */
+  public function getCurrentOrder() {
+    $order_ids = $this->getOrderIds();
+    if (empty($order_ids)) {
+      return NULL;
+    }
+    $order_storage = $this->entityTypeManager()->getStorage('commerce_order');
+    $order_ids = $order_storage->getQuery()
+      ->condition('type', 'recurring')
+      ->condition('order_id', $order_ids, 'IN')
+      ->condition('state', 'draft')
+      ->sort('order_id', 'DESC')
+      ->accessCheck(FALSE)
+      ->range(0, 1)
+      ->execute();
+
+    if (!$order_ids) {
+      return NULL;
+    }
+    return $order_storage->load(key($order_ids));
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public function getOrderIds() {
     $order_ids = [];
     foreach ($this->get('orders') as $field_item) {
@@ -385,6 +410,52 @@ class Subscription extends ContentEntityBase implements SubscriptionInterface {
   /**
    * {@inheritdoc}
    */
+  public function getTrialStartTime() {
+    return $this->get('trial_starts')->value;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function setTrialStartTime($timestamp) {
+    $this->set('trial_starts', $timestamp);
+    return $this;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getTrialEndTime() {
+    return $this->get('trial_ends')->value;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function setTrialEndTime($timestamp) {
+    $this->set('trial_ends', $timestamp);
+    return $this;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getTrialStartDate() {
+    return DrupalDateTime::createFromTimestamp($this->getTrialStartTime());
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getTrialEndDate() {
+    if ($end_time = $this->getTrialEndTime()) {
+      return DrupalDateTime::createFromTimestamp($end_time);
+    }
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public function getStartTime() {
     return $this->get('starts')->value;
   }
@@ -431,6 +502,116 @@ class Subscription extends ContentEntityBase implements SubscriptionInterface {
   /**
    * {@inheritdoc}
    */
+  public function getCurrentBillingPeriod() {
+    if ($current_order = $this->getCurrentOrder()) {
+      if (!$current_order->get('billing_period')->isEmpty()) {
+        return $current_order->get('billing_period')->first()->toBillingPeriod();
+      }
+    }
+    return NULL;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function hasScheduledChanges() {
+    return !$this->get('scheduled_changes')->isEmpty();
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getScheduledChanges() {
+    return $this->get('scheduled_changes')->getScheduledChanges();
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function setScheduledChanges(array $scheduled_changes) {
+    $this->set('scheduled_changes', $scheduled_changes);
+    return $this;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function addScheduledChange($field_name, $value) {
+    if (!$this->hasField($field_name)) {
+      throw new \InvalidArgumentException(sprintf('Invalid field_name "%s" specified for the given scheduled change.', $field_name));
+    }
+    if ($field_name === 'purchased_entity') {
+      throw new \InvalidArgumentException('Scheduling a plan change is not yet supported.');
+    }
+    // Other scheduled changes are made irrelevant by a state change.
+    if ($field_name === 'state') {
+      $this->removeScheduledChanges();
+    }
+    else {
+      // There can only be a single scheduled change for a given field.
+      $this->removeScheduledChanges($field_name);
+    }
+    $scheduled_change = new ScheduledChange($field_name, $value, \Drupal::time()->getRequestTime());
+    $this->get('scheduled_changes')->appendItem($scheduled_change);
+    return $this;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function removeScheduledChanges($field_name = NULL) {
+    foreach ($this->getScheduledChanges() as $scheduled_change) {
+      if (!$field_name || $scheduled_change->getFieldName() === $field_name) {
+        $this->get('scheduled_changes')->removeScheduledChange($scheduled_change);
+      }
+    }
+    return $this;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function hasScheduledChange($field_name, $value = NULL) {
+    foreach ($this->getScheduledChanges() as $change) {
+      if ($change->getFieldName() != $field_name) {
+        continue;
+      }
+      if (is_null($value) || $change->getValue() == $value) {
+        return TRUE;
+      }
+    }
+    return FALSE;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function applyScheduledChanges() {
+    foreach ($this->getScheduledChanges() as $scheduled_change) {
+      $this->set($scheduled_change->getFieldName(), $scheduled_change->getValue());
+    }
+    $this->removeScheduledChanges();
+    return $this;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function cancel($schedule = TRUE) {
+    if ($schedule) {
+      $transition = $this->getState()->getWorkflow()->getTransition('cancel');
+      $state_id = $transition->getToState()->getId();
+      $this->addScheduledChange('state', $state_id);
+    }
+    else {
+      $this->getState()->applyTransitionById('cancel');
+    }
+    return $this;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public function preSave(EntityStorageInterface $storage) {
     parent::preSave($storage);
 
@@ -440,18 +621,67 @@ class Subscription extends ContentEntityBase implements SubscriptionInterface {
       }
     }
 
-    $state = $this->getState()->value;
-    $original_state = isset($this->original) ? $this->original->getState()->value : '';
-    if ($state === 'active' && $original_state !== 'active') {
+    $state = $this->getState()->getId();
+    $original_state = isset($this->original) ? $this->original->getState()->getId() : '';
+
+    if ($original_state !== $state) {
+      $this->removeScheduledChanges();
+    }
+
+    if ($state === 'trial' && $original_state !== 'trial') {
+      if (empty($this->getTrialStartTime())) {
+        $this->setTrialStartTime(\Drupal::time()->getRequestTime());
+      }
+      if (empty($this->getTrialEndTime()) && $billing_schedule = $this->getBillingSchedule()) {
+        $billing_schedule_plugin = $billing_schedule->getPlugin();
+        if ($billing_schedule_plugin->allowTrials()) {
+          $trial_period = $billing_schedule_plugin->generateTrialPeriod($this->getTrialStartDate());
+          $trial_end_time = $trial_period->getEndDate()->getTimestamp();
+          $this->setTrialEndTime($trial_end_time);
+        }
+      }
+      if (empty($this->getStartTime()) && !empty($this->getTrialEndTime())) {
+        $this->setStartTime($this->getTrialEndTime());
+      }
+    }
+    elseif ($state === 'active' && $original_state !== 'active') {
       if (empty($this->getStartTime())) {
         $this->setStartTime(\Drupal::time()->getRequestTime());
+      }
+      if (!empty($this->getEndTime())) {
+        $this->setEndTime(NULL);
       }
     }
     elseif ($state == 'expired' && $original_state != 'expired') {
       $this->getType()->onSubscriptionExpire($this);
     }
     elseif ($state == 'canceled' && $original_state != 'canceled') {
-      $this->getType()->onSubscriptionCancel($this);
+      if ($original_state === 'trial') {
+        $this->getType()->onSubscriptionTrialCancel($this);
+      }
+      else {
+        $this->getType()->onSubscriptionCancel($this);
+      }
+      $this->setEndTime(\Drupal::time()->getRequestTime());
+    }
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function postSave(EntityStorageInterface $storage, $update = TRUE) {
+    parent::postSave($storage, $update);
+
+    $current_order = $this->getCurrentOrder();
+    if (!isset($this->original) || empty($current_order)) {
+      return;
+    }
+    $state = $this->getState()->getId();
+    $original_state = $this->original->getState()->getId();
+
+    if ($state != $original_state && in_array($state, ['canceled'])) {
+      $current_order->setRefreshState(OrderInterface::REFRESH_ON_SAVE);
+      $current_order->save();
     }
   }
 
@@ -478,11 +708,12 @@ class Subscription extends ContentEntityBase implements SubscriptionInterface {
     $fields['billing_schedule'] = BaseFieldDefinition::create('entity_reference')
       ->setLabel(t('Billing schedule'))
       ->setDescription(t('The billing schedule.'))
+      ->setRequired(TRUE)
       ->setSetting('target_type', 'commerce_billing_schedule')
       ->setSetting('handler', 'default')
       ->setDisplayConfigurable('view', TRUE)
       ->setDisplayOptions('form', [
-        'type' => 'entity_reference_autocomplete',
+        'type' => 'options_select',
         'weight' => 0,
       ])
       ->setDisplayConfigurable('form', TRUE);
@@ -537,7 +768,7 @@ class Subscription extends ContentEntityBase implements SubscriptionInterface {
       ])
       ->setDisplayOptions('form', [
         'type' => 'string_textfield',
-        'weight' => -1,
+        'weight' => -10,
       ])
       ->setDisplayConfigurable('form', TRUE)
       ->setDisplayConfigurable('view', TRUE);
@@ -586,11 +817,6 @@ class Subscription extends ContentEntityBase implements SubscriptionInterface {
       ->setSetting('target_type', 'commerce_order')
       ->setSetting('handler', 'default')
       ->setSetting('display_description', TRUE)
-      ->setDisplayOptions('form', [
-        'type' => 'entity_reference_autocomplete',
-        'weight' => 0,
-      ])
-      ->setDisplayConfigurable('form', TRUE)
       ->setDisplayConfigurable('view', TRUE);
 
     $fields['orders'] = BaseFieldDefinition::create('entity_reference')
@@ -619,6 +845,36 @@ class Subscription extends ContentEntityBase implements SubscriptionInterface {
         'weight' => 0,
       ]);
 
+    $fields['trial_starts'] = BaseFieldDefinition::create('timestamp')
+      ->setLabel(t('Trial starts'))
+      ->setDescription(t('The time when the subscription trial starts.'))
+      ->setRequired(FALSE)
+      ->setDisplayOptions('view', [
+        'label' => 'hidden',
+        'type' => 'timestamp',
+        'weight' => 0,
+      ])
+      ->setDisplayOptions('form', [
+        'type' => 'datetime_timestamp',
+        'weight' => 0,
+      ])
+      ->setDisplayConfigurable('form', TRUE);
+
+    $fields['trial_ends'] = BaseFieldDefinition::create('timestamp')
+      ->setLabel(t('Trial ends'))
+      ->setDescription(t('The time when the subscription trial ends.'))
+      ->setRequired(FALSE)
+      ->setDisplayOptions('view', [
+        'label' => 'hidden',
+        'type' => 'timestamp',
+        'weight' => 0,
+      ])
+      ->setDisplayOptions('form', [
+        'type' => 'commerce_recurring_end_timestamp',
+        'weight' => 0,
+      ])
+      ->setDisplayConfigurable('form', TRUE);
+
     $fields['starts'] = BaseFieldDefinition::create('timestamp')
       ->setLabel(t('Starts'))
       ->setDescription(t('The time when the subscription starts.'))
@@ -644,10 +900,22 @@ class Subscription extends ContentEntityBase implements SubscriptionInterface {
         'weight' => 0,
       ])
       ->setDisplayOptions('form', [
-        'type' => 'datetime_timestamp',
+        'type' => 'commerce_recurring_end_timestamp',
         'weight' => 0,
       ])
       ->setDisplayConfigurable('form', TRUE);
+
+    $fields['scheduled_changes'] = BaseFieldDefinition::create('commerce_scheduled_change')
+      ->setLabel(t('Scheduled changes'))
+      ->setRequired(FALSE)
+      ->setCardinality(BaseFieldDefinition::CARDINALITY_UNLIMITED)
+      ->setDisplayOptions('view', [
+        'label' => 'hidden',
+        'type' => 'commerce_scheduled_change_default',
+        'weight' => 0,
+      ])
+      ->setDisplayConfigurable('form', FALSE)
+      ->setDisplayConfigurable('view', TRUE);
 
     return $fields;
   }
@@ -666,7 +934,7 @@ class Subscription extends ContentEntityBase implements SubscriptionInterface {
     // The field definition is recreated instead of cloned to get around
     // core issue #2346329 (fixed in 8.5.x but not 8.4.x).
     $fields['purchased_entity'] = BaseFieldDefinition::create('entity_reference')
-      ->setLabel($original->getLabel())
+      ->setLabel(t('Product variation'))
       ->setDescription($original->getDescription())
       ->setConstraints($original->getConstraints())
       ->setDisplayOptions('view', $original->getDisplayOptions('view'))

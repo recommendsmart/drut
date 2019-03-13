@@ -39,6 +39,8 @@ subscription_default:
   states:
     pending:
       label: Pending
+    trial:
+      label: Trial
     active:
       label: Active
     expired:
@@ -48,7 +50,7 @@ subscription_default:
   transitions:
     activate:
       label: Activate
-      from: [pending]
+      from: [pending, trial]
       to: active
     expire:
       label: Expire
@@ -56,5 +58,5 @@ subscription_default:
       to: expired
     cancel:
       label: Cancel
-      from: [active]
+      from: [trial, active]
       to: canceled

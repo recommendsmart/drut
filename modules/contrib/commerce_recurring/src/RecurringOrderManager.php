@@ -45,7 +45,40 @@ class RecurringOrderManager implements RecurringOrderManagerInterface {
   /**
    * {@inheritdoc}
    */
-  public function ensureOrder(SubscriptionInterface $subscription) {
+  public function startTrial(SubscriptionInterface $subscription) {
+    $state = $subscription->getState()->getId();
+    if ($state != 'trial') {
+      throw new \InvalidArgumentException(sprintf('Unexpected subscription state "%s".', $state));
+    }
+    $billing_schedule = $subscription->getBillingSchedule();
+    if (!$billing_schedule->getPlugin()->allowTrials()) {
+      throw new \InvalidArgumentException(sprintf('The billing schedule "%s" does not allow trials.', $billing_schedule->id()));
+    }
+
+    $start_date = $subscription->getTrialStartDate();
+    $end_date = $subscription->getTrialEndDate();
+    $trial_period = new BillingPeriod($start_date, $end_date);
+    $order = $this->createOrder($subscription, $trial_period);
+    $this->applyCharges($order, $subscription, $trial_period);
+    // Allow the type to modify the subscription and order before they're saved.
+    $subscription->getType()->onSubscriptionTrialStart($subscription, $order);
+
+    $order->save();
+    $subscription->addOrder($order);
+    $subscription->save();
+
+    return $order;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function startRecurring(SubscriptionInterface $subscription) {
+    $state = $subscription->getState()->getId();
+    if ($state != 'active') {
+      throw new \InvalidArgumentException(sprintf('Unexpected subscription state "%s".', $state));
+    }
+
     $start_date = $subscription->getStartDate();
     $billing_schedule = $subscription->getBillingSchedule();
     $billing_period = $billing_schedule->getPlugin()->generateFirstBillingPeriod($start_date);
@@ -54,10 +87,6 @@ class RecurringOrderManager implements RecurringOrderManagerInterface {
     // Allow the type to modify the subscription and order before they're saved.
     $subscription->getType()->onSubscriptionActivate($subscription, $order);
 
-    // @todo The order should save its own unsaved order items.
-    foreach ($order->getItems() as $order_item) {
-      $order_item->save();
-    }
     $order->save();
     $subscription->addOrder($order);
     $subscription->save();
@@ -100,9 +129,8 @@ class RecurringOrderManager implements RecurringOrderManagerInterface {
    * {@inheritdoc}
    */
   public function closeOrder(OrderInterface $order) {
-    if ($order->getState()->value == 'draft') {
-      $transition = $order->getState()->getWorkflow()->getTransition('place');
-      $order->getState()->applyTransition($transition);
+    if ($order->getState()->getId() == 'draft') {
+      $order->getState()->applyTransitionById('place');
       $order->save();
     }
 
@@ -127,8 +155,7 @@ class RecurringOrderManager implements RecurringOrderManagerInterface {
     // supposed to be handled by the caller, to allow for dunning.
     $payment_gateway_plugin->createPayment($payment);
 
-    $transition = $order->getState()->getWorkflow()->getTransition('mark_paid');
-    $order->getState()->applyTransition($transition);
+    $order->getState()->applyTransitionById('mark_paid');
     $order->save();
   }
 
@@ -139,8 +166,8 @@ class RecurringOrderManager implements RecurringOrderManagerInterface {
     $subscriptions = $this->collectSubscriptions($order);
     /** @var \Drupal\commerce_recurring\Entity\SubscriptionInterface $subscription */
     $subscription = reset($subscriptions);
-    if ($subscription->getState()->value != 'active') {
-      // The subscription has ended.
+    if (!$subscription || $subscription->getState()->getId() != 'active') {
+      // The subscription was deleted or deactivated.
       return NULL;
     }
 
@@ -155,11 +182,6 @@ class RecurringOrderManager implements RecurringOrderManagerInterface {
     $this->applyCharges($next_order, $subscription, $next_billing_period);
     // Allow the subscription type to modify the order before it is saved.
     $subscription->getType()->onSubscriptionRenew($subscription, $order, $next_order);
-
-    // @todo The order should save its own unsaved order items.
-    foreach ($next_order->getItems() as $order_item) {
-      $order_item->save();
-    }
     $next_order->save();
     // Update the subscription with the new order and renewal timestamp.
     $subscription->addOrder($next_order);
@@ -239,9 +261,14 @@ class RecurringOrderManager implements RecurringOrderManagerInterface {
         $existing_order_items[] = $order_item;
       }
     }
+    if ($subscription->getState()->getId() == 'trial') {
+      $charges = $subscription->getType()->collectTrialCharges($subscription, $billing_period);
+    }
+    else {
+      $charges = $subscription->getType()->collectCharges($subscription, $billing_period);
+    }
 
     $order_items = [];
-    $charges = $subscription->getType()->collectCharges($subscription, $billing_period);
     foreach ($charges as $charge) {
       $order_item = array_shift($existing_order_items);
       if (!$order_item) {
@@ -259,10 +286,15 @@ class RecurringOrderManager implements RecurringOrderManagerInterface {
       $order_item->set('billing_period', $charge->getBillingPeriod());
       // Populate the initial unit price, then prorate it.
       $order_item->setUnitPrice($charge->getUnitPrice());
-      $prorater = $subscription->getBillingSchedule()->getProrater();
-      $prorated_unit_price = $prorater->prorateOrderItem($order_item, $charge->getBillingPeriod(), $billing_period);
-      $order_item->setUnitPrice($prorated_unit_price, TRUE);
-
+      if ($charge->needsProration()) {
+        $prorater = $subscription->getBillingSchedule()->getProrater();
+        $prorated_unit_price = $prorater->prorateOrderItem($order_item, $charge->getBillingPeriod(), $charge->getFullBillingPeriod());
+        $order_item->setUnitPrice($prorated_unit_price, TRUE);
+      }
+      // Avoid setting unsaved order items for now, to avoid #3017259.
+      if ($order_item->isNew()) {
+        $order_item->save();
+      }
       $order_items[] = $order_item;
     }
     $order->setItems($order_items);
@@ -294,7 +326,7 @@ class RecurringOrderManager implements RecurringOrderManagerInterface {
         $payment_methods[$payment_method->id()] = $payment_method;
       }
     }
-    ksort($payment_methods, SORT_NUMERIC);
+    krsort($payment_methods, SORT_NUMERIC);
     $payment_method = reset($payment_methods);
 
     return $payment_method ?: NULL;

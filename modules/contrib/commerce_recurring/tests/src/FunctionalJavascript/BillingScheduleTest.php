@@ -4,17 +4,14 @@ namespace Drupal\Tests\commerce_recurring\FunctionalJavascript;
 
 use Drupal\commerce_recurring\Entity\BillingSchedule;
 use Drupal\commerce_recurring\Entity\BillingScheduleInterface;
-use Drupal\Tests\commerce\Functional\CommerceBrowserTestBase;
-use Drupal\Tests\commerce\FunctionalJavascript\JavascriptTestTrait;
+use Drupal\Tests\commerce\FunctionalJavascript\CommerceWebDriverTestBase;
 
 /**
  * Tests the billing schedule UI.
  *
  * @group commerce_recurring
  */
-class BillingScheduleTest extends CommerceBrowserTestBase {
-
-  use JavascriptTestTrait;
+class BillingScheduleTest extends CommerceWebDriverTestBase {
 
   /**
    * {@inheritdoc}
@@ -38,25 +35,26 @@ class BillingScheduleTest extends CommerceBrowserTestBase {
    */
   public function testBillingScheduleCreation() {
     $this->drupalGet('admin/commerce/config/billing-schedules');
-    $this->getSession()->getPage()->clickLink('Add billing schedule');
+    $page = $this->getSession()->getPage();
+    $page->clickLink('Add billing schedule');
     $this->assertSession()->addressEquals('admin/commerce/config/billing-schedules/add');
-
+    $page->fillField('label', 'Test');
+    $this->getSession()->wait(1000, 'jQuery("#edit-label-machine-name-suffix .machine-name-value").html() == "test"');
     $values = [
-      'label' => 'Test',
-      'displayLabel' => 'Awesome test',
       'billingType' => BillingScheduleInterface::BILLING_TYPE_POSTPAID,
+      'displayLabel' => 'Awesome test',
       'dunning[retry][0]' => '1',
       'dunning[retry][1]' => '2',
       'dunning[retry][2]' => '3',
       'dunning[unpaid_subscription_state]' => 'canceled',
       'plugin' => 'fixed',
+      'configuration[fixed][trial_interval][allow_trials]' => 1,
+      'configuration[fixed][trial_interval][number]' => '2',
+      'configuration[fixed][trial_interval][unit]' => 'month',
       'configuration[fixed][interval][number]' => '2',
       'configuration[fixed][interval][unit]' => 'month',
       'configuration[fixed][start_day]' => '4',
       'prorater' => 'proportional',
-      // Setting the 'id' can fail if focus switches to another field.
-      // This is a bug in the machine name JS that can be reproduced manually.
-      'id' => 'test',
     ];
     $this->submitForm($values, 'Save');
     $this->assertSession()->addressEquals('admin/commerce/config/billing-schedules');
@@ -70,6 +68,7 @@ class BillingScheduleTest extends CommerceBrowserTestBase {
     $this->assertEquals([1, 2, 3], $billing_schedule->getRetrySchedule());
     $this->assertEquals('canceled', $billing_schedule->getUnpaidSubscriptionState());
     $this->assertEquals('fixed', $billing_schedule->getPluginId());
+    $this->assertTrue($billing_schedule->getPlugin()->allowTrials());
     $this->assertEquals([
       'interval' => [
         'number' => '2',
@@ -77,6 +76,10 @@ class BillingScheduleTest extends CommerceBrowserTestBase {
       ],
       'start_month' => '1',
       'start_day' => '4',
+      'trial_interval' => [
+        'number' => '2',
+        'unit' => 'month',
+      ],
     ], $billing_schedule->getPluginConfiguration());
     $this->assertEquals($billing_schedule->getPluginConfiguration(), $billing_schedule->getPlugin()->getConfiguration());
     $this->assertEquals('proportional', $billing_schedule->getProraterId());
@@ -138,6 +141,7 @@ class BillingScheduleTest extends CommerceBrowserTestBase {
       ],
       'start_month' => '2',
       'start_day' => '5',
+      'trial_interval' => [],
     ], $billing_schedule->getPluginConfiguration());
     $this->assertEquals($billing_schedule->getPluginConfiguration(), $billing_schedule->getPlugin()->getConfiguration());
     $this->assertEquals('full_price', $billing_schedule->getProraterId());

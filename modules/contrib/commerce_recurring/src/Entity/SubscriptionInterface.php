@@ -264,6 +264,14 @@ interface SubscriptionInterface extends ContentEntityInterface {
   public function getInitialOrderId();
 
   /**
+   * Gets the current draft recurring order.
+   *
+   * @return \Drupal\commerce_order\Entity\OrderInterface|null
+   *   The current draft recurring order, or NULL if none found.
+   */
+  public function getCurrentOrder();
+
+  /**
    * Gets the recurring order IDs.
    *
    * @return int[]
@@ -357,6 +365,58 @@ interface SubscriptionInterface extends ContentEntityInterface {
   public function setRenewedTime($timestamp);
 
   /**
+   * Gets the trial start timestamp.
+   *
+   * @return int
+   *   The trial start timestamp.
+   */
+  public function getTrialStartTime();
+
+  /**
+   * Sets the trial start timestamp.
+   *
+   * @param int $timestamp
+   *   The trial start timestamp.
+   *
+   * @return $this
+   */
+  public function setTrialStartTime($timestamp);
+
+  /**
+   * Gets the trial end timestamp.
+   *
+   * @return int
+   *   The trial end timestamp.
+   */
+  public function getTrialEndTime();
+
+  /**
+   * Sets the trial end timestamp.
+   *
+   * @param int $timestamp
+   *   The trial end timestamp.
+   *
+   * @return $this
+   */
+  public function setTrialEndTime($timestamp);
+
+  /**
+   * Gets the trial start timestamp as a DrupalDateTime object.
+   *
+   * @return \Drupal\Core\Datetime\DrupalDateTime
+   *   The trial start date/time.
+   */
+  public function getTrialStartDate();
+
+  /**
+   * Gets the trial end timestamp as a DrupalDateTime object.
+   *
+   * @return \Drupal\Core\Datetime\DrupalDateTime|null
+   *   The trial end date/time, or NULL if not yet known.
+   */
+  public function getTrialEndDate();
+
+  /**
    * Gets the start timestamp.
    *
    * @return int
@@ -407,5 +467,92 @@ interface SubscriptionInterface extends ContentEntityInterface {
    *   The end date/time, or NULL if not yet known.
    */
   public function getEndDate();
+
+  /**
+   * Gets the billing period value object for the current order.
+   *
+   * @return \Drupal\commerce_recurring\BillingPeriod|null
+   *   The billing period object, or null if not set.
+   */
+  public function getCurrentBillingPeriod();
+
+  /**
+   * Gets whether the subscription has scheduled changes.
+   *
+   * @return bool
+   *   TRUE if the subscription has scheduled changes, FALSE otherwise.
+   */
+  public function hasScheduledChanges();
+
+  /**
+   * Gets the scheduled changes.
+   *
+   * @return \Drupal\commerce_recurring\ScheduledChange[]
+   *   The scheduled changes.
+   */
+  public function getScheduledChanges();
+
+  /**
+   * Sets the scheduled changes.
+   *
+   * @param \Drupal\commerce_recurring\ScheduledChange[] $scheduled_changes
+   *   The scheduled changes.
+   *
+   * @return $this
+   */
+  public function setScheduledChanges(array $scheduled_changes);
+
+  /**
+   * Adds a scheduled change for the given field.
+   *
+   * @param string $field_name
+   *   The field_name.
+   * @param mixed $value
+   *   The value.
+   *
+   * @return $this
+   */
+  public function addScheduledChange($field_name, $value);
+
+  /**
+   * Removes the scheduled changes.
+   *
+   * @param string $field_name
+   *   (optional) The field name. If provided, only scheduled changes for that
+   *   field will be removed. Otherwise, all scheduled changes will be removed.
+   *
+   * @return $this
+   */
+  public function removeScheduledChanges($field_name = NULL);
+
+  /**
+   * Determines if a scheduled change for the given field exists.
+   *
+   * @param string $field_name
+   *   The field_name.
+   * @param mixed $value
+   *   (optional) The value.
+   *
+   * @return bool
+   *   TRUE if the given change is scheduled, FALSE otherwise.
+   */
+  public function hasScheduledChange($field_name, $value = NULL);
+
+  /**
+   * Apply the scheduled changes.
+   *
+   * @return $this
+   */
+  public function applyScheduledChanges();
+
+  /**
+   * Cancel the subscription.
+   *
+   * @param bool $schedule
+   *   Whether to schedule the cancellation.
+   *
+   * @return $this
+   */
+  public function cancel($schedule = TRUE);
 
 }
