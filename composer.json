@@ -73,7 +73,8 @@
         "drupal/panelbutton": "^1.2",
         "drupal/role_expire": "^1.1",
         "drupal/field_permissions": "^1.0@RC",
-        "drupal/profile": "^1.0@RC"
+        "drupal/profile": "^1.0@RC",
+        "drupal/fontawesome_menu_icons": "^1.5"
     },
     "replace": {
         "drupal/core": "^8.6"
