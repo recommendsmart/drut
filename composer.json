@@ -47,7 +47,7 @@
         "drupal/inlinejs": "^1.0@alpha",
         "drupal/exclude_node_title": "^1.0@beta",
         "drupal/menu_item_visibility": "1.x-dev",
-        "drupal/ctools": "^3.2",
+        "drupal/ctools": "3.0",
         "drupal/imce": "^1.7",
         "drupal/google_analytics": "^3.0",
         "drupal/backup_migrate": "^4.0",
