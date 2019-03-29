@@ -29,7 +29,7 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
  *
  * @CommercePaymentGateway(
  *   id = "paypal_express_checkout",
- *   label = @Translation("PayPal (Express Checkout)"),
+ *   label = @Translation("PayPal Express Checkout [Deprecated]"),
  *   display_label = @Translation("PayPal"),
  *    forms = {
  *     "offsite-payment" = "Drupal\commerce_paypal\PluginForm\ExpressCheckoutForm",
@@ -198,12 +198,12 @@ class ExpressCheckout extends OffsitePaymentGatewayBase implements ExpressChecko
 
     $form['solution_type'] = [
       '#type' => 'radios',
-      '#title' => t('Type of checkout flow'),
-      '#description' => t('Express Checkout Account Optional (ECAO) where PayPal accounts are not required for payment may not be available in all markets.'),
+      '#title' => $this->t('Type of checkout flow'),
+      '#description' => $this->t('Express Checkout Account Optional (ECAO) where PayPal accounts are not required for payment may not be available in all markets.'),
       '#options' => [
-        'Mark' => t('Require a PayPal account (this is the standard configuration).'),
-        'SoleLogin' => t('Allow PayPal AND credit card payments, defaulting to the PayPal form.'),
-        'SoleBilling' => t('Allow PayPal AND credit card payments, defaulting to the credit card form.'),
+        'Mark' => $this->t('Require a PayPal account (this is the standard configuration).'),
+        'SoleLogin' => $this->t('Allow PayPal AND credit card payments, defaulting to the PayPal form.'),
+        'SoleBilling' => $this->t('Allow PayPal AND credit card payments, defaulting to the credit card form.'),
       ],
       '#default_value' => $this->configuration['solution_type'],
     ];
@@ -287,13 +287,14 @@ class ExpressCheckout extends OffsitePaymentGatewayBase implements ExpressChecko
 
     // Set the Payer ID used to finalize payment.
     $order_express_checkout_data['payerid'] = $paypal_response['PAYERID'];
-    $order->setData('paypal_express_checkout', $order_express_checkout_data);
 
+    // Note: There is no need to save the order here, because it will be
+    // saved by the Commerce PaymentController after onReturn() completes.
+    $order->setData('paypal_express_checkout', $order_express_checkout_data);
     // If the user is anonymous, add their PayPal e-mail to the order.
     if (empty($order->mail)) {
       $order->setEmail($paypal_response['EMAIL']);
     }
-    $order->save();
 
     // DoExpressCheckoutPayment API Operation (NVP).
     // Completes an Express Checkout transaction.

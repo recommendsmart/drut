@@ -8,19 +8,26 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Component\Utility\Html;
 
 /**
+ * Check the content and add responsive classes and wrappers.
+ *
  * @Filter(
  *   id = "filter_bootstrap_responsive_wrapper",
- *   title = @Translation("Bootstrap Responsive Wrapper Filter"),
- *   description = @Translation("Add bootstrap responsive wrapper elements"),
+ *   title = @Translation("Responsive wrapper filter"),
+ *   description = @Translation("Adds responsive wrappers and classes to content to make it responsive."),
  *   type = Drupal\filter\Plugin\FilterInterface::TYPE_TRANSFORM_IRREVERSIBLE
  * )
  */
 class FilterBootstrapResponsiveWrapper extends FilterBase {
 
+  /**
+   * Implements filter processor.
+   */
   public function process($text, $langcode) {
     $result = new FilterProcessResult($text);
 
     if ($this->settings['responsive_iframe'] || $this->settings['responsive_table'] || $this->settings['responsive_image']) {
+      // Module base config.
+      $config = \Drupal::config('responsivewrappers.settings');
 
       $dom = Html::load($text);
 
@@ -30,7 +37,7 @@ class FilterBootstrapResponsiveWrapper extends FilterBase {
         $iframes = $dom->getElementsByTagName('iframe');
         $video_pattern = $this->settings['responsive_iframe_pattern'];
 
-        foreach ($iframes AS $iframe) {
+        foreach ($iframes as $iframe) {
           // Video detection pattern.
           $iframe_src = $iframe->getAttribute('src');
           if (preg_match($video_pattern, $iframe_src)) {
@@ -62,7 +69,7 @@ class FilterBootstrapResponsiveWrapper extends FilterBase {
       // Responsive table wrapper and class.
       if ($this->settings['responsive_table']) {
         $tables = $dom->getElementsByTagName('table');
-        foreach ($tables AS $table) {
+        foreach ($tables as $table) {
 
           // Table wrapper.
           $table_wrapper_class = ($table->parentNode->tagName === 'div') ? $table->parentNode->getAttribute('class') : '';
@@ -84,22 +91,36 @@ class FilterBootstrapResponsiveWrapper extends FilterBase {
       // Responsive image class.
       if ($this->settings['responsive_image']) {
         $images = $dom->getElementsByTagName('img');
-        foreach ($images AS $image) {
-
+        foreach ($images as $image) {
           // Image class.
           $image_class = $image->getAttribute('class');
-          if (strpos($image_class, 'img-responsive') === FALSE) {
-            $image->setAttribute('class', trim($image_class . ' img-responsive'));
+          $responsive_class = (4 === $config->get('version')) ? 'img-fluid' : 'img-responsive';
+
+          if (strpos($image_class, $responsive_class) === FALSE) {
+            $image->setAttribute('class', trim($image_class . ' ' . $responsive_class));
           }
         }
       }
 
       $result->setProcessedText(Html::serialize($dom));
+
+      // Attach responsive CSS if needed.
+      if ($config->get('add_css')) {
+        if (4 === $config->get('version')) {
+          $result->setAttachments(['library' => ['responsivewrappers/responsivewrappers_v4']]);
+        }
+        else {
+          $result->setAttachments(['library' => ['responsivewrappers/responsivewrappers_v3']]);
+        }
+      }
     }
 
     return $result;
   }
 
+  /**
+   * Implements settings filter form.
+   */
   public function settingsForm(array $form, FormStateInterface $form_state) {
     $form['responsive_iframe'] = [
       '#type' => 'checkbox',
