@@ -226,7 +226,43 @@ class MailchimpSignupForm extends EntityForm {
         ),
       ),
     );
+    
+    $form['subscription_settings']['gdpr_consent'] = array(
+      '#type' => 'checkbox',
+      '#title' => t('Add a GDPR consent checkbox'),
+      '#description' => t('Add a GDPR consent checkbox to the signup form that syncs with the Mailchimp marketing permission field.'),
+      '#default_value' => isset($signup->settings['gdpr_consent']) ? $signup->settings['gdpr_consent'] : FALSE,
+    );
 
+    $form['subscription_settings']['gdpr_checkbox_label'] = array(
+      '#type' => 'textarea',
+      '#title' => t('Consent checkbox label'),
+      '#description' => t('The label to display on the GDPR consent checkbox, for example "I agree to the privacy policy". This should coincide with what you have in Mailchimp!'),
+      '#default_value' => isset($signup->settings['gdpr_checkbox_label']) ? $signup->settings['gdpr_checkbox_label'] : NULL,
+      '#states' => array(
+        // Hide unless needed.
+        'visible' => array(
+          ':input[name="gdpr_consent"]' => array('checked' => TRUE),
+        ),
+        'required' => array(
+          ':input[name="gdpr_consent"]' => array('checked' => TRUE),
+        ),
+      ),
+    );
+
+    $form['subscription_settings']['gdpr_consent_required'] = array(
+      '#type' => 'checkbox',
+      '#title' => t('GDPR consent required'),
+      '#description' => t('Make the GDPR consent checkbox a required field.'),
+      '#default_value' => isset($signup->settings['gdpr_consent_required']) ? $signup->settings['gdpr_consent_required'] : FALSE,
+      '#states' => array(
+        // Hide unless needed.
+        'visible' => array(
+          ':input[name="gdpr_consent"]' => array('checked' => TRUE),
+        ),
+      ),
+    );
+    
     return $form;
   }
 
@@ -265,6 +301,9 @@ class MailchimpSignupForm extends EntityForm {
     $signup->settings['doublein'] = $form_state->getValue('doublein');
     $signup->settings['include_interest_groups'] = $form_state->getValue('include_interest_groups');
     $signup->settings['safe_interest_groups'] = $form_state->getValue('safe_interest_groups');
+    $signup->settings['gdpr_consent'] = $form_state->getValue('gdpr_consent');
+    $signup->settings['gdpr_checkbox_label'] = $form_state->getValue('gdpr_checkbox_label');
+    $signup->settings['gdpr_consent_required'] = $form_state->getValue('gdpr_consent_required');
 
     // Clear path value if mode doesn't include signup page.
     if (!isset($mode[MAILCHIMP_SIGNUP_PAGE])) {
