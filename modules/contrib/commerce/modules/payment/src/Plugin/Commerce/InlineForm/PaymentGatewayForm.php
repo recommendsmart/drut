@@ -3,13 +3,11 @@
 namespace Drupal\commerce_payment\Plugin\Commerce\InlineForm;
 
 use Drupal\commerce\Plugin\Commerce\InlineForm\EntityInlineFormBase;
-use Drupal\commerce\Response\NeedsRedirectException;
 use Drupal\commerce_payment\Entity\EntityWithPaymentGatewayInterface;
 use Drupal\commerce_payment\Exception\PaymentGatewayException;
 use Drupal\commerce_payment\PluginForm\PaymentGatewayFormInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Plugin\PluginFormFactoryInterface;
-use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -30,13 +28,6 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  * )
  */
 class PaymentGatewayForm extends EntityInlineFormBase {
-
-  /**
-   * The logger.
-   *
-   * @var \Psr\Log\LoggerInterface
-   */
-  protected $logger;
 
   /**
    * The plugin form factory.
@@ -61,15 +52,12 @@ class PaymentGatewayForm extends EntityInlineFormBase {
    *   The plugin_id for the plugin instance.
    * @param mixed $plugin_definition
    *   The plugin implementation definition.
-   * @param \Psr\Log\LoggerInterface $logger
-   *   The logger.
    * @param \Drupal\Core\Plugin\PluginFormFactoryInterface $plugin_form_factory
    *   The plugin form factory.
    */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, LoggerInterface $logger, PluginFormFactoryInterface $plugin_form_factory) {
+  public function __construct(array $configuration, $plugin_id, $plugin_definition, PluginFormFactoryInterface $plugin_form_factory) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
 
-    $this->logger = $logger;
     $this->pluginFormFactory = $plugin_form_factory;
   }
 
@@ -81,7 +69,6 @@ class PaymentGatewayForm extends EntityInlineFormBase {
       $configuration,
       $plugin_id,
       $plugin_definition,
-      $container->get('logger.factory')->get('commerce_payment'),
       $container->get('plugin_form.factory')
     );
   }
@@ -92,10 +79,9 @@ class PaymentGatewayForm extends EntityInlineFormBase {
   public function defaultConfiguration() {
     return [
       'operation' => NULL,
-      // The url to which the user will be redirected if an exception is thrown
-      // while building the form. If empty, the error will be shown inline.
-      'exception_url' => '',
-      'exception_message' => $this->t('An error occurred while contacting the gateway. Please try again later.'),
+      // Allows parent forms to handle exceptions themselves (in order to
+      // perform a redirect, or some other logic).
+      'catch_build_exceptions' => TRUE,
     ];
   }
 
@@ -122,17 +108,14 @@ class PaymentGatewayForm extends EntityInlineFormBase {
       $inline_form = $this->pluginForm->buildConfigurationForm($inline_form, $form_state);
     }
     catch (PaymentGatewayException $e) {
-      $this->logger->error($e->getMessage());
-      if (!empty($this->configuration['exception_url'])) {
-        $this->messenger()->addError($this->configuration['exception_message']);
-        throw new NeedsRedirectException($this->configuration['exception_url']);
+      if (empty($this->configuration['catch_build_exceptions'])) {
+        throw $e;
       }
-      else {
-        $inline_form['error'] = [
-          '#markup' => $this->configuration['exception_message'],
-        ];
-        $inline_form['#process'][] = [get_class($this), 'preventSubmit'];
-      }
+
+      $inline_form['error'] = [
+        '#markup' => $this->t('An error occurred while contacting the gateway. Please try again later.'),
+      ];
+      $inline_form['#process'][] = [get_class($this), 'preventSubmit'];
     }
 
     return $inline_form;

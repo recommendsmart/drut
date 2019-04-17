@@ -39,7 +39,11 @@ use Drupal\Core\Field\BaseFieldDefinition;
  *       "default" = "Drupal\commerce_promotion\Form\PromotionForm",
  *       "add" = "Drupal\commerce_promotion\Form\PromotionForm",
  *       "edit" = "Drupal\commerce_promotion\Form\PromotionForm",
+ *       "duplicate" = "Drupal\commerce_promotion\Form\PromotionForm",
  *       "delete" = "Drupal\Core\Entity\ContentEntityDeleteForm"
+ *     },
+ *     "local_task_provider" = {
+ *       "default" = "Drupal\entity\Menu\DefaultEntityLocalTaskProvider",
  *     },
  *     "route_provider" = {
  *       "default" = "Drupal\entity\Routing\AdminHtmlRouteProvider",
@@ -61,6 +65,7 @@ use Drupal\Core\Field\BaseFieldDefinition;
  *   links = {
  *     "add-form" = "/promotion/add",
  *     "edit-form" = "/promotion/{commerce_promotion}/edit",
+ *     "duplicate-form" = "/promotion/{commerce_promotion}/duplicate",
  *     "delete-form" = "/promotion/{commerce_promotion}/delete",
  *     "delete-multiple-form" = "/admin/commerce/promotions/delete",
  *     "collection" = "/admin/commerce/promotions",
@@ -68,6 +73,17 @@ use Drupal\Core\Field\BaseFieldDefinition;
  * )
  */
 class Promotion extends CommerceContentEntityBase implements PromotionInterface {
+
+  /**
+   * {@inheritdoc}
+   */
+  public function createDuplicate() {
+    $duplicate = parent::createDuplicate();
+    // Coupons cannot be transferred because their codes are unique.
+    $duplicate->set('coupons', []);
+
+    return $duplicate;
+  }
 
   /**
    * {@inheritdoc}
@@ -479,7 +495,7 @@ class Promotion extends CommerceContentEntityBase implements PromotionInterface 
   public function apply(OrderInterface $order) {
     $offer = $this->getOffer();
     if ($offer instanceof OrderItemPromotionOfferInterface) {
-      $offer_conditions = new ConditionGroup($offer->getConditions(), 'OR');
+      $offer_conditions = new ConditionGroup($offer->getConditions(), $offer->getConditionOperator());
       // Apply the offer to order items that pass the conditions.
       foreach ($order->getItems() as $order_item) {
         if ($offer_conditions->evaluate($order_item)) {

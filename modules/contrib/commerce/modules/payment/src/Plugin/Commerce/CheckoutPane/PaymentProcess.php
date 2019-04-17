@@ -14,6 +14,7 @@ use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Link;
 use Drupal\Core\Url;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -36,6 +37,13 @@ class PaymentProcess extends CheckoutPaneBase {
   protected $inlineFormManager;
 
   /**
+   * The logger.
+   *
+   * @var \Psr\Log\LoggerInterface
+   */
+  protected $logger;
+
+  /**
    * Constructs a new PaymentProcess object.
    *
    * @param array $configuration
@@ -50,11 +58,14 @@ class PaymentProcess extends CheckoutPaneBase {
    *   The entity type manager.
    * @param \Drupal\commerce\InlineFormManager $inline_form_manager
    *   The inline form manager.
+   * @param \Psr\Log\LoggerInterface $logger
+   *   The logger.
    */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, CheckoutFlowInterface $checkout_flow, EntityTypeManagerInterface $entity_type_manager, InlineFormManager $inline_form_manager) {
+  public function __construct(array $configuration, $plugin_id, $plugin_definition, CheckoutFlowInterface $checkout_flow, EntityTypeManagerInterface $entity_type_manager, InlineFormManager $inline_form_manager, LoggerInterface $logger) {
     parent::__construct($configuration, $plugin_id, $plugin_definition, $checkout_flow, $entity_type_manager);
 
     $this->inlineFormManager = $inline_form_manager;
+    $this->logger = $logger;
   }
 
   /**
@@ -67,7 +78,8 @@ class PaymentProcess extends CheckoutPaneBase {
       $plugin_definition,
       $checkout_flow,
       $container->get('entity_type.manager'),
-      $container->get('plugin.manager.commerce_inline_form')
+      $container->get('plugin.manager.commerce_inline_form'),
+      $container->get('logger.channel.commerce_payment')
     );
   }
 
@@ -179,17 +191,26 @@ class PaymentProcess extends CheckoutPaneBase {
         $this->checkoutFlow->redirectToStep($error_step_id);
       }
       catch (PaymentGatewayException $e) {
-        \Drupal::logger('commerce_payment')->error($e->getMessage());
+        $this->logger->error($e->getMessage());
         $message = $this->t('We encountered an unexpected error processing your payment method. Please try again later.');
         $this->messenger()->addError($message);
         $this->checkoutFlow->redirectToStep($error_step_id);
       }
     }
     elseif ($payment_gateway_plugin instanceof OffsitePaymentGatewayInterface) {
+      $complete_form['actions']['next']['#value'] = $this->t('Proceed to @gateway', [
+        '@gateway' => $payment_gateway_plugin->getDisplayLabel(),
+      ]);
+      // Make sure that the payment gateway's onCancel() method is invoked,
+      // by pointing the "Go back" link to the cancel URL.
+      $complete_form['actions']['next']['#suffix'] = Link::fromTextAndUrl($this->t('Go back'), $this->buildCancelUrl())->toString();
+      // Actions are not needed by gateways that embed iframes or redirect
+      // via GET. The inline form can show them when needed (redirect via POST).
+      $complete_form['actions']['#access'] = FALSE;
+
       $inline_form = $this->inlineFormManager->createInstance('payment_gateway_form', [
         'operation' => 'offsite-payment',
-        'exception_url' => $this->buildErrorUrl()->toString(),
-        'exception_message' => $this->t('We encountered an unexpected error processing your payment. Please try again later.'),
+        'catch_build_exceptions' => FALSE,
       ], $payment);
 
       $pane_form['offsite_payment'] = [
@@ -199,18 +220,15 @@ class PaymentProcess extends CheckoutPaneBase {
         '#cancel_url' => $this->buildCancelUrl()->toString(),
         '#capture' => $this->configuration['capture'],
       ];
-      $pane_form['offsite_payment'] = $inline_form->buildInlineForm($pane_form['offsite_payment'], $form_state);
-
-      $complete_form['actions']['next']['#value'] = $this->t('Proceed to @gateway', [
-        '@gateway' => $payment_gateway_plugin->getDisplayLabel(),
-      ]);
-      // Make sure that the payment gateway's onCancel() method is invoked,
-      // by pointing the "Go back" link to the cancel URL.
-      $complete_form['actions']['next']['#suffix'] = Link::fromTextAndUrl($this->t('Go back'), $this->buildCancelUrl())->toString();
-      // Hide the actions by default, they are not needed by gateways that
-      // embed iframes or redirect via GET. The offsite-payment form can
-      // choose to show them when needed (redirect via POST).
-      $complete_form['actions']['#access'] = FALSE;
+      try {
+        $pane_form['offsite_payment'] = $inline_form->buildInlineForm($pane_form['offsite_payment'], $form_state);
+      }
+      catch (PaymentGatewayException $e) {
+        $this->logger->error($e->getMessage());
+        $message = $this->t('We encountered an unexpected error processing your payment. Please try again later.');
+        $this->messenger()->addError($message);
+        $this->checkoutFlow->redirectToStep($error_step_id);
+      }
 
       return $pane_form;
     }
@@ -220,7 +238,7 @@ class PaymentProcess extends CheckoutPaneBase {
         $this->checkoutFlow->redirectToStep($next_step_id);
       }
       catch (PaymentGatewayException $e) {
-        \Drupal::logger('commerce_payment')->error($e->getMessage());
+        $this->logger->error($e->getMessage());
         $message = $this->t('We encountered an unexpected error processing your payment. Please try again later.');
         $this->messenger()->addError($message);
         $this->checkoutFlow->redirectToStep($error_step_id);
@@ -254,19 +272,6 @@ class PaymentProcess extends CheckoutPaneBase {
     return Url::fromRoute('commerce_payment.checkout.cancel', [
       'commerce_order' => $this->order->id(),
       'step' => 'payment',
-    ], ['absolute' => TRUE]);
-  }
-
-  /**
-   * Builds the URL to the "error" page.
-   *
-   * @return \Drupal\Core\Url
-   *   The "error" page URL.
-   */
-  protected function buildErrorUrl() {
-    return Url::fromRoute('commerce_checkout.form', [
-      'commerce_order' => $this->order->id(),
-      'step' => $this->getErrorStepId(),
     ], ['absolute' => TRUE]);
   }
 

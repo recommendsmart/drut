@@ -5,8 +5,8 @@ description: 'Test module that provides a sample Event subscriber to alter the P
 dependencies:
   - commerce_paypal
 
-# Information added by Drupal.org packaging script on 2019-03-26
-version: '8.x-1.0-beta3'
+# Information added by Drupal.org packaging script on 2019-04-01
+version: '8.x-1.0-beta4'
 core: '8.x'
 project: 'commerce_paypal'
-datestamp: 1553635985
+datestamp: 1554134290
