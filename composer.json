@@ -77,7 +77,10 @@
         "drupal/fontawesome_menu_icons": "^1.5",
         "drupal/mailchimp": "^1.8",
         "drupal/address": "^1.6",
-        "drupal/block_content_permissions": "^1.6"
+        "drupal/block_content_permissions": "^1.6",
+        "drupal/lang_dropdown": "^2.0@beta",
+        "drupal/languageicons": "^1.0@beta",
+        "drupal/block_permissions": "^1.0"
     },
     "replace": {
         "drupal/core": "^8.6"
