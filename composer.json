@@ -80,7 +80,9 @@
         "drupal/block_content_permissions": "^1.6",
         "drupal/lang_dropdown": "^2.0@beta",
         "drupal/languageicons": "^1.0@beta",
-        "drupal/block_permissions": "^1.0"
+        "drupal/block_permissions": "^1.0",
+        "commerceguys/addressing": "^1.0",
+        "guzzlehttp/guzzle": "^6.3"
     },
     "replace": {
         "drupal/core": "^8.7"
