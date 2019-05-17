@@ -1498,18 +1498,18 @@
     },
     {
         "name": "drupal/bootstrap",
-        "version": "3.17.0",
-        "version_normalized": "3.17.0.0",
+        "version": "3.19.0",
+        "version_normalized": "3.19.0.0",
         "source": {
             "type": "git",
             "url": "https://git.drupalcode.org/project/bootstrap.git",
-            "reference": "8.x-3.17"
+            "reference": "8.x-3.19"
         },
         "dist": {
             "type": "zip",
-            "url": "https://ftp.drupal.org/files/projects/bootstrap-8.x-3.17.zip",
-            "reference": "8.x-3.17",
-            "shasum": "7fec8e6bc1435b97952844315035b36c2dbc07b2"
+            "url": "https://ftp.drupal.org/files/projects/bootstrap-8.x-3.19.zip",
+            "reference": "8.x-3.19",
+            "shasum": "6d000a1a470ac831185a46cb003d0c7870ac2a3d"
         },
         "require": {
             "drupal/core": "~8.0"
@@ -1520,8 +1520,8 @@
                 "dev-3.x": "3.x-dev"
             },
             "drupal": {
-                "version": "8.x-3.17",
-                "datestamp": "1548102180",
+                "version": "8.x-3.19",
+                "datestamp": "1557526081",
                 "security-coverage": {
                     "status": "covered",
                     "message": "Covered by Drupal's security advisory policy"
@@ -1548,10 +1548,6 @@
                 "name": "Fabiano Sant'Ana (wundo)",
                 "homepage": "https://www.drupal.org/u/wundo",
                 "role": "Co-maintainer"
-            },
-            {
-                "name": "wundo",
-                "homepage": "https://www.drupal.org/user/25523"
             }
         ],
         "description": "Built to use Bootstrap, a sleek, intuitive, and powerful front-end framework for faster and easier web development.",
@@ -2909,21 +2905,21 @@
     },
     {
         "name": "drupal/entity_embed",
-        "version": "1.0.0-beta2",
-        "version_normalized": "1.0.0.0-beta2",
+        "version": "1.0.0-beta3",
+        "version_normalized": "1.0.0.0-beta3",
         "source": {
             "type": "git",
             "url": "https://git.drupalcode.org/project/entity_embed.git",
-            "reference": "8.x-1.0-beta2"
+            "reference": "8.x-1.0-beta3"
         },
         "dist": {
             "type": "zip",
-            "url": "https://ftp.drupal.org/files/projects/entity_embed-8.x-1.0-beta2.zip",
-            "reference": "8.x-1.0-beta2",
-            "shasum": "21cdeb2b058efce461683aed9a8951053512dca7"
+            "url": "https://ftp.drupal.org/files/projects/entity_embed-8.x-1.0-beta3.zip",
+            "reference": "8.x-1.0-beta3",
+            "shasum": "2ecb2e88e5ecc217195dfa291b4959ea6b83aa8c"
         },
         "require": {
-            "drupal/core": "*",
+            "drupal/core": "^8.4.0",
             "drupal/embed": "*"
         },
         "require-dev": {
@@ -2935,8 +2931,8 @@
                 "dev-1.x": "1.x-dev"
             },
             "drupal": {
-                "version": "8.x-1.0-beta2",
-                "datestamp": "1476698339",
+                "version": "8.x-1.0-beta3",
+                "datestamp": "1556906881",
                 "security-coverage": {
                     "status": "not-covered",
                     "message": "Beta releases are not covered by Drupal security advisories."
@@ -2962,8 +2958,16 @@
                 "homepage": "https://www.drupal.org/user/3260690"
             },
             {
+                "name": "Wim Leers",
+                "homepage": "https://www.drupal.org/user/99777"
+            },
+            {
                 "name": "cs_shadow",
                 "homepage": "https://www.drupal.org/user/2828287"
+            },
+            {
+                "name": "phenaproxima",
+                "homepage": "https://www.drupal.org/user/205645"
             },
             {
                 "name": "slashrsm",
@@ -2973,7 +2977,7 @@
         "description": "Allows any entity to be embedded within a text area using a WYSIWYG editor.",
         "homepage": "https://www.drupal.org/project/entity_embed",
         "support": {
-            "source": "http://cgit.drupalcode.org/entity_embed",
+            "source": "https://git.drupalcode.org/project/entity_embed",
             "issues": "https://www.drupal.org/project/issues/entity_embed",
             "irc": "irc://irc.freenode.org/drupal-media"
         }
@@ -3248,21 +3252,21 @@
     },
     {
         "name": "drupal/feeds",
-        "version": "3.0.0-alpha4",
-        "version_normalized": "3.0.0.0-alpha4",
+        "version": "3.0.0-alpha5",
+        "version_normalized": "3.0.0.0-alpha5",
         "source": {
             "type": "git",
             "url": "https://git.drupalcode.org/project/feeds.git",
-            "reference": "8.x-3.0-alpha4"
+            "reference": "8.x-3.0-alpha5"
         },
         "dist": {
             "type": "zip",
-            "url": "https://ftp.drupal.org/files/projects/feeds-8.x-3.0-alpha4.zip",
-            "reference": "8.x-3.0-alpha4",
-            "shasum": "3d1ff885e2f85bb0da5d5421466ec26a29ee0857"
+            "url": "https://ftp.drupal.org/files/projects/feeds-8.x-3.0-alpha5.zip",
+            "reference": "8.x-3.0-alpha5",
+            "shasum": "e0267cb59da7b28888801eec99c39e7057c9a24e"
         },
         "require": {
-            "drupal/core": "^8.3.0"
+            "drupal/core": "^8.5.0"
         },
         "type": "drupal-module",
         "extra": {
@@ -3270,8 +3274,8 @@
                 "dev-3.x": "3.x-dev"
             },
             "drupal": {
-                "version": "8.x-3.0-alpha4",
-                "datestamp": "1546264264",
+                "version": "8.x-3.0-alpha5",
+                "datestamp": "1557081481",
                 "security-coverage": {
                     "status": "not-covered",
                     "message": "Project has not opted into security advisory coverage!"
@@ -3527,18 +3531,18 @@
     },
     {
         "name": "drupal/fontawesome",
-        "version": "2.12.0",
-        "version_normalized": "2.12.0.0",
+        "version": "2.13.0",
+        "version_normalized": "2.13.0.0",
         "source": {
             "type": "git",
             "url": "https://git.drupalcode.org/project/fontawesome.git",
-            "reference": "8.x-2.12"
+            "reference": "8.x-2.13"
         },
         "dist": {
             "type": "zip",
-            "url": "https://ftp.drupal.org/files/projects/fontawesome-8.x-2.12.zip",
-            "reference": "8.x-2.12",
-            "shasum": "ed8ea9c5354201db2f0eac2bf8f3a4c46403f307"
+            "url": "https://ftp.drupal.org/files/projects/fontawesome-8.x-2.13.zip",
+            "reference": "8.x-2.13",
+            "shasum": "3bf8bc202f429b6ad35777ae9229b8c1f1bad085"
         },
         "require": {
             "drupal/core": "~8.0"
@@ -3549,8 +3553,8 @@
                 "dev-2.x": "2.x-dev"
             },
             "drupal": {
-                "version": "8.x-2.12",
-                "datestamp": "1550692543",
+                "version": "8.x-2.13",
+                "datestamp": "1557577985",
                 "security-coverage": {
                     "status": "covered",
                     "message": "Covered by Drupal's security advisory policy"
@@ -3588,7 +3592,7 @@
         "description": "The web's most popular icon set and toolkit.",
         "homepage": "https://www.drupal.org/project/fontawesome",
         "support": {
-            "source": "http://cgit.drupalcode.org/fontawesome"
+            "source": "https://git.drupalcode.org/project/fontawesome"
         }
     },
     {
@@ -4357,18 +4361,18 @@
     },
     {
         "name": "drupal/menu_breadcrumb",
-        "version": "1.8.0",
-        "version_normalized": "1.8.0.0",
+        "version": "1.9.0",
+        "version_normalized": "1.9.0.0",
         "source": {
             "type": "git",
             "url": "https://git.drupalcode.org/project/menu_breadcrumb.git",
-            "reference": "8.x-1.8"
+            "reference": "8.x-1.9"
         },
         "dist": {
             "type": "zip",
-            "url": "https://ftp.drupal.org/files/projects/menu_breadcrumb-8.x-1.8.zip",
-            "reference": "8.x-1.8",
-            "shasum": "db3aee3edd5e34a750297709d74b61c0c7c432f7"
+            "url": "https://ftp.drupal.org/files/projects/menu_breadcrumb-8.x-1.9.zip",
+            "reference": "8.x-1.9",
+            "shasum": "c68782d805b12b1d15d4e0bea2e16a76dac89bd2"
         },
         "require": {
             "drupal/core": "~8.0"
@@ -4379,8 +4383,8 @@
                 "dev-1.x": "1.x-dev"
             },
             "drupal": {
-                "version": "8.x-1.8",
-                "datestamp": "1549606384",
+                "version": "8.x-1.9",
+                "datestamp": "1554988685",
                 "security-coverage": {
                     "status": "covered",
                     "message": "Covered by Drupal's security advisory policy"
@@ -4421,7 +4425,7 @@
         "description": "Create breadcrumbs from nested menu titles and/or taxonomy membership.",
         "homepage": "https://www.drupal.org/project/menu_breadcrumb",
         "support": {
-            "source": "http://cgit.drupalcode.org/menu_breadcrumb"
+            "source": "https://git.drupalcode.org/project/menu_breadcrumb"
         }
     },
     {
@@ -4473,26 +4477,28 @@
     },
     {
         "name": "drupal/migrate_plus",
-        "version": "4.1.0",
-        "version_normalized": "4.1.0.0",
+        "version": "4.2.0",
+        "version_normalized": "4.2.0.0",
         "source": {
             "type": "git",
             "url": "https://git.drupalcode.org/project/migrate_plus.git",
-            "reference": "8.x-4.1"
+            "reference": "8.x-4.2"
         },
         "dist": {
             "type": "zip",
-            "url": "https://ftp.drupal.org/files/projects/migrate_plus-8.x-4.1.zip",
-            "reference": "8.x-4.1",
-            "shasum": "cfd7ef2b17ede664b2b74eb101032a03c386457e"
+            "url": "https://ftp.drupal.org/files/projects/migrate_plus-8.x-4.2.zip",
+            "reference": "8.x-4.2",
+            "shasum": "5736a43e39cc5c091d54ceef2849ea35ba979af3"
         },
         "require": {
             "drupal/core": "^8.3"
         },
         "require-dev": {
+            "drupal/entity": "*",
             "drupal/migrate_example_advanced_setup": "*",
             "drupal/migrate_example_setup": "*",
-            "drupal/migrate_tools": "*"
+            "drupal/migrate_tools": "*",
+            "drupal/profile": "*"
         },
         "suggest": {
             "ext-soap": "*",
@@ -4504,8 +4510,8 @@
                 "dev-4.x": "4.x-dev"
             },
             "drupal": {
-                "version": "8.x-4.1",
-                "datestamp": "1546879080",
+                "version": "8.x-4.2",
+                "datestamp": "1555683487",
                 "security-coverage": {
                     "status": "covered",
                     "message": "Covered by Drupal's security advisory policy"
@@ -5311,18 +5317,18 @@
     },
     {
         "name": "drupal/search_api",
-        "version": "1.12.0",
-        "version_normalized": "1.12.0.0",
+        "version": "1.13.0",
+        "version_normalized": "1.13.0.0",
         "source": {
             "type": "git",
             "url": "https://git.drupalcode.org/project/search_api.git",
-            "reference": "8.x-1.12"
+            "reference": "8.x-1.13"
         },
         "dist": {
             "type": "zip",
-            "url": "https://ftp.drupal.org/files/projects/search_api-8.x-1.12.zip",
-            "reference": "8.x-1.12",
-            "shasum": "db203e2fdd669d6e9ff2c99688c0816d248a1fff"
+            "url": "https://ftp.drupal.org/files/projects/search_api-8.x-1.13.zip",
+            "reference": "8.x-1.13",
+            "shasum": "9f03dd5a4d9ee7c58d47aabc33d9229793d1195f"
         },
         "require": {
             "drupal/core": "^8.5"
@@ -5342,8 +5348,8 @@
                 "dev-1.x": "1.x-dev"
             },
             "drupal": {
-                "version": "8.x-1.12",
-                "datestamp": "1552334285",
+                "version": "8.x-1.13",
+                "datestamp": "1557244685",
                 "security-coverage": {
                     "status": "covered",
                     "message": "Covered by Drupal's security advisory policy"
@@ -6024,18 +6030,18 @@
     },
     {
         "name": "drupal/video_embed_field",
-        "version": "2.0.0",
-        "version_normalized": "2.0.0.0",
+        "version": "2.1.0",
+        "version_normalized": "2.1.0.0",
         "source": {
             "type": "git",
             "url": "https://git.drupalcode.org/project/video_embed_field.git",
-            "reference": "8.x-2.0"
+            "reference": "8.x-2.1"
         },
         "dist": {
             "type": "zip",
-            "url": "https://ftp.drupal.org/files/projects/video_embed_field-8.x-2.0.zip",
-            "reference": "8.x-2.0",
-            "shasum": "e864f090b3cb9405376ca324d81ace83613e2019"
+            "url": "https://ftp.drupal.org/files/projects/video_embed_field-8.x-2.1.zip",
+            "reference": "8.x-2.1",
+            "shasum": "fa1682741b4a1404df80c709ed8e40b7d8362d67"
         },
         "require": {
             "drupal/core": "*"
@@ -6051,13 +6057,12 @@
                 "dev-2.x": "2.x-dev"
             },
             "drupal": {
-                "version": "8.x-1.x",
-                "datestamp": "1523338084",
+                "version": "8.x-2.1",
+                "datestamp": "1557724385",
                 "security-coverage": {
                     "status": "covered",
                     "message": "Covered by Drupal's security advisory policy"
-                },
-                "package": "Field types"
+                }
             }
         },
         "installation-source": "dist",
@@ -6082,7 +6087,7 @@
         "description": "A pluggable field type for storing videos from external video hosts such as Vimeo and YouTube.",
         "homepage": "https://www.drupal.org/project/video_embed_field",
         "support": {
-            "source": "http://cgit.drupalcode.org/video_embed_field"
+            "source": "https://git.drupalcode.org/project/video_embed_field"
         }
     },
     {
