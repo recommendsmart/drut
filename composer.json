@@ -83,7 +83,15 @@
         "drupal/block_permissions": "^1.0",
         "commerceguys/addressing": "^1.0",
         "guzzlehttp/guzzle": "^6.3",
-        "drupal/user_restrictions": "^1.0@RC"
+        "drupal/user_restrictions": "^1.0@RC",
+        "drupal/colorbutton": "^1.1",
+        "drupal/address_map_link": "^1.0",
+        "drupal/insert": "^1.0",
+        "drupal/range": "^1.1",
+        "drupal/editor_advanced_link": "^1.4",
+        "drupal/menu_block": "^1.5",
+        "drupal/shs": "^1.0@alpha",
+        "drupal/views_field_view": "^1.0@beta"
     },
     "replace": {
         "drupal/core": "^8.7"

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ca4b95d5629d543773cece787fe79168",
+    "content-hash": "563f56a8c8d35b7035f305b798ce589d",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -843,6 +843,60 @@
             "homepage": "http://drupal.org/project/address",
             "support": {
                 "source": "https://git.drupalcode.org/project/address"
+            }
+        },
+        {
+            "name": "drupal/address_map_link",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/address_map_link.git",
+                "reference": "8.x-1.0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/address_map_link-8.x-1.0.zip",
+                "reference": "8.x-1.0",
+                "shasum": "ec1e4273844795ddd6741ba1eb181476727373f2"
+            },
+            "require": {
+                "drupal/address": "^1.0",
+                "drupal/core": "~8.0"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "branch-alias": {
+                    "dev-1.x": "1.x-dev"
+                },
+                "drupal": {
+                    "version": "8.x-1.0",
+                    "datestamp": "1504143244",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0+"
+            ],
+            "authors": [
+                {
+                    "name": "Chris Snyder",
+                    "homepage": "https://www.drupal.org/user/1988434",
+                    "email": "chris@chrissnyder.org",
+                    "role": "Lead Developer"
+                }
+            ],
+            "description": "Provides a link to an external mapping site for an address field.",
+            "homepage": "https://www.drupal.org/project/address_map_link",
+            "keywords": [
+                "Drupal"
+            ],
+            "support": {
+                "source": "http://cgit.drupalcode.org/address_map_link",
+                "issues": "https://www.drupal.org/project/issues/address_map_link"
             }
         },
         {
@@ -1738,6 +1792,63 @@
             }
         },
         {
+            "name": "drupal/colorbutton",
+            "version": "1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/colorbutton.git",
+                "reference": "8.x-1.1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/colorbutton-8.x-1.1.zip",
+                "reference": "8.x-1.1",
+                "shasum": "147d755b5e0bd1b20a81bf7bebdb32098abb3ba6"
+            },
+            "require": {
+                "drupal/core": "*",
+                "drupal/panelbutton": "*"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "branch-alias": {
+                    "dev-1.x": "1.x-dev"
+                },
+                "drupal": {
+                    "version": "8.x-1.1",
+                    "datestamp": "1500211142",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0+"
+            ],
+            "authors": [
+                {
+                    "name": "Kevin Quillen (kevinquillen)",
+                    "homepage": "https://www.drupal.org/u/kevinquillen",
+                    "role": "Maintainer"
+                },
+                {
+                    "name": "kevinquillen",
+                    "homepage": "https://www.drupal.org/user/317279"
+                }
+            ],
+            "description": "Adds the Color Button plugin to CKEditor.",
+            "homepage": "http://drupal.org/project/colorbutton",
+            "keywords": [
+                "Drupal"
+            ],
+            "support": {
+                "source": "http://cgit.drupalcode.org/colorbutton",
+                "issues": "http://drupal.org/project/issues/colorbutton"
+            }
+        },
+        {
             "name": "drupal/commerce",
             "version": "2.13.0",
             "source": {
@@ -2374,6 +2485,53 @@
                 "source": "http://git.drupal.org/project/ds.git",
                 "issues": "https://www.drupal.org/project/issues/ds",
                 "irc": "irc://irc.freenode.org/drupal-contribute"
+            }
+        },
+        {
+            "name": "drupal/editor_advanced_link",
+            "version": "1.4.0",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/editor_advanced_link.git",
+                "reference": "8.x-1.4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/editor_advanced_link-8.x-1.4.zip",
+                "reference": "8.x-1.4",
+                "shasum": "52cf139a313d5fa6a461a25a1ba36ae987bc403d"
+            },
+            "require": {
+                "drupal/core": "*"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "branch-alias": {
+                    "dev-1.x": "1.x-dev"
+                },
+                "drupal": {
+                    "version": "8.x-1.4",
+                    "datestamp": "1490108883",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "DuaelFr",
+                    "homepage": "https://www.drupal.org/user/931394"
+                }
+            ],
+            "description": "Add title, target etc. attributes to Text Editor's link dialog if the text format allows them.",
+            "homepage": "https://www.drupal.org/project/editor_advanced_link",
+            "support": {
+                "source": "https://git.drupalcode.org/project/editor_advanced_link"
             }
         },
         {
@@ -3442,6 +3600,57 @@
             }
         },
         {
+            "name": "drupal/insert",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/insert.git",
+                "reference": "8.x-1.0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/insert-8.x-1.0.zip",
+                "reference": "8.x-1.0",
+                "shasum": "6c37ceedc7821c7efdc5907a0f34adeb68d79b0a"
+            },
+            "require": {
+                "drupal/core": "*"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "branch-alias": {
+                    "dev-1.x": "1.x-dev"
+                },
+                "drupal": {
+                    "version": "8.x-1.0",
+                    "datestamp": "1514827685",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Snater",
+                    "homepage": "https://www.drupal.org/user/3513717"
+                },
+                {
+                    "name": "quicksketch",
+                    "homepage": "https://www.drupal.org/user/35821"
+                }
+            ],
+            "description": "Assists in inserting files, images, or other media into the body field or other text areas.",
+            "homepage": "https://www.drupal.org/project/insert",
+            "support": {
+                "source": "https://git.drupalcode.org/project/insert"
+            }
+        },
+        {
             "name": "drupal/insert_view",
             "version": "1.0.0-alpha1",
             "source": {
@@ -3914,6 +4123,69 @@
                 "source": "https://git.drupal.org/project/masquerade.git",
                 "issues": "https://www.drupal.org/project/issues/masquerade",
                 "irc": "irc://irc.freenode.org/drupal-contribute"
+            }
+        },
+        {
+            "name": "drupal/menu_block",
+            "version": "1.5.0",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/menu_block.git",
+                "reference": "8.x-1.5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/menu_block-8.x-1.5.zip",
+                "reference": "8.x-1.5",
+                "shasum": "b3ac3e23e426f702974d88cc8bf93bf2a0b6236b"
+            },
+            "require": {
+                "drupal/core": "*"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "branch-alias": {
+                    "dev-1.x": "1.x-dev"
+                },
+                "drupal": {
+                    "version": "8.x-1.5",
+                    "datestamp": "1525200184",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Dave Reid",
+                    "homepage": "https://www.drupal.org/user/53892"
+                },
+                {
+                    "name": "JohnAlbin",
+                    "homepage": "https://www.drupal.org/user/32095"
+                },
+                {
+                    "name": "joelpittet",
+                    "homepage": "https://www.drupal.org/user/160302"
+                },
+                {
+                    "name": "kim.pepper",
+                    "homepage": "https://www.drupal.org/user/370574"
+                },
+                {
+                    "name": "rrrob",
+                    "homepage": "https://www.drupal.org/user/273533"
+                }
+            ],
+            "description": "Provides configurable blocks of menu links.",
+            "homepage": "https://www.drupal.org/project/menu_block",
+            "support": {
+                "source": "https://git.drupalcode.org/project/menu_block"
             }
         },
         {
@@ -4624,6 +4896,57 @@
             }
         },
         {
+            "name": "drupal/range",
+            "version": "1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/range.git",
+                "reference": "8.x-1.1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/range-8.x-1.1.zip",
+                "reference": "8.x-1.1",
+                "shasum": "15e846ae9bb5e1d45f3975d92de420c03e318cbb"
+            },
+            "require": {
+                "drupal/core": "*"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "branch-alias": {
+                    "dev-1.x": "1.x-dev"
+                },
+                "drupal": {
+                    "version": "8.x-1.1",
+                    "datestamp": "1489346583",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Taran2L",
+                    "homepage": "https://www.drupal.org/user/473438"
+                },
+                {
+                    "name": "ribel",
+                    "homepage": "https://www.drupal.org/user/1449610"
+                }
+            ],
+            "description": "Defines a numeric range field type.",
+            "homepage": "https://www.drupal.org/project/range",
+            "support": {
+                "source": "https://git.drupalcode.org/project/range"
+            }
+        },
+        {
             "name": "drupal/recaptcha",
             "version": "2.4.0",
             "source": {
@@ -4912,6 +5235,56 @@
                 "source": "http://git.drupal.org/project/search_api.git",
                 "issues": "https://www.drupal.org/project/issues/search_api",
                 "irc": "irc://irc.freenode.org/drupal-search-api"
+            }
+        },
+        {
+            "name": "drupal/shs",
+            "version": "1.0.0-alpha4",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/shs.git",
+                "reference": "8.x-1.0-alpha4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/shs-8.x-1.0-alpha4.zip",
+                "reference": "8.x-1.0-alpha4",
+                "shasum": "7c10a4ed872620ee05dbd082cc66021fc3ee3036"
+            },
+            "require": {
+                "drupal/core": "*"
+            },
+            "require-dev": {
+                "drupal/chosen": "*"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "branch-alias": {
+                    "dev-1.x": "1.x-dev"
+                },
+                "drupal": {
+                    "version": "8.x-1.0-alpha4",
+                    "datestamp": "1536746285",
+                    "security-coverage": {
+                        "status": "not-covered",
+                        "message": "Alpha releases are not covered by Drupal security advisories."
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "stBorchert",
+                    "homepage": "https://www.drupal.org/user/36942"
+                }
+            ],
+            "description": "Creates a simple hierarchical select widget for taxonomy fields.",
+            "homepage": "https://www.drupal.org/project/shs",
+            "support": {
+                "source": "https://git.drupalcode.org/project/shs"
             }
         },
         {
@@ -5840,6 +6213,69 @@
             "homepage": "https://www.drupal.org/project/views_data_export",
             "support": {
                 "source": "http://cgit.drupalcode.org/views_data_export"
+            }
+        },
+        {
+            "name": "drupal/views_field_view",
+            "version": "1.0.0-beta2",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/views_field_view.git",
+                "reference": "8.x-1.0-beta2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/views_field_view-8.x-1.0-beta2.zip",
+                "reference": "8.x-1.0-beta2",
+                "shasum": "2f9c841f5e1ac8a9f8410b6d62c715edb9987519"
+            },
+            "require": {
+                "drupal/core": "*"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "branch-alias": {
+                    "dev-1.x": "1.x-dev"
+                },
+                "drupal": {
+                    "version": "8.x-1.0-beta2",
+                    "datestamp": "1447937051",
+                    "security-coverage": {
+                        "status": "not-covered",
+                        "message": "Beta releases are not covered by Drupal security advisories."
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "damiankloip",
+                    "homepage": "https://www.drupal.org/user/1037976"
+                },
+                {
+                    "name": "dawehner",
+                    "homepage": "https://www.drupal.org/user/99340"
+                },
+                {
+                    "name": "jibran",
+                    "homepage": "https://www.drupal.org/user/1198144"
+                },
+                {
+                    "name": "tizzo",
+                    "homepage": "https://www.drupal.org/user/168251"
+                },
+                {
+                    "name": "voxpelli",
+                    "homepage": "https://www.drupal.org/user/341713"
+                }
+            ],
+            "description": "Adds a view field handler to embed views inside views.",
+            "homepage": "https://www.drupal.org/project/views_field_view",
+            "support": {
+                "source": "https://git.drupalcode.org/project/views_field_view"
             }
         },
         {
@@ -10663,6 +11099,8 @@
         "drupal/lang_dropdown": 10,
         "drupal/languageicons": 10,
         "drupal/user_restrictions": 5,
+        "drupal/shs": 15,
+        "drupal/views_field_view": 10,
         "behat/mink": 20,
         "behat/mink-selenium2-driver": 20
     },
