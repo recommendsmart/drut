@@ -24,7 +24,7 @@
         "drupal/colorbox": "^1.4",
         "drupal/ds": "^3.3",
         "drupal/entityblock": "^1.0",
-        "drupal/field_group": "^1.0",
+        "drupal/field_group": "3.0-rc1",
         "drupal/insert_view": "^1.0@alpha",
         "drupal/responsivewrappers": "^1.2",
         "drupal/libraries": "^3.0@alpha",
@@ -47,13 +47,13 @@
         "drupal/inlinejs": "^1.0@alpha",
         "drupal/exclude_node_title": "^1.0@beta",
         "drupal/menu_item_visibility": "1.x-dev",
-        "drupal/ctools": "3.0",
+        "drupal/ctools": "^3.2",
         "drupal/imce": "^1.7",
         "drupal/google_analytics": "^3.0",
         "drupal/backup_migrate": "^4.0",
         "drupal/eu_cookie_compliance": "^1.5",
         "drupal/pathauto": "^1.4",
-        "drupal/admin_toolbar": "^1.26",
+        "drupal/admin_toolbar": "^1.27",
         "drupal/token": "^1.5",
         "fortawesome/font-awesome": "^4.7",
         "drupal/webform": "^5.0@RC",
@@ -76,7 +76,7 @@
         "drupal/profile": "^1.0@RC",
         "drupal/fontawesome_menu_icons": "^1.5",
         "drupal/mailchimp": "^1.8",
-        "drupal/address": "^1.6",
+        "drupal/address": "^1.7",
         "drupal/block_content_permissions": "^1.6",
         "drupal/lang_dropdown": "^2.0@beta",
         "drupal/languageicons": "^1.0@beta",
@@ -91,7 +91,8 @@
         "drupal/editor_advanced_link": "^1.4",
         "drupal/menu_block": "^1.5",
         "drupal/shs": "^1.0@alpha",
-        "drupal/views_field_view": "^1.0@beta"
+        "drupal/views_field_view": "^1.0@beta",
+        "drupal/entity": "1.0-rc3"
     },
     "replace": {
         "drupal/core": "^8.7"

@@ -1092,18 +1092,18 @@
     },
     {
         "name": "drupal/address",
-        "version": "1.6.0",
-        "version_normalized": "1.6.0.0",
+        "version": "1.7.0",
+        "version_normalized": "1.7.0.0",
         "source": {
             "type": "git",
             "url": "https://git.drupalcode.org/project/address.git",
-            "reference": "8.x-1.6"
+            "reference": "8.x-1.7"
         },
         "dist": {
             "type": "zip",
-            "url": "https://ftp.drupal.org/files/projects/address-8.x-1.6.zip",
-            "reference": "8.x-1.6",
-            "shasum": "e27d2f8dac799a166b8ee040ceb608f2eff57cee"
+            "url": "https://ftp.drupal.org/files/projects/address-8.x-1.7.zip",
+            "reference": "8.x-1.7",
+            "shasum": "dab23a510090e59e3e6bc77faa517b523ad048ae"
         },
         "require": {
             "commerceguys/addressing": "^1.0.0",
@@ -1118,8 +1118,8 @@
                 "dev-1.x": "1.x-dev"
             },
             "drupal": {
-                "version": "8.x-1.6",
-                "datestamp": "1554334685",
+                "version": "8.x-1.7",
+                "datestamp": "1559642884",
                 "security-coverage": {
                     "status": "covered",
                     "message": "Covered by Drupal's security advisory policy"
@@ -1217,18 +1217,18 @@
     },
     {
         "name": "drupal/admin_toolbar",
-        "version": "1.26.0",
-        "version_normalized": "1.26.0.0",
+        "version": "1.27.0",
+        "version_normalized": "1.27.0.0",
         "source": {
             "type": "git",
             "url": "https://git.drupalcode.org/project/admin_toolbar.git",
-            "reference": "8.x-1.26"
+            "reference": "8.x-1.27"
         },
         "dist": {
             "type": "zip",
-            "url": "https://ftp.drupal.org/files/projects/admin_toolbar-8.x-1.26.zip",
-            "reference": "8.x-1.26",
-            "shasum": "7be9f91008bf17cf49b43d1c8e2211e7a8e40ce4"
+            "url": "https://ftp.drupal.org/files/projects/admin_toolbar-8.x-1.27.zip",
+            "reference": "8.x-1.27",
+            "shasum": "fed1fbbdf8f805b1da63d73e7e2c54750f354d61"
         },
         "require": {
             "drupal/core": "*"
@@ -1239,8 +1239,8 @@
                 "dev-1.x": "1.x-dev"
             },
             "drupal": {
-                "version": "8.x-1.26",
-                "datestamp": "1549218480",
+                "version": "8.x-1.27",
+                "datestamp": "1558553350",
                 "security-coverage": {
                     "status": "covered",
                     "message": "Covered by Drupal's security advisory policy"
@@ -2718,21 +2718,21 @@
     },
     {
         "name": "drupal/ctools",
-        "version": "3.0.0",
-        "version_normalized": "3.0.0.0",
+        "version": "3.2.0",
+        "version_normalized": "3.2.0.0",
         "source": {
             "type": "git",
             "url": "https://git.drupalcode.org/project/ctools.git",
-            "reference": "8.x-3.0"
+            "reference": "8.x-3.2"
         },
         "dist": {
             "type": "zip",
-            "url": "https://ftp.drupal.org/files/projects/ctools-8.x-3.0.zip",
-            "reference": "8.x-3.0",
-            "shasum": "302e869ecd1e59fe55663673999fee2ccac5daa8"
+            "url": "https://ftp.drupal.org/files/projects/ctools-8.x-3.2.zip",
+            "reference": "8.x-3.2",
+            "shasum": "d6da87239b64ba708a5977e7b33b1e009e36b091"
         },
         "require": {
-            "drupal/core": "~8.0"
+            "drupal/core": "^8.5"
         },
         "type": "drupal-module",
         "extra": {
@@ -2740,8 +2740,8 @@
                 "dev-3.x": "3.x-dev"
             },
             "drupal": {
-                "version": "8.x-3.0",
-                "datestamp": "1549603381",
+                "version": "8.x-3.2",
+                "datestamp": "1550728386",
                 "security-coverage": {
                     "status": "covered",
                     "message": "Covered by Drupal's security advisory policy"
@@ -3004,18 +3004,18 @@
     },
     {
         "name": "drupal/entity",
-        "version": "1.0.0-rc2",
-        "version_normalized": "1.0.0.0-RC2",
+        "version": "1.0.0-rc3",
+        "version_normalized": "1.0.0.0-RC3",
         "source": {
             "type": "git",
             "url": "https://git.drupalcode.org/project/entity.git",
-            "reference": "8.x-1.0-rc2"
+            "reference": "8.x-1.0-rc3"
         },
         "dist": {
             "type": "zip",
-            "url": "https://ftp.drupal.org/files/projects/entity-8.x-1.0-rc2.zip",
-            "reference": "8.x-1.0-rc2",
-            "shasum": "616b4c095dc8cf67f318f2d5504aed1c4d6dd363"
+            "url": "https://ftp.drupal.org/files/projects/entity-8.x-1.0-rc3.zip",
+            "reference": "8.x-1.0-rc3",
+            "shasum": "6b4ccc0231c52ed9594502a0718057f53d98404d"
         },
         "require": {
             "drupal/core": "^8.6"
@@ -3026,8 +3026,8 @@
                 "dev-1.x": "1.x-dev"
             },
             "drupal": {
-                "version": "8.x-1.0-rc2",
-                "datestamp": "1553254684",
+                "version": "8.x-1.0-rc3",
+                "datestamp": "1559579884",
                 "security-coverage": {
                     "status": "not-covered",
                     "message": "RC releases are not covered by Drupal security advisories."
@@ -3521,18 +3521,18 @@
     },
     {
         "name": "drupal/field_group",
-        "version": "1.0.0",
-        "version_normalized": "1.0.0.0",
+        "version": "3.0.0-rc1",
+        "version_normalized": "3.0.0.0-RC1",
         "source": {
             "type": "git",
             "url": "https://git.drupalcode.org/project/field_group.git",
-            "reference": "8.x-1.0"
+            "reference": "8.x-3.0-rc1"
         },
         "dist": {
             "type": "zip",
-            "url": "https://ftp.drupal.org/files/projects/field_group-8.x-1.0.zip",
-            "reference": "8.x-1.0",
-            "shasum": "e8aa3fae5c3c5dec84644bb577996938d638a611"
+            "url": "https://ftp.drupal.org/files/projects/field_group-8.x-3.0-rc1.zip",
+            "reference": "8.x-3.0-rc1",
+            "shasum": "e291b5468c834a344e9aa6cafd3a76171d473a22"
         },
         "require": {
             "drupal/core": "*"
@@ -3540,14 +3540,14 @@
         "type": "drupal-module",
         "extra": {
             "branch-alias": {
-                "dev-1.x": "1.x-dev"
+                "dev-3.x": "3.x-dev"
             },
             "drupal": {
-                "version": "8.x-1.0",
-                "datestamp": "1510352885",
+                "version": "8.x-3.0-rc1",
+                "datestamp": "1558647185",
                 "security-coverage": {
-                    "status": "covered",
-                    "message": "Covered by Drupal's security advisory policy"
+                    "status": "not-covered",
+                    "message": "RC releases are not covered by Drupal security advisories."
                 }
             }
         },
@@ -3581,7 +3581,7 @@
         "description": "Provides the field_group module.",
         "homepage": "https://www.drupal.org/project/field_group",
         "support": {
-            "source": "http://cgit.drupalcode.org/field_group"
+            "source": "https://git.drupalcode.org/project/field_group"
         }
     },
     {
@@ -4947,22 +4947,22 @@
     },
     {
         "name": "drupal/page_manager",
-        "version": "4.0.0-beta3",
-        "version_normalized": "4.0.0.0-beta3",
+        "version": "4.0.0-beta4",
+        "version_normalized": "4.0.0.0-beta4",
         "source": {
             "type": "git",
             "url": "https://git.drupalcode.org/project/page_manager.git",
-            "reference": "8.x-4.0-beta3"
+            "reference": "8.x-4.0-beta4"
         },
         "dist": {
             "type": "zip",
-            "url": "https://ftp.drupal.org/files/projects/page_manager-8.x-4.0-beta3.zip",
-            "reference": "8.x-4.0-beta3",
-            "shasum": "d4776dd32ca34f647bf7f2cfb1acf4800646e231"
+            "url": "https://ftp.drupal.org/files/projects/page_manager-8.x-4.0-beta4.zip",
+            "reference": "8.x-4.0-beta4",
+            "shasum": "f77d57fa0f0a734c26d9119850672a51e2760d5f"
         },
         "require": {
-            "drupal/core": "^8.0.5",
-            "drupal/ctools": "~3"
+            "drupal/core": "~8.5",
+            "drupal/ctools": "~3.1"
         },
         "type": "drupal-module",
         "extra": {
@@ -4970,8 +4970,8 @@
                 "dev-4.x": "4.x-dev"
             },
             "drupal": {
-                "version": "8.x-4.0-beta3",
-                "datestamp": "1523670484",
+                "version": "8.x-4.0-beta4",
+                "datestamp": "1559135889",
                 "security-coverage": {
                     "status": "not-covered",
                     "message": "Project has not opted into security advisory coverage!"
@@ -4998,8 +4998,8 @@
                 "homepage": "https://www.drupal.org/user/45640"
             },
             {
-                "name": "tim.plunkett",
-                "homepage": "https://www.drupal.org/user/241634"
+                "name": "manuel.adan",
+                "homepage": "https://www.drupal.org/user/516420"
             }
         ],
         "description": "Provides a way to place blocks on a custom page.",
