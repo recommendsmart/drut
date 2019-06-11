@@ -92,7 +92,10 @@
         "drupal/menu_block": "^1.5",
         "drupal/shs": "^1.0@alpha",
         "drupal/views_field_view": "^1.0@beta",
-        "drupal/entity": "1.0-rc3"
+        "drupal/entity": "1.0-rc3",
+        "drupal/search_api_solr": "^3.0",
+        "drupal/search_api_autocomplete": "^1.2",
+        "drupal/collapsiblock": "^2.0"
     },
     "replace": {
         "drupal/core": "^8.7"
