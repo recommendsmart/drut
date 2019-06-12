@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2f4a62495d4b8c403fbd6ed1a1fd2658",
+    "content-hash": "7e3669a456f2c68db17c1c1ac6af88a0",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -4956,6 +4956,53 @@
             "homepage": "http://drupal.org/project/profile",
             "support": {
                 "source": "http://cgit.drupalcode.org/profile"
+            }
+        },
+        {
+            "name": "drupal/quick_node_block",
+            "version": "1.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/quick_node_block.git",
+                "reference": "8.x-1.2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/quick_node_block-8.x-1.2.zip",
+                "reference": "8.x-1.2",
+                "shasum": "d51c426ab887824253e90529de2c307c1be89848"
+            },
+            "require": {
+                "drupal/core": "*"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "branch-alias": {
+                    "dev-1.x": "1.x-dev"
+                },
+                "drupal": {
+                    "version": "8.x-1.2",
+                    "datestamp": "1547464684",
+                    "security-coverage": {
+                        "status": "covered",
+                        "message": "Covered by Drupal's security advisory policy"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "saesa",
+                    "homepage": "https://www.drupal.org/user/3561094"
+                }
+            ],
+            "description": "Add node and his display in a block",
+            "homepage": "https://www.drupal.org/project/quick_node_block",
+            "support": {
+                "source": "https://git.drupalcode.org/project/quick_node_block"
             }
         },
         {

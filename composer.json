@@ -93,7 +93,8 @@
         "drupal/shs": "^1.0@alpha",
         "drupal/views_field_view": "^1.0@beta",
         "drupal/entity": "1.0-rc3",
-        "drupal/collapsiblock": "^2.0"
+        "drupal/collapsiblock": "^2.0",
+        "drupal/quick_node_block": "^1.2"
     },
     "replace": {
         "drupal/core": "^8.7"
