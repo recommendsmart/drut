@@ -91,4 +91,6 @@ return array(
     'Behat\\Mink\\Driver\\' => array($vendorDir . '/behat/mink-browserkit-driver/src', $vendorDir . '/behat/mink-goutte-driver/src', $vendorDir . '/behat/mink-selenium2-driver/src'),
     'Behat\\Mink\\' => array($vendorDir . '/behat/mink/src'),
     'Asm89\\Stack\\' => array($vendorDir . '/asm89/stack-cors/src/Asm89/Stack'),
+    'AcademicPuma\\CiteProc\\' => array($vendorDir . '/academicpuma/citeproc-php/src'),
+    'ADCI\\FullNameParser\\' => array($vendorDir . '/adci/full-name-parser/src'),
 );

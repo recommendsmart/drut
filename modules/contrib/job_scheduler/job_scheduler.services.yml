@@ -1,0 +1,4 @@
+services:
+  job_scheduler.manager:
+    class: Drupal\job_scheduler\JobScheduler
+    arguments: ['@database', '@datetime.time']

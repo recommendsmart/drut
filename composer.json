@@ -94,7 +94,12 @@
         "drupal/views_field_view": "^1.0@beta",
         "drupal/entity": "1.0-rc3",
         "drupal/collapsiblock": "^2.0",
-        "drupal/quick_node_block": "^1.2"
+        "drupal/quick_node_block": "^1.2",
+        "drupal/bibcite": "^1.0@alpha",
+        "drupal/job_scheduler": "^2.0@alpha",
+        "drupal/override_node_options": "^2.4",
+        "drupal/view_unpublished": "^1.0@alpha",
+        "drupal/draggableviews": "^1.2"
     },
     "replace": {
         "drupal/core": "^8.7"

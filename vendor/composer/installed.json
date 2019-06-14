@@ -1,5 +1,158 @@
 [
     {
+        "name": "academicpuma/citeproc-php",
+        "version": "1.0.0",
+        "version_normalized": "1.0.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/seboettg/citeproc-php-old.git",
+            "reference": "41da9655943bc495439df92ff68890b61277d724"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/seboettg/citeproc-php-old/zipball/41da9655943bc495439df92ff68890b61277d724",
+            "reference": "41da9655943bc495439df92ff68890b61277d724",
+            "shasum": ""
+        },
+        "require": {
+            "academicpuma/locales": ">=1.0",
+            "academicpuma/styles": ">=1.0"
+        },
+        "require-dev": {
+            "phpunit/phpunit": "3.7.*",
+            "phpunit/phpunit-skeleton-generator": "2.0.*"
+        },
+        "time": "2015-09-15T09:01:39+00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "AcademicPuma\\CiteProc\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "GPL v3"
+        ],
+        "authors": [
+            {
+                "name": "Sebastian Böttger",
+                "email": "boettger@cs.uni-kassel.de"
+            }
+        ],
+        "description": "This is an effort to implement a full-featured standalone CSL processor in PHP. The code based on the implementation of Ron Jerome.",
+        "abandoned": "seboettg/citeproc-php"
+    },
+    {
+        "name": "academicpuma/locales",
+        "version": "1.0.0",
+        "version_normalized": "1.0.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/seboettg/locales.git",
+            "reference": "e5985dbc979f6a285e74006466daab40fd53573f"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/seboettg/locales/zipball/e5985dbc979f6a285e74006466daab40fd53573f",
+            "reference": "e5985dbc979f6a285e74006466daab40fd53573f",
+            "shasum": ""
+        },
+        "time": "2015-09-08T14:33:33+00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "Creative Commons Attribution-ShareAlike 3.0 License"
+        ],
+        "authors": [
+            {
+                "name": "seboettg",
+                "email": "boettger@cs.uni-kassel.de"
+            }
+        ],
+        "description": "Citation Style Language (CSL) Locales Repository"
+    },
+    {
+        "name": "academicpuma/styles",
+        "version": "1.0.0",
+        "version_normalized": "1.0.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/seboettg/styles.git",
+            "reference": "24a0ab9277d3cc7d344e621721b2f4c2ed2f2ecc"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/seboettg/styles/zipball/24a0ab9277d3cc7d344e621721b2f4c2ed2f2ecc",
+            "reference": "24a0ab9277d3cc7d344e621721b2f4c2ed2f2ecc",
+            "shasum": ""
+        },
+        "time": "2015-09-08T14:22:08+00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "Creative Commons Attribution-ShareAlike 3.0 License"
+        ],
+        "authors": [
+            {
+                "name": "seboettg",
+                "email": "boettger@cs.uni-kassel.de"
+            }
+        ],
+        "description": "Citation Style Language (CSL) Stylesheet Repository"
+    },
+    {
+        "name": "adci/full-name-parser",
+        "version": "0.2.3",
+        "version_normalized": "0.2.3.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/ADCI/full-name-parser.git",
+            "reference": "657ea52e39adce94f297970c4fbd5c70db17a3b5"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/ADCI/full-name-parser/zipball/657ea52e39adce94f297970c4fbd5c70db17a3b5",
+            "reference": "657ea52e39adce94f297970c4fbd5c70db17a3b5",
+            "shasum": ""
+        },
+        "require": {
+            "ext-mbstring": "*",
+            "php": ">=5.6"
+        },
+        "require-dev": {
+            "phpunit/phpunit": ">=4.8.28 <5"
+        },
+        "time": "2019-03-25T08:56:48+00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "ADCI\\FullNameParser\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "ADCI Solutions",
+                "homepage": "https://www.adcisolutions.com"
+            }
+        ],
+        "description": "Parses a human name",
+        "keywords": [
+            "full name",
+            "name",
+            "parse",
+            "parser",
+            "php"
+        ]
+    },
+    {
         "name": "asm89/stack-cors",
         "version": "1.2.0",
         "version_normalized": "1.2.0.0",
@@ -51,6 +204,52 @@
         "keywords": [
             "cors",
             "stack"
+        ]
+    },
+    {
+        "name": "audiolabs/bibtexparser",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/audiolabs/bibtexparser.git",
+            "reference": "b2d7794f49887ee7801c780b215d4d66b0f2e475"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/audiolabs/bibtexparser/zipball/b2d7794f49887ee7801c780b215d4d66b0f2e475",
+            "reference": "b2d7794f49887ee7801c780b215d4d66b0f2e475",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.0"
+        },
+        "time": "2014-04-07T10:08:24+00:00",
+        "type": "library",
+        "installation-source": "source",
+        "autoload": {
+            "psr-0": {
+                "AudioLabs": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Nils Werner",
+                "email": "nils.werner@audiolabs-erlangen.de",
+                "homepage": "http://www.audiolabs-erlangen.de",
+                "role": "Developer"
+            }
+        ],
+        "description": "Bibtex parser for PHP 5.3",
+        "homepage": "http://github.com/alabs/bibtexparser",
+        "keywords": [
+            "bibtex",
+            "latex",
+            "parsing"
         ]
     },
     {
@@ -329,6 +528,45 @@
             }
         ],
         "description": "Backports unserialize options introduced in PHP 7.0 to older PHP versions."
+    },
+    {
+        "name": "caseyamcl/php-marc21",
+        "version": "v1.0",
+        "version_normalized": "1.0.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/caseyamcl/php-marc21.git",
+            "reference": "24571bf0690c0e0dde0b588a0c829d3e4c592efc"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/caseyamcl/php-marc21/zipball/24571bf0690c0e0dde0b588a0c829d3e4c592efc",
+            "reference": "24571bf0690c0e0dde0b588a0c829d3e4c592efc",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.0"
+        },
+        "time": "2016-06-14T15:47:56+00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-0": {
+                "PhpMarc": "lib/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "description": "MARC Record handling tool for PHP",
+        "homepage": "https://github.com/caseyamc/php-marc21",
+        "keywords": [
+            "conversion",
+            "format",
+            "library",
+            "marc"
+        ]
     },
     {
         "name": "commerceguys/addressing",
@@ -1448,6 +1686,84 @@
         "support": {
             "source": "http://cgit.drupalcode.org/backup_migrate",
             "issues": "https://www.drupal.org/project/issues/backup_migrate"
+        }
+    },
+    {
+        "name": "drupal/bibcite",
+        "version": "1.0.0-alpha10",
+        "version_normalized": "1.0.0.0-alpha10",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupalcode.org/project/bibcite.git",
+            "reference": "8.x-1.0-alpha10"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/bibcite-8.x-1.0-alpha10.zip",
+            "reference": "8.x-1.0-alpha10",
+            "shasum": "243322fbbea823864237509f369980c571771682"
+        },
+        "require": {
+            "academicpuma/citeproc-php": "~1.0",
+            "adci/full-name-parser": "^0.2",
+            "audiolabs/bibtexparser": "dev-master",
+            "caseyamcl/php-marc21": "~1.0",
+            "drupal/core": "*",
+            "technosophos/libris": "~2.0"
+        },
+        "require-dev": {
+            "drupal/bibcite_entity": "*"
+        },
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-1.x": "1.x-dev"
+            },
+            "drupal": {
+                "version": "8.x-1.0-alpha10",
+                "datestamp": "1559209688",
+                "security-coverage": {
+                    "status": "not-covered",
+                    "message": "Project has not opted into security advisory coverage!"
+                }
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packages.drupal.org/8/downloads",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "authors": [
+            {
+                "name": "adci_contributor",
+                "homepage": "https://www.drupal.org/user/1830536"
+            },
+            {
+                "name": "adcillc",
+                "homepage": "https://www.drupal.org/user/366450"
+            },
+            {
+                "name": "antongp",
+                "homepage": "https://www.drupal.org/user/1060446"
+            },
+            {
+                "name": "kruhak",
+                "homepage": "https://www.drupal.org/user/2840307"
+            },
+            {
+                "name": "usdv",
+                "homepage": "https://www.drupal.org/user/2476206"
+            }
+        ],
+        "description": "Working with bibliographic data",
+        "homepage": "https://www.drupal.org/project/bibcite",
+        "keywords": [
+            "Bibliography",
+            "Drupal"
+        ],
+        "support": {
+            "source": "http://cgit.drupalcode.org/bibcite",
+            "issues": "https://www.drupal.org/project/issues/bibcite"
         }
     },
     {
@@ -2877,6 +3193,90 @@
         }
     },
     {
+        "name": "drupal/draggableviews",
+        "version": "1.2.0",
+        "version_normalized": "1.2.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupalcode.org/project/draggableviews.git",
+            "reference": "8.x-1.2"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/draggableviews-8.x-1.2.zip",
+            "reference": "8.x-1.2",
+            "shasum": "0f5e9195ceec209552aa50f8ce3c230692c284db"
+        },
+        "require": {
+            "drupal/core": "*"
+        },
+        "require-dev": {
+            "drupal/draggableviews_demo": "*"
+        },
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-1.x": "1.x-dev"
+            },
+            "drupal": {
+                "version": "8.x-1.2",
+                "datestamp": "1541518680",
+                "security-coverage": {
+                    "status": "covered",
+                    "message": "Covered by Drupal's security advisory policy"
+                }
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packages.drupal.org/8/downloads",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "authors": [
+            {
+                "name": "Tyler Struyk (iStryker)",
+                "homepage": "https://www.drupal.org/u/istryker",
+                "email": "tyler.struyk@gmail.com",
+                "role": "Maintainer"
+            },
+            {
+                "name": "Andrii Podanenko (podarok)",
+                "homepage": "https://www.drupal.org/u/podarok",
+                "email": "podarokua@gmail.com",
+                "role": "Drupal 7 to 8 Porter"
+            },
+            {
+                "name": "Yuriy Gerasimov (ygerasimov)",
+                "homepage": "https://www.drupal.org/u/ygerasimov",
+                "email": "yuriy.gerasimov@gmail.com",
+                "role": "Ex Maintainer (D7)"
+            },
+            {
+                "name": "Severin Unger (sevi)",
+                "homepage": "https://www.drupal.org/u/sevi",
+                "role": "Ex Maintainer (D6)"
+            },
+            {
+                "name": "podarok",
+                "homepage": "https://www.drupal.org/user/116002"
+            },
+            {
+                "name": "sevi",
+                "homepage": "https://www.drupal.org/user/199290"
+            },
+            {
+                "name": "ygerasimov",
+                "homepage": "https://www.drupal.org/user/257311"
+            }
+        ],
+        "description": "DraggableViews module makes views draggable.",
+        "homepage": "https://www.drupal.org/project/draggableviews",
+        "support": {
+            "source": "https://cgit.drupalcode.org/draggableviews",
+            "issues": "https://www.drupal.org/project/issues/draggableviews"
+        }
+    },
+    {
         "name": "drupal/ds",
         "version": "3.3.0",
         "version_normalized": "3.3.0.0",
@@ -4291,6 +4691,91 @@
         }
     },
     {
+        "name": "drupal/job_scheduler",
+        "version": "2.0.0-alpha1",
+        "version_normalized": "2.0.0.0-alpha1",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupalcode.org/project/job_scheduler.git",
+            "reference": "8.x-2.0-alpha1"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/job_scheduler-8.x-2.0-alpha1.zip",
+            "reference": "8.x-2.0-alpha1",
+            "shasum": "fb1d6c14f5ca5304bb90f7abe34d84aadce79901"
+        },
+        "require": {
+            "drupal/core": "~8.1"
+        },
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-2.x": "2.x-dev"
+            },
+            "drupal": {
+                "version": "8.x-2.0-alpha1",
+                "datestamp": "1542187684",
+                "security-coverage": {
+                    "status": "not-covered",
+                    "message": "Project has not opted into security advisory coverage!"
+                }
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packages.drupal.org/8/downloads",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "authors": [
+            {
+                "name": "RenatoG",
+                "homepage": "https://www.drupal.org/user/3326031"
+            },
+            {
+                "name": "alex_b",
+                "homepage": "https://www.drupal.org/user/53995"
+            },
+            {
+                "name": "febbraro",
+                "homepage": "https://www.drupal.org/user/43670"
+            },
+            {
+                "name": "gabesullice",
+                "homepage": "https://www.drupal.org/user/2287430"
+            },
+            {
+                "name": "intrafusion",
+                "homepage": "https://www.drupal.org/user/424800"
+            },
+            {
+                "name": "jmiccolis",
+                "homepage": "https://www.drupal.org/user/31731"
+            },
+            {
+                "name": "joachim",
+                "homepage": "https://www.drupal.org/user/107701"
+            },
+            {
+                "name": "makara",
+                "homepage": "https://www.drupal.org/user/132402"
+            },
+            {
+                "name": "twistor",
+                "homepage": "https://www.drupal.org/user/473738"
+            },
+            {
+                "name": "webflo",
+                "homepage": "https://www.drupal.org/user/254778"
+            }
+        ],
+        "description": "Scheduler API.",
+        "homepage": "http://drupal.org/project/job_scheduler",
+        "support": {
+            "source": "https://git.drupalcode.org/project/job_scheduler"
+        }
+    },
+    {
         "name": "drupal/lang_dropdown",
         "version": "2.0.0-beta3",
         "version_normalized": "2.0.0.0-beta3",
@@ -5008,6 +5493,56 @@
         "homepage": "https://www.drupal.org/project/notify",
         "support": {
             "source": "http://cgit.drupalcode.org/notify"
+        }
+    },
+    {
+        "name": "drupal/override_node_options",
+        "version": "2.4.0",
+        "version_normalized": "2.4.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupalcode.org/project/override_node_options.git",
+            "reference": "8.x-2.4"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/override_node_options-8.x-2.4.zip",
+            "reference": "8.x-2.4",
+            "shasum": "0d00dbefc7f9103c863af2607a988bf68681df60"
+        },
+        "require": {
+            "drupal/core": "^8.4.0"
+        },
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-2.x": "2.x-dev"
+            },
+            "drupal": {
+                "version": "8.x-2.4",
+                "datestamp": "1522490884",
+                "security-coverage": {
+                    "status": "covered",
+                    "message": "Covered by Drupal's security advisory policy"
+                }
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packages.drupal.org/8/downloads",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "authors": [
+            {
+                "name": "Oliver Davies",
+                "homepage": "https://www.drupal.org/user/381388",
+                "email": "oliver@oliverdavies.uk"
+            }
+        ],
+        "description": "Allows permissions to be set on each node option such as published and authoring information.",
+        "homepage": "https://www.drupal.org/project/override_node_options",
+        "support": {
+            "source": "https://git.drupalcode.org/project/override_node_options"
         }
     },
     {
@@ -6654,6 +7189,67 @@
         "homepage": "https://www.drupal.org/project/video_embed_field",
         "support": {
             "source": "https://git.drupalcode.org/project/video_embed_field"
+        }
+    },
+    {
+        "name": "drupal/view_unpublished",
+        "version": "1.0.0-alpha1",
+        "version_normalized": "1.0.0.0-alpha1",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupalcode.org/project/view_unpublished.git",
+            "reference": "8.x-1.0-alpha1"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/view_unpublished-8.x-1.0-alpha1.zip",
+            "reference": "8.x-1.0-alpha1",
+            "shasum": "6c5928295162027cd4da8f45aba6111d11e899f0"
+        },
+        "require": {
+            "drupal/core": "*"
+        },
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-1.x": "1.x-dev"
+            },
+            "drupal": {
+                "version": "8.x-1.0-alpha1",
+                "datestamp": "1483493344",
+                "security-coverage": {
+                    "status": "not-covered",
+                    "message": "Alpha releases are not covered by Drupal security advisories."
+                }
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packages.drupal.org/8/downloads",
+        "license": [
+            "GPL-2.0-or-later"
+        ],
+        "authors": [
+            {
+                "name": "amaria",
+                "homepage": "https://www.drupal.org/user/66428"
+            },
+            {
+                "name": "beeradb",
+                "homepage": "https://www.drupal.org/user/120651"
+            },
+            {
+                "name": "elevins",
+                "homepage": "https://www.drupal.org/user/781882"
+            },
+            {
+                "name": "entendu",
+                "homepage": "https://www.drupal.org/user/173461"
+            }
+        ],
+        "description": "Select which roles should be able to see unpublished nodes.",
+        "homepage": "https://www.drupal.org/project/view_unpublished",
+        "support": {
+            "source": "https://git.drupalcode.org/project/view_unpublished"
         }
     },
     {
@@ -11070,6 +11666,52 @@
         ],
         "description": "Symfony Yaml Component",
         "homepage": "https://symfony.com"
+    },
+    {
+        "name": "technosophos/LibRIS",
+        "version": "2.0.2",
+        "version_normalized": "2.0.2.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/technosophos/LibRIS.git",
+            "reference": "5b6628ece0e57e90bd54f3b2d8de922dc4cc662c"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/technosophos/LibRIS/zipball/5b6628ece0e57e90bd54f3b2d8de922dc4cc662c",
+            "reference": "5b6628ece0e57e90bd54f3b2d8de922dc4cc662c",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.0"
+        },
+        "time": "2012-03-14T16:36:15+00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-0": {
+                "LibRIS": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT or GPLv2"
+        ],
+        "authors": [
+            {
+                "name": "M Butcher",
+                "homepage": "http://technosophos.com"
+            }
+        ],
+        "description": "An RIS parser. RIS is a format for reference metadata.",
+        "homepage": "https://github.com/technosophos/LibRIS",
+        "keywords": [
+            "Bibliography",
+            "File parser",
+            "RIS",
+            "Reference"
+        ],
+        "abandoned": true
     },
     {
         "name": "thinkshout/mailchimp-api-php",
