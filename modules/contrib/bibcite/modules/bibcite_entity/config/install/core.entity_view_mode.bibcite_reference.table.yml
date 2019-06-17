@@ -1,9 +1,0 @@
-id: bibcite_reference.table
-label: Table
-status: true
-cache: true
-targetEntityType: bibcite_reference
-dependencies:
-  enforced:
-    module:
-      - bibcite_entity
