@@ -12,8 +12,10 @@ return array(
     'Twig_' => array($vendorDir . '/twig/twig/lib'),
     'Stack' => array($vendorDir . '/stack/builder/src'),
     'Prophecy\\' => array($vendorDir . '/phpspec/prophecy/src'),
+    'PhpMarc' => array($vendorDir . '/caseyamcl/php-marc21/lib'),
     'PEAR' => array($vendorDir . '/pear/pear_exception'),
     'Mailchimp' => array($baseDir . '/modules/contrib/mailchimp/src'),
+    'LibRIS' => array($vendorDir . '/technosophos/LibRIS/src'),
     'EasyRdf_' => array($vendorDir . '/easyrdf/easyrdf/lib'),
     'Drupal\\' => array($vendorDir . '/drupal/coder/coder_sniffer/Drupal'),
     'DrupalPractice\\' => array($vendorDir . '/drupal/coder/coder_sniffer/Drupal'),
@@ -22,6 +24,7 @@ return array(
     'Doctrine\\Common\\Collections\\' => array($vendorDir . '/doctrine/collections/lib'),
     'Doctrine\\Common\\Annotations\\' => array($vendorDir . '/doctrine/annotations/lib'),
     'Console' => array($vendorDir . '/pear/console_getopt'),
+    'AudioLabs' => array($vendorDir . '/audiolabs/bibtexparser/src'),
     'Archive_Tar' => array($vendorDir . '/pear/archive_tar'),
     '' => array($vendorDir . '/pear/pear-core-minimal/src'),
 );

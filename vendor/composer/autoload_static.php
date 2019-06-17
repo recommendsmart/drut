@@ -150,6 +150,7 @@ class ComposerStaticInitDrupal8
         array (
             'Asm89\\Stack\\' => 12,
             'AcademicPuma\\CiteProc\\' => 22,
+            'ADCI\\FullNameParser\\' => 20,
         ),
     );
 
@@ -500,6 +501,10 @@ class ComposerStaticInitDrupal8
         array (
             0 => __DIR__ . '/..' . '/academicpuma/citeproc-php/src',
         ),
+        'ADCI\\FullNameParser\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/adci/full-name-parser/src',
+        ),
     );
 
     public static $prefixesPsr0 = array (
@@ -544,6 +549,10 @@ class ComposerStaticInitDrupal8
             array (
                 0 => __DIR__ . '/..' . '/phpspec/prophecy/src',
             ),
+            'PhpMarc' => 
+            array (
+                0 => __DIR__ . '/..' . '/caseyamcl/php-marc21/lib',
+            ),
             'PEAR' => 
             array (
                 0 => __DIR__ . '/..' . '/pear/pear_exception',
@@ -554,6 +563,13 @@ class ComposerStaticInitDrupal8
             'Mailchimp' => 
             array (
                 0 => __DIR__ . '/../..' . '/modules/contrib/mailchimp/src',
+            ),
+        ),
+        'L' => 
+        array (
+            'LibRIS' => 
+            array (
+                0 => __DIR__ . '/..' . '/technosophos/LibRIS/src',
             ),
         ),
         'E' => 
@@ -599,6 +615,10 @@ class ComposerStaticInitDrupal8
         ),
         'A' => 
         array (
+            'AudioLabs' => 
+            array (
+                0 => __DIR__ . '/..' . '/audiolabs/bibtexparser/src',
+            ),
             'Archive_Tar' => 
             array (
                 0 => __DIR__ . '/..' . '/pear/archive_tar',
