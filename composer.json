@@ -99,7 +99,10 @@
         "drupal/job_scheduler": "^2.0@alpha",
         "drupal/override_node_options": "^2.4",
         "drupal/view_unpublished": "^1.0@alpha",
-        "drupal/draggableviews": "^1.2"
+        "drupal/draggableviews": "^1.2",
+        "audiolabs/bibtexparser": "dev-master",
+        "drupal/weight": "^3.1",
+        "academicpuma/citeproc-php": "~1.0"
     },
     "replace": {
         "drupal/core": "^8.7"
