@@ -599,10 +599,6 @@ class ComposerStaticInitDrupal8
         ),
         'A' => 
         array (
-            'AudioLabs' => 
-            array (
-                0 => __DIR__ . '/..' . '/audiolabs/bibtexparser/src',
-            ),
             'Archive_Tar' => 
             array (
                 0 => __DIR__ . '/..' . '/pear/archive_tar',

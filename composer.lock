@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9a16625e6f592548131ac6c321d10bed",
+    "content-hash": "5e9dd32ba6f5f0add2fe208831edf892",
     "packages": [
         {
             "name": "academicpuma/citeproc-php",
@@ -155,50 +155,6 @@
                 "stack"
             ],
             "time": "2017-12-20T14:37:45+00:00"
-        },
-        {
-            "name": "audiolabs/bibtexparser",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/audiolabs/bibtexparser.git",
-                "reference": "b2d7794f49887ee7801c780b215d4d66b0f2e475"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/audiolabs/bibtexparser/zipball/b2d7794f49887ee7801c780b215d4d66b0f2e475",
-                "reference": "b2d7794f49887ee7801c780b215d4d66b0f2e475",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-0": {
-                    "AudioLabs": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Nils Werner",
-                    "email": "nils.werner@audiolabs-erlangen.de",
-                    "homepage": "http://www.audiolabs-erlangen.de",
-                    "role": "Developer"
-                }
-            ],
-            "description": "Bibtex parser for PHP 5.3",
-            "homepage": "http://github.com/alabs/bibtexparser",
-            "keywords": [
-                "bibtex",
-                "latex",
-                "parsing"
-            ],
-            "time": "2014-04-07T10:08:24+00:00"
         },
         {
             "name": "brumann/polyfill-unserialize",
@@ -11759,7 +11715,6 @@
         "drupal/views_field_view": 10,
         "drupal/job_scheduler": 15,
         "drupal/view_unpublished": 15,
-        "audiolabs/bibtexparser": 20,
         "behat/mink": 20,
         "behat/mink-selenium2-driver": 20
     },

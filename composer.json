@@ -101,8 +101,7 @@
         "drupal/draggableviews": "^1.2",
         "drupal/weight": "^3.1",
         "academicpuma/citeproc-php": "~1.0",
-        "drupal/shrinktheweb": "^1.1",
-        "audiolabs/bibtexparser": "dev-master"
+        "drupal/shrinktheweb": "^1.1"
     },
     "replace": {
         "drupal/core": "^8.7"
