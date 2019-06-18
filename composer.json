@@ -102,7 +102,8 @@
         "drupal/weight": "^3.1",
         "academicpuma/citeproc-php": "~1.0",
         "drupal/shrinktheweb": "^1.1",
-        "drupal/bibcite": "^1.0@alpha"
+        "drupal/bibcite": "^1.0@alpha",
+        "drupal/linked_field": "^1.1"
     },
     "replace": {
         "drupal/core": "^8.7"
