@@ -57,7 +57,7 @@
         "drupal/token": "^1.5",
         "fortawesome/font-awesome": "^4.7",
         "drupal/webform": "^5.0@RC",
-        "drupal/bootstrap": "^3.19",
+        "drupal/bootstrap": "^3.20",
         "drupal/bootstrap_layouts": "^5.1",
         "drupal/chosen": "^2.6",
         "drupal/embed": "^1.0",
@@ -103,7 +103,8 @@
         "academicpuma/citeproc-php": "~1.0",
         "drupal/shrinktheweb": "^1.1",
         "drupal/bibcite": "^1.0@alpha",
-        "drupal/linked_field": "^1.1"
+        "drupal/fixed_text_link_formatter": "^1.5",
+        "drupal/environment_indicator": "^3.6"
     },
     "replace": {
         "drupal/core": "^8.7"
