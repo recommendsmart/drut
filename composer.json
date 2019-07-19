@@ -61,7 +61,7 @@
         "drupal/bootstrap_layouts": "^5.1",
         "drupal/chosen": "^2.6",
         "drupal/embed": "^1.0",
-        "drupal/entity_embed": "^1.0@beta",
+        "drupal/entity_embed": "^1.0",
         "drupal/commerce": "^2.13",
         "drupal/commerce_order": "^2.13",
         "drupal/commerce_price": "^2.13",
