@@ -48,7 +48,6 @@
         "drupal/exclude_node_title": "^1.0@beta",
         "drupal/menu_item_visibility": "1.x-dev",
         "drupal/ctools": "^3.2",
-        "drupal/imce": "^1.7",
         "drupal/google_analytics": "^3.0",
         "drupal/backup_migrate": "^4.0",
         "drupal/eu_cookie_compliance": "^1.8",
@@ -104,7 +103,8 @@
         "drupal/shrinktheweb": "^1.1",
         "drupal/bibcite": "^1.0@alpha",
         "drupal/fixed_text_link_formatter": "^1.5",
-        "drupal/environment_indicator": "^3.6"
+        "drupal/environment_indicator": "^3.6",
+        "drupal/imce": "1.x-dev"
     },
     "replace": {
         "drupal/core": "^8.7"

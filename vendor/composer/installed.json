@@ -2389,7 +2389,7 @@
         "version_normalized": "8.3.1.0",
         "source": {
             "type": "git",
-            "url": "https://git.drupal.org/project/coder.git",
+            "url": "https://git.drupalcode.org/project/coder.git",
             "reference": "29a25627e7148b3119c84f18e087fc3b8c85b959"
         },
         "require": {
@@ -4437,21 +4437,15 @@
     },
     {
         "name": "drupal/imce",
-        "version": "1.7.0",
-        "version_normalized": "1.7.0.0",
+        "version": "dev-1.x",
+        "version_normalized": "dev-1.x",
         "source": {
             "type": "git",
             "url": "https://git.drupalcode.org/project/imce.git",
-            "reference": "8.x-1.7"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://ftp.drupal.org/files/projects/imce-8.x-1.7.zip",
-            "reference": "8.x-1.7",
-            "shasum": "55827d5c18c398269cea782a6bb8d9788a97576c"
+            "reference": "768b8cd61a2a4e30317435a0dd455360f63b4189"
         },
         "require": {
-            "drupal/core": "~8.0"
+            "drupal/core": "^8.5"
         },
         "type": "drupal-module",
         "extra": {
@@ -4459,20 +4453,24 @@
                 "dev-1.x": "1.x-dev"
             },
             "drupal": {
-                "version": "8.x-1.7",
-                "datestamp": "1540559280",
+                "version": "8.x-1.7+106-dev",
+                "datestamp": "1570742887",
                 "security-coverage": {
-                    "status": "covered",
-                    "message": "Covered by Drupal's security advisory policy"
+                    "status": "not-covered",
+                    "message": "Dev releases are not covered by Drupal security advisories."
                 }
             }
         },
-        "installation-source": "dist",
+        "installation-source": "source",
         "notification-url": "https://packages.drupal.org/8/downloads",
         "license": [
             "GPL-2.0+"
         ],
         "authors": [
+            {
+                "name": "thalles",
+                "homepage": "https://www.drupal.org/user/3589086"
+            },
             {
                 "name": "ufku",
                 "homepage": "https://www.drupal.org/user/9910"
@@ -4481,7 +4479,7 @@
         "description": "Provides a file manager supporting personal folders.",
         "homepage": "https://drupal.org/project/imce",
         "support": {
-            "source": "http://cgit.drupalcode.org/imce"
+            "source": "https://git.drupalcode.org/project/imce"
         }
     },
     {
