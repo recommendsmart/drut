@@ -18,7 +18,7 @@
         "drupal/page_manager": "^4.0@beta",
         "drupal/panels": "^4.4",
         "drupal/synonyms": "^1.0@alpha",
-        "drupal/commerce_paypal": "^1.0@beta",
+        "drupal/commerce_paypal": "1.0-beta6",
         "drupal/commerce_recurring": "^1.0@beta",
         "drupal/bootstrap_library": "^1.11",
         "drupal/colorbox": "^1.4",

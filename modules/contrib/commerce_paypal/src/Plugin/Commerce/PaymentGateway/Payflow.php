@@ -26,7 +26,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *
  * @CommercePaymentGateway(
  *   id = "paypal_payflow",
- *   label = "PayPal (Payflow)",
+ *   label = "PayPal - Payflow",
  *   display_label = "Credit Card",
  *   payment_method_types = {"credit_card"},
  *   credit_card_types = {
@@ -203,7 +203,7 @@ class Payflow extends OnsitePaymentGatewayBase implements PayflowInterface {
    */
   protected function getExpirationDate(array $payment_details) {
     $date = \DateTime::createFromFormat('Y', $payment_details['expiration']['year']);
-    return $payment_details['expiration']['month']  . $date->format('y');
+    return $payment_details['expiration']['month'] . $date->format('y');
   }
 
   /**
@@ -492,7 +492,7 @@ class Payflow extends OnsitePaymentGatewayBase implements PayflowInterface {
       $data = $this->executeTransaction([
         'trxtype' => 'C',
         'origid' => $transaction_number,
-        'amt'=> $amount->getNumber(),
+        'amt' => $amount->getNumber(),
       ]);
       if ($data['result'] !== '0') {
         throw new PaymentGatewayException('Credit could not be completed. Message: ' . $data['respmsg'], $data['result']);

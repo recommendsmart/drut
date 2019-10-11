@@ -4,6 +4,7 @@ commerce_paypal.checkout.create:
     _controller: '\Drupal\commerce_paypal\Controller\CheckoutController::onCreate'
   requirements:
     _custom_access: '\Drupal\commerce_checkout\Controller\CheckoutController::checkAccess'
+    _module_dependencies: commerce_checkout
   options:
     parameters:
       commerce_payment_gateway:
@@ -17,6 +18,7 @@ commerce_paypal.checkout.approve:
     _controller: '\Drupal\commerce_paypal\Controller\CheckoutController::onApprove'
   requirements:
     _custom_access: '\Drupal\commerce_checkout\Controller\CheckoutController::checkAccess'
+    _module_dependencies: commerce_checkout
   options:
     parameters:
       commerce_payment_gateway:

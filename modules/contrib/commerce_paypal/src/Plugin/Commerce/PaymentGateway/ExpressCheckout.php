@@ -29,7 +29,7 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
  *
  * @CommercePaymentGateway(
  *   id = "paypal_express_checkout",
- *   label = @Translation("PayPal Express Checkout [Deprecated]"),
+ *   label = @Translation("PayPal - Express Checkout [LEGACY-DEPRECATED]"),
  *   display_label = @Translation("PayPal"),
  *    forms = {
  *     "offsite-payment" = "Drupal\commerce_paypal\PluginForm\ExpressCheckoutForm",
@@ -866,7 +866,7 @@ class ExpressCheckout extends OffsitePaymentGatewayBase implements ExpressChecko
   /**
    * Returns a mapping of PayPal payment statuses to payment states.
    *
-   * @param $status
+   * @param string $status
    *   (optional) The PayPal payment status.
    *
    * @return array|string

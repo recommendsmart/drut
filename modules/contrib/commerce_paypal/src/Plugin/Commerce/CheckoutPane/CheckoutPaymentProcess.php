@@ -3,11 +3,15 @@
 namespace Drupal\commerce_paypal\Plugin\Commerce\CheckoutPane;
 
 use Drupal\commerce\Response\NeedsRedirectException;
+use Drupal\commerce_checkout\Plugin\Commerce\CheckoutFlow\CheckoutFlowInterface;
 use Drupal\commerce_checkout\Plugin\Commerce\CheckoutPane\CheckoutPaneBase;
 use Drupal\commerce_payment\Exception\PaymentGatewayException;
 use Drupal\commerce_paypal\Plugin\Commerce\PaymentGateway\CheckoutInterface;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
+use Psr\Log\LoggerInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Provides the PayPal Checkout payment process pane.
@@ -23,6 +27,49 @@ use Drupal\Core\Url;
 class CheckoutPaymentProcess extends CheckoutPaneBase {
 
   /**
+   * The logger.
+   *
+   * @var \Psr\Log\LoggerInterface
+   */
+  protected $logger;
+
+  /**
+   * Constructs a new CheckoutPaymentProcess object.
+   *
+   * @param array $configuration
+   *   A configuration array containing information about the plugin instance.
+   * @param string $plugin_id
+   *   The plugin_id for the plugin instance.
+   * @param mixed $plugin_definition
+   *   The plugin implementation definition.
+   * @param \Drupal\commerce_checkout\Plugin\Commerce\CheckoutFlow\CheckoutFlowInterface $checkout_flow
+   *   The parent checkout flow.
+   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
+   *   The entity type manager.
+   * @param \Psr\Log\LoggerInterface $logger
+   *   The logger.
+   */
+  public function __construct(array $configuration, $plugin_id, $plugin_definition, CheckoutFlowInterface $checkout_flow, EntityTypeManagerInterface $entity_type_manager, LoggerInterface $logger) {
+    parent::__construct($configuration, $plugin_id, $plugin_definition, $checkout_flow, $entity_type_manager);
+
+    $this->logger = $logger;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition, CheckoutFlowInterface $checkout_flow = NULL) {
+    return new static(
+      $configuration,
+      $plugin_id,
+      $plugin_definition,
+      $checkout_flow,
+      $container->get('entity_type.manager'),
+      $container->get('logger.channel.commerce_paypal')
+    );
+  }
+
+  /**
    * {@inheritdoc}
    */
   public function isVisible() {
@@ -30,23 +77,24 @@ class CheckoutPaymentProcess extends CheckoutPaneBase {
       // No payment is needed if the order is free or has already been paid.
       return FALSE;
     }
-    return $this->checkoutFlow->getPluginId() == 'paypal_checkout';
+    if ($this->checkoutFlow->getPluginId() !== 'paypal_checkout' ||
+      empty($this->order->getData('commerce_paypal_checkout')) ||
+      $this->order->get('payment_gateway')->isEmpty()) {
+      return FALSE;
+    }
+    $checkout_data = $this->order->getData('commerce_paypal_checkout');
+    /** @var \Drupal\commerce_payment\Entity\PaymentGatewayInterface $payment_gateway */
+    $payment_gateway = $this->order->payment_gateway->entity;
+    return $checkout_data['flow'] == 'shortcut' && $payment_gateway->getPlugin() instanceof CheckoutInterface;
   }
 
   /**
    * {@inheritdoc}
    */
   public function buildPaneForm(array $pane_form, FormStateInterface $form_state, array &$complete_form) {
-    if ($this->order->get('payment_gateway')->isEmpty()) {
-      return;
-    }
     /** @var \Drupal\commerce_payment\Entity\PaymentGatewayInterface $payment_gateway */
     $payment_gateway = $this->order->payment_gateway->entity;
     $payment_gateway_plugin = $payment_gateway->getPlugin();
-    if (!$payment_gateway_plugin instanceof CheckoutInterface) {
-      return;
-    }
-
     $payment_storage = $this->entityTypeManager->getStorage('commerce_payment');
     /** @var \Drupal\commerce_payment\Entity\PaymentInterface $payment */
     $payment = $payment_storage->create([
@@ -58,13 +106,12 @@ class CheckoutPaymentProcess extends CheckoutPaneBase {
     $next_step_id = $this->checkoutFlow->getNextStepId($this->getStepId());
 
     try {
-      $payment->payment_method = $this->order->payment_method->entity;
       $payment_gateway_plugin->createPayment($payment);
       $this->checkoutFlow->redirectToStep($next_step_id);
     }
     catch (PaymentGatewayException $e) {
-      \Drupal::logger('commerce_paypal')->error($e->getMessage());
-      $message = $this->t('We encountered an unexpected error processing your payment method. Please try again later.');
+      $this->logger->error($e->getMessage());
+      $message = $this->t('We encountered an unexpected error processing your payment. Please try again later.');
       $this->messenger()->addError($message);
       $this->redirectToCart();
     }

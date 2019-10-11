@@ -9,6 +9,8 @@ use Drupal\commerce_paypal\Event\CheckoutOrderRequestEvent;
 use Drupal\commerce_paypal\Event\PayPalEvents;
 use Drupal\commerce_price\Calculator;
 use Drupal\commerce_product\Entity\ProductVariationInterface;
+use Drupal\Component\Datetime\TimeInterface;
+use Drupal\Component\Serialization\Json;
 use Drupal\Core\Extension\ModuleHandlerInterface;
 use GuzzleHttp\ClientInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -47,6 +49,13 @@ class CheckoutSdk implements CheckoutSdkInterface {
   protected $moduleHandler;
 
   /**
+   * The time.
+   *
+   * @var \Drupal\Component\Datetime\TimeInterface
+   */
+  protected $time;
+
+  /**
    * The payment gateway plugin configuration.
    *
    * @var array
@@ -64,14 +73,17 @@ class CheckoutSdk implements CheckoutSdkInterface {
    *   The event dispatcher.
    * @param \Drupal\Core\Extension\ModuleHandlerInterface $module_handler
    *   The module handler.
+   * @param \Drupal\Component\Datetime\TimeInterface $time
+   *   The time.
    * @param array $config
    *   The payment gateway plugin configuration array.
    */
-  public function __construct(ClientInterface $client, AdjustmentTransformerInterface $adjustment_transformer, EventDispatcherInterface $event_dispatcher, ModuleHandlerInterface $module_handler, array $config) {
+  public function __construct(ClientInterface $client, AdjustmentTransformerInterface $adjustment_transformer, EventDispatcherInterface $event_dispatcher, ModuleHandlerInterface $module_handler, TimeInterface $time, array $config) {
     $this->client = $client;
     $this->adjustmentTransformer = $adjustment_transformer;
     $this->eventDispatcher = $event_dispatcher;
     $this->moduleHandler = $module_handler;
+    $this->time = $time;
     $this->config = $config;
   }
 
@@ -90,8 +102,22 @@ class CheckoutSdk implements CheckoutSdkInterface {
   /**
    * {@inheritdoc}
    */
-  public function createOrder(OrderInterface $order) {
-    $params = $this->prepareOrderRequest($order);
+  public function getClientToken() {
+    $response = $this->getAccessToken();
+    $body = Json::decode($response->getBody()->getContents());
+    return $this->client->post('/v1/identity/generate-token', [
+      'headers' => [
+        'Authorization' => $body['access_token'],
+        'Content-Type' => 'application/json',
+      ],
+    ]);
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function createOrder(OrderInterface $order, AddressInterface $billing_address = NULL) {
+    $params = $this->prepareOrderRequest($order, $billing_address);
     $event = new CheckoutOrderRequestEvent($order, $params);
     $this->eventDispatcher->dispatch(PayPalEvents::CHECKOUT_CREATE_ORDER_REQUEST, $event);
     return $this->client->post('/v2/checkout/orders', ['json' => $event->getRequestBody()]);
@@ -203,23 +229,25 @@ class CheckoutSdk implements CheckoutSdkInterface {
    *
    * @param \Drupal\commerce_order\Entity\OrderInterface $order
    *   The order.
+   * @param \Drupal\address\AddressInterface $billing_address
+   *   (optional) A billing address to pass to PayPal as the payer information.
+   *   This is used in checkout to pass the entered address that is not yet
+   *   submitted and associated to the order.
+   *
    * @return array
    *   An array suitable for use in the create|update order API calls.
    */
-  protected function prepareOrderRequest(OrderInterface $order) {
+  protected function prepareOrderRequest(OrderInterface $order, AddressInterface $billing_address = NULL) {
     $items = [];
     $item_total = NULL;
     $tax_total = NULL;
     foreach ($order->getItems() as $order_item) {
-      // We need to pass the adjusted unit/total because passing a discount
-      // in the breakdown isn't supported yet.
-      // See https://github.com/paypal/paypal-checkout-components/issues/1016.
-      $item_total = $item_total ? $item_total->add($order_item->getAdjustedTotalPrice(['promotion'])) : $order_item->getAdjustedTotalPrice(['promotion']);
+      $item_total = $item_total ? $item_total->add($order_item->getTotalPrice()) : $order_item->getTotalPrice();
       $item = [
         'name' => mb_substr($order_item->getTitle(), 0, 127),
         'unit_amount' => [
           'currency_code' => $order_item->getUnitPrice()->getCurrencyCode(),
-          'value' => $order_item->getAdjustedUnitPrice(['promotion'])->getNumber(),
+          'value' => Calculator::trim($order_item->getUnitPrice()->getNumber()),
         ],
         'quantity' => intval($order_item->getQuantity()),
       ];
@@ -254,28 +282,38 @@ class CheckoutSdk implements CheckoutSdkInterface {
         'value' => Calculator::trim($shipping_total->getNumber()),
       ];
     }
+
+    $promotion_total = $this->getAdjustmentsTotal($adjustments, ['promotion']);
+    if (!empty($promotion_total)) {
+      $breakdown['discount'] = [
+        'currency_code' => $promotion_total->getCurrencyCode(),
+        'value' => Calculator::trim($promotion_total->multiply(-1)->getNumber()),
+      ];
+    }
     $payer = [];
 
     if (!empty($order->getEmail())) {
       $payer['email_address'] = $order->getEmail();
     }
 
-    $billing_profile = $order->getBillingProfile();
-    if (!empty($billing_profile)) {
+    $profiles = $order->collectProfiles();
+    if (!empty($billing_address)) {
+      $payer += static::formatAddress($billing_address);
+    }
+    elseif (isset($profiles['billing'])) {
       /** @var \Drupal\address\AddressInterface $address */
-      $address = $billing_profile->address->first();
+      $address = $profiles['billing']->address->first();
       if (!empty($address)) {
         $payer += static::formatAddress($address);
       }
     }
-    $time = \Drupal::time()->getRequestTime();
     $params = [
       'intent' => strtoupper($this->config['intent']),
       'purchase_units' => [
         [
           'reference_id' => 'default',
           'custom_id' => $order->id(),
-          'invoice_id' => $order->id() . '-' . $time,
+          'invoice_id' => $order->id() . '-' . $this->time->getRequestTime(),
           'amount' => [
             'currency_code' => $order->getTotalPrice()->getCurrencyCode(),
             'value' => Calculator::trim($order->getTotalPrice()->getNumber()),
@@ -288,7 +326,15 @@ class CheckoutSdk implements CheckoutSdkInterface {
         'brand_name' => mb_substr($order->getStore()->label(), 0, 127),
       ],
     ];
-    $shipping_address = $this->collectShippingAddress($order);
+
+    $shipping_address = [];
+    if (isset($profiles['shipping'])) {
+      /** @var \Drupal\address\AddressInterface $address */
+      $address = $profiles['shipping']->address->first();
+      if (!empty($address)) {
+        $shipping_address = static::formatAddress($address, 'shipping');
+      }
+    }
     $shipping_preference = $this->config['shipping_preference'];
 
     // The shipping module isn't enabled, override the shipping preference
@@ -312,17 +358,6 @@ class CheckoutSdk implements CheckoutSdkInterface {
     }
     $params['application_context']['shipping_preference'] = strtoupper($shipping_preference);
 
-    // In case of the "mark" flow, a payment_method is already referenced by
-    // the order, when that is the case, we need to tell PayPal to display a
-    // "Pay now" button instead of a "Continue" button.
-    if (!$order->get('payment_method')->isEmpty()) {
-      $payment_method = $order->get('payment_method')->entity;
-
-      if ($payment_method->bundle() == 'paypal_checkout' && $payment_method->get('flow')->value == 'mark') {
-        $params['application_context']['user_action'] = 'PAY_NOW';
-      }
-    }
-
     if ($payer) {
       $params['payer'] = $payer;
     }
@@ -339,7 +374,7 @@ class CheckoutSdk implements CheckoutSdkInterface {
    *   The adjustment types to include in the calculation.
    *   Examples: fee, promotion, tax. Defaults to all adjustment types.
    *
-   * @return \Drupal\commerce_price\Price|NULL
+   * @return \Drupal\commerce_price\Price|null
    *   The adjustments total, or NULL if no matching adjustments were found.
    */
   protected function getAdjustmentsTotal(array $adjustments, array $adjustment_types = []) {
@@ -363,36 +398,6 @@ class CheckoutSdk implements CheckoutSdkInterface {
     }
 
     return $adjustments_total;
-  }
-
-  /**
-   * Collect the shipping address from the first referenced shipment.
-   *
-   * @param \Drupal\commerce_order\Entity\OrderInterface $order
-   *   The order.
-   *
-   * @return array
-   *   The formatted shipping address extracted from the first referenced
-   *   shipment, an empty array if no shipping profile was found.
-   */
-  protected function collectShippingAddress(OrderInterface $order) {
-    $shipping_address = [];
-
-    if (!$order->hasField('shipments') || $order->get('shipments')->isEmpty()) {
-      return $shipping_address;
-    }
-    /**
-     * @var \Drupal\commerce_shipping\Entity\ShipmentInterface $first_shipment
-     */
-    $first_shipment = $order->get('shipments')->first()->entity;
-    $shipping_profile = $first_shipment->getShippingProfile();
-    if (empty($shipping_profile) || $shipping_profile->get('address')->isEmpty()) {
-      return $shipping_address;
-    }
-    /** @var \Drupal\address\AddressInterface $address */
-    $address = $shipping_profile->get('address')->first();
-    $shipping_address = static::formatAddress($address, 'shipping');
-    return $shipping_address;
   }
 
   /**

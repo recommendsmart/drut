@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f00afad72c1eec5e9354aa6a7cf68995",
+    "content-hash": "815d3d09e9b52994f7688fdbde1b1599",
     "packages": [
         {
             "name": "academicpuma/citeproc-php",
@@ -2404,20 +2404,20 @@
         },
         {
             "name": "drupal/commerce_paypal",
-            "version": "1.0.0-beta4",
+            "version": "1.0.0-beta6",
             "source": {
                 "type": "git",
                 "url": "https://git.drupalcode.org/project/commerce_paypal.git",
-                "reference": "8.x-1.0-beta4"
+                "reference": "8.x-1.0-beta6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://ftp.drupal.org/files/projects/commerce_paypal-8.x-1.0-beta4.zip",
-                "reference": "8.x-1.0-beta4",
-                "shasum": "322fa80004ca376d6e6b647bf70adddba719e904"
+                "url": "https://ftp.drupal.org/files/projects/commerce_paypal-8.x-1.0-beta6.zip",
+                "reference": "8.x-1.0-beta6",
+                "shasum": "7d8b02514918aeb734d948001ea53aebd0852f92"
             },
             "require": {
-                "drupal/commerce": "~2.10",
+                "drupal/commerce": "^2.14",
                 "drupal/commerce_payment": "*",
                 "drupal/core": "~8.0",
                 "sainsburys/guzzle-oauth2-plugin": "^3.0"
@@ -2428,8 +2428,8 @@
                     "dev-1.x": "1.x-dev"
                 },
                 "drupal": {
-                    "version": "8.x-1.0-beta4",
-                    "datestamp": "1554134286",
+                    "version": "8.x-1.0-beta6",
+                    "datestamp": "1570114089",
                     "security-coverage": {
                         "status": "not-covered",
                         "message": "Beta releases are not covered by Drupal security advisories."
@@ -12063,7 +12063,6 @@
         "drupal/notify": 20,
         "drupal/page_manager": 10,
         "drupal/synonyms": 15,
-        "drupal/commerce_paypal": 10,
         "drupal/commerce_recurring": 10,
         "drupal/insert_view": 15,
         "drupal/libraries": 15,
