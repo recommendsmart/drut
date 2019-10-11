@@ -26,11 +26,19 @@ class RoleExpireApiService {
   protected $database;
 
   /**
+   * Session manager.
+   *
+   * Drupal\Core\Session\SessionManager
+   */
+  protected $sessionManager;
+
+  /**
    * Constructs a new RoleExpireApiService object.
    */
   public function __construct(ConfigFactory $configFactory, Connection $connection) {
     $this->config = $configFactory->get('role_expire.config');
     $this->database = $connection;
+    $this->sessionManager = \Drupal::service('session_manager');
   }
 
   /**
@@ -95,6 +103,9 @@ class RoleExpireApiService {
     $query = $this->database->delete('role_expire');
     $query->condition('uid', $uid)->condition('rid', $rid);
     $query->execute();
+
+    // Delete the user's sessions so they have login again with their new access.
+    $this->sessionManager->delete($uid);
   }
 
   /**
@@ -115,6 +126,9 @@ class RoleExpireApiService {
    */
   public function deleteUserRecords($uid) {
     $this->database->delete('role_expire')->condition('uid', $uid)->execute();
+
+    // Delete the user's sessions so they have login again with their new access.
+    $this->sessionManager->delete($uid);
   }
 
   /**
@@ -241,9 +255,9 @@ class RoleExpireApiService {
    *
    * It won't override the current expiration time for user's role.
    *
-   * @param $role_id
+   * @param string $role_id
    *   The ID of the role.
-   * @param $uid
+   * @param int $uid
    *   The user ID.
    */
   function processDefaultRoleDurationForUser($role_id, $uid) {
@@ -254,7 +268,7 @@ class RoleExpireApiService {
       // If the expiry is empty then we act!.
       if (!$user_role_expiry) {
         // Use strtotime of default duration.
-        \Drupal::service('role_expire.api')->writeRecord($uid, $role_id, strtotime($default_duration));
+        $this->writeRecord($uid, $role_id, strtotime($default_duration));
         \Drupal::logger('role_expire')->notice(t('Added default duration @default_duration to role @role to user @account.', array('@default_duration' => $default_duration, '@role' => $role_id, '@account' => $uid)));
       }
     }

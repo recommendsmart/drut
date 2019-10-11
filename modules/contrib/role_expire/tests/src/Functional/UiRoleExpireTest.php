@@ -2,6 +2,8 @@
 
 namespace Drupal\Tests\role_expire\Functional;
 
+use Drupal\Tests\BrowserTestBase;
+use Drupal\Tests\role_expire\Traits\AssertRoleExpireTrait;
 
 /**
  * Tests that the Role expire interface is available.
@@ -21,7 +23,9 @@ namespace Drupal\Tests\role_expire\Functional;
  * https://api.drupal.org/api/drupal/vendor%21behat%21mink%21src%21Element%21DocumentElement.php/class/DocumentElement/8.6.x
  * The rules module has a lot of tests that can serve as an example. Example: UiPageTest.php
  */
-class UiRoleExpireTest extends RoleExpireBrowserTest {
+class UiRoleExpireTest extends BrowserTestBase {
+
+  use AssertRoleExpireTrait;
 
   /**
    * Modules to enable.

@@ -1,4 +1,23 @@
-Role expire 8.x-1.1, 2018-02-07
+Role expire 8.x-1.3, 2019-10-06
+-------------------------------
+#3083481: Remove unused variable
+#3029593: Support role assignment modules
+Remove another unused variable
+Remove usage of Deprecated REQUEST_TIME
+Remove two unused use statements
+Update deprecated tags in old API calls
+Updated PHPDoc for API calls
+Simplify call to writeRecord in processDefaultRoleDurationForUser API call
+
+Role expire 8.x-1.2, 2019-09-23
+-------------------------------
+
+#3080679: End sessions when expiring roles
+#3080861: Exclude authenticated and anonymous role while assigning new role after expiration
+Fixed views fields "Role expiration date/time" and "Role expiration role" to avoid row duplicates
+Tests: Moved helper functions to a Trait
+
+Role expire 8.x-1.1, 2019-02-07
 -------------------------------
 
 README improvement

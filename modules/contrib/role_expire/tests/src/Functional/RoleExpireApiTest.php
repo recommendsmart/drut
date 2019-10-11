@@ -2,6 +2,9 @@
 
 namespace Drupal\Tests\role_expire\Functional;
 
+use Drupal\Tests\BrowserTestBase;
+use Drupal\Tests\role_expire\Traits\AssertRoleExpireTrait;
+
 /**
  * Tests that the Role expire API works.
  *
@@ -15,7 +18,9 @@ namespace Drupal\Tests\role_expire\Functional;
  *
  * https://api.drupal.org/api/drupal/core%21tests%21Drupal%21Tests%21BrowserTestBase.php/class/BrowserTestBase/8.6.x
  */
-class RoleExpireApiTest extends RoleExpireBrowserTest {
+class RoleExpireApiTest extends BrowserTestBase {
+
+  use AssertRoleExpireTrait;
 
   /**
    * Role expire API service.

@@ -9,9 +9,7 @@
 
 use Drupal\Component\Utility\Html;
 use Drupal\Component\Render\FormattableMarkup;
-use Drupal\role_expire\RoleExpireApiService;
 use Drupal\role_expire\Event\RoleExpiresEvent;
-use Drupal\Core\Database\Database;
 use Drupal\Core\Form\FormStateInterface;
 
 /*******************************************************************************
@@ -21,14 +19,16 @@ use Drupal\Core\Form\FormStateInterface;
 /**
  * API function; Get expiration time of a user role.
  *
- * @param $uid
+ * @param int $uid
  *   User ID.
- * @param $rid
+ * @param string $rid
  *   Role ID.
- * @return
+ *
+ * @return array
  *  Array with the expiration time.
  *
- * @deprecated Use the new service role_expire.api instead.
+ * @deprecated in role_expire:8.x-1.0 and is removed from role_expire:9.x-1.0. Use the new service role_expire.api instead.
+ * @see https://www.drupal.org/project/role_expire/issues/2981894
  */
 function role_expire_get_user_role_expiry_time($uid, $rid) {
   return \Drupal::service('role_expire.api')->getUserRoleExpiryTime($uid, $rid);
@@ -37,12 +37,14 @@ function role_expire_get_user_role_expiry_time($uid, $rid) {
 /**
  * API function; Get expiration of all roles of a user.
  *
- * @param $uid
+ * @param int $uid
  *   User ID.
- * @return
+ *
+ * @return array
  *  Array with the expiration time.
  *
- * @deprecated Use the new service role_expire.api instead.
+ * @deprecated in role_expire:8.x-1.0 and is removed from role_expire:9.x-1.0. Use the new service role_expire.api instead.
+ * @see https://www.drupal.org/project/role_expire/issues/2981894
  */
 function role_expire_get_all_user_records($uid) {
   return \Drupal::service('role_expire.api')->getAllUserRecords($uid);
@@ -51,13 +53,13 @@ function role_expire_get_all_user_records($uid) {
 /**
  * API function; Delete a record from the database.
  *
- * @param $uid
+ * @param int $uid
  *   User ID.
- * @param $rid
+ * @param string $rid
  *   Role ID.
- * @return
  *
- * @deprecated Use the new service role_expire.api instead.
+ * @deprecated in role_expire:8.x-1.0 and is removed from role_expire:9.x-1.0. Use the new service role_expire.api instead.
+ * @see https://www.drupal.org/project/role_expire/issues/2981894
  */
 function role_expire_delete_record($uid, $rid) {
   \Drupal::service('role_expire.api')->deleteRecord($uid, $rid);
@@ -66,11 +68,11 @@ function role_expire_delete_record($uid, $rid) {
 /**
  * API function; Delete all records for role.
  *
- * @param $rid
+ * @param string $rid
  *   Role ID.
- * @return
  *
- * @deprecated Use the new service role_expire.api instead.
+ * @deprecated in role_expire:8.x-1.0 and is removed from role_expire:9.x-1.0. Use the new service role_expire.api instead.
+ * @see https://www.drupal.org/project/role_expire/issues/2981894
  */
 function role_expire_delete_role_records($rid) {
   \Drupal::service('role_expire.api')->deleteRoleRecords($rid);
@@ -79,11 +81,11 @@ function role_expire_delete_role_records($rid) {
 /**
  * API function; Delete all user expirations.
  *
- * @param $uid
+ * @param int $uid
  *   User ID.
- * @return
  *
- * @deprecated Use the new service role_expire.api instead.
+ * @deprecated in role_expire:8.x-1.0 and is removed from role_expire:9.x-1.0. Use the new service role_expire.api instead.
+ * @see https://www.drupal.org/project/role_expire/issues/2981894
  */
 function role_expire_delete_user_records($uid) {
   \Drupal::service('role_expire.api')->deleteUserRecords($uid);
@@ -92,14 +94,15 @@ function role_expire_delete_user_records($uid) {
 /**
  * API function; Insert or update a record in the database.
  *
- * @param $uid
+ * @param int $uid
  *   User ID.
- * @param $rid
+ * @param string $rid
  *   Role ID.
- * @param $expiry_timestamp
+ * @param int $expiry_timestamp
  *   The expiration timestamp.
  *
- * @deprecated Use the new service role_expire.api instead.
+ * @deprecated in role_expire:8.x-1.0 and is removed from role_expire:9.x-1.0. Use the new service role_expire.api instead.
+ * @see https://www.drupal.org/project/role_expire/issues/2981894
  */
 function role_expire_write_record($uid, $rid, $expiry_timestamp) {
   \Drupal::service('role_expire.api')->writeRecord($uid, $rid, $expiry_timestamp);
@@ -108,14 +111,15 @@ function role_expire_write_record($uid, $rid, $expiry_timestamp) {
 /**
  * API function; Get the default duration for a role.
  *
- * @param $rid
+ * @param string $rid
  *   Required. The role_id to check.
  *
- * @return
+ * @return string
  *  String containing the strtotime compatible default duration of the role
  *  or empty string if not set.
  *
- * @deprecated Use the new service role_expire.api instead.
+ * @deprecated in role_expire:8.x-1.0 and is removed from role_expire:9.x-1.0. Use the new service role_expire.api instead.
+ * @see https://www.drupal.org/project/role_expire/issues/2981894
  */
 function role_expire_get_default_duration($rid) {
   return \Drupal::service('role_expire.api')->getDefaultDuration($rid);
@@ -124,12 +128,13 @@ function role_expire_get_default_duration($rid) {
 /**
  * API function; Insert or update the default expiry duration for a role.
  *
- * @param $rid
+ * @param string $rid
  *   Role ID.
- * @param $duration
+ * @param string $duration
  *   The strtotime-compatible duration string.
  *
- * @deprecated Use the new service role_expire.api instead.
+ * @deprecated in role_expire:8.x-1.0 and is removed from role_expire:9.x-1.0. Use the new service role_expire.api instead.
+ * @see https://www.drupal.org/project/role_expire/issues/2981894
  */
 function role_expire_set_default_duration($rid, $duration) {
   \Drupal::service('role_expire.api')->setDefaultDuration($rid, $duration);
@@ -138,10 +143,11 @@ function role_expire_set_default_duration($rid, $duration) {
 /**
  * API function; Delete default duration(s) for a role.
  *
- * @param $rid
+ * @param string $rid
  *   Required. The role_id to remove.
  *
- * @deprecated Use the new service role_expire.api instead.
+ * @deprecated in role_expire:8.x-1.0 and is removed from role_expire:9.x-1.0. Use the new service role_expire.api instead.
+ * @see https://www.drupal.org/project/role_expire/issues/2981894
  */
 function role_expire_delete_default_duration($rid) {
   \Drupal::service('role_expire.api')->deleteDefaultDuration($rid);
@@ -150,10 +156,11 @@ function role_expire_delete_default_duration($rid) {
 /**
  * API function; Get all records that should be expired.
  *
- * @param $time
+ * @param int $time
  *   Optional. The time to check, if not set it will check current time.
  *
- * @deprecated Use the new service role_expire.api instead.
+ * @deprecated in role_expire:8.x-1.0 and is removed from role_expire:9.x-1.0. Use the new service role_expire.api instead.
+ * @see https://www.drupal.org/project/role_expire/issues/2981894
  */
 function role_expire_get_expired($time = '') {
   return \Drupal::service('role_expire.api')->getExpired($time);
@@ -167,7 +174,8 @@ function role_expire_get_expired($time = '') {
  *   one that has to be assigned on expiration. The array will be empty if
  *   configuration is not set.
  *
- * @deprecated Use the new service role_expire.api instead.
+ * @deprecated in role_expire:8.x-1.0 and is removed from role_expire:9.x-1.0. Use the new service role_expire.api instead.
+ * @see https://www.drupal.org/project/role_expire/issues/2981894
  */
 function role_expire_get_roles_after_expiration() {
   return \Drupal::service('role_expire.api')->getRolesAfterExpiration();
@@ -324,6 +332,18 @@ function role_expire_user_form_submit_validate($form, FormStateInterface &$form_
  */
 function role_expire_user_form_submit($form, FormStateInterface &$form_state) {
   $values = $form_state->getValues();
+
+  // Only rely on Role Delegation data if the user hasn't access to the normal roles field.
+  if (!\Drupal::currentUser()->hasPermission('administer permissions')) {
+    // If Role Delegation module is used.
+    if (isset($values['role_change'])) {
+      $values['roles'] = array();
+      foreach ($values['role_change'] as $rid) {
+        $values['roles'] = $rid;
+      }
+    }
+  }
+
   $account = $form_state->getFormObject()->getEntity();
   $original_roles = $form_state->get('original_roles');
 
@@ -461,7 +481,6 @@ function role_expire_cron() {
   $expires = \Drupal::service('role_expire.api')->getExpired();
 
   if ($expires) {
-    $roles = _role_expire_get_role();
     foreach ($expires as $expire) {
 
       // Remove the role expiration record from the role_expires table.
@@ -583,7 +602,7 @@ function _role_expire_get_role() {
   unset($roles[Drupal\Core\Session\AccountInterface::AUTHENTICATED_ROLE]);
 
   // Return in the same format as in D7 version to simplify D8 upgrade.
-  foreach ($roles as $label => $role) {
+  foreach ($roles as $role) {
     $roles_out[$role->id()] = $role->label();
   }
   return $roles_out;
@@ -618,12 +637,13 @@ function _role_expire_validate_role_expires(&$form, FormStateInterface &$form_st
  *
  * It won't override the current expiration time for user's role.
  *
- * @param $role_id
+ * @param string $role_id
  *   The ID of the role.
- * @param $uid
+ * @param int $uid
  *   The user ID.
  *
- * @deprecated Use the new service role_expire.api instead.
+ * @deprecated in role_expire:8.x-1.0 and is removed from role_expire:9.x-1.0. Use the new service role_expire.api instead.
+ * @see https://www.drupal.org/project/role_expire/issues/2981894
  */
 function role_expire_process_default_role_duration_for_user($role_id, $uid) {
   \Drupal::service('role_expire.api')->processDefaultRoleDurationForUser($role_id, $uid);

@@ -48,6 +48,8 @@ class RoleExpireConfigurationForm extends ConfigFormBase {
     );
     // It is important to respect the keys on this array merge.
     $roles_select = $default + $parsed_roles;
+    unset($roles_select['anonymous']);
+    unset($roles_select['authenticated']);
 
     $form['general'] = array(
       '#type' => 'fieldset',

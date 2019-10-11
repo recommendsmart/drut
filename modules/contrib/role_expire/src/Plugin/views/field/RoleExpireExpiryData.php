@@ -10,10 +10,13 @@
 
 namespace Drupal\role_expire\Plugin\views\field;
 
-use Drupal\role_expire\RoleExpireApiService;
+use Drupal\views\ViewExecutable;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\views\Plugin\views\field\FieldPluginBase;
-use Drupal\views\ResultRow;
+use Drupal\views\Plugin\views\field\PrerenderList;
+use Drupal\role_expire\RoleExpireApiService;
+use Drupal\views\Plugin\views\display\DisplayPluginBase;
+use Drupal\Core\Datetime\DateFormatterInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Field handler to display the role expire data.
@@ -22,13 +25,69 @@ use Drupal\views\ResultRow;
  *
  * @ViewsField("role_expire_expiry_data")
  */
-class RoleExpireExpiryData extends FieldPluginBase {
+class RoleExpireExpiryData extends PrerenderList {
+
+  /**
+   * The date formatter service.
+   *
+   * @var \Drupal\Core\Datetime\DateFormatterInterface
+   */
+  protected $dateFormatter;
+
+  /**
+   * Role expire API service.
+   *
+   * @var \Drupal\role_expire\RoleExpireApiService
+   */
+  protected $roleExpireApi;
+
+  /**
+   * Constructs a \Drupal\user\Plugin\views\field\Roles object.
+   *
+   * @param array $configuration
+   *   A configuration array containing information about the plugin instance.
+   * @param string $plugin_id
+   *   The plugin_id for the plugin instance.
+   * @param mixed $plugin_definition
+   *   The plugin implementation definition.
+   * @param \Drupal\role_expire\RoleExpireApiService $role_expire_api
+   *   Role expire API service.
+   */
+  public function __construct(array $configuration, $plugin_id, $plugin_definition, DateFormatterInterface $date_formatter, RoleExpireApiService $role_expire_api) {
+    parent::__construct($configuration, $plugin_id, $plugin_definition);
+
+    $this->dateFormatter = $date_formatter;
+    $this->roleExpireApi = $role_expire_api;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
+    return new static(
+      $configuration,
+      $plugin_id,
+      $plugin_definition,
+      $container->get('date.formatter'),
+      $container->get('role_expire.api')
+    );
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function init(ViewExecutable $view, DisplayPluginBase $display, array &$options = NULL) {
+    parent::init($view, $display, $options);
+
+    $this->additional_fields['uid'] = ['table' => 'users_field_data', 'field' => 'uid'];
+  }
 
   /**
    * @{inheritdoc}
    */
   public function query() {
-    // Leave empty to avoid a query on this field.
+    $this->addAdditionalFields();
+    $this->field_alias = $this->aliases['uid'];
   }
 
   /**
@@ -70,22 +129,28 @@ class RoleExpireExpiryData extends FieldPluginBase {
   /**
    * @{inheritdoc}
    */
-  public function render(ResultRow $values) {
-    $user = $values->_entity;
+  public function preRender(&$values) {
+    $this->items = array();
 
-    $expirations = \Drupal::service('role_expire.api')->getAllUserRecords($user->id());
-    $timezone = !empty($this->options['timezone']) ? $this->options['timezone'] : NULL;
-    $format = $this->options['custom_date_format'];
+    if (is_array($values)) {
 
-    if (is_array($expirations)) {
-      $output = [];
-      foreach ($expirations as $role => $timestamp) {
-        $date = \Drupal::service('date.formatter')->format($timestamp, 'custom', $format, $timezone);
-        $output[] = $this->t('@role (@date)', array('@role' => $role, '@date' => $date));
+      $format = $this->options['custom_date_format'];
+      $timezone = !empty($this->options['timezone']) ? $this->options['timezone'] : NULL;
+
+      foreach ($values as $user) {
+        $expirations = $this->roleExpireApi->getAllUserRecords($user->uid);
+        foreach ($expirations as $role => $timestamp) {
+          $date = $this->dateFormatter->format($timestamp, 'custom', $format, $timezone);
+          $this->items[$user->uid][$role]['expireData'] = $this->t('@role (@date)', array('@role' => $role, '@date' => $date));
+        }
       }
-      return implode(', ', $output);
     }
+  }
 
-    return '-';
+  /**
+   * @{inheritdoc}
+   */
+  public function render_item($count, $item) {
+    return $item['expireData'];
   }
 }

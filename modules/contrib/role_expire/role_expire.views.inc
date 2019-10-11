@@ -35,18 +35,18 @@ function role_expire_views_data() {
   // Integer timestamp field, exposed as a field, sort, and filter.
   $data['role_expire']['expiry_timestamp'] = [
     'title' => t('Role expiration date/time'),
-    'help' => t('Date and time the role will expire. (See also Role expiration role.'),
+    'help' => t('Date and time the role will expire. (See also Role expiration role).'),
     'field' => [
       // ID of field handler plugin to use.
-      'id' => 'date',
+      'id' => 'role_expire_date',
     ],
     'sort' => [
       // ID of sort handler plugin to use.
-      'id' => 'date',
+      'id' => 'role_expire_date',
     ],
     'filter' => [
       // ID of filter handler plugin to use.
-      'id' => 'date',
+      'id' => 'role_expire_date',
     ],
   ];
 
@@ -55,11 +55,11 @@ function role_expire_views_data() {
     'help' => t('The Role that corresponds with the Role expiration date/time'),
     'field' => [
       // ID of field handler plugin to use.
-      'id' => 'standard',
+      'id' => 'role_expire_rid',
     ],
     'sort' => [
       // ID of sort handler plugin to use.
-      'id' => 'standard',
+      'id' => 'role_expire_rid',
     ],
     'filter' => [
       // ID of filter handler plugin to use.
@@ -76,10 +76,10 @@ function role_expire_views_data() {
 function role_expire_views_data_alter(array &$data) {
   // Extend the users table to add the role expiration data (a simple field to render data).
   $data['users']['role_expire_expiry_data'] = [
-    'title' => t('Role expiration all data'),
+    'title' => t('Role expire: Role expiration all data'),
     'group' => t('Role expire'),
     'field' => [
-      'title' => t('Role expire: Role expiration data'),
+      'title' => t('Role expiration all data'),
       'help' => t('List of roles that will expire together with their date and time of expiration.'),
       // ID of the views plugin that will handle the field.
       'id' => 'role_expire_expiry_data',

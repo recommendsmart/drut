@@ -13,8 +13,15 @@
 
       $('input.role-expire-role-expiry', context).parent().hide();
 
-      $('#edit-roles input.form-checkbox', context).each(function() {
-        var textfieldId = this.id.replace("roles", "role-expire");
+      // No key change needed if Role Assign module is used.
+      rolesKey = 'roles';
+      if ($('#edit-role-change').length > 0) {
+        // Role Delegation module is used.
+        var rolesKey = 'role-change';
+      }
+
+      $('#edit-' + rolesKey + ' input.form-checkbox', context).each(function() {
+        var textfieldId = this.id.replace(rolesKey, "role-expire");
 
         // Move all expiry date fields under corresponding checkboxes
         $(this).parent().after($('#'+textfieldId).parent());
@@ -25,9 +32,9 @@
         }
       });
 
-      $('#edit-roles input.form-checkbox', context).click(function() {
+      $('#edit-' + rolesKey + ' input.form-checkbox', context).click(function() {
 
-        var textfieldId = this.id.replace("roles", "role-expire");
+        var textfieldId = this.id.replace(rolesKey, "role-expire");
 
         $('#'+textfieldId).parent().toggle();
       });
