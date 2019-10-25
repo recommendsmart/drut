@@ -2159,18 +2159,18 @@
     },
     {
         "name": "drupal/captcha",
-        "version": "1.0.0-beta3",
-        "version_normalized": "1.0.0.0-beta3",
+        "version": "1.0.0-beta4",
+        "version_normalized": "1.0.0.0-beta4",
         "source": {
             "type": "git",
             "url": "https://git.drupalcode.org/project/captcha.git",
-            "reference": "8.x-1.0-beta3"
+            "reference": "8.x-1.0-beta4"
         },
         "dist": {
             "type": "zip",
-            "url": "https://ftp.drupal.org/files/projects/captcha-8.x-1.0-beta3.zip",
-            "reference": "8.x-1.0-beta3",
-            "shasum": "d8c77cdeba543b618b3e6dbb5436796dc3bd1f2a"
+            "url": "https://ftp.drupal.org/files/projects/captcha-8.x-1.0-beta4.zip",
+            "reference": "8.x-1.0-beta4",
+            "shasum": "08ecd947204852302704b0bd6ec73a6f6a871854"
         },
         "require": {
             "drupal/core": "*"
@@ -2181,8 +2181,8 @@
                 "dev-1.x": "1.x-dev"
             },
             "drupal": {
-                "version": "8.x-1.0-beta3",
-                "datestamp": "1570537685",
+                "version": "8.x-1.0-beta4",
+                "datestamp": "1571689089",
                 "security-coverage": {
                     "status": "not-covered",
                     "message": "Beta releases are not covered by Drupal security advisories."
@@ -5958,21 +5958,21 @@
     },
     {
         "name": "drupal/pathauto",
-        "version": "1.4.0",
-        "version_normalized": "1.4.0.0",
+        "version": "1.5.0",
+        "version_normalized": "1.5.0.0",
         "source": {
             "type": "git",
             "url": "https://git.drupalcode.org/project/pathauto.git",
-            "reference": "8.x-1.4"
+            "reference": "8.x-1.5"
         },
         "dist": {
             "type": "zip",
-            "url": "https://ftp.drupal.org/files/projects/pathauto-8.x-1.4.zip",
-            "reference": "8.x-1.4",
-            "shasum": "ddfb047ae04ca2ddf475d65f6c09bceb44169e25"
+            "url": "https://ftp.drupal.org/files/projects/pathauto-8.x-1.5.zip",
+            "reference": "8.x-1.5",
+            "shasum": "ae3c13f26d625e63da3b13dc64016888eca519c7"
         },
         "require": {
-            "drupal/core": "^8.5",
+            "drupal/core": "^8.6",
             "drupal/ctools": "*",
             "drupal/token": "*"
         },
@@ -5982,8 +5982,8 @@
                 "dev-1.x": "1.x-dev"
             },
             "drupal": {
-                "version": "8.x-1.4",
-                "datestamp": "1554239887",
+                "version": "8.x-1.5",
+                "datestamp": "1570828084",
                 "security-coverage": {
                     "status": "covered",
                     "message": "Covered by Drupal's security advisory policy"
@@ -6666,18 +6666,18 @@
     },
     {
         "name": "drupal/smtp",
-        "version": "1.0.0-beta5",
-        "version_normalized": "1.0.0.0-beta5",
+        "version": "1.0.0-beta6",
+        "version_normalized": "1.0.0.0-beta6",
         "source": {
             "type": "git",
             "url": "https://git.drupalcode.org/project/smtp.git",
-            "reference": "8.x-1.0-beta5"
+            "reference": "8.x-1.0-beta6"
         },
         "dist": {
             "type": "zip",
-            "url": "https://ftp.drupal.org/files/projects/smtp-8.x-1.0-beta5.zip",
-            "reference": "8.x-1.0-beta5",
-            "shasum": "caf14465ceda18717a526a958918c9c2610debaa"
+            "url": "https://ftp.drupal.org/files/projects/smtp-8.x-1.0-beta6.zip",
+            "reference": "8.x-1.0-beta6",
+            "shasum": "f793114fb24964a1936e7cf797f91330a0a55b99"
         },
         "require": {
             "drupal/core": "~8.0"
@@ -6688,8 +6688,8 @@
                 "dev-1.x": "1.x-dev"
             },
             "drupal": {
-                "version": "8.x-1.0-beta5",
-                "datestamp": "1570302488",
+                "version": "8.x-1.0-beta6",
+                "datestamp": "1571689090",
                 "security-coverage": {
                     "status": "not-covered",
                     "message": "Beta releases are not covered by Drupal security advisories."
