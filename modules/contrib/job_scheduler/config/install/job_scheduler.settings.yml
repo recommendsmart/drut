@@ -1,1 +1,3 @@
-rebuild_all: true
+logging: true
+limit: 200
+time: 30

@@ -8,7 +8,7 @@
 /**
  * Declare job scheduling holding items that need to be run periodically.
  *
- * @return
+ * @return array
  *   An associative array where the key is the queue name and the value is
  *   again an associative array. Possible keys are:
  *   - 'worker callback': The name of the function to call. It will be called
@@ -53,8 +53,10 @@ function hook_cron_job_scheduler_info_alter(&$info) {
 /**
  * Declare job scheduler queue information.
  *
- * TODO: Description.
+ * @return array
+ *   Information for the schedule.
  *
+ * @see job_scheduler_queue_info()
  * @see hook_cron_job_scheduler_queue_info_alter()
  */
 function hook_cron_job_scheduler_queue_info() {
@@ -69,7 +71,10 @@ function hook_cron_job_scheduler_queue_info() {
 /**
  * Alter job scheduler queue information.
  *
- * TODO: Description.
+ * @param array $info
+ *   Information for the schedule.
+ *
+ * @see job_scheduler_queue_info()
  */
 function hook_cron_job_scheduler_queue_info_alter(&$info) {
   // Replace the default time.

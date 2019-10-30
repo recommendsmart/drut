@@ -3945,21 +3945,21 @@
     },
     {
         "name": "drupal/feeds",
-        "version": "3.0.0-alpha5",
-        "version_normalized": "3.0.0.0-alpha5",
+        "version": "3.0.0-alpha6",
+        "version_normalized": "3.0.0.0-alpha6",
         "source": {
             "type": "git",
             "url": "https://git.drupalcode.org/project/feeds.git",
-            "reference": "8.x-3.0-alpha5"
+            "reference": "8.x-3.0-alpha6"
         },
         "dist": {
             "type": "zip",
-            "url": "https://ftp.drupal.org/files/projects/feeds-8.x-3.0-alpha5.zip",
-            "reference": "8.x-3.0-alpha5",
-            "shasum": "e0267cb59da7b28888801eec99c39e7057c9a24e"
+            "url": "https://ftp.drupal.org/files/projects/feeds-8.x-3.0-alpha6.zip",
+            "reference": "8.x-3.0-alpha6",
+            "shasum": "f387e6d3cf0d065143c2fec45277d57223e64bb5"
         },
         "require": {
-            "drupal/core": "^8.5.0"
+            "drupal/core": "^8.6.0"
         },
         "type": "drupal-module",
         "extra": {
@@ -3967,8 +3967,8 @@
                 "dev-3.x": "3.x-dev"
             },
             "drupal": {
-                "version": "8.x-3.0-alpha5",
-                "datestamp": "1557081481",
+                "version": "8.x-3.0-alpha6",
+                "datestamp": "1572170584",
                 "security-coverage": {
                     "status": "not-covered",
                     "message": "Project has not opted into security advisory coverage!"
@@ -4811,18 +4811,18 @@
     },
     {
         "name": "drupal/job_scheduler",
-        "version": "2.0.0-alpha1",
-        "version_normalized": "2.0.0.0-alpha1",
+        "version": "3.0.0",
+        "version_normalized": "3.0.0.0",
         "source": {
             "type": "git",
             "url": "https://git.drupalcode.org/project/job_scheduler.git",
-            "reference": "8.x-2.0-alpha1"
+            "reference": "8.x-3.0"
         },
         "dist": {
             "type": "zip",
-            "url": "https://ftp.drupal.org/files/projects/job_scheduler-8.x-2.0-alpha1.zip",
-            "reference": "8.x-2.0-alpha1",
-            "shasum": "fb1d6c14f5ca5304bb90f7abe34d84aadce79901"
+            "url": "https://ftp.drupal.org/files/projects/job_scheduler-8.x-3.0.zip",
+            "reference": "8.x-3.0",
+            "shasum": "87ff1d56c52030d0f45003842be13e6020604ab4"
         },
         "require": {
             "drupal/core": "~8.1"
@@ -4830,11 +4830,11 @@
         "type": "drupal-module",
         "extra": {
             "branch-alias": {
-                "dev-2.x": "2.x-dev"
+                "dev-3.x": "3.x-dev"
             },
             "drupal": {
-                "version": "8.x-2.0-alpha1",
-                "datestamp": "1542187684",
+                "version": "8.x-3.0",
+                "datestamp": "1571905685",
                 "security-coverage": {
                     "status": "not-covered",
                     "message": "Project has not opted into security advisory coverage!"
@@ -6315,6 +6315,55 @@
         }
     },
     {
+        "name": "drupal/responsive_tables_filter",
+        "version": "1.2.0",
+        "version_normalized": "1.2.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupalcode.org/project/responsive_tables_filter.git",
+            "reference": "8.x-1.2"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/responsive_tables_filter-8.x-1.2.zip",
+            "reference": "8.x-1.2",
+            "shasum": "3169304a61d66ed72a5c03755cabdc79b003ba45"
+        },
+        "require": {
+            "drupal/core": "~8.0"
+        },
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-1.x": "1.x-dev"
+            },
+            "drupal": {
+                "version": "8.x-1.2",
+                "datestamp": "1553112480",
+                "security-coverage": {
+                    "status": "covered",
+                    "message": "Covered by Drupal's security advisory policy"
+                }
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packages.drupal.org/8/downloads",
+        "license": [
+            "GPL-2.0-or-later"
+        ],
+        "authors": [
+            {
+                "name": "mark_fullmer",
+                "homepage": "https://www.drupal.org/user/2612816"
+            }
+        ],
+        "description": "Make tables in WYSIWYG fields responsive",
+        "homepage": "https://www.drupal.org/project/responsive_tables_filter",
+        "support": {
+            "source": "https://git.drupalcode.org/project/responsive_tables_filter"
+        }
+    },
+    {
         "name": "drupal/responsivewrappers",
         "version": "1.2.0",
         "version_normalized": "1.2.0.0",
@@ -6605,63 +6654,6 @@
         "homepage": "https://www.drupal.org/project/shs",
         "support": {
             "source": "https://git.drupalcode.org/project/shs"
-        }
-    },
-    {
-        "name": "drupal/simple_responsive_table",
-        "version": "2.2.0",
-        "version_normalized": "2.2.0.0",
-        "source": {
-            "type": "git",
-            "url": "https://git.drupalcode.org/project/simple_responsive_table.git",
-            "reference": "8.x-2.2"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://ftp.drupal.org/files/projects/simple_responsive_table-8.x-2.2.zip",
-            "reference": "8.x-2.2",
-            "shasum": "ba7be341b78ad7290a6873893d1a3d2702f28da3"
-        },
-        "require": {
-            "drupal/core": "~8.0"
-        },
-        "type": "drupal-module",
-        "extra": {
-            "branch-alias": {
-                "dev-2.x": "2.x-dev"
-            },
-            "drupal": {
-                "version": "8.x-2.2",
-                "datestamp": "1538833081",
-                "security-coverage": {
-                    "status": "covered",
-                    "message": "Covered by Drupal's security advisory policy"
-                }
-            }
-        },
-        "installation-source": "dist",
-        "notification-url": "https://packages.drupal.org/8/downloads",
-        "license": [
-            "GPL-2.0+"
-        ],
-        "authors": [
-            {
-                "name": "manojapare",
-                "homepage": "https://www.drupal.org/user/2825053"
-            },
-            {
-                "name": "rakesh.gectcr",
-                "homepage": "https://www.drupal.org/user/1177822"
-            }
-        ],
-        "description": "Simple module to make table responsive.",
-        "homepage": "https://www.drupal.org/project/simple_responsive_table",
-        "keywords": [
-            "Drupal"
-        ],
-        "support": {
-            "source": "http://cgit.drupalcode.org/simple_responsive_table",
-            "issues": ""
         }
     },
     {

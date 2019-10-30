@@ -3,17 +3,9 @@
 namespace Drupal\job_scheduler;
 
 /**
- * Jose's cron tab parser = Better try only simple crontab strings.
- *
- * Usage:
- *   // Run 23 minutes after midn, 2am, 4am ..., everyday
- *   $crontab = new JobSchedulerCronTab('23 0-23/2 * * *');
- *   // When this needs to run next, from current time?
- *   $next_time = $crontab->nextTime(time());
- *
- * I hate Sundays.
+ * Class for job scheduler crontab.
  */
-class JobSchedulerCronTab {
+class JobSchedulerCronTab implements JobSchedulerCronTabInterface {
 
   /**
    * Original crontab string or array.
@@ -33,7 +25,7 @@ class JobSchedulerCronTab {
    * Constructs a JobSchedulerCronTab object.
    *
    * About crontab strings, see all about possible formats
-   * http://linux.die.net/man/5/crontab
+   * http://linux.die.net/man/5/crontab.
    *
    * @param string|array $crontab
    *   Crontab text line: minute hour day-of-month month day-of-week.
@@ -49,15 +41,7 @@ class JobSchedulerCronTab {
   }
 
   /**
-   * Parses a full crontab string into an array of type => values.
-   *
-   * Note this one is static and can be used to validate values.
-   *
-   * @param string $crontab
-   *   The crontab string to parse.
-   *
-   * @return array
-   *   The parsed crontab array.
+   * {@inheritdoc}
    */
   public static function parse($crontab) {
     // Replace multiple spaces by single space.
@@ -69,19 +53,13 @@ class JobSchedulerCronTab {
   }
 
   /**
-   * Parses an array of values, check whether this is valid.
-   *
-   * @param array $array
-   *   A crontab array to validate.
-   *
-   * @return null|array
-   *   The validated elements or null if the input was invalid.
+   * {@inheritdoc}
    */
   public static function values(array $array) {
     if (count($array) == 5) {
-      $values = array_combine(array('minutes', 'hours', 'mday', 'mon', 'wday'), array_map('trim', $array));
+      $values = array_combine(['minutes', 'hours', 'mday', 'mon', 'wday'], array_map('trim', $array));
 
-      $elements = array();
+      $elements = [];
       foreach ($values as $type => $string) {
         $elements[$type] = self::parseElement($type, $string, TRUE);
       }
@@ -96,15 +74,7 @@ class JobSchedulerCronTab {
   }
 
   /**
-   * Finds the next occurrence within the next year as unix timestamp.
-   *
-   * @param int $start_time
-   *   (optional) Starting time. Defaults to null.
-   * @param int $limit
-   *   (optional) The time limit in days. Defaults to 366.
-   *
-   * @return int|false
-   *   The next occurrence as a unix timestamp, or false if there was an error.
+   * {@inheritdoc}
    */
   public function nextTime($start_time = NULL, $limit = 366) {
     $start_time = isset($start_time) ? $start_time : time();
@@ -120,17 +90,7 @@ class JobSchedulerCronTab {
   }
 
   /**
-   * Finds the next occurrence within the next year as a date array.
-   *
-   * @param array $date
-   *   Date array with: 'mday', 'mon', 'year', 'hours', 'minutes'.
-   * @param int $limit
-   *   (optional) The time limit in days. Defaults to 366.
-   *
-   * @return array|false
-   *   A date array, or false if there was an error.
-   *
-   * @see getdate()
+   * {@inheritdoc}
    */
   public function nextDate(array $date, $limit = 366) {
     $date['seconds'] = 0;
@@ -147,6 +107,62 @@ class JobSchedulerCronTab {
   }
 
   /**
+   * {@inheritdoc}
+   */
+  public static function possibleValues($type) {
+    switch ($type) {
+      case 'minutes':
+        return range(0, 59);
+
+      case 'hours':
+        return range(0, 23);
+
+      case 'mday':
+        return range(1, 31);
+
+      case 'mon':
+        return range(1, 12);
+
+      case 'wday':
+        // These are PHP values, not *nix ones.
+        return range(0, 6);
+    }
+
+    return [];
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function translateNames($type, $string) {
+    switch ($type) {
+      case 'wday':
+        $replace = array_merge(
+        // Tricky, tricky, we need sunday to be zero at the beginning of a
+        // range, but 7 at the end.
+          ['-sunday' => '-7', '-sun' => '-7', 'sunday-' => '0-', 'sun-' => '0-'],
+          array_flip(['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday']),
+          array_flip(['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'])
+        );
+        break;
+
+      case 'mon':
+        $replace = array_merge(
+          array_flip(['nomonth1', 'january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november', 'december']),
+          array_flip(['nomonth2', 'jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec']),
+          ['sept' => 9]
+        );
+        break;
+    }
+    if (empty($replace)) {
+      return $string;
+    }
+    else {
+      return strtr($string, $replace);
+    }
+  }
+
+  /**
    * Checks whether date's day is a valid one.
    *
    * @param array $date
@@ -156,7 +172,7 @@ class JobSchedulerCronTab {
    *   Returns true if the day is valid, false otherwise.
    */
   protected function checkDay(array $date) {
-    foreach (array('wday', 'mday', 'mon') as $key) {
+    foreach (['wday', 'mday', 'mon'] as $key) {
       if (!in_array($date[$key], $this->cron[$key])) {
         return FALSE;
       }
@@ -269,7 +285,7 @@ class JobSchedulerCronTab {
     elseif (strpos($string, ',')) {
       // Now process list parts, expand into items, process each and merge back.
       $list = explode(',', $string);
-      $range = array();
+      $range = [];
       foreach ($list as $item) {
         if ($values = self::parseElement($type, $item)) {
           $range = array_merge($range, $values);
@@ -284,7 +300,7 @@ class JobSchedulerCronTab {
     }
     elseif (is_numeric($string)) {
       // This looks like a single number, double check it's int.
-      $range = array((int) $string);
+      $range = [(int) $string];
     }
 
     // Return unique sorted values and double check they're within possible
@@ -302,76 +318,7 @@ class JobSchedulerCronTab {
     }
     else {
       // No match found for this one, will produce an error with validation.
-      return array();
-    }
-  }
-
-  /**
-   * Get values for each type.
-   *
-   * @param string $type
-   *   The element type. One of 'minutes', 'hours', 'mday', 'mon', 'wday'.
-   *
-   * @return array
-   *   An array on integers specifying the range of the provided type.
-   */
-  public static function possibleValues($type) {
-    switch ($type) {
-      case 'minutes':
-        return range(0, 59);
-
-      case 'hours':
-        return range(0, 23);
-
-      case 'mday':
-        return range(1, 31);
-
-      case 'mon':
-        return range(1, 12);
-
-      case 'wday':
-        // These are PHP values, not *nix ones.
-        return range(0, 6);
-    }
-
-    return [];
-  }
-
-  /**
-   * Replaces element names with values.
-   *
-   * @param string $type
-   *   The element type. One of 'wday' or 'mon'.
-   * @param string $string
-   *   The element string to translate.
-   *
-   * @return string
-   *   The translated string.
-   */
-  public static function translateNames($type, $string) {
-    switch ($type) {
-      case 'wday':
-        $replace = array_merge(
-          // Tricky, tricky, we need sunday to be zero at the beginning of a
-          // range, but 7 at the end.
-          array('-sunday' => '-7', '-sun' => '-7', 'sunday-' => '0-', 'sun-' => '0-'),
-          array_flip(array('sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday')),
-          array_flip(array('sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'))
-        );
-        break;
-      case 'mon':
-        $replace = array_merge(
-          array_flip(array('nomonth1', 'january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november', 'december')),
-          array_flip(array('nomonth2', 'jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec')),
-          array('sept' => 9)
-        );
-        break;
-    }
-    if (empty($replace)) {
-      return $string;
-    }
-    else {
-      return strtr($string, $replace);
+      return [];
     }
   }
 

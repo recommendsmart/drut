@@ -1,10 +1,11 @@
 name: Job Scheduler
 description: Scheduler API
 type: module
-# core: 8.x
+core: 8.x
+package: Job Scheduler
+configure: job_scheduler.admin_settings
 
-# Information added by Drupal.org packaging script on 2018-11-14
-version: '8.x-2.0-alpha1'
-core: '8.x'
+# Information added by Drupal.org packaging script on 2019-10-24
+version: '8.x-3.0'
 project: 'job_scheduler'
-datestamp: 1542187686
+datestamp: 1571905694

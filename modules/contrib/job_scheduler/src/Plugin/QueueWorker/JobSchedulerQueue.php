@@ -3,6 +3,7 @@
 namespace Drupal\job_scheduler\Plugin\QueueWorker;
 
 use Drupal\Core\Queue\QueueWorkerBase;
+use Drupal\job_scheduler\Entity\JobSchedule;
 
 /**
  * Providing our own worker has the advantage that we can reschedule the job or
@@ -36,7 +37,8 @@ class JobSchedulerQueue extends QueueWorkerBase {
   /**
    * {@inheritdoc}
    */
-  public function processItem($job) {
+  public function processItem($id) {
+    $job = JobSchedule::load($id);
     $scheduler = $this->scheduler;
     try {
       $scheduler->execute($job);
@@ -44,7 +46,7 @@ class JobSchedulerQueue extends QueueWorkerBase {
     catch (\Exception $e) {
       watchdog_exception('job_scheduler', $e);
       // Drop jobs that have caused exceptions.
-      $scheduler->remove($job);
+      $job->delete();
     }
   }
 

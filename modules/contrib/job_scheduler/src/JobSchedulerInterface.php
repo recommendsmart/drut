@@ -2,6 +2,9 @@
 
 namespace Drupal\job_scheduler;
 
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\job_scheduler\Entity\JobSchedule;
+
 /**
  * Provides an interface defining a job scheduler manager.
  */
@@ -13,9 +16,13 @@ interface JobSchedulerInterface {
    * @param string $name
    *   Name of the schedule.
    *
+   * @return array
+   *   Information for the schedule.
+   *
    * @see hook_cron_job_scheduler_info()
    *
-   * @throws JobSchedulerException
+   * @throws \Exception
+   *   Exceptions thrown by code called by this method are passed on.
    */
   public function info($name);
 
@@ -40,6 +47,9 @@ interface JobSchedulerInterface {
    *   'id'       - A numeric identifier of the job.
    *   'period'   - The time when the task should be executed.
    *   'periodic' - True if the task should be repeated periodically.
+   *
+   * @throws \Exception
+   *   Exceptions thrown by code called by this method are passed on.
    */
   public function set(array $job);
 
@@ -49,7 +59,10 @@ interface JobSchedulerInterface {
    * A job is uniquely identified by $job = array(type, id).
    *
    * @param array $job
-   *   A job to reserve.
+   *   A job to remove.
+   *
+   * @throws \Exception
+   *   Exceptions thrown by code called by this method are passed on.
    */
   public function remove(array $job);
 
@@ -57,10 +70,12 @@ interface JobSchedulerInterface {
    * Removes all jobs for a given type.
    *
    * @param string $name
-   *   Name of the schedule.
-   *
+   *   The job name to remove.
    * @param string $type
    *   The job type to remove.
+   *
+   * @throws \Exception
+   *   Exceptions thrown by code called by this method are passed on.
    */
   public function removeAll($name, $type);
 
@@ -70,43 +85,90 @@ interface JobSchedulerInterface {
    * Executes a worker callback or if schedule declares a queue name, queues a
    * job for execution.
    *
-   * @param array $job
-   *   A $job array as passed into set() or read from job_schedule table.
+   * @param JobSchedule $job
+   *   A $job entity as passed into set() or loaded.
    *
    * @throws \Exception
    *   Exceptions thrown by code called by this method are passed on.
    */
-  public function dispatch(array $job);
+  public function dispatch(JobSchedule $job);
 
   /**
    * Executes a job.
    *
-   * @param array $job
-   *   A $job array as passed into set() or read from job_schedule table.
+   * @param JobSchedule $job
+   *   A $job array as passed into set() or loaded.
    *
    * @throws \Exception
    *   Exceptions thrown by code called by this method are passed on.
-   * @throws \Drupal\job_scheduler\JobSchedulerException
-   *   Thrown if the job callback does not exist.
    */
-  public function execute(array $job);
+  public function execute(JobSchedule $job);
 
   /**
    * Re-schedules a job if intended to run again.
    *
    * If cannot determine the next time, drop the job.
    *
-   * @param array $job
+   * @param JobSchedule $job
    *   The job to reschedule.
+   *
+   * @throws \Exception
+   *   Exceptions thrown by code called by this method are passed on.
    */
-  public function reschedule(array $job);
+  public function reschedule(JobSchedule $job);
 
   /**
    * Checks whether a job exists in the queue and update its parameters if so.
    *
    * @param array $job
    *   The job to reschedule.
+   *
+   * @return bool
+   *   Execution result.
+   *
+   * @throws \Exception
+   *   Exceptions thrown by code called by this method are passed on.
    */
   public function check(array $job);
+
+  /**
+   * Perform periodic jobs.
+   *
+   * @param string $name
+   *   (optional) Name of the schedule to perform. Defaults to null.
+   * @param int $limit
+   *   (optional) The number of jobs to perform. Defaults to 200.
+   * @param int $time
+   *   (optional) How much time scheduler should spend on processing jobs in
+   *   seconds. Defaults to 30.
+   *
+   * @return array
+   *   Result of perform periodic jobs.
+   *
+   * @throws \Exception
+   *   Exceptions thrown by code called by this method are passed on.
+   */
+  public function perform($name = NULL, $limit = 200, $time = 30);
+
+  /**
+   * Rebuilds a single scheduler.
+   *
+   * @param string $name
+   *   The name of the schedule.
+   * @param array $info
+   *   (optional) The job info array. Defaults to null.
+   *
+   * @throws \Exception
+   *   Exceptions thrown by code called by this method are passed on.
+   */
+  public function rebuild($name, array $info = NULL);
+
+  /**
+   * Rebuilds all schedulers.
+   *
+   * @throws \Exception
+   *   Exceptions thrown by code called by this method are passed on.
+   */
+  public function rebuildAll();
 
 }

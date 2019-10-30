@@ -2,8 +2,8 @@
 
 namespace Drupal\job_scheduler;
 
-use Drupal\Component\Datetime\TimeInterface;
-use Drupal\Core\Database\Connection;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\job_scheduler\Entity\JobSchedule;
 
 /**
  * Manage scheduled jobs.
@@ -11,41 +11,34 @@ use Drupal\Core\Database\Connection;
 class JobScheduler implements JobSchedulerInterface {
 
   /**
-   * The current primary database.
+   * The job scheduler crontab decorator.
    *
-   * @var \Drupal\Core\Database\Connection
+   * @var \Drupal\job_scheduler\JobSchedulerCronTabDecoratorInterface
    */
-  protected $database;
+  protected $crontabDecorator;
 
   /**
-   * The time service.
+   * The job schedule storage.
    *
-   * @var \Drupal\Component\Datetime\TimeInterface
+   * @var \Drupal\Core\Entity\EntityStorageInterface
    */
-  public $time;
+  protected $jobScheduleStorage;
 
   /**
    * Constructs a object.
    *
-   * @param \Drupal\Core\Database\Connection
-   * @param \Drupal\Component\Datetime\TimeInterface $time
+   * @param \Drupal\job_scheduler\JobSchedulerCronTabDecoratorInterface $crontab_decorator
+   *   The job scheduler crontab decorator.
+   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entityTypeManager
+   *   The entity type manager service.
    */
-  public function __construct(Connection $database, TimeInterface $time) {
-    $this->database = $database;
-    $this->time = $time;
+  public function __construct(JobSchedulerCronTabDecoratorInterface $crontab_decorator, EntityTypeManagerInterface $entityTypeManager) {
+    $this->crontabDecorator = $crontab_decorator;
+    $this->jobScheduleStorage = $entityTypeManager->getStorage('job_schedule');
   }
 
   /**
-   * Returns scheduler info.
-   *
-   * @param string $name
-   *   Name of the schedule.
-   *
-   * @return array
-   *
-   * @see hook_cron_job_scheduler_info()
-   *
-   * @throws JobSchedulerException
+   * {@inheritdoc}
    */
   public function info($name) {
     if ($info = job_scheduler_info($name)) {
@@ -57,101 +50,63 @@ class JobScheduler implements JobSchedulerInterface {
   }
 
   /**
-   * Adds a job to the schedule, replace any existing job.
-   *
-   * A job is uniquely identified by $job = array(type, id).
-   *
-   * @code
-   * function worker_callback($job) {
-   *   // Work off job.
-   *   // Set next time to be called. If this portion of the code is not
-   *   // reached for some reason, the scheduler will keep periodically invoking
-   *   // the callback() with the period value initially specified.
-   *   $scheduler->set($job);
-   * }
-   * @endcode
-   *
-   * @param array $job
-   *   An array that must contain the following keys:
-   *   'type'     - A string identifier of the type of job.
-   *   'id'       - A numeric identifier of the job.
-   *   'period'   - The time when the task should be executed.
-   *   'periodic' - True if the task should be repeated periodically.
+   * {@inheritdoc}
    */
   public function set(array $job) {
-    $timestamp = $this->time->getRequestTime();
-    $job['periodic'] = isset($job['periodic']) ? (int) $job['periodic'] : 0;
-    $job['data'] = isset($job['data']) ? serialize($job['data']) : FALSE;
+    $storage = $this->jobScheduleStorage;
+    $timestamp = time();
     $job['last'] = $timestamp;
     if (!empty($job['crontab'])) {
-      $crontab = new JobSchedulerCronTab($job['crontab']);
+      $crontab = $this->crontabDecorator->decorate($job['crontab']);
       $job['next'] = $crontab->nextTime($timestamp);
     }
     else {
       $job['next'] = $timestamp + $job['period'];
     }
 
-    $job['scheduled'] = 0;
-    $this->remove($job);
-    $this->database->insert('job_schedule')->fields($job)->execute();
+    $entity = $storage->create($job);
+    $entity->save();
   }
 
   /**
-   * Removes a job from the schedule, replace any existing job.
-   *
-   * A job is uniquely identified by $job = array(type, id).
-   *
-   * @param array $job
-   *   A job to reserve.
-   *
-   * @see \Drupal\job_scheduler\JobScheduler::set()
+   * {@inheritdoc}
    */
   public function remove(array $job) {
-    $this->database->delete('job_schedule')
-      ->condition('name', $job['name'])
-      ->condition('type', $job['type'])
-      ->condition('id', isset($job['id']) ? $job['id'] : 0)
-      ->execute();
+    $storage = $this->jobScheduleStorage;
+    $query = $storage->getQuery();
+    $query->condition('name', $job['name']);
+    $query->condition('type', $job['type']);
+    $query->condition('id', isset($job['id']) ? $job['id'] : 0);
+    $entity_ids = $query->execute();
+    if (!empty($entity_ids)) {
+      $entities = $storage->loadMultiple($entity_ids);
+      $storage->delete($entities);
+    }
   }
 
   /**
-   * Removes all jobs for a given type.
-   *
-   * @param string $name
-   *   Name of the schedule.
-   *
-   * @param string $type
-   *   The job type to remove.
+   * {@inheritdoc}
    */
   public function removeAll($name, $type) {
-    $this->database->delete('job_schedule')
-      ->condition('name', $name)
-      ->condition('type', $type)
-      ->execute();
+    $storage = $this->jobScheduleStorage;
+    $query = $storage->getQuery();
+    $query->condition('name', $name);
+    $query->condition('type', $type);
+    $entity_ids = $query->execute();
+    if (!empty($entity_ids)) {
+      $entities = $storage->loadMultiple($entity_ids);
+      $storage->delete($entities);
+    }
   }
 
   /**
-   * Dispatches a job.
-   *
-   * Executes a worker callback or if schedule declares a queue name, queues a
-   * job for execution.
-   *
-   * @param array $job
-   *   A $job array as passed into set() or read from job_schedule table.
-   *
-   * @throws \Exception
-   *   Exceptions thrown by code called by this method are passed on.
-   *
-   * @see \Drupal\job_scheduler\JobScheduler::set()
+   * {@inheritdoc}
    */
-  public function dispatch(array $job) {
-    $info = $this->info($job['name']);
-    if (!$job['periodic']) {
-      $this->remove($job);
-    }
+  public function dispatch(JobSchedule $job) {
+    $info = $this->info($job->getName());
     if (!empty($info['queue name'])) {
       $queue_name = 'job_scheduler_queue:' . $info['queue name'];
-      if (\Drupal::queue($queue_name)->createItem($job)) {
+      if (\Drupal::queue($queue_name)->createItem($job->id())) {
         $this->reserve($job);
       }
     }
@@ -161,21 +116,16 @@ class JobScheduler implements JobSchedulerInterface {
   }
 
   /**
-   * Executes a job.
-   *
-   * @param array $job
-   *   A $job array as passed into set() or read from job_schedule table.
-   *
-   * @throws \Exception
-   *   Exceptions thrown by code called by this method are passed on.
-   * @throws \Drupal\job_scheduler\JobSchedulerException
-   *   Thrown if the job callback does not exist.
+   * {@inheritdoc}
    */
-  public function execute(array $job) {
-    $info = $this->info($job['name']);
+  public function execute(JobSchedule $job) {
+    $info = $this->info($job->getName());
     // If the job is periodic, re-schedule it before calling the worker.
-    if ($job['periodic']) {
+    if ($job->getPeriodic()) {
       $this->reschedule($job);
+    }
+    else {
+      $job->delete();
     }
     if (!empty($info['file']) && file_exists($info['file'])) {
       include_once $info['file'];
@@ -184,8 +134,6 @@ class JobScheduler implements JobSchedulerInterface {
       call_user_func($info['worker callback'], $job);
     }
     else {
-      // @todo If worker doesn't exist anymore we should do something about it, remove and throw exception?
-      $this->remove($job);
       throw new JobSchedulerException(t('Could not find worker callback function: @function', [
         '@function' => $info['worker callback'],
       ]));
@@ -193,106 +141,161 @@ class JobScheduler implements JobSchedulerInterface {
   }
 
   /**
-   * Re-schedules a job if intended to run again.
-   *
-   * If cannot determine the next time, drop the job.
-   *
-   * @param array $job
-   *   The job to reschedule.
-   *
-   * @see \Drupal\job_scheduler\JobScheduler::set()
+   * {@inheritdoc}
    */
-  public function reschedule(array $job) {
-    $timestamp = $this->time->getRequestTime();
-    $job['periodic'] = isset($job['periodic']) ? (int) $job['periodic'] : 0;
-    $job['data'] = isset($job['data']) ? serialize($job['data']) : FALSE;
-    $job['last'] = $timestamp;
-    $job['scheduled'] = 0;
-    if (!empty($job['crontab'])) {
-      $crontab = new JobSchedulerCronTab($job['crontab']);
-      $job['next'] = $crontab->nextTime($timestamp);
+  public function reschedule(JobSchedule $job) {
+    $timestamp = time();
+    $job->setScheduled(0);
+    $job->setLast($timestamp);
+    $crontab = $job->getCrontab();
+    if (!empty($crontab)) {
+      $crontab = $this->crontabDecorator->decorate($crontab);
+      $next = $crontab->nextTime($timestamp);
     }
     else {
-      $job['next'] = $timestamp + $job['period'];
+      $next = $timestamp + $job->getPeriod();
     }
-
-    if ($job['next']) {
-      $this->doUpdate($job, ['item_id']);
+    if ($next) {
+      $job->setNext($next);
+      $job->save();
     }
     else {
       // If no next time, it may mean it wont run again the next year (crontab).
-      $this->remove($job);
+      $job->delete();
     }
   }
 
   /**
-   * Checks whether a job exists in the queue and update its parameters if so.
-   *
-   * @param array $job
-   *   The job to reschedule.
-   *
-   * @see \Drupal\job_scheduler\JobScheduler::set()
+   * {@inheritdoc}
    */
   public function check(array $job) {
+    $storage = $this->jobScheduleStorage;
     $job += ['id' => 0, 'period' => 0, 'crontab' => ''];
 
-    $existing = $this->database->select('job_schedule')
-      ->fields('job_schedule')
-      ->condition('name', $job['name'])
-      ->condition('type', $job['type'])
-      ->condition('id', $job['id'])
-      ->execute()
-      ->fetchAssoc();
+    $query = $storage->getQuery();
+    $query->condition('name', $job['name']);
+    $query->condition('type', $job['type']);
+    $query->condition('id', $job['id']);
+    $entity_ids = $query->execute();
+
     // If existing, and changed period or crontab, reschedule the job.
-    if ($existing) {
-      if ($job['period'] != $existing['period'] || $job['crontab'] != $existing['crontab']) {
-        $existing['period'] = $job['period'];
-        $existing['crontab'] = $job['crontab'];
+    if ($entity_ids) {
+      /** @var JobSchedule $existing */
+      $existing = $storage->load(reset($entity_ids));
+      if ($job['period'] != $existing->getPeriod() || $job['crontab'] != $existing->getCrontab()) {
+        $existing->setPeriod($job['period']);
+        $existing->setCrontab($job['crontab']);
         $this->reschedule($existing);
       }
 
-      return $existing;
+      return TRUE;
+    }
+
+    return FALSE;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function perform($name = NULL, $limit = 200, $time = 30) {
+    $storage = $this->jobScheduleStorage;
+    $timestamp = time();
+
+    // Reschedule stuck periodic jobs after one hour.
+    $query = $storage->getQuery();
+    $query->condition('scheduled', $timestamp - 3600, '<');
+    $query->condition('periodic', 1);
+    if (!empty($name)) {
+      $query->condition('name', $name);
+    }
+    $entity_ids = $query->execute();
+    if (!empty($entity_ids)) {
+      $jobs = $storage->loadMultiple($entity_ids);
+      foreach ($jobs as $job) {
+        $job->setScheduled(0);
+        $job->save();
+      }
+    }
+
+    // Query and dispatch scheduled jobs.
+    // Process a maximum of 200 jobs in a maximum of 30 seconds.
+    $start = time();
+    $total = 0;
+    $failed = 0;
+    $query = $storage->getQuery();
+    $query->condition('scheduled', 0);
+    $query->condition('next', $timestamp, '<=');
+    if (!empty($name)) {
+      $query->condition('name', $name);
+    }
+    $query->sort('next', 'ASC');
+    $query->range(0, $limit);
+    $entity_ids = $query->execute();
+    if (!empty($entity_ids)) {
+      $jobs = $storage->loadMultiple($entity_ids);
+      foreach ($jobs as $job) {
+        try {
+          $this->dispatch($job);
+        }
+        catch (\Exception $e) {
+          watchdog_exception('job_scheduler', $e);
+          $failed++;
+          // Drop jobs that have caused exceptions.
+          $job->delete();
+        }
+        $total++;
+        if (time() > ($start + $time)) {
+          break;
+        }
+      }
+    }
+
+    return ['start' => $start, 'total' => $total, 'failed' => $failed];
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function rebuild($name, array $info = NULL) {
+    $info = $info ?: $this->info($name);
+
+    if (!empty($info['jobs'])) {
+      foreach ($info['jobs'] as $job) {
+        $job['name'] = $name;
+        if (!$this->check($job)) {
+          $this->set($job);
+        }
+      }
+    }
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function rebuildAll() {
+    foreach (job_scheduler_info() as $name => $info) {
+      $this->rebuild($name, $info);
     }
   }
 
   /**
    * Reserves a job.
    *
-   * @param array $job
-   *   A job to reserve.
+   * @param JobSchedule $job
+   *   The job to reserve.
    *
-   * @see \Drupal\job_scheduler\JobScheduler::set()
+   * @see \Drupal\job_scheduler\JobScheduler::dispatch()
+   *
+   * @throws \Drupal\Core\Entity\EntityStorageException
+   *   In case of failures at the configuration storage level.
    */
-  protected function reserve(array $job) {
-    $timestamp = $this->time->getRequestTime();
-    $job['periodic'] = isset($job['periodic']) ? (int) $job['periodic'] : 0;
-    $job['data'] = isset($job['data']) ? serialize($job['data']) : FALSE;
-    $job['scheduled'] = $job['period'] + $timestamp;
-    $job['last'] = $timestamp;
-    $job['next'] = $job['scheduled'];
-    $this->doUpdate($job, ['name', 'type', 'id']);
-  }
-
-  /**
-   * Updates a record to the database.
-   */
-  protected function doUpdate(array $job, $primary_keys) {
-    $fields = [];
-    foreach ($job as $key => $value) {
-      if (!in_array($key, $primary_keys)) {
-        $fields[$key] = $value;
-      }
-    }
-    $query = $this->database->update('job_schedule')->fields($fields);
-    foreach ($primary_keys as $key) {
-      if (!isset($job[$key])) {
-        throw new JobSchedulerException(t('Could not find job parameter: @parameter', [
-          '@parameter' => $key,
-        ]));
-      }
-      $query->condition($key, $job[$key]);
-    }
-    $query->execute();
+  protected function reserve(JobSchedule $job) {
+    $timestamp = time();
+    $scheduled = $job->getPeriod() + $timestamp;
+    $job->setScheduled($scheduled);
+    $job->setLast($timestamp);
+    $job->setNext($scheduled);
+    $job->save();
   }
 
 }

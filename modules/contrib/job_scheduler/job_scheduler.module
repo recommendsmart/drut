@@ -59,72 +59,26 @@ function job_scheduler_queue_info($name = NULL) {
 
 /**
  * Implements hook_cron().
- *
- * @todo Covert job storage to service.
  */
 function job_scheduler_cron() {
-  // Reschedule all jobs if requested.
-  $config = \Drupal::service('config.factory')->getEditable('job_scheduler.settings');
-  if ($config->get('rebuild_all')) {
-    foreach (job_scheduler_info() as $name => $info) {
-      job_scheduler_rebuild_scheduler($name, $info);
-    }
-    $config->set('rebuild_all', FALSE)->save();
-    return;
-  }
+  try {
+    $config = \Drupal::config('job_scheduler.settings');
+    $scheduler = \Drupal::service('job_scheduler.manager');
+    $results = $scheduler->perform(NULL, $config->get('limit'), $config->get('time'));
 
-  $timestamp = \Drupal::time()->getRequestTime();
-  $scheduler = \Drupal::service('job_scheduler.manager');
-  $db = \Drupal::database();
-
-  // Reschedule stuck periodic jobs after one hour.
-  $db->update('job_schedule')
-    ->fields([
-      'scheduled' => 0,
-    ])
-    ->condition('scheduled', $timestamp - 3600, '<')
-    ->condition('periodic', 1)
-    ->execute();
-
-  // Query and dispatch scheduled jobs.
-  // Process a maximum of 200 jobs in a maximum of 30 seconds.
-  $start = time();
-  $total = 0;
-  $failed = 0;
-  $jobs = $db->select('job_schedule', NULL, ['fetch' => PDO::FETCH_ASSOC])
-    ->fields('job_schedule')
-    ->condition('scheduled', 0)
-    ->condition('next', $timestamp, '<=')
-    ->orderBy('next', 'ASC')
-    ->range(0, 200)
-    ->execute();
-
-  foreach ($jobs as $job) {
-    $job['data'] = unserialize($job['data']);
-    try {
-      $scheduler->dispatch($job);
-    }
-    catch (Exception $e) {
-      watchdog_exception('job_scheduler', $e);
-      $failed++;
-      // Drop jobs that have caused exceptions.
-      $scheduler->remove($job);
-    }
-    $total++;
-    if (time() > ($start + 30)) {
-      break;
+    // If any jobs were processed, log how much time we spent processing.
+    if ($config->get('logging') && ($results['total'] || $results['failed'])) {
+      $date_formatter = \Drupal::service('date.formatter');
+      $logger = \Drupal::logger('job_scheduler');
+      $logger->info(t('Finished processing scheduled jobs (:time, :total total, :failed failed).', [
+        ':time' => $date_formatter->formatInterval(time() - $results['start']),
+        ':total' => $results['total'],
+        ':failed' => $results['failed'],
+      ]));
     }
   }
-
-  // If any jobs were processed, log how much time we spent processing.
-  if ($total || $failed) {
-    $date_formatter = \Drupal::service('date.formatter');
-    $logger = \Drupal::logger('job_scheduler');
-    $logger->info(t('Finished processing scheduled jobs (:time, :total total, :failed failed).', [
-      ':time' => $date_formatter->formatInterval(time() - $start),
-      ':total' => $total,
-      ':failed' => $failed,
-    ]));
+  catch (Exception $e) {
+    watchdog_exception('job_scheduler', $e);
   }
 }
 
@@ -132,28 +86,6 @@ function job_scheduler_cron() {
  * Rebuilds scheduled information.
  */
 function job_scheduler_rebuild_all() {
-  $config = \Drupal::service('config.factory')->getEditable('job_scheduler.settings');
-  $config->set('rebuild_all', TRUE)->save();
-}
-
-/**
- * Rebuilds a single scheduler.
- *
- * @param string $name
- *   The name of the schedule.
- * @param array $info
- *   (optional) The job info array. Defaults to null.
- */
-function job_scheduler_rebuild_scheduler($name, array $info = NULL) {
-  $info = $info ?: job_scheduler_info($name);
-
-  if (!empty($info['jobs'])) {
-    $scheduler = \Drupal::service('job_scheduler.manager');
-    foreach ($info['jobs'] as $job) {
-      $job['name'] = $name;
-      if (!$scheduler->check($job)) {
-        $scheduler->set($job);
-      }
-    }
-  }
+  $scheduler = \Drupal::service('job_scheduler.manager');
+  $scheduler->rebuildAll();
 }
