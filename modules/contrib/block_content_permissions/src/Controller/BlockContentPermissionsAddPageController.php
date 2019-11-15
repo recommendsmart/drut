@@ -3,7 +3,10 @@
 namespace Drupal\block_content_permissions\Controller;
 
 use Drupal\block_content\Controller\BlockContentController;
+use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Url;
+use Drupal\Core\Session\AccountInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -14,13 +17,55 @@ use Symfony\Component\HttpFoundation\Request;
 class BlockContentPermissionsAddPageController extends BlockContentController {
 
   /**
+   * The custom block storage.
+   *
+   * @var \Drupal\Core\Entity\EntityStorageInterface
+   */
+  protected $blockContentStorage;
+
+  /**
+   * The custom block type storage.
+   *
+   * @var \Drupal\Core\Entity\EntityStorageInterface
+   */
+  protected $blockContentTypeStorage;
+
+  /**
+   * The account.
+   *
+   * @var \Drupal\Core\Session\AccountInterface
+   */
+  protected $account;
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container) {
+    $entity_manager = $container->get('entity.manager');
+    return new static(
+      $entity_manager->getStorage('block_content'),
+      $entity_manager->getStorage('block_content_type'),
+      $container->get('current_user')
+    );
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function __construct(EntityStorageInterface $block_content_storage, EntityStorageInterface $block_content_type_storage, AccountInterface $account) {
+    $this->blockContentStorage = $block_content_storage;
+    $this->blockContentTypeStorage = $block_content_type_storage;
+    $this->account = $account;
+  }
+
+  /**
    * {@inheritdoc}
    */
   public function add(Request $request) {
     $types = $this->blockContentTypeStorage->loadMultiple();
 
     // Remove block content types based on create permissions.
-    $account = \Drupal::getContainer()->get('current_user');
+    $account = $this->account;
     foreach ($types as $bundle_type => $bundle_obj) {
       if (!$account->hasPermission("create $bundle_type block content")) {
         unset($types[$bundle_type]);
