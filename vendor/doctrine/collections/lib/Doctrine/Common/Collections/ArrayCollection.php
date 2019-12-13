@@ -349,7 +349,7 @@ class ArrayCollection implements Collection, Selectable
             }
         }
 
-        return [$this->createFrom($matches), $this->createFrom($noMatches)];
+        return array($this->createFrom($matches), $this->createFrom($noMatches));
     }
 
     /**

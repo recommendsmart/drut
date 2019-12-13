@@ -174,21 +174,21 @@ class ClosureExpressionVisitor extends ExpressionVisitor
                 };
 
             case Comparison::MEMBER_OF:
-                return function ($object) use ($field, $value) : bool {
+                return function ($object) use ($field, $value) {
                     $fieldValues = ClosureExpressionVisitor::getObjectFieldValue($object, $field);
                     if (!is_array($fieldValues)) {
                         $fieldValues = iterator_to_array($fieldValues);
                     }
-                    return in_array($value, $fieldValues, true);
+                    return in_array($value, $fieldValues);
                 };
 
             case Comparison::STARTS_WITH:
-                return function ($object) use ($field, $value) : bool {
+                return function ($object) use ($field, $value) {
                     return 0 === strpos(ClosureExpressionVisitor::getObjectFieldValue($object, $field), $value);
                 };
 
             case Comparison::ENDS_WITH:
-                return function ($object) use ($field, $value) : bool {
+                return function ($object) use ($field, $value) {
                     return $value === substr(ClosureExpressionVisitor::getObjectFieldValue($object, $field), -strlen($value));
                 };
 
