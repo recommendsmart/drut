@@ -1,5 +1,158 @@
 [
     {
+        "name": "academicpuma/citeproc-php",
+        "version": "1.0.0",
+        "version_normalized": "1.0.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/seboettg/citeproc-php-old.git",
+            "reference": "41da9655943bc495439df92ff68890b61277d724"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/seboettg/citeproc-php-old/zipball/41da9655943bc495439df92ff68890b61277d724",
+            "reference": "41da9655943bc495439df92ff68890b61277d724",
+            "shasum": ""
+        },
+        "require": {
+            "academicpuma/locales": ">=1.0",
+            "academicpuma/styles": ">=1.0"
+        },
+        "require-dev": {
+            "phpunit/phpunit": "3.7.*",
+            "phpunit/phpunit-skeleton-generator": "2.0.*"
+        },
+        "time": "2015-09-15T09:01:39+00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "AcademicPuma\\CiteProc\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "GPL v3"
+        ],
+        "authors": [
+            {
+                "name": "Sebastian Böttger",
+                "email": "boettger@cs.uni-kassel.de"
+            }
+        ],
+        "description": "This is an effort to implement a full-featured standalone CSL processor in PHP. The code based on the implementation of Ron Jerome.",
+        "abandoned": "seboettg/citeproc-php"
+    },
+    {
+        "name": "academicpuma/locales",
+        "version": "1.0.0",
+        "version_normalized": "1.0.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/seboettg/locales.git",
+            "reference": "e5985dbc979f6a285e74006466daab40fd53573f"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/seboettg/locales/zipball/e5985dbc979f6a285e74006466daab40fd53573f",
+            "reference": "e5985dbc979f6a285e74006466daab40fd53573f",
+            "shasum": ""
+        },
+        "time": "2015-09-08T14:33:33+00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "Creative Commons Attribution-ShareAlike 3.0 License"
+        ],
+        "authors": [
+            {
+                "name": "seboettg",
+                "email": "boettger@cs.uni-kassel.de"
+            }
+        ],
+        "description": "Citation Style Language (CSL) Locales Repository"
+    },
+    {
+        "name": "academicpuma/styles",
+        "version": "1.0.0",
+        "version_normalized": "1.0.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/seboettg/styles.git",
+            "reference": "24a0ab9277d3cc7d344e621721b2f4c2ed2f2ecc"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/seboettg/styles/zipball/24a0ab9277d3cc7d344e621721b2f4c2ed2f2ecc",
+            "reference": "24a0ab9277d3cc7d344e621721b2f4c2ed2f2ecc",
+            "shasum": ""
+        },
+        "time": "2015-09-08T14:22:08+00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "Creative Commons Attribution-ShareAlike 3.0 License"
+        ],
+        "authors": [
+            {
+                "name": "seboettg",
+                "email": "boettger@cs.uni-kassel.de"
+            }
+        ],
+        "description": "Citation Style Language (CSL) Stylesheet Repository"
+    },
+    {
+        "name": "adci/full-name-parser",
+        "version": "0.2.4",
+        "version_normalized": "0.2.4.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/ADCI/full-name-parser.git",
+            "reference": "2c59942d97195bbdc101e3d1a0ad01519577edb0"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/ADCI/full-name-parser/zipball/2c59942d97195bbdc101e3d1a0ad01519577edb0",
+            "reference": "2c59942d97195bbdc101e3d1a0ad01519577edb0",
+            "shasum": ""
+        },
+        "require": {
+            "ext-mbstring": "*",
+            "php": ">=5.6"
+        },
+        "require-dev": {
+            "phpunit/phpunit": ">=4.8.28 <5"
+        },
+        "time": "2019-11-05T05:32:16+00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "ADCI\\FullNameParser\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "ADCI Solutions",
+                "homepage": "https://www.adcisolutions.com"
+            }
+        ],
+        "description": "Parses a human name",
+        "keywords": [
+            "full name",
+            "name",
+            "parse",
+            "parser",
+            "php"
+        ]
+    },
+    {
         "name": "asm89/stack-cors",
         "version": "1.2.0",
         "version_normalized": "1.2.0.0",
@@ -51,6 +204,91 @@
         "keywords": [
             "cors",
             "stack"
+        ]
+    },
+    {
+        "name": "audiolabs/bibtexparser",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/audiolabs/bibtexparser.git",
+            "reference": "b2d7794f49887ee7801c780b215d4d66b0f2e475"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/audiolabs/bibtexparser/zipball/b2d7794f49887ee7801c780b215d4d66b0f2e475",
+            "reference": "b2d7794f49887ee7801c780b215d4d66b0f2e475",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.0"
+        },
+        "time": "2014-04-07T10:08:24+00:00",
+        "type": "library",
+        "installation-source": "source",
+        "autoload": {
+            "psr-0": {
+                "AudioLabs": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Nils Werner",
+                "email": "nils.werner@audiolabs-erlangen.de",
+                "homepage": "http://www.audiolabs-erlangen.de",
+                "role": "Developer"
+            }
+        ],
+        "description": "Bibtex parser for PHP 5.3",
+        "homepage": "http://github.com/alabs/bibtexparser",
+        "keywords": [
+            "bibtex",
+            "latex",
+            "parsing"
+        ]
+    },
+    {
+        "name": "caseyamcl/php-marc21",
+        "version": "v1.0",
+        "version_normalized": "1.0.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/caseyamcl/php-marc21.git",
+            "reference": "24571bf0690c0e0dde0b588a0c829d3e4c592efc"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/caseyamcl/php-marc21/zipball/24571bf0690c0e0dde0b588a0c829d3e4c592efc",
+            "reference": "24571bf0690c0e0dde0b588a0c829d3e4c592efc",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.0"
+        },
+        "time": "2016-06-14T15:47:56+00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-0": {
+                "PhpMarc": "lib/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "description": "MARC Record handling tool for PHP",
+        "homepage": "https://github.com/caseyamc/php-marc21",
+        "keywords": [
+            "conversion",
+            "format",
+            "library",
+            "marc"
         ]
     },
     {
@@ -839,6 +1077,324 @@
         }
     },
     {
+        "name": "drupal/advancedqueue",
+        "version": "1.0.0-beta3",
+        "version_normalized": "1.0.0.0-beta3",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupalcode.org/project/advancedqueue.git",
+            "reference": "8.x-1.0-beta3"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/advancedqueue-8.x-1.0-beta3.zip",
+            "reference": "8.x-1.0-beta3",
+            "shasum": "6b5495416fd99c07867263204b189204256e616c"
+        },
+        "require": {
+            "drupal/core": "~8.0"
+        },
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-1.x": "1.x-dev"
+            },
+            "drupal": {
+                "version": "8.x-1.0-beta3",
+                "datestamp": "1512047585",
+                "security-coverage": {
+                    "status": "not-covered",
+                    "message": "Beta releases are not covered by Drupal security advisories."
+                }
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packages.drupal.org/8/downloads",
+        "license": [
+            "GPL-2.0-or-later"
+        ],
+        "authors": [
+            {
+                "name": "Damien Tournoud",
+                "homepage": "https://www.drupal.org/user/22211"
+            },
+            {
+                "name": "Kazanir",
+                "homepage": "https://www.drupal.org/user/2279698"
+            },
+            {
+                "name": "amitaibu",
+                "homepage": "https://www.drupal.org/user/57511"
+            },
+            {
+                "name": "bojanz",
+                "homepage": "https://www.drupal.org/user/86106"
+            },
+            {
+                "name": "dawehner",
+                "homepage": "https://www.drupal.org/user/99340"
+            },
+            {
+                "name": "jsacksick",
+                "homepage": "https://www.drupal.org/user/972218"
+            },
+            {
+                "name": "laurentchardin",
+                "homepage": "https://www.drupal.org/user/87775"
+            },
+            {
+                "name": "pjcdawkins",
+                "homepage": "https://www.drupal.org/user/1025236"
+            },
+            {
+                "name": "rszrama",
+                "homepage": "https://www.drupal.org/user/49344"
+            },
+            {
+                "name": "skipyT",
+                "homepage": "https://www.drupal.org/user/350126"
+            }
+        ],
+        "description": "Provides a better Queue API.",
+        "homepage": "https://www.drupal.org/project/advancedqueue",
+        "support": {
+            "source": "https://git.drupalcode.org/project/advancedqueue"
+        }
+    },
+    {
+        "name": "drupal/backup_migrate",
+        "version": "4.1.0",
+        "version_normalized": "4.1.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupalcode.org/project/backup_migrate.git",
+            "reference": "8.x-4.1"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/backup_migrate-8.x-4.1.zip",
+            "reference": "8.x-4.1",
+            "shasum": "5ee3b9a1131e6dd1ad4bc65cdef8248c7784dc51"
+        },
+        "require": {
+            "drupal/core": "~8.0"
+        },
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-4.x": "4.x-dev"
+            },
+            "drupal": {
+                "version": "8.x-4.1",
+                "datestamp": "1576877587",
+                "security-coverage": {
+                    "status": "covered",
+                    "message": "Covered by Drupal's security advisory policy"
+                }
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packages.drupal.org/8/downloads",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "authors": [
+            {
+                "name": "Ronan Dowling",
+                "homepage": "https://www.drupal.org/u/ronan",
+                "role": "Maintainer"
+            },
+            {
+                "name": "Alex Andrascu",
+                "homepage": "https://www.drupal.org/u/alex-andrascu",
+                "role": "Maintainer"
+            },
+            {
+                "name": "dgorton",
+                "homepage": "https://www.drupal.org/user/19044"
+            },
+            {
+                "name": "ikit-claw",
+                "homepage": "https://www.drupal.org/user/3285813"
+            },
+            {
+                "name": "ronan",
+                "homepage": "https://www.drupal.org/user/72815"
+            }
+        ],
+        "description": "Backup and Migrate Drupal Module",
+        "homepage": "https://www.drupal.org/project/backup_migrate",
+        "support": {
+            "source": "http://cgit.drupalcode.org/backup_migrate",
+            "issues": "https://www.drupal.org/project/issues/backup_migrate",
+            "slack": "https://drupal.slack.com/messages/C7C4M4QJV/details/"
+        }
+    },
+    {
+        "name": "drupal/chosen",
+        "version": "2.9.0",
+        "version_normalized": "2.9.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupalcode.org/project/chosen.git",
+            "reference": "8.x-2.9"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/chosen-8.x-2.9.zip",
+            "reference": "8.x-2.9",
+            "shasum": "28f3ce08a96bb9fd0190ad9579b3b4a9d9be79c9"
+        },
+        "require": {
+            "drupal/chosen_lib": "*",
+            "drupal/core": "^8 || ^9",
+            "harvesthq/chosen": "^1.8.7"
+        },
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-2.x": "2.x-dev"
+            },
+            "drupal": {
+                "version": "8.x-2.9",
+                "datestamp": "1576963005",
+                "security-coverage": {
+                    "status": "covered",
+                    "message": "Covered by Drupal's security advisory policy"
+                }
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packages.drupal.org/8/downloads",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "authors": [
+            {
+                "name": "Cyclodex",
+                "homepage": "https://www.drupal.org/user/1305230"
+            },
+            {
+                "name": "Dave Reid",
+                "homepage": "https://www.drupal.org/user/53892"
+            },
+            {
+                "name": "Hydra",
+                "homepage": "https://www.drupal.org/user/647364"
+            },
+            {
+                "name": "Pol",
+                "homepage": "https://www.drupal.org/user/47194"
+            },
+            {
+                "name": "aidanlis",
+                "homepage": "https://www.drupal.org/user/502018"
+            },
+            {
+                "name": "arshadcn",
+                "homepage": "https://www.drupal.org/user/571032"
+            },
+            {
+                "name": "kalman.hosszu",
+                "homepage": "https://www.drupal.org/user/267481"
+            },
+            {
+                "name": "nagy.balint",
+                "homepage": "https://www.drupal.org/user/1763952"
+            },
+            {
+                "name": "supercabbageuk",
+                "homepage": "https://www.drupal.org/user/235438"
+            }
+        ],
+        "description": "Makes select elements more friendly using the Chosen jQuery plugin",
+        "homepage": "https://www.drupal.org/project/chosen",
+        "keywords": [
+            "Chosen",
+            "Drupal"
+        ],
+        "support": {
+            "source": "https://drupal.org/project/chosen",
+            "issues": "https://drupal.org/project/issues/chosen"
+        }
+    },
+    {
+        "name": "drupal/chosen_lib",
+        "version": "2.9.0",
+        "version_normalized": "2.9.0.0",
+        "require": {
+            "drupal/chosen": "self.version",
+            "drupal/core": "^8 || ^9",
+            "php": ">=5.6.0"
+        },
+        "type": "metapackage",
+        "extra": {
+            "branch-alias": {
+                "dev-2.x": "2.x-dev"
+            },
+            "drupal": {
+                "version": "8.x-2.9",
+                "datestamp": "1576963005",
+                "security-coverage": {
+                    "status": "covered",
+                    "message": "Covered by Drupal's security advisory policy"
+                }
+            },
+            "drush": {
+                "services": {
+                    "drush.services.yml": "^9"
+                }
+            }
+        },
+        "notification-url": "https://packages.drupal.org/8/downloads",
+        "license": [
+            "GPL-2.0-or-later"
+        ],
+        "authors": [
+            {
+                "name": "Cyclodex",
+                "homepage": "https://www.drupal.org/user/1305230"
+            },
+            {
+                "name": "Dave Reid",
+                "homepage": "https://www.drupal.org/user/53892"
+            },
+            {
+                "name": "Hydra",
+                "homepage": "https://www.drupal.org/user/647364"
+            },
+            {
+                "name": "Pol",
+                "homepage": "https://www.drupal.org/user/47194"
+            },
+            {
+                "name": "aidanlis",
+                "homepage": "https://www.drupal.org/user/502018"
+            },
+            {
+                "name": "arshadcn",
+                "homepage": "https://www.drupal.org/user/571032"
+            },
+            {
+                "name": "kalman.hosszu",
+                "homepage": "https://www.drupal.org/user/267481"
+            },
+            {
+                "name": "nagy.balint",
+                "homepage": "https://www.drupal.org/user/1763952"
+            },
+            {
+                "name": "supercabbageuk",
+                "homepage": "https://www.drupal.org/user/235438"
+            }
+        ],
+        "description": "This module provides the basic integration with the Chosen jQuery plugin.",
+        "homepage": "https://www.drupal.org/project/chosen",
+        "support": {
+            "source": "https://git.drupalcode.org/project/chosen"
+        }
+    },
+    {
         "name": "drupal/commerce",
         "version": "2.16.0",
         "version_normalized": "2.16.0.0",
@@ -1129,6 +1685,90 @@
         "homepage": "https://www.drupal.org/project/commerce",
         "support": {
             "source": "https://git.drupalcode.org/project/commerce"
+        }
+    },
+    {
+        "name": "drupal/commerce_recurring",
+        "version": "1.0.0-beta5",
+        "version_normalized": "1.0.0.0-beta5",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupalcode.org/project/commerce_recurring.git",
+            "reference": "8.x-1.0-beta5"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/commerce_recurring-8.x-1.0-beta5.zip",
+            "reference": "8.x-1.0-beta5",
+            "shasum": "ff1e1ca3d72711efd30e3ecf0cb178e91feeae34"
+        },
+        "require": {
+            "drupal/advancedqueue": "^1.0",
+            "drupal/commerce": "^2.16",
+            "drupal/commerce_order": "*",
+            "drupal/commerce_payment": "*",
+            "drupal/commerce_price": "*",
+            "drupal/core": "~8.0",
+            "drupal/state_machine": "^1.0"
+        },
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-1.x": "1.x-dev"
+            },
+            "drupal": {
+                "version": "8.x-1.0-beta5",
+                "datestamp": "1576075380",
+                "security-coverage": {
+                    "status": "not-covered",
+                    "message": "Beta releases are not covered by Drupal security advisories."
+                }
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packages.drupal.org/8/downloads",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "authors": [
+            {
+                "name": "bojanz",
+                "homepage": "https://www.drupal.org/user/86106"
+            },
+            {
+                "name": "dawehner",
+                "homepage": "https://www.drupal.org/user/99340"
+            },
+            {
+                "name": "deggertsen",
+                "homepage": "https://www.drupal.org/user/411393"
+            },
+            {
+                "name": "facine",
+                "homepage": "https://www.drupal.org/user/1169056"
+            },
+            {
+                "name": "jsacksick",
+                "homepage": "https://www.drupal.org/user/972218"
+            },
+            {
+                "name": "larowlan",
+                "homepage": "https://www.drupal.org/user/395439"
+            },
+            {
+                "name": "mglaman",
+                "homepage": "https://www.drupal.org/user/2416470"
+            },
+            {
+                "name": "pcambra",
+                "homepage": "https://www.drupal.org/user/122101"
+            }
+        ],
+        "description": "Provides recurring billing for Drupal Commerce.",
+        "homepage": "http://drupal.org/project/commerce_recurring",
+        "support": {
+            "source": "http://cgit.drupalcode.org/commerce_recurring",
+            "issues": "https://www.drupal.org/project/issues/commerce_recurring"
         }
     },
     {
@@ -1625,6 +2265,217 @@
         ]
     },
     {
+        "name": "drupal/ctools",
+        "version": "3.2.0",
+        "version_normalized": "3.2.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupalcode.org/project/ctools.git",
+            "reference": "8.x-3.2"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/ctools-8.x-3.2.zip",
+            "reference": "8.x-3.2",
+            "shasum": "d6da87239b64ba708a5977e7b33b1e009e36b091"
+        },
+        "require": {
+            "drupal/core": "^8.5"
+        },
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-3.x": "3.x-dev"
+            },
+            "drupal": {
+                "version": "8.x-3.2",
+                "datestamp": "1550728386",
+                "security-coverage": {
+                    "status": "covered",
+                    "message": "Covered by Drupal's security advisory policy"
+                }
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packages.drupal.org/8/downloads",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "authors": [
+            {
+                "name": "Kris Vanderwater (EclipseGc)",
+                "homepage": "https://www.drupal.org/u/eclipsegc",
+                "role": "Maintainer"
+            },
+            {
+                "name": "Jakob Perry (japerry)",
+                "homepage": "https://www.drupal.org/u/japerry",
+                "role": "Maintainer"
+            },
+            {
+                "name": "Tim Plunkett (tim.plunkett)",
+                "homepage": "https://www.drupal.org/u/timplunkett",
+                "role": "Maintainer"
+            },
+            {
+                "name": "James Gilliland (neclimdul)",
+                "homepage": "https://www.drupal.org/u/neclimdul",
+                "role": "Maintainer"
+            },
+            {
+                "name": "Daniel Wehner (dawehner)",
+                "homepage": "https://www.drupal.org/u/dawehner",
+                "role": "Maintainer"
+            },
+            {
+                "name": "joelpittet",
+                "homepage": "https://www.drupal.org/user/160302"
+            },
+            {
+                "name": "merlinofchaos",
+                "homepage": "https://www.drupal.org/user/26979"
+            },
+            {
+                "name": "neclimdul",
+                "homepage": "https://www.drupal.org/user/48673"
+            },
+            {
+                "name": "sdboyer",
+                "homepage": "https://www.drupal.org/user/146719"
+            },
+            {
+                "name": "sun",
+                "homepage": "https://www.drupal.org/user/54136"
+            },
+            {
+                "name": "tim.plunkett",
+                "homepage": "https://www.drupal.org/user/241634"
+            }
+        ],
+        "description": "Provides a number of utility and helper APIs for Drupal developers and site builders.",
+        "homepage": "https://www.drupal.org/project/ctools",
+        "support": {
+            "source": "http://cgit.drupalcode.org/ctools",
+            "issues": "https://www.drupal.org/project/issues/ctools"
+        }
+    },
+    {
+        "name": "drupal/editor_advanced_link",
+        "version": "1.6.0",
+        "version_normalized": "1.6.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupalcode.org/project/editor_advanced_link.git",
+            "reference": "8.x-1.6"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/editor_advanced_link-8.x-1.6.zip",
+            "reference": "8.x-1.6",
+            "shasum": "920f22fd7841bc1c77b56c6ae51436319b47636e"
+        },
+        "require": {
+            "drupal/core": "*"
+        },
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-1.x": "1.x-dev"
+            },
+            "drupal": {
+                "version": "8.x-1.6",
+                "datestamp": "1577188383",
+                "security-coverage": {
+                    "status": "covered",
+                    "message": "Covered by Drupal's security advisory policy"
+                }
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packages.drupal.org/8/downloads",
+        "license": [
+            "GPL-2.0-or-later"
+        ],
+        "authors": [
+            {
+                "name": "DuaelFr",
+                "homepage": "https://www.drupal.org/user/931394"
+            }
+        ],
+        "description": "Add title, target etc. attributes to Text Editor's link dialog if the text format allows them.",
+        "homepage": "https://www.drupal.org/project/editor_advanced_link",
+        "support": {
+            "source": "https://git.drupalcode.org/project/editor_advanced_link"
+        }
+    },
+    {
+        "name": "drupal/embed",
+        "version": "1.3.0",
+        "version_normalized": "1.3.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupalcode.org/project/embed.git",
+            "reference": "8.x-1.3"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/embed-8.x-1.3.zip",
+            "reference": "8.x-1.3",
+            "shasum": "141be860f2d2e1df67904995fa43774fee355328"
+        },
+        "require": {
+            "drupal/core": "^8 || ^9"
+        },
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-1.x": "1.x-dev"
+            },
+            "drupal": {
+                "version": "8.x-1.3",
+                "datestamp": "1576704484",
+                "security-coverage": {
+                    "status": "covered",
+                    "message": "Covered by Drupal's security advisory policy"
+                }
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packages.drupal.org/8/downloads",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "authors": [
+            {
+                "name": "Dave Reid",
+                "homepage": "https://www.drupal.org/user/53892"
+            },
+            {
+                "name": "Devin Carlson",
+                "homepage": "https://www.drupal.org/user/290182"
+            },
+            {
+                "name": "Drupal Media Team",
+                "homepage": "https://www.drupal.org/user/3260690"
+            },
+            {
+                "name": "cs_shadow",
+                "homepage": "https://www.drupal.org/user/2828287"
+            },
+            {
+                "name": "slashrsm",
+                "homepage": "https://www.drupal.org/user/744628"
+            }
+        ],
+        "description": "Provide a framework for various different types of embeds in WYSIWYG editors, common functionality, interfaces, and standards.",
+        "homepage": "https://www.drupal.org/project/embed",
+        "support": {
+            "source": "https://git.drupalcode.org/project/embed",
+            "issues": "https://www.drupal.org/project/issues/embed",
+            "irc": "irc://irc.freenode.org/drupal-media"
+        }
+    },
+    {
         "name": "drupal/entity",
         "version": "1.0.0-rc3",
         "version_normalized": "1.0.0.0-RC3",
@@ -1754,6 +2605,72 @@
         }
     },
     {
+        "name": "drupal/fontawesome",
+        "version": "2.15.0",
+        "version_normalized": "2.15.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupalcode.org/project/fontawesome.git",
+            "reference": "8.x-2.15"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/fontawesome-8.x-2.15.zip",
+            "reference": "8.x-2.15",
+            "shasum": "d3ee7a02ddd01c14cab44afcd6f3e55cfa3d0491"
+        },
+        "require": {
+            "drupal/core": "~8.0"
+        },
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-2.x": "2.x-dev"
+            },
+            "drupal": {
+                "version": "8.x-2.15",
+                "datestamp": "1578431890",
+                "security-coverage": {
+                    "status": "covered",
+                    "message": "Covered by Drupal's security advisory policy"
+                }
+            },
+            "drush": {
+                "services": {
+                    "drush.services.yml": "^9"
+                }
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packages.drupal.org/8/downloads",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "authors": [
+            {
+                "name": "Daniel.Moberly",
+                "homepage": "https://www.drupal.org/user/1160788"
+            },
+            {
+                "name": "RobLoach",
+                "homepage": "https://www.drupal.org/user/61114"
+            },
+            {
+                "name": "inders",
+                "homepage": "https://www.drupal.org/user/127640"
+            },
+            {
+                "name": "truls1502",
+                "homepage": "https://www.drupal.org/user/325866"
+            }
+        ],
+        "description": "The web's most popular icon set and toolkit.",
+        "homepage": "https://www.drupal.org/project/fontawesome",
+        "support": {
+            "source": "https://git.drupalcode.org/project/fontawesome"
+        }
+    },
+    {
         "name": "drupal/inline_entity_form",
         "version": "1.0.0-rc2",
         "version_normalized": "1.0.0.0-RC2",
@@ -1842,6 +2759,69 @@
         }
     },
     {
+        "name": "drupal/pathauto",
+        "version": "1.6.0",
+        "version_normalized": "1.6.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupalcode.org/project/pathauto.git",
+            "reference": "8.x-1.6"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/pathauto-8.x-1.6.zip",
+            "reference": "8.x-1.6",
+            "shasum": "eb976ae110d73c06fafb1b657adb967dd2cb8246"
+        },
+        "require": {
+            "drupal/core": "^8.6",
+            "drupal/ctools": "*",
+            "drupal/token": "*"
+        },
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-1.x": "1.x-dev"
+            },
+            "drupal": {
+                "version": "8.x-1.6",
+                "datestamp": "1575467285",
+                "security-coverage": {
+                    "status": "covered",
+                    "message": "Covered by Drupal's security advisory policy"
+                }
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packages.drupal.org/8/downloads",
+        "license": [
+            "GPL-2.0-or-later"
+        ],
+        "authors": [
+            {
+                "name": "Berdir",
+                "homepage": "https://www.drupal.org/user/214652"
+            },
+            {
+                "name": "Dave Reid",
+                "homepage": "https://www.drupal.org/user/53892"
+            },
+            {
+                "name": "Freso",
+                "homepage": "https://www.drupal.org/user/27504"
+            },
+            {
+                "name": "greggles",
+                "homepage": "https://www.drupal.org/user/36762"
+            }
+        ],
+        "description": "Provides a mechanism for modules to automatically generate aliases for the content they manage.",
+        "homepage": "https://www.drupal.org/project/pathauto",
+        "support": {
+            "source": "https://git.drupalcode.org/project/pathauto"
+        }
+    },
+    {
         "name": "drupal/profile",
         "version": "1.0.0",
         "version_normalized": "1.0.0.0",
@@ -1912,6 +2892,55 @@
         "homepage": "http://drupal.org/project/profile",
         "support": {
             "source": "https://git.drupalcode.org/project/profile"
+        }
+    },
+    {
+        "name": "drupal/responsive_tables_filter",
+        "version": "1.4.0",
+        "version_normalized": "1.4.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupalcode.org/project/responsive_tables_filter.git",
+            "reference": "8.x-1.4"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/responsive_tables_filter-8.x-1.4.zip",
+            "reference": "8.x-1.4",
+            "shasum": "13e722fa466492b535afc0f7af6c5660334acc83"
+        },
+        "require": {
+            "drupal/core": "~8.0"
+        },
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-1.x": "1.x-dev"
+            },
+            "drupal": {
+                "version": "8.x-1.4",
+                "datestamp": "1575995881",
+                "security-coverage": {
+                    "status": "covered",
+                    "message": "Covered by Drupal's security advisory policy"
+                }
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packages.drupal.org/8/downloads",
+        "license": [
+            "GPL-2.0-or-later"
+        ],
+        "authors": [
+            {
+                "name": "mark_fullmer",
+                "homepage": "https://www.drupal.org/user/2612816"
+            }
+        ],
+        "description": "Make tables in WYSIWYG fields responsive",
+        "homepage": "https://www.drupal.org/project/responsive_tables_filter",
+        "support": {
+            "source": "https://git.drupalcode.org/project/responsive_tables_filter"
         }
     },
     {
@@ -2083,6 +3112,65 @@
         "homepage": "https://www.drupal.org/project/token",
         "support": {
             "source": "https://git.drupalcode.org/project/token"
+        }
+    },
+    {
+        "name": "drupal/we_megamenu",
+        "version": "1.7.0",
+        "version_normalized": "1.7.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupalcode.org/project/we_megamenu.git",
+            "reference": "8.x-1.7"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/we_megamenu-8.x-1.7.zip",
+            "reference": "8.x-1.7",
+            "shasum": "39df675e4eeb4931f400f4ab039c18ed92b30862"
+        },
+        "require": {
+            "drupal/core": "~8.0"
+        },
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-1.x": "1.x-dev"
+            },
+            "drupal": {
+                "version": "8.x-1.7",
+                "datestamp": "1575618784",
+                "security-coverage": {
+                    "status": "covered",
+                    "message": "Covered by Drupal's security advisory policy"
+                }
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packages.drupal.org/8/downloads",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "authors": [
+            {
+                "name": "Hai Nguyen Ngoc (HaiNN)",
+                "homepage": "https://www.drupal.org/u/hainn",
+                "role": "Maintainer"
+            },
+            {
+                "name": "WeebPal",
+                "homepage": "https://www.drupal.org/user/1861072"
+            },
+            {
+                "name": "buivankim2020",
+                "homepage": "https://www.drupal.org/user/2959439"
+            }
+        ],
+        "description": "This powerful Drupal module helps you create custom menu, video and Drupal Blocks.",
+        "homepage": "https://www.drupal.org/project/we_megamenu",
+        "support": {
+            "source": "https://git.drupalcode.org/project/we_megamenu",
+            "issues": "https://www.drupal.org/project/issues/we_megamenu"
         }
     },
     {
@@ -2400,6 +3488,57 @@
             "stream",
             "uri",
             "url"
+        ]
+    },
+    {
+        "name": "harvesthq/chosen",
+        "version": "v1.8.7",
+        "version_normalized": "1.8.7.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/harvesthq/chosen-package.git",
+            "reference": "ad86732b668627c131e61ee8f0e6e9ed52e4db8d"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/harvesthq/chosen-package/zipball/ad86732b668627c131e61ee8f0e6e9ed52e4db8d",
+            "reference": "ad86732b668627c131e61ee8f0e6e9ed52e4db8d",
+            "shasum": ""
+        },
+        "time": "2018-06-28T20:32:51+00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Koen Punt",
+                "homepage": "https://github.com/koenpunt"
+            },
+            {
+                "name": "Patrick Filler",
+                "homepage": "https://github.com/pfiller"
+            },
+            {
+                "name": "Christophe Coevoet",
+                "homepage": "https://github.com/stof"
+            },
+            {
+                "name": "Ken Earley",
+                "homepage": "https://github.com/kenearley"
+            }
+        ],
+        "description": "Chosen is a JavaScript plugin that makes select boxes user-friendly. It is currently available in both jQuery and Prototype flavors.",
+        "homepage": "https://harvesthq.github.io/chosen/",
+        "keywords": [
+            "dropdown",
+            "form",
+            "input",
+            "multiselect",
+            "select",
+            "ui"
         ]
     },
     {
@@ -4368,6 +5507,52 @@
         ],
         "description": "Symfony Yaml Component",
         "homepage": "https://symfony.com"
+    },
+    {
+        "name": "technosophos/LibRIS",
+        "version": "2.0.2",
+        "version_normalized": "2.0.2.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/technosophos/LibRIS.git",
+            "reference": "5b6628ece0e57e90bd54f3b2d8de922dc4cc662c"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/technosophos/LibRIS/zipball/5b6628ece0e57e90bd54f3b2d8de922dc4cc662c",
+            "reference": "5b6628ece0e57e90bd54f3b2d8de922dc4cc662c",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.0"
+        },
+        "time": "2012-03-14T16:36:15+00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-0": {
+                "LibRIS": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT or GPLv2"
+        ],
+        "authors": [
+            {
+                "name": "M Butcher",
+                "homepage": "http://technosophos.com"
+            }
+        ],
+        "description": "An RIS parser. RIS is a format for reference metadata.",
+        "homepage": "https://github.com/technosophos/LibRIS",
+        "keywords": [
+            "Bibliography",
+            "File parser",
+            "RIS",
+            "Reference"
+        ],
+        "abandoned": true
     },
     {
         "name": "twig/twig",

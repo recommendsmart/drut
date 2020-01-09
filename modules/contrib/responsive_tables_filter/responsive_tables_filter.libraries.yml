@@ -1,8 +1,9 @@
 tablesaw-filter:
   version: 1.x
   css:
-    theme:
-      css/tablesaw.css: {}
+    component:
+      css/tablesaw-base.css: {}
+      css/tablesaw-responsive.css: { media: screen }
   js:
     js/tablesaw.min.js: {}
     js/tablesaw-init.js: {}

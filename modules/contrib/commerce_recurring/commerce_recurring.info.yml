@@ -1,7 +1,7 @@
 name: 'Commerce Recurring'
 type: module
 description: 'Provides recurring billing for Drupal Commerce'
-# core: 8.x
+core: 8.x
 package: 'Commerce (contrib)'
 dependencies:
   - commerce:commerce
@@ -11,8 +11,7 @@ dependencies:
   - state_machine
   - advancedqueue
 
-# Information added by Drupal.org packaging script on 2019-03-12
-version: '8.x-1.0-beta4'
-core: '8.x'
+# Information added by Drupal.org packaging script on 2019-12-11
+version: '8.x-1.0-beta5'
 project: 'commerce_recurring'
-datestamp: 1552412288
+datestamp: 1576075410

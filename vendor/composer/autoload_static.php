@@ -107,6 +107,8 @@ class ComposerStaticInitf58dd9d2e64a825de7df7497c1354a33
         'A' => 
         array (
             'Asm89\\Stack\\' => 12,
+            'AcademicPuma\\CiteProc\\' => 22,
+            'ADCI\\FullNameParser\\' => 20,
         ),
     );
 
@@ -315,6 +317,14 @@ class ComposerStaticInitf58dd9d2e64a825de7df7497c1354a33
         array (
             0 => __DIR__ . '/..' . '/asm89/stack-cors/src/Asm89/Stack',
         ),
+        'AcademicPuma\\CiteProc\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/academicpuma/citeproc-php/src',
+        ),
+        'ADCI\\FullNameParser\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/adci/full-name-parser/src',
+        ),
     );
 
     public static $prefixesPsr0 = array (
@@ -334,9 +344,20 @@ class ComposerStaticInitf58dd9d2e64a825de7df7497c1354a33
         ),
         'P' => 
         array (
+            'PhpMarc' => 
+            array (
+                0 => __DIR__ . '/..' . '/caseyamcl/php-marc21/lib',
+            ),
             'PEAR' => 
             array (
                 0 => __DIR__ . '/..' . '/pear/pear_exception',
+            ),
+        ),
+        'L' => 
+        array (
+            'LibRIS' => 
+            array (
+                0 => __DIR__ . '/..' . '/technosophos/LibRIS/src',
             ),
         ),
         'E' => 
@@ -362,6 +383,10 @@ class ComposerStaticInitf58dd9d2e64a825de7df7497c1354a33
         ),
         'A' => 
         array (
+            'AudioLabs' => 
+            array (
+                0 => __DIR__ . '/..' . '/audiolabs/bibtexparser/src',
+            ),
             'Archive_Tar' => 
             array (
                 0 => __DIR__ . '/..' . '/pear/archive_tar',
