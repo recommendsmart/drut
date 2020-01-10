@@ -38,7 +38,8 @@
         "drupal/pathauto": "^1.6",
         "drupal/responsive_tables_filter": "^1.4",
         "drupal/we_megamenu": "^1.7",
-        "technosophos/LibRIS": "^2.0"
+        "oomphinc/composer-installers-extender": "^1.1",
+        "technosophos/libris": "^2.0"
     },
     "require-dev": {
     },
@@ -58,7 +59,7 @@
         },
         "installer-paths": {
             "core": ["type:drupal-core"],
-            "libraries/{$name}": ["type:drupal-library"],
+            "libraries/{$name}": ["type:drupal-library", "harvesthq/chosen"],
             "modules/contrib/{$name}": ["type:drupal-module"],
             "profiles/contrib/{$name}": ["type:drupal-profile"],
             "themes/contrib/{$name}": ["type:drupal-theme"],
@@ -66,6 +67,9 @@
             "modules/custom/{$name}": ["type:drupal-custom-module"],
             "themes/custom/{$name}": ["type:drupal-custom-theme"]
         },
+		"installer-types": [
+			"library"
+		],		
         "drupal-core-project-message": {
             "include-keys": ["homepage", "support"],
             "post-create-project-cmd-message": [

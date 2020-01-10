@@ -69,6 +69,10 @@ class ComposerStaticInitf58dd9d2e64a825de7df7497c1354a33
             'Psr\\Http\\Message\\' => 17,
             'Psr\\Container\\' => 14,
         ),
+        'O' => 
+        array (
+            'OomphInc\\ComposerInstallersExtender\\' => 36,
+        ),
         'M' => 
         array (
             'Masterminds\\' => 12,
@@ -232,6 +236,10 @@ class ComposerStaticInitf58dd9d2e64a825de7df7497c1354a33
         'Psr\\Container\\' => 
         array (
             0 => __DIR__ . '/..' . '/psr/container/src',
+        ),
+        'OomphInc\\ComposerInstallersExtender\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/oomphinc/composer-installers-extender/src',
         ),
         'Masterminds\\' => 
         array (
