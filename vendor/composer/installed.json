@@ -2671,6 +2671,60 @@
         }
     },
     {
+        "name": "drupal/iek",
+        "version": "1.1.0",
+        "version_normalized": "1.1.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://git.drupalcode.org/project/iek.git",
+            "reference": "8.x-1.1"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://ftp.drupal.org/files/projects/iek-8.x-1.1.zip",
+            "reference": "8.x-1.1",
+            "shasum": "720320aad94450c283b147398a3646a7d2165693"
+        },
+        "require": {
+            "drupal/core": ">=8.2.0",
+            "ext-gd": "*"
+        },
+        "type": "drupal-module",
+        "extra": {
+            "branch-alias": {
+                "dev-1.x": "1.x-dev"
+            },
+            "drupal": {
+                "version": "8.x-1.1",
+                "datestamp": "1578668589",
+                "security-coverage": {
+                    "status": "covered",
+                    "message": "Covered by Drupal's security advisory policy"
+                }
+            }
+        },
+        "installation-source": "dist",
+        "notification-url": "https://packages.drupal.org/8/downloads",
+        "license": [
+            "GPL-2.0-or-later"
+        ],
+        "authors": [
+            {
+                "name": "Jay.Chen",
+                "homepage": "https://www.drupal.org/user/180060"
+            },
+            {
+                "name": "lonalore",
+                "homepage": "https://www.drupal.org/user/1539304"
+            }
+        ],
+        "description": "Provides custom image effects.",
+        "homepage": "https://www.drupal.org/project/iek",
+        "support": {
+            "source": "https://git.drupalcode.org/project/iek"
+        }
+    },
+    {
         "name": "drupal/inline_entity_form",
         "version": "1.0.0-rc2",
         "version_normalized": "1.0.0.0-RC2",
