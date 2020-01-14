@@ -1,0 +1,107 @@
+.region-hero-image {
+  .field--name-field-landscape,
+  .field--name-field-portrait {
+    flex-direction: column;
+    height: 100%;
+    justify-content: center;
+    overflow: hidden;
+  }
+  .field--name-field-landscape {
+    display: none;
+    &:before {
+      background: rgba(0, 0, 0, 0.6);
+      content: "";
+      display: block;
+      height: 427px;
+      position: absolute;
+      width: 100%;
+      @media (min-width: $screen-lg-min) {
+        height: 600px;
+      }
+    }
+    @media (min-width: $screen-sm-min) {
+      display: flex;
+      align-items: center;
+      max-height: 427px;
+    }
+    @media (min-width: $screen-lg-min) {
+      max-height: 600px;
+      margin-top: rem-calc(-70);
+    }
+  }
+  .field--name-field-portrait {
+    display: flex;
+    max-height: 400px;
+    &:before {
+      background: rgba(0, 0, 0, 0.4);
+      content: "";
+      display: block;
+      height: 400px;
+      position: absolute;
+      width: 100%;
+    }
+    @media (min-width: $screen-sm-min) {
+      display: none;
+    }
+  }
+  .field--name-field-hero-title,
+  .field--name-field-hero-text,
+  .field--name-field-hero-link {
+    left: 0;
+    margin: 0 auto;
+    max-width: 710px;
+    position: absolute;
+    right: 0;
+    text-align: center;
+    @media (max-width: $screen-xs-max) {
+      display: none;
+    }
+    @media (min-width: $screen-lg-min) {
+      max-width: 770px;
+    }
+  }
+  .field--name-field-hero-title {
+    @extend h1;
+    color: $white;
+    top: rem-calc(165);
+  }
+  .field--name-field-hero-text {
+    @extend p;
+    color: $light-grayish;
+    top: rem-calc(240);
+  }
+  .field--name-field-hero-link {
+    @include button-primary;
+    height: 50px;
+    margin: 0 auto;
+    max-width: 169px;
+    padding: rem-calc(15 24);
+    top: rem-calc(311);
+    a {
+      align-items: center;
+      color: $white;
+      bottom: 0;
+      display: flex;
+      justify-content: center;
+      left: 0;
+      position: absolute;
+      right: 0;
+      top: 0;
+    }
+  }
+}
+
+body:not(.user-logged-in) :not(.toolbar-horizontal), :not(.toolbar-vertical) {
+  .region-hero-image {
+    .field--name-field-landscape {
+      @media (min-width: $screen-lg-min) {
+        height: 660px;
+        margin-bottom: rem-calc(30);
+      }
+    }
+    .hero_image.menu--main {
+      margin-top: rem-calc(-30);
+    }
+  }
+}
+

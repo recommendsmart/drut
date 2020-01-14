@@ -1,0 +1,70 @@
+.block-social-media {
+  position: relative;
+  @media (min-width: $screen-lg-min) {
+    height: 100px;
+    left: 0;
+    margin: auto;
+    position: absolute;
+    top: 1000px;
+    z-index: 3;
+  }
+  .list-social-media {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin: 0;
+    padding: rem-calc(20) 0 rem-calc(40);
+    @media (min-width: $screen-sm-min) {
+      padding: rem-calc(50) 0 rem-calc(80);
+    }
+    @media (min-width: $screen-lg-min) {
+      flex-direction: column;
+      padding: 0;
+      position: absolute;
+      left:0;
+    }
+    li {
+      background: $white;
+      border-radius: rem-calc(4);
+      box-shadow: 0 rem-calc(2) rem-calc(4) 0 rgba(0, 0, 0, 0.15);
+      height: 50px;
+      margin-left: rem-calc(8);
+      padding: rem-calc(8) 0;
+      width: 50px;
+      @media (min-width: $screen-sm-min) {
+        margin-left: rem-calc(48);
+      }
+      @media (min-width: $screen-lg-min) {
+        margin: 0 0 rem-calc(16);
+      }
+      .share {
+        padding: rem-calc(10) rem-calc(13) rem-calc(16);
+      }
+      svg {
+        padding-top: rem-calc(5);
+        width: 24px;
+        .st0 {
+          fill: $dark-grayish;
+        }
+      }
+    }
+  }
+  .social-media-sharing {
+    @media (min-width: $screen-md-min) {
+      position: relative;
+    }
+  }
+}
+.scrolled {
+  @media (min-width: $screen-lg-min) {
+    position: fixed;
+    top: 10%;
+  }
+}
+.sticked {
+  @media (min-width: $screen-lg-min) {
+    bottom: 0;
+    position: absolute;
+    top: 0;
+  }
+}

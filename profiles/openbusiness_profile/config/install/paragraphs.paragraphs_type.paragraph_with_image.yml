@@ -1,0 +1,8 @@
+langcode: en
+status: true
+dependencies: {  }
+id: paragraph_with_image
+label: 'Paragraph with image'
+icon_uuid: null
+description: "Paragraph with image (image can be position on left on right)\r\n"
+behavior_plugins: {  }

@@ -1,0 +1,8 @@
+langcode: en
+status: true
+dependencies: {  }
+id: carousel
+label: Carousel
+icon_uuid: null
+description: 'Is a paragraph with a slider with 3 images'
+behavior_plugins: {  }

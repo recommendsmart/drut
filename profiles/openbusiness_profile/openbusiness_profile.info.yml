@@ -1,0 +1,69 @@
+name: 'Open Business'
+type: profile
+description: 'This is an installation profile made by Softescu.'
+core: 8.x
+install:
+  - node
+  - history
+  - block
+  - breakpoint
+  - ckeditor
+  - color
+  - config
+  - comment
+  - contextual
+  - contact
+  - menu_link_content
+  - datetime
+  - block_content
+  - quickedit
+  - editor
+  - help
+  - image
+  - menu_ui
+  - options
+  - path
+  - page_cache
+  - dynamic_page_cache
+  - big_pipe
+  - taxonomy
+  - dblog
+  - search
+  - shortcut
+  - toolbar
+  - field_ui
+  - file
+  - rdf
+  - views
+  - views_ui
+  - tour
+  - automated_cron
+  - update
+  - language
+  - config_translation
+  - content_translation
+  - locale
+  - contact_block
+  - captcha
+  - recaptcha
+  - social_media
+  - token
+  - inline_form_errors
+  - google_analytics
+  - metatag
+dependencies:
+  - smart_trim
+  - smart_trim_readmore
+  - paragraphs
+  - paragraphs_type_permissions
+themes:
+  - bootstrap
+  - seven
+  - bartik
+  - openbusiness_theme
+keep_english: true
+
+# Information added by Drupal.org packaging script on 2019-12-30
+version: '8.x-1.0-beta1'
+project: 'openbusiness'
+datestamp: 1577713393

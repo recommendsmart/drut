@@ -1,0 +1,414 @@
+ <p>A preview collection of pre-designed elements, graphics and rules you should follow to ensure that separate website
+    pieces will be consistent and will create a cohesive experience at the end.</p>
+<!--START Heading Section-->
+<div class="section-styleguide">
+  <h2>Headings</h2>
+  <div class="headings">
+    <h1>This is an h1 heading</h1>
+    <h2>This is an h2 heading</h2>
+    <h3>This is an h3 heading</h3>
+    <h4>This is an h4 heading</h4>
+    <h5>This is an h5 heading</h5>
+    <h6>This is an h6 heading</h6>
+  </div>
+</div>
+<!--END Heading Section-->
+<!--START Paragraph with link exemple-->
+<div class="section-styleguide">
+  <h2>Paragraph With Links</h2>
+  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et <a href="#">dolore
+      magna aliqua</a>. Ut enim ad minim veniam,
+    <a href="#"> quis nostrud exercitation ullamco </a> a laboris nisi ut aliquip ex ea commodo consequat.</p>
+</div>
+<!--END Paragraph with link exemple-->
+<!--START Colors exemple-->
+<div class="section-styleguide">
+  <h2>Colors</h2>
+  <h3>Primary colors</h3>
+  <div class="colors">
+    <!--scss:$fuchsia-->
+    <div class="color-div">
+      <div class="color fuchsia"></div>
+      <p>#C5198D</p>
+    </div>
+    <!--scss:$dark-grey-->
+    <div class="color-div">
+      <div class="color dark-grey"></div>
+      <p>#454545</p>
+    </div>
+    <!--scss:$dark-grayish-->
+    <div class="color-div">
+      <div class="color dark-grayish"></div>
+      <p>#9DA7A7</p>
+    </div>
+    <!--scss:$light-grayish-->
+    <div class="color-div">
+      <div class="color light-grayish"></div>
+      <p>#D6DBDB</p>
+    </div>
+    <!-- linear-gradient;-->
+    <div class="color-div linear-gradient-margin">
+      <p>#FFFFFF</p>
+      <div class="color linear-gradient"></div>
+      <p>#E8EDF0</p>
+    </div>
+  </div>
+  <h3>Secondary colors</h3>
+  <div class="colors">
+    <!--scss:$light-pink-->
+    <div class="color-div">
+      <div class="color light-pink"></div>
+      <p>#F3CEE6</p>
+    </div>
+    <!--scss:$light-green-->
+    <div class="color-div">
+      <div class="color light-green"></div>
+      <p>#CDF3E7</p>
+    </div>
+    <!--scss:$light-yellow-->
+    <div class="color-div">
+      <div class="color light-yellow"></div>
+      <p>#F6E9CA</p>
+    </div>
+    <!--scss:$light-purple-->
+    <div class="color-div">
+      <div class="color light-purple"></div>
+      <p>#D2DEF2</p>
+    </div>
+    <!--scss: $light-blue-->
+    <div class="color-div">
+      <div class="color light-blue"></div>
+      <p>#E2E9F1</p>
+    </div>
+  </div>
+</div>
+<!--END Colors exemple-->
+<!--START Table section-->
+<div class="section-styleguide">
+  <h2>Table</h2>
+  <div class="table-responsive">
+  <table class="table">
+    <thead>
+    <tr>
+      <th>Header 1</th>
+      <th>Header 2</th>
+      <th>Header 3</th>
+    </tr>
+    </thead>
+    <tr>
+      <td>row 1, cell 1</td>
+      <td>row 2, cell 1</td>
+      <td>row 3, cell 1</td>
+    </tr>
+    <tr>
+      <td>row 1, cell 2</td>
+      <td>row 2, cell 2</td>
+      <td>row 3, cell 2</td>
+    </tr>
+    <tr>
+      <td>row 1, cell 3</td>
+      <td>row 2, cell 3</td>
+      <td>row 3, cell 3</td>
+    </tr>
+  </table>
+  </div>
+</div>
+<!--END Table section-->
+<!--START Tooltips section-->
+<div class="section-styleguide">
+  <h2>Tooltip</h2>
+  <div class="tooltips">
+    <button type="button" class="btn btn-tooltip" data-toggle="tooltip"
+            data-placement="left" title="Tooltip on left">
+      Tooltip on Left
+    </button>
+    <button type="button" class="btn btn-tooltip" data-toggle="tooltip"
+            data-placement="bottom" title="Tooltip on bottom">
+      Tooltip on Bottom
+    </button>
+    <button type="button" class="btn btn-tooltip" data-toggle="tooltip"
+            data-placement="top" title="Tooltip on top">
+      Tooltip on Top
+    </button>
+    <button type="button" class="btn btn-tooltip" data-toggle="tooltip"
+            data-placement="right" title="Tooltip on right">
+      Tooltip on Right
+    </button>
+  </div>
+</div>
+<!--END Tooltips section-->
+<!--START Buttons section-->
+<div class="section-styleguide">
+  <h2>Buttons</h2>
+  <div class="section-button">
+    <p>Primary button</p>
+    <p><button type="button" class="btn btn-primary">Primary</button></p>
+  </div>
+  <div class="section-button">
+    <p>Secondary button</p>
+    <p><button type="button" class="btn btn-secondary">Secondary</button></p>
+  </div>
+</div>
+<!--END Buttons section-->
+<!--START Forms section-->
+<div class="section-styleguide">
+  <h2>Forms</h2>
+  <form method="post" action="#test" class="test-form-lite">
+    <div class="form-item form-text-test">
+      <label>Username</label>
+      <input type="text" placeholder="Type here" class="form-control" required>
+    </div>
+    <div class="form-item">
+      <label>Password:</label>
+      <input type="text" placeholder="Type here" class="form-control" required>
+    </div>
+    <div class="form-item js-form-item form-type-checkbox js-form-type-checkbox form-item-agree js-form-item-agree checkbox">
+      <label for="edit-agree" class="control-label option js-form-required form-required">
+        <input data-drupal-selector="edit-agree" class="form-checkbox required" type="checkbox" id="edit-agree" name="agree" value="1" required="required" aria-required="true">
+        <p class="terms-text">I have read and agreed to the <a href="/privacy">Privacy Policy</a> and <a href="/terms">Terms and Conditions</a>.</p>
+      </label>
+    </div>
+    <input type="submit" name="Send" value="Send" class="btn-primary">
+  </form>
+  <form method="post" action="#test">
+    <div class="form-item js-form-item form-type-textfield js-form-type-textfield form-item-name js-form-item-name form-group error has-error">
+      <label for="edit-name" class="control-label js-form-required form-required">Username</label>
+      <input autocorrect="none" autocapitalize="none" spellcheck="false" autofocus="autofocus" placeholder="Type here" data-drupal-selector="edit-name" class="form-text required error form-control" type="text" id="edit-name" name="name" size="60" maxlength="60" required="required" aria-required="true" aria-invalid="true" title="" data-toggle="tooltip" data-original-title="Enter your Open Business username.">
+      <div class="form-item--error-message alert alert-danger alert-sm">
+        Unrecognized username or password. <a href="/user/password?name=dsadas">Forgot your password?</a>
+      </div>
+    </div>
+  </form>
+</div>
+<!--END Forms section-->
+<!--START Dropdown section-->
+<div class="section-styleguide">
+  <h2>Dropdown</h2>
+  <div class="dropdown"><button aria-expanded="true" aria-haspopup="true" class="btn btn-default dropdown-toggle" data-toggle="dropdown" id="dropdownMenu1" type="button">All</button>
+    <ul aria-labelledby="dropdownMenu1" class="dropdown-menu">
+      <li><a href="#">First option</a></li>
+      <li><a href="#">Second option</a></li>
+      <li><a href="#">Third option</a></li>
+      <li class="divider" role="separator">&nbsp;</li>
+      <li><a href="#">Separated link</a></li>
+    </ul>
+  </div>
+</div>
+<!--END Dropdown section-->
+<!--START Pager section-->
+<div class="section-styleguide">
+  <h2>Pagination</h2>
+  <div class="global-pager">
+    <h5 class="pager-count-text">Showing 12 items per page</h5>
+
+    <nav aria-labelledby="pagination-heading" class="pager-nav text-center" role="navigation">
+      <ul class="pagination">
+        <li class="pager__item pager__item--previous"><a href="#"><span class="visually-hidden">Previous page</span><span aria-hidden="true">prev</span></a></li>
+        <li class="pager__item"><a href="#">1</a></li>
+        <li class="pager__item is-active active"><a href="#">2</a></li>
+        <li class="pager__item"><a href="#">3</a></li>
+        <li class="pager__item"><a href="#">4</a></li>
+        <li class="pager__item"><a href="#">5</a></li>
+        <li class="pager__item"><a href="#">6</a></li>
+        <li class="pager__item"><a href="#">7</a></li>
+        <li class="pager__item"><a href="#">8</a></li>
+        <li class="pager__item"><a href="#">9</a></li>
+        <li class="pager__item pager__item--next"><a href="#"><span class="visually-hidden">Next page</span><span aria-hidden="true">next</span></a></li>
+      </ul>
+    </nav>
+  </div>
+</div>
+<!--End Pager section-->
+<!--START Tabs section-->
+<div class="section-styleguide tab-section">
+ <h2>Tabs</h2>
+ <div class="tabs-vertical">
+   <ul class="nav nav-pills nav-stacked">
+     <li class="active"><a data-toggle="tab" href="#vision">Vision</a></li>
+     <li><a data-toggle="tab" href="#mission">Mission</a></li>
+     <li><a data-toggle="tab" href="#value">Value</a></li>
+   </ul>
+   <div class="tab-content col-md-9">
+     <div id="vision" class="tab-pane fade in active">
+       <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+         dolore magna aliqua.</p>
+     </div>
+     <div id="mission" class="tab-pane fade">
+       <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+         consequat.</p>
+     </div>
+     <div id="value" class="tab-pane fade">
+       <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem
+         aperiam.</p>
+     </div>
+   </div>
+ </div>
+ <div class="tabs-horizontal">
+   <ul class="nav nav-tabs ">
+     <li class="active"><a data-toggle="tab" href="#news">News</a></li>
+     <li><a data-toggle="tab" href="#events">Events</a></li>
+     <li><a data-toggle="tab" href="#features">Features</a></li>
+     <li><a data-toggle="tab" href="#all">All</a></li>
+   </ul>
+   <div class="tab-content">
+     <div id="news" class="tab-pane fade in active">
+       <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+         dolore magna aliqua.</p>
+     </div>
+     <div id="events" class="tab-pane fade">
+       <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+         consequat.</p>
+     </div>
+     <div id="features" class="tab-pane fade">
+       <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem
+         aperiam.</p>
+     </div>
+     <div id="all" class="tab-pane fade">
+       <p>Eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
+     </div>
+   </div>
+ </div>
+</div>
+<!--End Tabs section -->
+<!--START Alerts section -->
+<div class="section-styleguide">
+  <h2>Alerts</h2>
+  <div class="alert alert-danger alert-dismissible" role="alert">
+    Oh snap! Change a few things up and try submitting again
+    <button aria-label="Close" class="close" data-dismiss="alert" type="button">
+      <span aria-hidden="true">×</span>
+    </button>
+  </div>
+  <div class="alert alert-success alert-dismissible" role="alert">
+    Well done! You successfully read this important alert message.
+    <button aria-label="Close" class="close" data-dismiss="alert" type="button">
+      <span aria-hidden="true">×</span>
+    </button>
+  </div>
+  <div class="alert alert-warning alert-dismissible" role="alert">
+    Heads up! This alert needs your attention, but it's not super important.
+    <button aria-label="Close" class="close" data-dismiss="alert" type="button">
+      <span aria-hidden="true">×</span>
+    </button>
+  </div>
+  <div class="alert alert-info alert-dismissible" role="alert">
+    Heads up! This alert needs your attention, but it's not super important.
+    <button aria-label="Close" class="close" data-dismiss="alert" type="button">
+      <span aria-hidden="true">×</span>
+    </button>
+  </div>
+</div>
+<!--END Alerts section -->
+<!--START Tags section -->
+<div class="section-styleguide">
+  <h2>Tags</h2>
+  <div class="tags">
+    <div class="card-tag-static"><a href="#">News</a></div>
+    <div class="card-tag-static"><a href="#">Events</a></div>
+    <div class="card-tag-static"><a href="#">Features</a></div>
+    <div class="card-tag-static"><a href="#">Blog</a></div>
+  </div>
+</div>
+<!--END Tags section -->
+<!--Start Cards section -->
+<div class="section-styleguide">
+  <h2>Cards</h2>
+  <!-- circle -->
+
+  <div class="cards">
+    <p>Option 1</p>
+    <ul class="card-type-circle-list">
+      <li class="card-type-circle-item col-lg-3 col-md-4 col-sm-4 ">
+        <div class="views-field views-field-field-tags">
+          <div class="field-content card-tag">
+            <a href="/blog/event" hreflang="en">Event</a>
+          </div>
+        </div>
+        <div class="views-field views-field-field-image">
+          <div class="field-content card-circle-image">
+            <a href="/article/Why-COMPANY-Succeeds" hreflang="en">
+              <img src="/profiles/openbusiness_profile/modules/custom/content_creator/content/images/portofolio1.png" width="370" height="369" alt="Why COMPANY Succeeds" typeof="foaf:Image" class="img-responsive">
+            </a>
+          </div>
+        </div>
+        <div class="views-field views-field-title">
+          <h3 class="field-content card-circle-title">
+            <a href="/article/Why-COMPANY-Succeeds" hreflang="en">Why COMPANY Succeeds</a>
+          </h3>
+        </div>
+        <div class="views-field views-field-nothing">
+          <div class="field-content card-circle-info">
+            <div class="card-circle-auth-by"> by admin</div>
+            <div> Nov. 27, 8:51 am</div>
+          </div>
+        </div>
+      </li>
+    </ul>
+    <div class="cards-column">
+      <!-- Square cards -->
+      <p>Option 2</p>
+      <ul class="card-type-square-list">
+        <li class="card-type-square-item">
+          <div class="views-field views-field-field-image">
+            <div class="field-content card-square-image">
+              <a href="/article/Why-COMPANY-Succeeds" hreflang="en">
+                <img src="/profiles/openbusiness_profile/modules/custom/content_creator/content/images/portofolio1.png" width="401" height="268" alt="Why COMPANY Succeeds" typeof="foaf:Image" class="img-responsive">
+              </a>
+            </div>
+          </div>
+          <div class="views-field views-field-title">
+            <h3 class="field-content card-square-title">
+              <a>Why COMPANY Succeeds</a></h3>
+          </div>
+        </li>
+      </ul>
+      <!-- radius Article-->
+      <p>Option 3</p>
+      <ul class="card-type-radius-list">
+        <li class="card-type-radius-item col-lg-4 col-sm-6">
+          <div class="views-field views-field-title">
+            <h3 class="field-content card-radius-title">
+              Bastian Celio
+            </h3>
+          </div>
+          <div class="views-field views-field-field-role">
+            <div class="field-content card-radius-role">
+              <p>Manager</p>
+            </div>
+          </div>
+          <div class="views-field views-field-field-image">
+            <div class="field-content card-radius-image">
+              <img src="/profiles/openbusiness_profile/modules/custom/content_creator/content/images/testimonial1.png" width="64" height="74" alt="Bastian Celio" typeof="foaf:Image" class="img-responsive">
+            </div>
+          </div>
+          <div class="views-field views-field-body">
+            <p class="field-content card-radius-body">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+              dolore magna.
+            </p>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+<!--End Cards Section -->
+<!--Start Modal Section -->
+<div class="section-styleguide">
+  <h2>Modal</h2>
+  <p><button class="btn btn-primary my-modal-test" data-target="#exampleModal" data-toggle="modal" type="button">Launch demo modal</button></p>
+  <div aria-hidden="true" aria-labelledby="exampleModalLabel" class="modal fade" id="exampleModal" role="dialog" tabindex="-1">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="modal-title" id="exampleModalLabel">Modal title</h2>
+          <button aria-label="Close" class="close" data-dismiss="modal" type="button"><span aria-hidden="true">×</span></button></div>
+        <div class="modal-body">
+          <p>Modal body text goes here.</p>
+        </div>
+        <div class="modal-footer"><button class="btn btn-secondary" data-dismiss="modal" type="button">Cancel</button><button class="btn btn-primary" type="button">Save changes</button></div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--END Modal Section -->

@@ -1,0 +1,150 @@
+// Width exception from the container
+.container-fluid section > .region-content {
+  .view-about {
+    max-width: 100%;
+  }
+}
+// About section
+.view-about {
+  @media (min-width: $screen-md-min) {
+    margin: rem-calc(0 0 45 0);
+  }
+  @media (min-width: $screen-lg-min) {
+    margin: rem-calc(180 0 0);
+    min-height: 300px;
+  }
+
+  > .view-content {
+    > .row {
+      margin: 0;
+    }
+  }
+
+  .view-header {
+    margin-bottom: rem-calc(24);
+    @media (min-width: $screen-sm-min) {
+      margin-top: rem-calc(20)
+    }
+    @media (min-width: $screen-md-min) {
+      margin-bottom: rem-calc(-40);
+      max-width: 210px;
+      text-align: right;
+      width: 100%;
+    }
+    @media (min-width: $screen-lg-min) {
+      margin: rem-calc(80 0 -50 0);
+      max-width: 376px;
+    }
+  }
+}
+.view-about .view-title-section {
+  display: flex;
+  @media (max-width: $screen-sm-max) {
+    padding: rem-calc(0 0 5 0);
+  }
+  @media (min-width: $screen-md-min) {
+    align-items: flex-end;
+    flex-direction: column;
+    margin-top: rem-calc(75);
+    padding-right: rem-calc(70);
+  }
+  @media (min-width: $screen-lg-min) {
+    margin-top: rem-calc(55);
+    padding-right: rem-calc(15);
+  }
+
+  .views-row {
+    font-family: $font-lato;
+    font-size: rem-calc(20);
+    line-height: rem-calc(28);
+    margin: rem-calc(0 24 24 0);
+    position: relative;
+    @media (min-width: $screen-lg-min) {
+      margin: rem-calc(25 0 0);
+    }
+
+    &:before {
+      @include transition(width 0.3s ease-in-out);
+      bottom: rem-calc(-5);
+      content: "";
+      height: 2px;
+      max-width: 30px;
+      position: absolute;
+      right: 0;
+      width: 0;
+    }
+
+    &:hover {
+      font-weight: bolder;
+      &:before {
+        @include transition(width 0.3s ease-in-out);
+        width: 100%;
+      }
+    }
+  }
+  .views-row.active {
+    font-weight: bolder;
+    &:before {
+      width: 100%;
+    }
+  }
+}
+.view-about .view-content-section {
+  @media (max-width: $screen-sm-max) {
+    padding: rem-calc(0);
+  }
+  @media (min-width: $screen-md-min) {
+    margin-left: rem-calc(-90);
+  }
+  @media (min-width: $screen-lg-min) {
+    margin-left: 0;
+  }
+  .views-row {
+    display: none;
+    font-family: $font-lato;
+    font-size: rem-calc(20);
+    line-height: rem-calc(28);
+    .views-field-title {
+      display: none;
+    }
+  }
+  .views-row.active {
+    display: block;
+  }
+}
+.view-about {
+  .more-link {
+    margin-top: rem-calc(30);
+    a {
+      @include button-primary;
+      font-weight: normal;
+    }
+  }
+}
+
+/* Dark Overwrites */
+.dark {
+  .view-about {
+    .view-header {
+      @media (min-width: $screen-lg-min) {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        margin: rem-calc(100 0 0);
+        max-width: 100%;
+      }
+    }
+    .view-title-section {
+      @media (min-width: $screen-lg-min) {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+      }
+      .views-row {
+        @media (min-width: $screen-lg-min) {
+          margin: rem-calc(0 50 50);
+        }
+      }
+    }
+  }
+}

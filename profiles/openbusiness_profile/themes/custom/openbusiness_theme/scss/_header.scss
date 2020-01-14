@@ -1,0 +1,503 @@
+header {
+  width: 100%;
+  @media (min-width: $screen-lg-min) {
+    max-width: 1170px;
+  }
+}
+
+.navbar-default.container-fluid {
+  padding: 0;
+}
+
+// Header style
+header.navbar-default {
+  background-color: transparent;
+  border: none;
+  .site-branding-block {
+    background: transparent;
+    display: flex;
+    z-index: 5;
+    @media (min-width: $screen-sm-min) {
+      position: absolute;
+    }
+    @media (min-width: $screen-lg-min) {
+      display: inline-block;
+      margin-top: rem-calc(25);
+    }
+    .site-branding-logo {
+      .navbar-btn {
+        margin-top: 0;
+      }
+      a {
+        max-width: 200px;
+        position: absolute;
+        width: 100%;
+        z-index: 1;
+       svg {
+          height: 32px;
+          width: 32px;
+          @media (min-width: $screen-sm-min) {
+            height: 48px;
+            width: 48px;
+          }
+        }
+      }
+    }
+    .site-branding-text {
+      margin: rem-calc(0 0 0 50);
+      @media (min-width: $screen-sm-min) {
+        margin: rem-calc(0 0 0 65);
+      }
+      @media (min-width: $screen-lg-min) {
+        max-width: 200px;
+      }
+      .navbar-brand {
+        font-family: $font-montserrat;
+        font-size: rem-calc(16);
+        font-weight: 600;
+        height: rem-calc(19);
+        line-height: rem-calc(19);
+        padding: 0;
+        @media (min-width: $screen-sm-min) {
+          font-size: rem-calc(20);
+          height: rem-calc(24);
+          line-height: rem-calc(24);
+        }
+      }
+      .navbar-text {
+        float: none;
+        font-family: $font-montserrat;
+        font-size: rem-calc(12);
+        font-weight: 500;
+        height: rem-calc(15);
+        line-height: rem-calc(15);
+        margin: 0;
+        @media (min-width: $screen-sm-min) {
+          font-size: rem-calc(16);
+          height: rem-calc(19);
+          line-height: rem-calc(19);
+        }
+      }
+    }
+  }
+  .site-branding-block.affix {
+    @media (min-width: $screen-lg-min) {
+      margin-top: 0;
+      max-width: 250px;
+      padding: rem-calc(10 0);
+      position: fixed;
+    }
+  }
+  .navbar-toggle {
+    border: none;
+    margin: 0 auto;
+    position: absolute;
+    right: rem-calc(20);
+    top: rem-calc(5);
+    @media (min-width: $screen-sm-min) {
+      right: rem-calc(30);
+      top: rem-calc(25);
+    }
+    &:focus,
+    &:hover {
+      background: none;
+    }
+    .icon-bar {
+      background-color: $white;
+      height: rem-calc(3);
+      width: rem-calc(30);
+    }
+  }
+}
+
+.navbar .logo {
+  margin-left: 0;
+  margin-right: 0;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+// Collapsible menu til 1200px
+.navbar-header {
+  @media (max-width: $screen-md-max) {
+    float: none;
+  }
+}
+.navbar-toggle {
+  @media (max-width: $screen-md-max) {
+   display: block;
+  }
+}
+.navbar-collapse.collapse {
+  @media (max-width: $screen-md-max) {
+   display: none!important;
+  }
+}
+.navbar-nav {
+  @media (max-width: $screen-md-max) {
+   float: none!important;
+  }
+}
+.navbar-nav>li {
+  @media (max-width: $screen-md-max) {
+   float: none;
+  }
+}
+.collapse.in {
+  @media (max-width: $screen-md-max) {
+   display: block!important;
+  }
+}
+
+//Menus style
+body:not(.path-frontpage) {
+  .header-row {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.05);
+    height: rem-calc(70);
+    position: fixed;
+    width: 100%;
+    z-index: 5;
+    @media (min-width: $screen-md-min) {
+      padding-top: 0;
+    }
+    header {
+      @media (min-width: $screen-lg-min) {
+        display: flex;
+      }
+    }
+    .navbar-header {
+      @media (min-width: $screen-sm-min) {
+        padding: rem-calc(10 30);
+      }
+      @media (min-width: $screen-lg-min) {
+        padding: rem-calc(10 0);
+      }
+    }
+    .navbar-toggle {
+      top: rem-calc(10);
+      z-index: 2;
+      &[aria-expanded="true"] {
+        span {
+          background: none;
+        }
+      }
+      .icon-bar {
+        background-color: $dark-grey;
+        height: rem-calc(3);
+        width: rem-calc(30);
+      }
+    }
+  }
+  .site-branding-block {
+    margin-top: 0;
+    position: absolute;
+    z-index: 5;
+  }
+  .site-branding-block.affix {
+    padding: 0;
+  }
+  .navbar-collapse {
+    border: none;
+    box-shadow: none;
+    left: 0;
+    position: absolute;
+    right: 0;
+    z-index: 1;
+    .navbar-nav {
+      background: $white;
+      text-align: center;
+      padding: rem-calc(117) 0 100%;
+      @media (min-width: $screen-lg-min) {
+        float: right;
+        padding: 0;
+      }
+      li {
+        margin-bottom: rem-calc(30);
+        @media (min-width: $screen-lg-min) {
+          padding: rem-calc(24 0 26 40);
+        }
+      }
+    }
+  }
+  .region-content {
+    margin-top: rem-calc(100);
+  }
+}
+
+.header-row {
+  @media (max-width: $screen-md-max) {
+    position: absolute;
+    width: 100%;
+    z-index: 1;
+  }
+}
+
+// Mobile menu animation.
+.navbar-toggle {
+  @include box-shadow(none);
+  @include transition(background .3s);
+  background-color: transparent;
+  border: 0;
+  cursor: pointer;
+  font-size: 0;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  width: 26px;
+
+  &[aria-expanded="true"] {
+    span {
+      background: none;
+
+      &::after,
+      &::before {
+        @include transition-delay(0s, .3s);
+      }
+
+      &::after {
+        @include transform(rotate(-45deg));
+        bottom: 0;
+      }
+
+      &::before {
+        @include transform(rotate(45deg));
+        top: 0;
+      }
+    }
+  }
+
+  span {
+    @include transition(background 0s .3s);
+    background-color: $white;
+    display: block;
+    height: 3px;
+    left: 0;
+    position: absolute;
+    right: 0;
+
+    &::after,
+    &::before {
+      @include transition-delay(.3s, 0s);
+      @include transition-duration(.3s, .3s);
+      background-color: $white;
+      content: '';
+      display: block;
+      height: 3px;
+      left: 0;
+      position: absolute;
+      width: 100%;
+    }
+
+    &::after {
+      @include transition-property(bottom, transform);
+      bottom: -8px;
+    }
+
+    &::before {
+      @include transition-property(top, transform);
+      top: -8px;
+    }
+  }
+}
+
+.path-frontpage .navbar-collapse {
+  margin-top: rem-calc(-70);
+}
+.without-scrolling {
+  header {
+    .site-branding-logo,
+    .site-branding-text,
+    .navbar-toggle {
+      z-index: 5;
+    }
+    .site-branding-text {
+      .navbar-text,
+      .navbar-brand {
+        color: $dark-grey;
+      }
+    }
+
+    .navbar-toggle[aria-expanded="true"] span::after,
+    .navbar-toggle[aria-expanded="true"] span::before {
+      background: $dark-grey;
+    }
+    .navbar-nav {
+      @media (max-width: $screen-sm-max) and (orientation: landscape) {
+        height: 200px;
+        overflow-y: scroll;
+      }
+    }
+  }
+}
+
+#block-mainnavigation,
+#block-mainnavigation-2 {
+  .navbar-nav {
+    text-transform: uppercase;
+    @media (min-width: $screen-lg-min) {
+      height: 70px;
+      margin-right: rem-calc(-15);
+      display: flex;
+      flex-direction: row;
+    }
+    li {
+      font-family: $font-lato;
+      font-size: rem-calc(20);
+      line-height: rem-calc(28);
+      @media (min-width: $screen-lg-min) {
+        margin-bottom: 0;
+      }
+      a {
+        padding: 0;
+        &:hover {
+          background: transparent;
+        }
+      }
+      a.is-active {
+        background: transparent;
+      }
+    }
+    .lang-switcher {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      .lang-link {
+        line-height: rem-calc(20);
+        @media (min-width: $screen-lg-min) {
+          padding-left: rem-calc(40);
+        }
+      }
+      .lang-link:last-of-type {
+        padding-left: rem-calc(15);
+        &:before {
+          content: '|';
+          margin-left: rem-calc(-10);
+        }
+      }
+    }
+  }
+}
+
+.path-frontpage {
+  .navbar-collapse {
+    border: none;
+    box-shadow: none;
+    left: 0;
+    position: fixed;
+    right: 0;
+    z-index: 3;
+    ul {
+      padding: rem-calc(98) 0 100%;
+      text-align: center;
+      li {
+        margin-bottom: rem-calc(30);
+      }
+    }
+  }
+}
+
+.path-frontpage {
+  .site-branding-block {
+    .navbar-brand, .navbar-text {
+      color: $white;
+    }
+  }
+  #block-mainnavigation {
+    @media (min-width: $screen-lg-min) {
+      display: none;
+    }
+  }
+  #block-mainnavigation-2 {
+    display: flex;
+    justify-content: center;
+    margin-top: rem-calc(-30);
+    max-width: 100%;
+    @media (max-width: $screen-md-max) {
+      display: none;
+    }
+    .navbar-nav {
+      display: flex;
+      justify-content: center;
+      max-width: 1170px;
+      position: absolute;
+      width: 100%;
+      z-index: 10;
+      li {
+        padding: rem-calc(24 34 21);
+      }
+      .lang-switcher {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        .lang-link {
+          line-height: rem-calc(20);
+          padding-right: 0;
+        }
+        .lang-link:last-of-type {
+          padding-left: rem-calc(15);
+          padding-right: rem-calc(34);
+          &:before {
+            content: '|';
+            position: absolute;
+            margin-left: rem-calc(-10);
+          }
+        }
+      }
+    }
+  }
+  #block-mainnavigation,
+  #block-mainnavigation-2 {
+    .navbar-nav {
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.05);
+    }
+  }
+  #block-mainnavigation-2.affix {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.05);
+    height: 70px;
+    width: 100%;
+    z-index: 1;
+    .navbar-nav {
+      box-shadow: none;
+      display: flex;
+      justify-content: flex-end;
+      left: 0;
+      margin: 0 auto;
+      position: absolute;
+      right: 0;
+      max-width: 1170px;
+      li {
+        padding: rem-calc(24 20 38);
+      }
+      .lang-switcher {
+        .lang-link {
+        }
+        .lang-link:last-of-type {
+          padding-right: rem-calc(0);
+        }
+      }
+    }
+  }
+}
+
+#block-mainnavigation-2.affix {
+  top: rem-calc(29);
+}
+
+.user-logged-in.toolbar-fixed.toolbar-tray-open {
+  #block-mainnavigation-2.affix {
+    top: rem-calc(109);
+  }
+}
+
+.user-logged-in.toolbar-fixed {
+  #block-mainnavigation-2.affix {
+    top: rem-calc(69);
+  }
+}
+
+.affix {
+  position: static;
+  @media (min-width: $screen-lg-min) {
+    position: fixed;
+  }
+}

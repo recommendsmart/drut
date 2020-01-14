@@ -1,0 +1,282 @@
+<?php
+
+/**
+ * @file
+ * Bootstrap sub-theme.
+ *
+ * Place your custom PHP code in this file.
+ */
+
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Url;
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function openbusiness_theme_form_contact_message_feedback_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  unset($form['actions']['preview']);
+  unset($form['copy']);
+  $form['title_page'] = [
+    '#type' => 'label',
+    '#title' => t('Contact'),
+    '#weight' => -99,
+    '#attributes' => [
+      'class' => [
+        'label-form-user',
+      ],
+    ],
+  ];
+  $form['name']['#title'] = t('Name');
+  $form['name']['#required'] = TRUE;
+  $form['name']['#attributes']['placeholder'] = t('Type here');
+  $form['mail']['#title'] = t('Email');
+  $form['mail']['#required'] = TRUE;
+  $form['mail']['#attributes']['placeholder'] = t('your@email.com');
+  $form['subject']['widget'][0]['value']['#placeholder'] = t('Type here');
+  $form['message']['widget'][0]['value']['#placeholder'] = t('Type here');
+  $form['agree']['#title'] = t("<p class='terms-text'>I have read and agreed to the <a href='/privacy'>Privacy Policy</a> and <a href='/terms'>Terms and Conditions</a>.</p>");
+  $form['agree']['#type'] = 'checkbox';
+  $form['agree']['#required'] = TRUE;
+  $form['actions']['submit']['#value'] = t('Send');
+  $form['name']['#weight'] = -15;
+  $form['name']['#prefix'] = "<div class='row'><div class='col-sm-6'>";
+  $form['mail']['#weight'] = -14;
+  $form['subject']['#weight'] = -13;
+  $form['subject']['#suffix'] = "</div>";
+  $form['message']['#weight'] = -12;
+  $form['message']['#prefix'] = "<div class='col-sm-6'>";
+  $form['message']['#suffix'] = "</div>";
+  $form['agree']['#weight'] = 20;
+  $form['agree']['#prefix'] = "<div class='col-sm-12'>";
+  $form['agree']['#suffix'] = "</div>";
+  $form['captcha']['#weight'] = 21;
+  $form['captcha']['#prefix'] = "<div class='col-sm-6'>";
+  $form['captcha']['#suffix'] = "</div>";
+  $form['actions']['submit']['#weight'] = 22;
+  $form['actions']['#prefix'] = "<div class='col-sm-6'>";
+  $form['actions']['#suffix'] = "</div></div>";
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function openbusiness_theme_form_user_login_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  $form['reset_password'] = [
+    '#type' => 'link',
+    '#title' => t('Reset your password'),
+    '#url' => Url::fromRoute('user.pass'),
+    '#id' => 'login-reset-password',
+    '#weight' => 99,
+  ];
+  $form['title_page'] = [
+    '#type' => 'label',
+    '#title' => t('Log in'),
+    '#weight' => -99,
+    '#attributes' => [
+      'class' => [
+        'label-form-user',
+      ],
+    ],
+  ];
+  $form['captcha']['#weight'] = 21;
+  $form['name']['#prefix'] = "<div class='row'><div class='col-sm-12'>";
+  $form['name']['#title'] = t('Username');
+  $form['name']['#attributes']['placeholder'] = t('Type here');
+  $form['pass']['#title'] = 'Password';
+  $form['pass']['#attributes']['placeholder'] = t('Type here');
+  $form['submit']['#suffix'] = '<div></div>';
+  $form['actions']['#weight'] = 98;
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function openbusiness_theme_form_user_register_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  unset($form['timezone']);
+  unset($form['user_picture']);
+  unset($form['contact']);
+  $form['actions']['submit']['#attributes']['class'][] = 'btn-primary';
+  $form['title_page'] = [
+    '#type' => 'label',
+    '#title' => t('Create account'),
+    '#weight' => -99,
+    '#attributes' => [
+      'class' => [
+        'label-form-user',
+      ],
+    ],
+    '#suffix' => "<div class='row'><div class='col-sm-12'>",
+  ];
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function openbusiness_theme_form_search_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  unset($form['help_link']);
+  unset($form['advanced']);
+  $form['actions']['submit']['#attributes']['class'][] = 'btn-primary';
+  $form['title_page'] = [
+    '#type' => 'label',
+    '#title' => t('Search'),
+    '#weight' => -99,
+    '#attributes' => [
+      'class' => [
+        'label-form-user',
+      ],
+    ],
+  ];
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function openbusiness_theme_form_user_pass_alter(&$form, FormStateInterface $form_state, $form_id) {
+  $form['login_account'] = [
+    '#type' => 'link',
+    '#title' => t('Log in'),
+    '#url' => Url::fromRoute('user.login'),
+    '#id' => 'login-reset-password',
+    '#weight' => 99,
+    '#prefix' => '<p class="login-form">Go to',
+    '#suffix' => "</p>",
+  ];
+  $form['title_page'] = [
+    '#type' => 'label',
+    '#title' => t('Reset your password'),
+    '#weight' => -99,
+    '#attributes' => [
+      'class' => [
+        'label-form-user',
+      ],
+    ],
+  ];
+  $form['captcha']['#weight'] = 21;
+  $form['name']['#prefix'] = "<div class='row'><div class='col-sm-12 order-block'>";
+  $form['name']['#title'] = t('Email');
+  $form['name']['#attributes']['placeholder'] = t('Type here');
+  $form['mail']['#markup'] = t("Enter your acount email to receive a link allowing you to reset your password.");
+  $form['mail']["#prefix"] = "<p class='label-pass-reset'>";
+  $form['submit']['#suffix'] = '<div></div>';
+  $form['actions']['#weight'] = 98;
+}
+
+/**
+ * Implements template_preprocess_block().
+ */
+function openbusiness_theme_preprocess_block(&$vars) {
+  if ($vars['attributes']['id'] === "block-copyright-footer") {
+    $vars['current_year'] = date("Y");
+    $config = \Drupal::config('system.site');
+    $vars['site_name'] = $config->get('name');
+  }
+  $block = \Drupal::entityTypeManager()->getStorage('block')->load($vars['elements']['#id']);
+  $region = $block->getRegion();
+  if ($region === 'content') {
+    if (isset($vars['content']['#name'])  && $vars['content']['#name'] != '') {
+      $vars['attributes']['id'] = strtolower($vars['content']['#title']['#markup']);
+    }
+    else {
+      if (!empty($vars['content']['title_page']['#title'])) {
+        $vars['attributes']['id'] = strtolower($vars['content']['title_page']['#title']->__toString());
+      }
+    }
+  }
+  if ($region !== 'footer' && $vars['derivative_plugin_id'] === "main") {
+    $vars['content']['#attributes']['class'][] = $region;
+  }
+}
+
+/**
+ * Implements hook_theme_suggestions_HOOK_alter().
+ */
+function openbusiness_theme_theme_suggestions_select_alter(&$suggestions) {
+  // Get view-id for 'select' theme suggestion.
+  $request = \Drupal::routeMatch()->getRouteObject()->getDefault('view_id');
+  if (!empty($request)) {
+    $suggestions[] = 'select__' . $request;
+  }
+}
+
+/**
+ * Implements template_preprocess_select().
+ */
+function openbusiness_theme_preprocess_select(&$variables) {
+  // Find filter id and store for twig pass.
+  $filter_identity = $variables['element']['#attributes']['name'];
+  $variables['filter_identity'] = $filter_identity;
+}
+
+/**
+ * Implements hook_form_alter().
+ */
+function openbusiness_theme_form_alter(&$form, $form_state, $form_id) {
+  if ($form['#id'] === 'views-exposed-form-blog-page-1') {
+    foreach ($form['#info'] as $filter_info) {
+      $filter = $filter_info['value'];
+      if ($form[$filter]['#type'] === 'select') {
+        // Change option value for "Any" default string.
+        $form[$filter]['#options']['All'] = t('All');
+      }
+    }
+    /* Unset button value because the design doesn't include this.*/
+    unset($form['actions']['submit']['#value']);
+  }
+}
+
+/**
+ * Implements template_preprocess_pager().
+ */
+function openbusiness_theme_preprocess_pager(&$variables) {
+  /* Hide the first and last item because the design doesn't include these.*/
+  unset($variables['items']['first']);
+  unset($variables['items']['last']);
+}
+
+/**
+ * Implements hook_theme_suggestions_page_alter().
+ */
+function openbusiness_theme_theme_suggestions_page_alter(array &$suggestions, array $variables) {
+
+  /* For error pages */
+  $path_args = explode('/', trim(\Drupal::service('path.current')
+    ->getPath(), '/'));
+  $suggestions = theme_get_suggestions($path_args, 'page');
+  $http_error_suggestions = [
+    'system.401' => 'page__401',
+    'system.403' => 'page__403',
+    'system.404' => 'page__404',
+  ];
+
+  $route_name = \Drupal::routeMatch()->getRouteName();
+  if (isset($http_error_suggestions[$route_name])) {
+    $suggestions[] = $http_error_suggestions[$route_name];
+  }
+  return $suggestions;
+}
+
+/**
+ * Implements hook_preprocess_menu().
+ */
+function openbusiness_theme_preprocess_menu(&$variables) {
+  if (isset($variables['menu_name'])) {
+    if ($variables['menu_name'] === 'main') {
+      $language_interface = \Drupal::languageManager()->getLanguages();
+      $variables['element_number'] = count($language_interface);
+      if (isset($variables['attributes']['class'])) {
+        if ($variables['attributes']['class'][0] != 'footer') {
+          $variables['items'] = $variables['items'] + $language_interface;
+        }
+      }
+    }
+  }
+}
+
+/**
+ * Implements template_preprocess_file_link().
+ */
+function openbusiness_theme_preprocess_file_link(&$variables) {
+  $fileText = $variables['link']->getText();
+  $filename = preg_replace('/[^a-zA-Z0-9.]/', ' ', $fileText);
+  $variables['link']->setText($filename);
+}

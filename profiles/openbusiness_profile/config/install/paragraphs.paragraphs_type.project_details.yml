@@ -1,0 +1,8 @@
+langcode: en
+status: true
+dependencies: {  }
+id: project_details
+label: 'Project details'
+icon_uuid: null
+description: 'Is a paragraph for project details '
+behavior_plugins: {  }

@@ -1,0 +1,8 @@
+langcode: en
+status: true
+dependencies: {  }
+id: paragraph_with_body
+label: 'Paragraph basic text'
+icon_uuid: null
+description: 'This paragraph has title and body'
+behavior_plugins: {  }
