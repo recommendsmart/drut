@@ -1,0 +1,12 @@
+name: Micro-content
+description: 'Provides a lightweight reusable content-entity and type that supports fields, revisions and translation.'
+core_version_requirement: ^8.8 || ~9.0
+type: module
+dependencies:
+  - drupal:user
+  - drupal:system
+
+# Information added by Drupal.org packaging script on 2019-12-04
+version: '8.x-1.0-alpha1'
+project: 'microcontent'
+datestamp: 1575446587

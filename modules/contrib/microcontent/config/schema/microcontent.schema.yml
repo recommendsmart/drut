@@ -1,0 +1,16 @@
+microcontent.type.*:
+  type: config_entity
+  label: 'Content type'
+  mapping:
+    name:
+      type: label
+      label: 'Name'
+    id:
+      type: string
+      label: 'Machine-readable name'
+    description:
+      type: text
+      label: 'Description'
+    type_class:
+      type: text
+      label: 'Background class'

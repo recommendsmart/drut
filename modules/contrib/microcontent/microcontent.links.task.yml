@@ -1,0 +1,4 @@
+entity.microcontent.collection:
+  title: Micro-content
+  route_name: entity.microcontent.collection
+  base_route: system.admin_content

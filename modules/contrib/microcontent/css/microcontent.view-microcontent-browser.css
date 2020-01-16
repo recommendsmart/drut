@@ -1,0 +1,97 @@
+/**
+ * @microcontent.view-microcontent-browser.css
+ */
+
+.view-microcontent-browser .pager {
+  padding: 20px;
+}
+
+.view-microcontent-browser .view-content {
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.view-microcontent-browser .views-row {
+  box-sizing: border-box;
+  position: relative;
+  width: 100%;
+  display: block;
+  border: 2px solid #b8b8b8;
+  padding: 1em;
+  transition: .2s;
+}
+
+@media screen and (min-width:37.5em) { /* 600px */
+  .view-microcontent-browser .views-row {
+    width: 33%;
+  }
+}
+
+.view-microcontent-browser .views-row .field--label-inline {
+  display: flex;
+}
+
+.view-microcontent-browser .views-row .field--label-inline .field__label {
+  width: 33.333%;
+  text-align: left;
+}
+
+.view-microcontent-browser .views-row .field--label-inline:nth-of-type(1) {
+  margin-top: 1em;
+}
+
+.view-microcontent-browser .views-row .field--label-inline .field__item {
+  text-align: left;
+}
+
+@media screen and (min-width:62.5em) { /* 1000px */
+  .view-microcontent-browser .views-row {
+    width: 25%;
+  }
+}
+
+.view-microcontent-browser .views-row.checked {
+  border: 2px solid #37802f;
+}
+
+.view-microcontent-browser .views-row img {
+  vertical-align: bottom;
+  width: 100%;
+  height: auto;
+}
+
+.view-microcontent-browser .views-row img::selection {
+  background: transparent;
+}
+
+.view-microcontent-browser .views-row .views-field-entity-browser-select {
+  position: absolute !important;
+  height: 1px;
+  width: 1px;
+  overflow: hidden;
+  clip: rect(1px, 1px, 1px, 1px);
+}
+
+.view-microcontent-browser .views-row:after {
+  content: " ";
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  position: absolute;
+  background: transparent url("../images/check.svg") no-repeat center center;
+  background-size: 0;
+  -webkit-transition: all 0.2s;
+  transition: all 0.2s;
+}
+
+.view-microcontent-browser .views-row.checked:after {
+  background-size: 80px 80px;
+}
+
+input[type="submit"][name="filter"] {
+  margin-left: 10px;
+  margin-top: 30px;
+}
