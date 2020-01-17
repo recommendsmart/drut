@@ -1,0 +1,48 @@
+{#
+/**
+ * @file
+ * Theme override to display all the fields in a row.
+ *
+ * Available variables:
+ * - view: The view in use.
+ * - fields: A list of fields, each one contains:
+ *   - content: The output of the field.
+ *   - raw: The raw data for the field, if it exists. This is NOT output safe.
+ *   - class: The safe class ID to use.
+ *   - handler: The Views field handler controlling this field.
+ *   - inline: Whether or not the field should be inline.
+ *   - wrapper_element: An HTML element for a wrapper.
+ *   - wrapper_attributes: List of attributes for wrapper element.
+ *   - separator: An optional separator that may appear before a field.
+ *   - label: The field's label text.
+ *   - label_element: An HTML element for a label wrapper.
+ *   - label_attributes: List of attributes for label wrapper.
+ *   - label_suffix: Colon after the label.
+ *   - element_type: An HTML element for the field content.
+ *   - element_attributes: List of attributes for HTML element for field content.
+ *   - has_label_colon: A boolean indicating whether to display a colon after
+ *     the label.
+ *   - element_type: An HTML element for the field content.
+ *   - element_attributes: List of attributes for HTML element for field content.
+ * - row: The raw result from the query, with all data it fetched.
+ *
+ * @see template_preprocess_views_view_fields()
+ */
+#}
+  <div class="columns small-12 medium-2 cart-img-wrapper">
+    {{ fields.field_product_images.content }}
+  </div>
+  <div class="columns small-12 medium-8 cart-desc-wrapper">
+    <span class="product-title-wrapper">
+      {{ fields.product_id.content }}
+      {{ fields.title.content }}
+    </span>
+    <span class="product-brand-wrapper">{{ 'by'|t }}<a>{{ fields.name.content }}</a></span>
+    <span class="product-quant-wrapper">{{ 'Select Quantity'|t }}{{ fields.edit_quantity.content }}</span>
+    {{ fields.remove_button.content }}
+    {{ fields.move_to_wishlist.content }}
+  </div>
+  <div class="columns small-12 medium-2 cart-price-wrapper">
+    {{ fields.total_price__number.content }}
+  </div>
+</div>

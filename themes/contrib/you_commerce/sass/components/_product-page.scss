@@ -1,0 +1,124 @@
+.product-page-wrapper {
+  margin: 20px 0 70px;
+
+  .product-image-slider {
+    img {
+      width: 428px;
+      height: 480px;
+      object-fit: cover;
+      max-width: 100%;
+    }
+  }
+
+  .product-image-slider-nav {
+    margin: 10px -10px;
+
+    img {
+      width: 80px;
+      height: 80px;
+      object-fit: cover;
+      max-width: 100%;
+      padding: 0 10px;
+    }
+  }
+
+  .product-detail-container {
+    .field-name-field-category {
+      display: inline-block;
+      padding: 5px 10px;
+      background-color: $category-bg;
+      border: 1px solid $border-color;
+      font-size: 10px;
+    }
+
+    .product-title {
+      font-size: 20px;
+      font-weight: bold;
+
+      span {
+        margin-left: 10px;
+      }
+    }
+
+    .field-name-body {
+      margin-top: 15px;
+      font-size: 12px;
+
+      p {
+        margin-bottom: 5px;
+      }
+    }
+  }
+
+  .field-commerce-product-variation--price {
+    font-family: 'Josefin Sans', sans-serif;
+    color: $price-red;
+    font-size: 24px;
+    font-weight: bold;
+  }
+
+  .field-name-overall-rating {
+    padding: 10px 0;
+
+    .rateit-range,
+    .rateit-selected {
+      color: $rate_yellow;
+    }
+  }
+
+  .field-commerce-product-variation--list-price {
+    margin-top: 5px;
+    color: $price-red;
+    font-size: 20px;
+    text-decoration: line-through;
+  }
+
+  .product-brand-wrapper {
+    @include flex;
+
+    .field-commerce-product--field-brands {
+      margin-left: 5px;
+    }
+  }
+
+  .product-description-wrapper {
+    margin-top: 20px;
+
+    .product-description-heading {
+      border-bottom: 1px solid $border-color;
+      margin-bottom: 10px;
+
+      span {
+        color: $black;
+        padding: 15px 20px;
+        display: table-cell;
+        font-weight: bold;
+        border-bottom: 1px solid $primarybg;
+      }
+    }
+  }
+
+  .commerce-order-item-add-to-cart-form {
+    padding: 0 15px;
+
+    [id^="edit-submit"] {
+      display: block;
+      background-color: $primarybg;
+      color: $white;
+      font-weight: bold;
+      width: 100%;
+    }
+
+    [id^="edit-wishlist"] {
+      display: block;
+      background-color: $category-bg;
+      color: $black;
+      font-weight: bold;
+      width: 100%;
+    }
+    [id^="edit-submit-button-2"] {
+      background-color: $light-purple;
+      color: $white;
+    }
+  }
+}

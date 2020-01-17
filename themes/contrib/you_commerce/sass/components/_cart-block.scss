@@ -1,0 +1,26 @@
+.block-commerce-cart-blocks {
+  display: none;
+}
+
+.cart-block--contents {
+  width: 320px;
+  max-width: 100%;
+  border: 1px solid $border-color;
+  border-top: 0;
+  top: 70px;
+
+  .cart-block--contents__links {
+    text-align: center;
+
+    a {
+      color: $white;
+      padding: 10px 15px;
+      display: block;
+      background-color: $primarybg;
+      font-weight: bold;
+    }
+  }
+}
+.cart-block--link__expand {
+  color: $black;
+}

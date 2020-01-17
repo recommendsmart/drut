@@ -1,0 +1,64 @@
+{#
+/**
+ * @file
+ *
+ * Default product template.
+ *
+ * Available variables:
+ * - attributes: HTML attributes for the wrapper.
+ * - product: The rendered product fields.
+ *   Use 'product' to print them all, or print a subset such as
+ *   'product.title'. Use the following code to exclude the
+ *   printing of a given field:
+ *   @code
+ *   {{ product|without('title') }}
+ *   @endcode
+ * - product_entity: The product entity.
+ * - product_url: The product URL.
+ *
+ * @ingroup themeable
+ */
+#}
+{%
+  set classes = [
+    'row',
+    'product-page-wrapper',
+  ]
+%}
+
+{% set product_title %}
+{{ product.title }}
+{% endset %}
+{% set var_desc %}
+{{ product.variation_field_technical_description }}
+{% endset %}
+<article{{ attributes.addclass(classes) }}>
+  <div class="columns small-12 medium-4">
+    {{ product.variation_field_product_images }}
+  </div>
+  <div class="columns small-12 medium-8 product-detail-container">
+     <div class="small-12 medium-6 product-description-align">
+    {{ product.field_category }}
+    <h2 class="product-title">{{ product_title|striptags|trim }}
+      <span>{{ product.variation_title }}</span></h2>
+    <span class="product-brand-wrapper">{{ 'By'|t }}
+      {{ product.field_brands }}</span>
+    {{ product.overall_rating }}
+    {{ product.variation_price }}
+    {{ product.variation_list_price }}
+    {{ product.body }}
+  </div>
+  <div class="small-12 medium-6 product-cart-align">
+    {{ product.variations }}
+  </div>
+  </div>
+  {% if var_desc | striptags | trim | render %}
+    <div class="columns small-12 product-description-wrapper">
+      <div class="product-description-heading">
+        <span>{{ 'Description'|t }}</span>
+        </div>
+        {{ product.variation_field_technical_description }}
+    </div>
+  {% endif %}
+  {{- product|without('variation_attributes', 'variation_field_product_images', 'variation_title', 'variation_price', 'body', 'variations', 'variation_sku', 'variation_list_price', 'field_brands', 'field_category', 'overall_rating', 'variation_field_quantity', 'variation_field_technical_description') -}}
+</article>

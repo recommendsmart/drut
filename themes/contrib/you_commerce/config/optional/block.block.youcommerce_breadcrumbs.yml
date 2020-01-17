@@ -1,0 +1,22 @@
+uuid: d4d7b332-e71f-41d9-9c8c-7df95c23b990
+langcode: en
+status: false
+dependencies:
+  module:
+    - system
+  theme:
+    - youcommerce
+_core:
+  default_config_hash: oXUb3JZR2WW5VOdw4HrhRicCsq51mCgLfRyvheG68ck
+id: youcommerce_breadcrumbs
+theme: youcommerce
+region: content
+weight: -1
+provider: null
+plugin: system_breadcrumb_block
+settings:
+  id: system_breadcrumb_block
+  label: Breadcrumbs
+  provider: system
+  label_display: '0'
+visibility: {  }

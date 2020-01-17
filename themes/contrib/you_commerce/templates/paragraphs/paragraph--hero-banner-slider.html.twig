@@ -1,0 +1,10 @@
+{% set productLink %}
+{{ content.field_product_link['0']['#url'] }}
+{% endset %}
+<div class="hero-slider-wrapper fullwidth-row">
+  <div class="hero-slider-content">
+    <a href="{% spaceless %}{{ productLink|striptags|trim }}{% endspaceless %}" target="_blank">
+      {{ content.field_product_image }}
+    </a>
+  </div>
+</div>

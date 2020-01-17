@@ -1,0 +1,101 @@
+.form-wrapper__login-option {
+  padding: 0;
+
+  .fieldset-wrapper {
+    border: solid 1px $breadcrumb-bg;
+    padding: 20px;
+  }
+
+  legend {
+    .fieldset-legend {
+      font-weight: bold;
+    }
+  }
+
+  input[id^=edit-login-returning-customer-submit] {
+    width: 60%;
+    margin-right: 10%;
+    background-color: $primarybg;
+    color: $white;
+    font-weight: bold;
+  }
+
+  [id^=edit-login-guest-continue] {
+    width: 60%;
+    background-color: $primarybg;
+    color: $white;
+    font-weight: bold;
+  }
+}
+
+.commerce-checkout-flow-multistep-default {
+  width: 100%;
+
+  legend {
+    .fieldset-legend {
+      font-weight: bold;
+    }
+  }
+
+  .checkout-pane-contact-information,
+  .checkout-pane-payment-information {
+    width: 60%;
+    float: left;
+    border: 1px solid $border-color;
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+
+  [id^=edit-coupon-redemption-form] {
+    width: 30%;
+    float: left;
+    border: 1px solid $border-color;
+    padding: 20px;
+    margin-bottom: 20px;
+    margin-left: 10%;
+  }
+
+  [id^=edit-coupon-redemption-form-apply],
+  [id^=edit-coupon-redemption-form-code] {
+    width: 100%;
+    margin: auto;
+  }
+
+  [id^=edit-coupon-redemption-form-apply] {
+    margin-top: 15px;
+    background-color: $primarybg;
+    color: $white;
+    font-weight: bold;
+  }
+
+  [id^=edit-actions] {
+    width: 100%;
+    float: left;
+
+    a {
+      display: block;
+      clear: both;
+      background-color: $primarybg;
+      width: 17%;
+      padding: 13px 65px;
+      margin-bottom: 20px;
+      font-weight: bold;
+      color: $white;
+    }
+  }
+
+  [id^=edit-actions-next] {
+    width: 60%;
+    background-color: $primarybg;
+    color: $white;
+    font-weight: bold;
+  }
+}
+
+[id^=edit-review-contact-information],
+[id^=edit-review-payment-information] {
+  border: 1px solid $border-color;
+  width: 60%;
+  padding: 20px;
+  margin-bottom: 20px;
+}

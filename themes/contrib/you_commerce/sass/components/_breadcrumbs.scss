@@ -1,0 +1,13 @@
+.breadcrumb-wrapper {
+  background-color: $breadcrumb-bg;
+
+  .breadcrumbs {
+    padding: 12px 0;
+    margin-bottom: 0;
+
+    li a {
+      font-size: 12px;
+      color: $black;
+    }
+  }
+}

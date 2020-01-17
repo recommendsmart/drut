@@ -1,0 +1,22 @@
+uuid: 627d79b7-4923-4365-9b49-244791af6039
+langcode: en
+status: true
+dependencies:
+  module:
+    - search
+  theme:
+    - youcommerce
+_core:
+  default_config_hash: za-39d5WDUg6XvbyqSnuVYEeq6QM4qKJxW8MnoAha5A
+id: youcommerce_search
+theme: youcommerce
+region: header_center
+weight: -6
+provider: null
+plugin: search_form_block
+settings:
+  id: search_form_block
+  label: Search
+  provider: search
+  label_display: '0'
+visibility: {  }

@@ -1,0 +1,21 @@
+.site-search-wrapper {
+
+  form {
+    @include flex;
+    justify-content: space-around;
+
+    .js-form-type-search {
+      width: 100%;
+
+      input {
+        border-radius: 2px;
+        border: solid 1px #e7e7ed;
+      }
+    }
+
+    .button.success {
+      background-color: $primarybg;
+      color: $white;
+    }
+  }
+}

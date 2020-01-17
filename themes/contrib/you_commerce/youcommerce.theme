@@ -1,0 +1,17 @@
+<?php
+
+/**
+ * @file
+ */
+
+ /**
+ * Implements Login / Logout buttons.
+ */
+function youcommerce_preprocess_page(&$variables) {
+  $variables['user_status'] = 'Logout';
+  $variables['user_status_url'] = '/user/logout';
+  if (\Drupal::currentUser()->isAnonymous()) {
+    $variables['user_status'] = 'Login';
+    $variables['user_status_url'] = '/user/login';
+  }
+}

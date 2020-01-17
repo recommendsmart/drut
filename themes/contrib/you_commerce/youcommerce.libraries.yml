@@ -1,0 +1,37 @@
+global-styling:
+  css:
+    base:
+      css/style.css: {}
+  js:
+    js/youcommerce.js: {}
+
+montserrat-font:
+  css:
+    base:
+      //fonts.googleapis.com/css?family=Montserrat&display=swap: { type: external }
+
+slick-carousel:
+  remote: http://kenwheeler.github.io/slick/
+  version: 1.8.1
+  license:
+    name: MIT
+    url: http://kenwheeler.github.io/slick/
+    gpl-compatible: true
+  css:
+    theme:
+      //cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css: { type: external }
+  js:
+    //cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js: { type: external }
+
+josefin-font:
+  css:
+    base:
+      //fonts.googleapis.com/css?family=Josefin+Sans&display=swap: { type: external }
+
+
+owl-carousel:
+  css:
+    base:
+      //cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css: { type: external }
+  js:
+    //cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js: { type: external }

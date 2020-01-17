@@ -1,0 +1,20 @@
+uuid: f514e552-99fa-4f28-8ded-b8225ff25945
+langcode: en
+status: true
+dependencies:
+  theme:
+    - youcommerce
+_core:
+  default_config_hash: 13GQpeITIJsp1kyPniXtWZfyFH87vb1xxJCHifL4UeE
+id: youcommerce_local_actions
+theme: youcommerce
+region: content
+weight: -3
+provider: null
+plugin: local_actions_block
+settings:
+  id: local_actions_block
+  label: 'Primary admin actions'
+  provider: core
+  label_display: '0'
+visibility: {  }

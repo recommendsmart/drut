@@ -1,0 +1,24 @@
+[class*="block-views-block-brand-logo-block-"] {
+  margin: 70px 0 20px;
+
+  .block-title {
+    text-align: center;
+    font-size: 16px;
+    @include josefin;
+    margin-bottom: 20px;
+  }
+}
+
+.brand-logo-block-wrapper {
+  .views-field-field-brand-logo {
+    position: relative;
+  }
+
+  img {
+    filter: grayscale(1);
+
+    &:hover {
+      filter: grayscale(0);
+    }
+  }
+}

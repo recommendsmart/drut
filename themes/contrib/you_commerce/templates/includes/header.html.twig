@@ -1,0 +1,23 @@
+<header class="row" role="banner" aria-label="{{ 'Site header'|t }}">
+  {% if page.header_left %}
+    <div class="columns small-12 medium-2 site-branding-wrapper">
+      {{ page.header_left }}
+    </div>
+  {% endif %}
+
+  {% if page.header_center %}
+    <div class="columns small-12 medium-6 site-search-wrapper">
+      {{ page.header_center }}
+    </div>
+  {% endif %}
+
+  <div class="columns small-12 medium-4 user-menu-wrapper">
+    {{ page.header_right }}
+    <ul class="user-status-menu-wrapper">
+      <li>
+        <a href="{{ user_status_url }}">{{ user_status }}<img class="header-user-img" src="/{{ directory }}/assets/images/user.png"/></a>
+      </li>
+    </ul>
+  </div>
+
+</header>

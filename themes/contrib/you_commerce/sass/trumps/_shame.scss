@@ -1,0 +1,25 @@
+// This is a place for the worst selectors and hacks that should be replaced and moved to the correct partial.
+// Ideally, this is empty.
+
+.product-detail-container {
+	position: relative;
+	.product-description-align {
+		float: left;
+	}
+	.product-cart-align {
+		float: right;
+    width: 100%;
+	}
+	.field--name-purchased-entity {
+		position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 50%;
+		padding: 0 15px;
+
+    @include small-only {
+    	position: relative;
+    	width: 100%;
+    }
+	}
+}

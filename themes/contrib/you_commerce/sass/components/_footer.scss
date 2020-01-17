@@ -1,0 +1,50 @@
+/* Main site footer */
+footer {
+  background-color: $footer-bg;
+  color: $white;
+
+  .footer-container {
+    width: 100%;
+    align-items: center;
+  }
+
+  .block-sitebranding {
+    margin-top: 40px;
+  }
+
+  a {
+    font-size: 14px;
+    color: $black;
+
+    &:hover {
+      color: $black;
+      font-weight: bold;
+    }
+  }
+
+  .menu {
+    a {
+      padding-left: 0;
+    }
+  }
+
+  h2.block-title {
+    color: $black;
+    font-size: 14px;
+    font-weight: bold;
+  }
+}
+
+.scroll-to-top {
+  background-color: $primarybg;
+  text-align: center;
+  vertical-align: middle;
+  min-height: 48px;
+  align-items: center;
+  cursor: pointer;
+  color: $white;
+
+  span {
+    font-weight: bold;
+  }
+}

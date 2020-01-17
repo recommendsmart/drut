@@ -1,0 +1,25 @@
+.cart-empty-page-wrapper {
+  text-align: center;
+
+  img {
+    width: 250px;
+    height: 150px;
+    margin-top: 80px;
+  }
+
+  h2 {
+    font-size: 14px;
+    margin-top: 30px;
+  }
+
+  .back-to-home-wrapper {
+    margin: 20px 0 80px;
+  }
+
+  .back-to-home {
+    padding: 10px 20px;
+    color: $white;
+    background-color: $primarybg;
+    font-weight: bold;
+  }
+}

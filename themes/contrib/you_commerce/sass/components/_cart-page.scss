@@ -1,0 +1,108 @@
+.cart-block-wrapper {
+  .views-form {
+    width: 80%;
+    float: left;
+  }
+
+  .cart-img-wrapper {
+    img {
+      min-height: 140px;
+      object-fit: cover;
+    }
+  }
+
+  .cart-desc-wrapper {
+    .product-title-wrapper {
+      font-size: 16px;
+      font-weight: bold;
+      display: block;
+      margin-bottom: 10px;
+
+      a {
+        color: $black;
+        font-weight: bold;
+      }
+    }
+
+    .product-brand-wrapper {
+      margin-bottom: 16px;
+      display: block;
+    }
+
+    .product-quant-wrapper {
+      [id^=edit-edit-quantity] {
+        margin-top: 10px;
+        width: 11%;
+      }
+    }
+
+    [id^=edit-move-to-wishlist],
+    [id^=edit-remove-button] {
+      background-color: $white;
+      color: $zurb_primary;
+      padding-left: 0;
+      font-weight: bold;
+    }
+  }
+
+  .cart-price-wrapper {
+    @include josefin;
+    color: $price-red;
+    font-size: 18px;
+  }
+
+  [id^=edit-checkout] {
+    float: right;
+    width: 20%;
+    background-color: $primarybg;
+    color: $white;
+    font-weight: bold;
+    margin-top: 30px;
+  }
+
+  [id^=edit-submit] {
+    width: 20%;
+    background-color: $primarybg;
+    color: $white;
+    font-weight: bold;
+    margin-top: 30px;
+
+    &:hover {
+      background-color: $primarybg;
+      color: $white;
+    }
+  }
+}
+
+.shopping-cart-tagline {
+  padding: 10px 5px;
+  background-color: $breadcrumb-bg;
+  font-size: 16px;
+  font-weight: bold;
+  margin: 40px 0;
+}
+
+.field-commerce-order--total-price {
+  float: left;
+  width: 20%;
+  background-color: $breadcrumb-bg;
+  padding: 20px;
+
+  .order-total-line-label {
+    display: block;
+    font-weight: bold;
+  }
+
+  .order-total-line__adjustment--promotion,
+  .order-total-line__subtotal {
+    margin-bottom: 20px;
+  }
+
+  .order-total-line__total {
+    .order-total-line-value {
+      color: $price-red;
+      @include josefin;
+      font-size: 18px;
+    }
+  }
+}

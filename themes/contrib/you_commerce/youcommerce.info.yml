@@ -1,0 +1,41 @@
+name: You Commerce
+description: E-Commerce theme.
+type: theme
+base theme: zurb_foundation
+core: 8.x
+
+regions:
+  header_left: Header Left
+  header_center: Header Center
+  header_right: Header Right
+  header_nav: Header Navigation
+  breadcrumbs: Header Breadcrumb
+  meta_header: 'Meta header'
+  help: Help
+  page_top: 'Page top'
+  page_bottom: 'Page bottom'
+  highlighted: Highlighted
+  hero_slider: Hero Slider
+  content: Content
+  sidebar_first: 'Left Sidebar'
+  sidebar_second: 'Right Sidebar'
+  footer_first: 'Footer first column'
+  footer_middle: 'Footer middle column'
+  footer_last: 'Footer last column'
+regions_hidden:
+  page_top: 'Page Top'
+  page_bottom: 'Page bottom'
+
+libraries:
+  - youcommerce/owl-carousel
+  - youcommerce/slick-carousel
+  - youcommerce/global-styling
+  - youcommerce/montserrat-font
+  - youcommerce/josefin-font
+
+# This themes uses Zurb Foundation Display Flex Grid System
+libraries-override:
+  zurb_foundation/global:
+    css:
+      base:
+        css/foundation-float.min.css: ../../../themes/contrib/zurb_foundation/css/foundation-flex.min.css
