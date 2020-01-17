@@ -20,6 +20,7 @@
         "audiolabs/bibtexparser": "dev-master",
         "caseyamcl/php-marc21": "^1.0",
         "composer/installers": "^1.2",
+        "drupal/ala": "^1.5",
         "drupal/assembly": "1.x-dev",
         "drupal/auto_entitylabel": "^3.0",
         "drupal/backup_migrate": "^4.1",
