@@ -1,8 +1,0 @@
-langcode: en
-status: true
-dependencies: {  }
-id: attachment
-label: Attachment
-icon_uuid: null
-description: 'Is a paragraph where you can upload files to be downloaded'
-behavior_plugins: {  }

@@ -1,6 +1,0 @@
-{
-  "name": "drupal/smart_trim_readmore",
-  "description": "Provides an extra formatter for smart trim module.",
-  "type": "drupal-module",
-  "license": "GPL-2.0+"
-}

@@ -1,8 +1,0 @@
-langcode: en
-status: true
-dependencies: {  }
-id: image_list
-label: 'Image list'
-icon_uuid: null
-description: 'Is an image list with maxim 3 images'
-behavior_plugins: {  }

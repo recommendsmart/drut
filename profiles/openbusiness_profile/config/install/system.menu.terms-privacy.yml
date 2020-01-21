@@ -1,7 +1,0 @@
-langcode: en
-status: true
-dependencies: {  }
-id: terms-privacy
-label: 'Terms & Privacy'
-description: 'Terms and privacy from footer region'
-locked: false

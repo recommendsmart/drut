@@ -1,5 +1,0 @@
-# Schema for the theme setting configuration file of the THEMETITLE theme.
-
-openbusiness_theme.settings:
-  type: theme_settings
-  label: 'Open Business settings'

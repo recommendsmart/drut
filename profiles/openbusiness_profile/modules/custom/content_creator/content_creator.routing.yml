@@ -1,7 +1,0 @@
-content_creator.front_page:
-  path: '/home'
-  defaults:
-    _controller: '\Drupal\content_creator\Controller\HomeController::page'
-    _title: 'Home'
-  requirements:
-    _permission: 'access content'
