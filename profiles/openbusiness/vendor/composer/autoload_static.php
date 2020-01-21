@@ -11,10 +11,6 @@ class ComposerStaticInitDrupal8
         array (
             'Wikimedia\\Composer\\' => 19,
         ),
-        'D' => 
-        array (
-            'Drupal\\Core\\Composer\\' => 21,
-        ),
         'C' => 
         array (
             'Composer\\Installers\\' => 20,
@@ -25,10 +21,6 @@ class ComposerStaticInitDrupal8
         'Wikimedia\\Composer\\' => 
         array (
             0 => __DIR__ . '/..' . '/wikimedia/composer-merge-plugin/src',
-        ),
-        'Drupal\\Core\\Composer\\' => 
-        array (
-            0 => '/core/lib/Drupal/Core/Composer',
         ),
         'Composer\\Installers\\' => 
         array (

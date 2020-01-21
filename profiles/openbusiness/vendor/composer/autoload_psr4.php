@@ -7,6 +7,5 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'Wikimedia\\Composer\\' => array($vendorDir . '/wikimedia/composer-merge-plugin/src'),
-    'Drupal\\Core\\Composer\\' => array('/core/lib/Drupal/Core/Composer'),
     'Composer\\Installers\\' => array($vendorDir . '/composer/installers/src/Composer/Installers'),
 );
