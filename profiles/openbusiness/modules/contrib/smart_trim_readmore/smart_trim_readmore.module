@@ -1,0 +1,16 @@
+<?php
+
+/**
+ * Implements hook_theme().
+ */
+function smart_trim_readmore_theme() {
+  return [
+    'smart_trim_readmore' => [
+      'variables' => [
+        'summary' => NULL,
+        'output' => NULL,
+      ],
+      'template' => 'smart-trim-readmore',
+    ],
+  ];
+}

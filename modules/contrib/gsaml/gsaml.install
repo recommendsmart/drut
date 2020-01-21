@@ -1,0 +1,8 @@
+<?php
+
+/**
+ * Implements hook_uninstall().
+ */
+function gsaml_uninstall() {
+  \Drupal::configFactory()->getEditable('gsaml.settings')->delete();
+}

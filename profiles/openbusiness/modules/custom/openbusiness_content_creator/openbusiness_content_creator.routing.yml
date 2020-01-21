@@ -1,0 +1,7 @@
+openbusiness_content_creator.front_page:
+  path: '/home'
+  defaults:
+    _controller: '\Drupal\openbusiness_content_creator\Controller\HomeController::page'
+    _title: 'Home'
+  requirements:
+    _permission: 'access content'

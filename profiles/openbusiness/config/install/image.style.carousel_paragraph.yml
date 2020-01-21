@@ -1,0 +1,21 @@
+langcode: en
+status: true
+dependencies: {  }
+name: carousel_paragraph
+label: 'Carousel Paragraph'
+effects:
+  b00fb315-54b1-45b7-b59d-a3c259291f0a:
+    uuid: b00fb315-54b1-45b7-b59d-a3c259291f0a
+    id: image_resize
+    weight: 1
+    data:
+      width: 1200
+      height: 550
+  98837c4f-6cd6-4ca1-829a-c1c0790d5abc:
+    uuid: 98837c4f-6cd6-4ca1-829a-c1c0790d5abc
+    id: image_scale
+    weight: 2
+    data:
+      width: 1200
+      height: 550
+      upscale: true

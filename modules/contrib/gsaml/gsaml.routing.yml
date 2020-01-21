@@ -1,0 +1,8 @@
+# General routes for the Group SAML module.
+gsaml.settings:
+  path: '/admin/group/saml'
+  defaults:
+    _form: '\Drupal\gsaml\Form\GSAMLSettingsForm'
+    _title: 'Group SAML settings'
+  requirements:
+    _permission: 'administer group'

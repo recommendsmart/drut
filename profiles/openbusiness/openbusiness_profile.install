@@ -1,0 +1,37 @@
+<?php
+
+/**
+ * @file
+ * An installation profile for D8 and offer an highly customizable interface.
+ */
+
+use Drupal\user\Entity\User;
+
+/**
+ * Implements hook_install().
+ *
+ * Perform actions to set up the site for this profile.
+ *
+ * @see system_install()
+ */
+function openbusiness_profile_install() {
+  // Assign user 1 the "administrator" role.
+  $user = User::load(1);
+  $user->roles[] = 'administrator';
+  $user->save();
+
+  // Rebuild the router.
+  \Drupal::service('router.builder')->rebuildIfNeeded();
+  // Setting themes.
+  \Drupal::configFactory()
+    ->getEditable('system.theme')
+    ->set('default', 'openbusiness_theme')
+    ->save();
+  // Setting admin theme seven.
+  \Drupal::configFactory()
+    ->getEditable('system.theme')
+    ->set('admin', 'seven')
+    ->save();
+  \Drupal::service('module_installer')
+    ->install(['openbusiness_content_creator'], TRUE);
+}

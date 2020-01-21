@@ -1,0 +1,4 @@
+gsaml.settings:
+  title: 'SAML'
+  base_route: 'entity.group.collection'
+  route_name: 'gsaml.settings'

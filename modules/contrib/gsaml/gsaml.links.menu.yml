@@ -1,0 +1,6 @@
+gsaml.settings:
+  title: 'SAML'
+  description: 'Configure the Group SAML settings.'
+  route_name: 'gsaml.settings'
+  parent: 'system.admin_group'
+  weight: 20

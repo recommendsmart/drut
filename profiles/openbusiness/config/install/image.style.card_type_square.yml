@@ -1,0 +1,13 @@
+langcode: en
+status: true
+dependencies: {  }
+name: card_type_square
+label: Card-Type-Square
+effects:
+  88440fca-e91d-4f87-8cd0-8d4c178669ab:
+    uuid: 88440fca-e91d-4f87-8cd0-8d4c178669ab
+    id: image_resize
+    weight: 1
+    data:
+      width: 401
+      height: 268

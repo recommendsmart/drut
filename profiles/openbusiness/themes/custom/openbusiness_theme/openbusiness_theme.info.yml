@@ -1,0 +1,22 @@
+core: 8.x
+type: theme
+base theme: bootstrap
+
+name: 'Open Business'
+description: 'A Drupal Bootstrap 3 based sub-theme.'
+package: 'Bootstrap'
+
+regions:
+  header: 'Header'
+  navigation_collapsible: 'Navigation (Collapsible)'
+  hero_image: 'Hero Image'
+  content: 'Content'
+  footer: 'Footer'
+  copy_right_footer: 'Copy Right Footer'
+
+libraries:
+    - 'openbusiness_theme/global-styling'
+    - 'openbusiness_theme/fonts'
+    - 'openbusiness_theme/global-scripts'
+    - 'openbusiness_theme/bootstrap-scripts'
+    - 'openbusiness_theme/color'

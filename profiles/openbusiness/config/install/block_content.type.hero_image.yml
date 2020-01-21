@@ -1,0 +1,7 @@
+langcode: en
+status: true
+dependencies: {  }
+id: hero_image
+label: 'Hero Image'
+revision: 0
+description: 'This block is used for the Hero section on the frontpage. Please add a landscape image for the wide version and a portrait image for the mobile version.'

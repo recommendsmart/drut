@@ -1,0 +1,8 @@
+langcode: en
+status: true
+dependencies: {  }
+id: block_quote
+label: 'Block quote'
+icon_uuid: null
+description: 'Is a paragraph for quotes'
+behavior_plugins: {  }

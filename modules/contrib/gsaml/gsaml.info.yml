@@ -1,0 +1,19 @@
+name: 'Group SAML'
+description: 'Allows you manage SAML permissions and associate taxonomy terms with group roles, based on user FS'
+package: 'Group'
+type: 'module'
+configure: 'gsaml.settings'
+dependencies:
+  - drupal:group
+  - drupal:taxonomy
+  - group:gnode
+  - groupmedia:groupmedia
+  - simplesamlphp_auth
+# version: '8.x-1.0-dev'
+core: '8.x'
+
+
+# Information added by Drupal.org packaging script on 2020-01-20
+version: '8.x-1.5'
+project: 'gsaml'
+datestamp: 1579525402

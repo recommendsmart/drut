@@ -1,0 +1,29 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - views.view.portofolio
+  module:
+    - system
+    - views
+  theme:
+    - openbusiness_theme
+id: views_block__portofolio_block_portofolio
+theme: openbusiness_theme
+region: content
+weight: -5
+provider: null
+plugin: 'views_block:portofolio-block_portofolio'
+settings:
+  id: 'views_block:portofolio-block_portofolio'
+  label: 'Portofolio'
+  provider: views
+  label_display: '0'
+  views_label: ''
+  items_per_page: none
+visibility:
+  request_path:
+    id: request_path
+    pages: '<front>'
+    negate: false
+    context_mapping: {  }

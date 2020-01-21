@@ -1,0 +1,77 @@
+<?php
+
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\gsaml\GSAML;
+
+/**
+ * Implements hook_form_node_form_alter().
+ */
+function gsaml_form_node_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  foreach (array_keys($form['actions']) as $action) {
+    if ($action != 'preview' && isset($form['actions'][$action]['#type']) && $form['actions'][$action]['#type'] === 'submit') {
+      $form['actions'][$action]['#submit'][] = '_gsaml_entity_update';
+    }
+  }
+}
+
+/**
+ * Implements hook_form_media_form_alter().
+ */
+function gsaml_form_media_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  if ($form_id == 'media_dw_document_add_form' || $form_id == 'media_dw_document_edit_form') {
+    foreach (array_keys($form['actions']) as $action) {
+      if ($action != 'preview' && isset($form['actions'][$action]['#type']) && $form['actions'][$action]['#type'] === 'submit') {
+        $form['actions'][$action]['#submit'][] = '_gsaml_entity_update';
+      }
+    }
+  }
+}
+
+/**
+ * Associate Content to Groups.
+ */
+function _gsaml_entity_update($form, FormStateInterface $form_state) {
+  $entity = $form_state->getFormObject()->getEntity();
+  if ($entity->isNew() || $entity->isDefaultRevision()) {
+    if ($entity->isTranslatable()) {
+      if ($entity->isDefaultTranslation()) {
+        GSAML::gsaml_entity_update($entity);
+      }
+    }
+    else {
+      GSAML::gsaml_entity_update($entity);
+    }
+  }
+  if (\Drupal::moduleHandler()->moduleExists('content_moderation_notifications_filter_group')) {
+    \Drupal::service('cm_notification_group.notification')->processEntity($entity);
+  }
+}
+
+/**
+ * Associate user to group/roles on login.
+ */
+function gsaml_simplesamlphp_auth_user_attributes(\Drupal\user\UserInterface $account, $attributes) {
+  $config_factory = \Drupal::configFactory();
+  $config = $config_factory->getEditable('gsaml.settings');
+  $field_name = $config->get('user_field');
+  $field_adfs = $config->get('user_adfs');
+  $fss = $attributes[$field_adfs];
+
+  if ($account->hasField($field_name)) {
+    $current_fs = $account->get($field_name)->getString();
+    $current_fs = explode(PHP_EOL, $current_fs);
+    array_walk($fss, create_function('&$val', '$val = trim($val);'));
+    sort($fss);
+    array_walk($current_fs, create_function('&$val', '$val = trim($val);'));
+    sort($current_fs);
+    $diffs = array_merge(array_diff($fss, $current_fs), array_diff($current_fs, $fss));
+    if (count($diffs) !== 0) {
+      ini_set('memory_limit', '384M');
+      $fss_string = implode(PHP_EOL, $fss);
+      $account->set($field_name, $fss_string);
+      GSAML::removeUserMemberships($account);
+      GSAML::associateSingleUserToGroup($account, $fss);
+    }
+  }
+  return $account;
+}

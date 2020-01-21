@@ -8,8 +8,8 @@ class ComposerStaticInitf58dd9d2e64a825de7df7497c1354a33
 {
     public static $files = array (
         '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
-        '023d27dca8066ef29e6739335ea73bad' => __DIR__ . '/..' . '/symfony/polyfill-php70/bootstrap.php',
         '320cde22f66dd4f5d3fd621d3e88b98f' => __DIR__ . '/..' . '/symfony/polyfill-ctype/bootstrap.php',
+        '023d27dca8066ef29e6739335ea73bad' => __DIR__ . '/..' . '/symfony/polyfill-php70/bootstrap.php',
         'bd9634f2d41831496de0d3dfe4c94881' => __DIR__ . '/..' . '/symfony/polyfill-php56/bootstrap.php',
         '7b11c4dc42b3b3023073cb14e519683c' => __DIR__ . '/..' . '/ralouphie/getallheaders/src/getallheaders.php',
         'c964ee0ededf28c96ebd9db5099ef910' => __DIR__ . '/..' . '/guzzlehttp/promises/src/functions_include.php',
@@ -24,6 +24,8 @@ class ComposerStaticInitf58dd9d2e64a825de7df7497c1354a33
         '0b0974a5566a1077e4f2e111341112c1' => __DIR__ . '/..' . '/zendframework/zend-diactoros/src/functions/normalize_server.php',
         '1ca3bc274755662169f9629d5412a1da' => __DIR__ . '/..' . '/zendframework/zend-diactoros/src/functions/normalize_uploaded_files.php',
         '40360c0b9b437e69bcbb7f1349ce029e' => __DIR__ . '/..' . '/zendframework/zend-diactoros/src/functions/parse_cookie_header.php',
+        '6175f5662c2e26de0149cb048cda7209' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/_autoload.php',
+        '5abda994d126976858eb25d2546ee3c9' => __DIR__ . '/..' . '/simplesamlphp/simplesamlphp/lib/_autoload_modules.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -34,8 +36,14 @@ class ComposerStaticInitf58dd9d2e64a825de7df7497c1354a33
             'Zend\\Escaper\\' => 13,
             'Zend\\Diactoros\\' => 15,
         ),
+        'W' => 
+        array (
+            'WhiteHat101\\Crypt\\' => 18,
+            'Webmozart\\Assert\\' => 17,
+        ),
         'T' => 
         array (
+            'Twig\\Extensions\\' => 16,
             'Twig\\' => 5,
             'TYPO3\\PharStreamWrapper\\' => 24,
         ),
@@ -55,13 +63,20 @@ class ComposerStaticInitf58dd9d2e64a825de7df7497c1354a33
             'Symfony\\Component\\Process\\' => 26,
             'Symfony\\Component\\HttpKernel\\' => 29,
             'Symfony\\Component\\HttpFoundation\\' => 33,
+            'Symfony\\Component\\Filesystem\\' => 29,
             'Symfony\\Component\\EventDispatcher\\' => 34,
             'Symfony\\Component\\DependencyInjection\\' => 38,
             'Symfony\\Component\\Debug\\' => 24,
             'Symfony\\Component\\Console\\' => 26,
+            'Symfony\\Component\\Config\\' => 25,
             'Symfony\\Component\\ClassLoader\\' => 30,
             'Symfony\\Cmf\\Component\\Routing\\' => 30,
             'Symfony\\Bridge\\PsrHttpMessage\\' => 30,
+            'SimpleSAML\\' => 11,
+        ),
+        'R' => 
+        array (
+            'RobRichards\\XMLSecLibs\\' => 23,
         ),
         'P' => 
         array (
@@ -77,11 +92,17 @@ class ComposerStaticInitf58dd9d2e64a825de7df7497c1354a33
         array (
             'Masterminds\\' => 12,
         ),
+        'J' => 
+        array (
+            'JaimePerez\\TwigConfigurableI18n\\' => 32,
+        ),
         'G' => 
         array (
             'GuzzleHttp\\Psr7\\' => 16,
             'GuzzleHttp\\Promise\\' => 19,
             'GuzzleHttp\\' => 11,
+            'Gettext\\Languages\\' => 18,
+            'Gettext\\' => 8,
         ),
         'E' => 
         array (
@@ -111,8 +132,6 @@ class ComposerStaticInitf58dd9d2e64a825de7df7497c1354a33
         'A' => 
         array (
             'Asm89\\Stack\\' => 12,
-            'AcademicPuma\\CiteProc\\' => 22,
-            'ADCI\\FullNameParser\\' => 20,
         ),
     );
 
@@ -132,6 +151,18 @@ class ComposerStaticInitf58dd9d2e64a825de7df7497c1354a33
         'Zend\\Diactoros\\' => 
         array (
             0 => __DIR__ . '/..' . '/zendframework/zend-diactoros/src',
+        ),
+        'WhiteHat101\\Crypt\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/whitehat101/apr1-md5/src',
+        ),
+        'Webmozart\\Assert\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/webmozart/assert/src',
+        ),
+        'Twig\\Extensions\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/twig/extensions/src',
         ),
         'Twig\\' => 
         array (
@@ -197,6 +228,10 @@ class ComposerStaticInitf58dd9d2e64a825de7df7497c1354a33
         array (
             0 => __DIR__ . '/..' . '/symfony/http-foundation',
         ),
+        'Symfony\\Component\\Filesystem\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/symfony/filesystem',
+        ),
         'Symfony\\Component\\EventDispatcher\\' => 
         array (
             0 => __DIR__ . '/..' . '/symfony/event-dispatcher',
@@ -213,6 +248,10 @@ class ComposerStaticInitf58dd9d2e64a825de7df7497c1354a33
         array (
             0 => __DIR__ . '/..' . '/symfony/console',
         ),
+        'Symfony\\Component\\Config\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/symfony/config',
+        ),
         'Symfony\\Component\\ClassLoader\\' => 
         array (
             0 => __DIR__ . '/..' . '/symfony/class-loader',
@@ -224,6 +263,14 @@ class ComposerStaticInitf58dd9d2e64a825de7df7497c1354a33
         'Symfony\\Bridge\\PsrHttpMessage\\' => 
         array (
             0 => __DIR__ . '/..' . '/symfony/psr-http-message-bridge',
+        ),
+        'SimpleSAML\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/simplesamlphp/simplesamlphp/lib/SimpleSAML',
+        ),
+        'RobRichards\\XMLSecLibs\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/robrichards/xmlseclibs/src',
         ),
         'Psr\\Log\\' => 
         array (
@@ -245,6 +292,10 @@ class ComposerStaticInitf58dd9d2e64a825de7df7497c1354a33
         array (
             0 => __DIR__ . '/..' . '/masterminds/html5/src',
         ),
+        'JaimePerez\\TwigConfigurableI18n\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/jaimeperez/twig-configurable-i18n/src',
+        ),
         'GuzzleHttp\\Psr7\\' => 
         array (
             0 => __DIR__ . '/..' . '/guzzlehttp/psr7/src',
@@ -256,6 +307,14 @@ class ComposerStaticInitf58dd9d2e64a825de7df7497c1354a33
         'GuzzleHttp\\' => 
         array (
             0 => __DIR__ . '/..' . '/guzzlehttp/guzzle/src',
+        ),
+        'Gettext\\Languages\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/gettext/languages/src',
+        ),
+        'Gettext\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/gettext/gettext/src',
         ),
         'Egulias\\EmailValidator\\' => 
         array (
@@ -325,19 +384,15 @@ class ComposerStaticInitf58dd9d2e64a825de7df7497c1354a33
         array (
             0 => __DIR__ . '/..' . '/asm89/stack-cors/src/Asm89/Stack',
         ),
-        'AcademicPuma\\CiteProc\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/academicpuma/citeproc-php/src',
-        ),
-        'ADCI\\FullNameParser\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/adci/full-name-parser/src',
-        ),
     );
 
     public static $prefixesPsr0 = array (
         'T' => 
         array (
+            'Twig_Extensions_' => 
+            array (
+                0 => __DIR__ . '/..' . '/twig/extensions/lib',
+            ),
             'Twig_' => 
             array (
                 0 => __DIR__ . '/..' . '/twig/twig/lib',
@@ -349,6 +404,10 @@ class ComposerStaticInitf58dd9d2e64a825de7df7497c1354a33
             array (
                 0 => __DIR__ . '/..' . '/stack/builder/src',
             ),
+            'SAML2\\' => 
+            array (
+                0 => __DIR__ . '/..' . '/simplesamlphp/saml2/src',
+            ),
         ),
         'P' => 
         array (
@@ -359,13 +418,6 @@ class ComposerStaticInitf58dd9d2e64a825de7df7497c1354a33
             'PEAR' => 
             array (
                 0 => __DIR__ . '/..' . '/pear/pear_exception',
-            ),
-        ),
-        'L' => 
-        array (
-            'LibRIS' => 
-            array (
-                0 => __DIR__ . '/..' . '/technosophos/LibRIS/src',
             ),
         ),
         'E' => 
@@ -391,10 +443,6 @@ class ComposerStaticInitf58dd9d2e64a825de7df7497c1354a33
         ),
         'A' => 
         array (
-            'AudioLabs' => 
-            array (
-                0 => __DIR__ . '/..' . '/audiolabs/bibtexparser/src',
-            ),
             'Archive_Tar' => 
             array (
                 0 => __DIR__ . '/..' . '/pear/archive_tar',

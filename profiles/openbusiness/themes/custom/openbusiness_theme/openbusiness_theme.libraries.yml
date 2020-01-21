@@ -1,0 +1,22 @@
+global-styling:
+  css:
+    theme:
+      css/style.css: {}
+
+global-scripts:
+  js:
+    js/custom.js: {}
+  dependencies:
+    - core/jquery
+    - core/jquery.once
+
+fonts:
+  css:
+    theme:
+      //fonts.googleapis.com/css?family=Montserrat:500,600&display=swap: { type: external, minified: true }
+      //fonts.googleapis.com/css?family=Lato:300,400,700&display=swap: { type: external, minified: true }
+
+color:
+  css:
+    theme:
+      css/color.css: {}

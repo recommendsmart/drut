@@ -1,0 +1,188 @@
+/* Cards */
+/* card-type-circle */
+.card-type-circle-list,
+.blog-listing {
+  @media (min-width: $screen-sm-min) {
+    margin-right: rem-calc(-20);
+  }
+  @media (min-width: $screen-lg-min) {
+    margin-right: rem-calc(-30);
+  }
+}
+.card-type-circle-item,
+.blog-listing-item {
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.15);
+  height: 450px;
+  margin: 0 auto rem-calc(20);
+  max-width: 280px;
+  padding: 0;
+  position: relative;
+  width: 100%;
+  @media (min-width: $screen-sm-min) {
+    height: 407px;
+    max-width: 222px;
+    width: 100%;
+    margin-right: rem-calc(20);
+  }
+  @media (min-width: $screen-lg-min) {
+    height: 468px;
+    margin-right: rem-calc(30);
+    max-width: 270px;
+    width: 25%;
+  }
+  &:hover {
+    .card-circle-image img {
+      border-radius: 0;
+      padding: rem-calc(0 0 63 0);
+      @media (min-width: $screen-lg-min) {
+        padding: rem-calc(0 0 62 0);
+      }
+    }
+    .card-tag {
+      padding-right: rem-calc(16);
+      &::before {
+        width: 100%;
+      }
+      a {
+        color: $white;
+        z-index: 10;
+      }
+    }
+  }
+  .card-tag {
+    margin-top: rem-calc(23);
+    position: absolute;
+    &:before {
+      margin-top: rem-calc(3);
+    }
+    @media (min-width: $screen-lg-min) {
+      margin-top: rem-calc(10);
+    }
+  }
+  .card-circle-image {
+    margin-bottom: rem-calc(-50);
+    img {
+      border-radius: 50%;
+      padding: rem-calc(55 24);
+      transition: all 0.3s ease-in-out;
+    }
+  }
+  .views-field-title {
+    padding: rem-calc(0 24);
+  }
+  .card-circle-title {
+    border-bottom: 1px solid $light-grayish;
+    height: 80px;
+    margin-bottom: rem-calc(20);
+    overflow-y: hidden;
+    text-align: center;
+    @media (min-width: $screen-sm-min) {
+      height: 79px;
+    }
+    a {
+      font-weight: 700;
+      margin: rem-calc(-32 0 23);
+      @media (min-width: $screen-lg-min) {
+        margin: rem-calc(-22 0 40);
+      }
+    }
+  }
+  .card-circle-info {
+    @extend h5;
+    display: block;
+    font-weight: 400;
+    justify-content: center;
+    margin-top: rem-calc(-15);
+    text-align: center;
+    @media (min-width: $screen-sm-min) {
+      margin-top: rem-calc(-10);
+    }
+    @media (min-width: $screen-lg-min) {
+      margin-top: rem-calc(-5);
+    }
+    .card-circle-auth-by {
+      margin-bottom: rem-calc(5);
+      @media (min-width: $screen-lg-min) {
+        margin-bottom: rem-calc(10);
+      }
+    }
+    div:nth-child(2) {
+      font-weight: 500;
+    }
+  }
+}
+
+/* card-type-radius */
+.card-type-radius-list {
+  display: flex;
+  flex-flow: wrap;
+  list-style-type: none;
+  margin-right: rem-calc(-20);
+}
+.card-type-radius-item {
+  border-radius: rem-calc(0 0 48 0);
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.15);
+  margin: rem-calc(0 0 20 0);
+  @media (min-width: $screen-sm-min) {
+    margin: rem-calc(0 20 20 0);
+    max-width: 345px;
+    width: 50%;
+  }
+  @media (min-width: $screen-lg-min) {
+    margin: rem-calc(0 30 30 0);
+    max-width: 370px;
+  }
+  .card-radius-title {
+    margin: rem-calc(0 0 0 80);
+  }
+  .card-radius-role {
+    margin: rem-calc(10 0 0 80);
+    p {
+      font-size: rem-calc(16);
+      font-weight: 400;
+    }
+  }
+  .card-radius-image {
+    border-radius: rem-calc(0 0 25 0);
+    height: 65px;
+    margin-bottom: rem-calc(34);
+    margin-top: rem-calc(-65);
+    overflow: hidden;
+    width: 65px;
+    img {
+      transform: scale(1.2);
+    }
+  }
+}
+
+/* card-type-square */
+.card-type-square-list {
+  @media (min-width: $screen-sm-min) {
+    display: inline-block;
+    margin-right: rem-calc(-20);
+  }
+}
+.card-type-square-item {
+  margin: rem-calc(0 auto 20);
+  max-width: 280px;
+  padding: 0;
+  @media (min-width: $screen-sm-min) {
+    margin-right: rem-calc(20);
+    max-width: 222px;
+  }
+  @media (min-width: $screen-lg-min) {
+    margin-right: rem-calc(30);
+    max-width: 370px;
+  }
+  .card-square-title {
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.15);
+    height: 114px;
+    margin: 0;
+    overflow: hidden;
+    padding: rem-calc(24 32);
+    a {
+      @extend h3;
+      font-weight: bold;
+    }
+  }
+}

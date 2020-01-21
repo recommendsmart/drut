@@ -1,0 +1,21 @@
+langcode: en
+status: true
+dependencies: {  }
+name: paragraph_with_image
+label: 'Paragraph with image'
+effects:
+  68a99f40-3cba-4e4a-a322-e188c892c579:
+    uuid: 68a99f40-3cba-4e4a-a322-e188c892c579
+    id: image_resize
+    weight: 1
+    data:
+      width: 470
+      height: 530
+  1691c2e3-3e18-4d81-b44a-ff540cfd0b2f:
+    uuid: 1691c2e3-3e18-4d81-b44a-ff540cfd0b2f
+    id: image_scale
+    weight: 2
+    data:
+      width: 470
+      height: 530
+      upscale: true

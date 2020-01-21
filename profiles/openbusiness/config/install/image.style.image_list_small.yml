@@ -1,0 +1,21 @@
+langcode: en
+status: true
+dependencies: {  }
+name: image_list_small
+label: 'Image list - small'
+effects:
+  5958218f-74e4-43a9-8ee9-e9250e2fd9b5:
+    uuid: 5958218f-74e4-43a9-8ee9-e9250e2fd9b5
+    id: image_resize
+    weight: 1
+    data:
+      width: 403
+      height: 403
+  34ab2ad5-9477-4a99-b7c7-1386ccd19e60:
+    uuid: 34ab2ad5-9477-4a99-b7c7-1386ccd19e60
+    id: image_scale
+    weight: 2
+    data:
+      width: 403
+      height: 403
+      upscale: true

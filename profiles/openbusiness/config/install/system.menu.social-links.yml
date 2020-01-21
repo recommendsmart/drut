@@ -1,0 +1,7 @@
+langcode: en
+status: true
+dependencies: {  }
+id: social-links
+label: 'Social Links'
+description: 'Social media links in footer region'
+locked: false

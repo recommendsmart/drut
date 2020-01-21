@@ -1,0 +1,23 @@
+<?php
+
+/**
+ * @file
+ * Auto content creating at instalation.
+ */
+
+use Drupal\openbusiness_content_creator\InstallCreatorContent;
+
+/**
+ * Implements hook_install().
+ *
+ * @see system_install()
+ */
+function openbusiness_content_creator_install() {
+  /* sets the front page */
+  $config = \Drupal::configFactory()->getEditable('system.site');
+  $config->set('page.front', '/home')->save();
+
+  if (!\Drupal::service('config.installer')->isSyncing()) {
+    \Drupal::classResolver(InstallCreatorContent::class)->createContent();
+  }
+}
