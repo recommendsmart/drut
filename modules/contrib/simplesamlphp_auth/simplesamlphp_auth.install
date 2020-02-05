@@ -51,7 +51,7 @@ function simplesamlphp_auth_requirements($phase) {
     simplesamlphp_auth_check_library();
     if (!class_exists('SimpleSAML\Configuration')) {
       $requirements['simplesamlphp_library'] = [
-        'description' => t('SimpleSAMLphp module requires the simplesamlphp library, version 1.17.2 or later. See README file for installation instructions.'),
+        'description' => t('SimpleSAMLphp module requires the simplesamlphp library, version 1.18.2 or later. See README file for installation instructions.'),
         'severity' => REQUIREMENT_ERROR,
       ];
     }
@@ -95,4 +95,22 @@ function simplesamlphp_auth_update_8001() {
  */
 function simplesamlphp_auth_update_8002() {
   \Drupal::service('router.builder')->rebuild();
+}
+
+/**
+ * Provide a default value for the new login_link_show configuration option.
+ */
+function simplesamlphp_auth_update_8301() {
+  \Drupal::configFactory()->getEditable('simplesamlphp_auth.settings')
+    ->set('login_link_show', TRUE)
+    ->save(TRUE);
+}
+
+/**
+ * Remove Site default language from simplesamlphp_auth configuration.
+ */
+function simplesamlphp_auth_update_8302() {
+  \Drupal::configFactory()->getEditable('simplesamlphp_auth.settings')
+    ->clear('default_langcode')
+    ->save(TRUE);
 }

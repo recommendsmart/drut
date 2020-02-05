@@ -11,6 +11,7 @@ class ComposerStaticInitf58dd9d2e64a825de7df7497c1354a33
         '320cde22f66dd4f5d3fd621d3e88b98f' => __DIR__ . '/..' . '/symfony/polyfill-ctype/bootstrap.php',
         '023d27dca8066ef29e6739335ea73bad' => __DIR__ . '/..' . '/symfony/polyfill-php70/bootstrap.php',
         'bd9634f2d41831496de0d3dfe4c94881' => __DIR__ . '/..' . '/symfony/polyfill-php56/bootstrap.php',
+        '5abda994d126976858eb25d2546ee3c9' => __DIR__ . '/..' . '/simplesamlphp/simplesamlphp/lib/_autoload_modules.php',
         '7b11c4dc42b3b3023073cb14e519683c' => __DIR__ . '/..' . '/ralouphie/getallheaders/src/getallheaders.php',
         'c964ee0ededf28c96ebd9db5099ef910' => __DIR__ . '/..' . '/guzzlehttp/promises/src/functions_include.php',
         'a0edc8309cc5e1d60e3047b5df6b7052' => __DIR__ . '/..' . '/guzzlehttp/psr7/src/functions_include.php',
@@ -24,8 +25,6 @@ class ComposerStaticInitf58dd9d2e64a825de7df7497c1354a33
         '0b0974a5566a1077e4f2e111341112c1' => __DIR__ . '/..' . '/zendframework/zend-diactoros/src/functions/normalize_server.php',
         '1ca3bc274755662169f9629d5412a1da' => __DIR__ . '/..' . '/zendframework/zend-diactoros/src/functions/normalize_uploaded_files.php',
         '40360c0b9b437e69bcbb7f1349ce029e' => __DIR__ . '/..' . '/zendframework/zend-diactoros/src/functions/parse_cookie_header.php',
-        '6175f5662c2e26de0149cb048cda7209' => __DIR__ . '/..' . '/simplesamlphp/saml2/src/_autoload.php',
-        '5abda994d126976858eb25d2546ee3c9' => __DIR__ . '/..' . '/simplesamlphp/simplesamlphp/lib/_autoload_modules.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -72,7 +71,33 @@ class ComposerStaticInitf58dd9d2e64a825de7df7497c1354a33
             'Symfony\\Component\\ClassLoader\\' => 30,
             'Symfony\\Cmf\\Component\\Routing\\' => 30,
             'Symfony\\Bridge\\PsrHttpMessage\\' => 30,
+            'SimpleSAML\\modules\\yubikey\\' => 27,
+            'SimpleSAML\\modules\\discopower\\' => 30,
+            'SimpleSAML\\TwigConfigurableI18n\\' => 32,
+            'SimpleSAML\\Module\\statistics\\' => 29,
+            'SimpleSAML\\Module\\sqlauth\\' => 26,
+            'SimpleSAML\\Module\\smartattributes\\' => 34,
+            'SimpleSAML\\Module\\sanitycheck\\' => 30,
+            'SimpleSAML\\Module\\riak\\' => 23,
+            'SimpleSAML\\Module\\radius\\' => 25,
+            'SimpleSAML\\Module\\preprodwarning\\' => 33,
+            'SimpleSAML\\Module\\negotiate\\' => 28,
+            'SimpleSAML\\Module\\metarefresh\\' => 30,
+            'SimpleSAML\\Module\\ldap\\' => 23,
+            'SimpleSAML\\Module\\expirycheck\\' => 30,
+            'SimpleSAML\\Module\\exampleattributeserver\\' => 41,
+            'SimpleSAML\\Module\\consent\\' => 26,
+            'SimpleSAML\\Module\\cdc\\' => 22,
+            'SimpleSAML\\Module\\cas\\' => 22,
+            'SimpleSAML\\Module\\authwindowslive\\' => 34,
+            'SimpleSAML\\Module\\authtwitter\\' => 30,
+            'SimpleSAML\\Module\\authorize\\' => 28,
+            'SimpleSAML\\Module\\authfacebook\\' => 31,
+            'SimpleSAML\\Module\\authcrypt\\' => 28,
+            'SimpleSAML\\Module\\authX509\\' => 27,
+            'SimpleSAML\\Module\\adfs\\' => 23,
             'SimpleSAML\\' => 11,
+            'SAML2\\' => 6,
         ),
         'R' => 
         array (
@@ -83,6 +108,7 @@ class ComposerStaticInitf58dd9d2e64a825de7df7497c1354a33
             'Psr\\Log\\' => 8,
             'Psr\\Http\\Message\\' => 17,
             'Psr\\Container\\' => 14,
+            'PHPMailer\\PHPMailer\\' => 20,
         ),
         'O' => 
         array (
@@ -91,10 +117,6 @@ class ComposerStaticInitf58dd9d2e64a825de7df7497c1354a33
         'M' => 
         array (
             'Masterminds\\' => 12,
-        ),
-        'J' => 
-        array (
-            'JaimePerez\\TwigConfigurableI18n\\' => 32,
         ),
         'G' => 
         array (
@@ -110,12 +132,9 @@ class ComposerStaticInitf58dd9d2e64a825de7df7497c1354a33
         ),
         'D' => 
         array (
-            'Drupal\\Driver\\' => 14,
-            'Drupal\\Core\\' => 12,
             'Drupal\\Composer\\Plugin\\VendorHardening\\' => 39,
             'Drupal\\Composer\\Plugin\\Scaffold\\' => 32,
             'Drupal\\Composer\\Plugin\\ProjectMessage\\' => 38,
-            'Drupal\\Component\\' => 17,
             'Doctrine\\Common\\Lexer\\' => 22,
             'Doctrine\\Common\\Inflector\\' => 26,
             'Doctrine\\Common\\Cache\\' => 22,
@@ -128,6 +147,10 @@ class ComposerStaticInitf58dd9d2e64a825de7df7497c1354a33
             'Composer\\Installers\\' => 20,
             'CommerceGuys\\Intl\\' => 18,
             'CommerceGuys\\Addressing\\' => 24,
+        ),
+        'B' => 
+        array (
+            'Basho\\' => 6,
         ),
         'A' => 
         array (
@@ -264,9 +287,113 @@ class ComposerStaticInitf58dd9d2e64a825de7df7497c1354a33
         array (
             0 => __DIR__ . '/..' . '/symfony/psr-http-message-bridge',
         ),
+        'SimpleSAML\\modules\\yubikey\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/simplesamlphp/simplesamlphp/modules/authYubikey/lib',
+        ),
+        'SimpleSAML\\modules\\discopower\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/simplesamlphp/simplesamlphp/modules/discopower/lib',
+        ),
+        'SimpleSAML\\TwigConfigurableI18n\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/simplesamlphp/twig-configurable-i18n/src',
+        ),
+        'SimpleSAML\\Module\\statistics\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/simplesamlphp/simplesamlphp/modules/statistics/lib',
+        ),
+        'SimpleSAML\\Module\\sqlauth\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/simplesamlphp/simplesamlphp/modules/sqlauth/lib',
+        ),
+        'SimpleSAML\\Module\\smartattributes\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/simplesamlphp/simplesamlphp/modules/smartattributes/lib',
+        ),
+        'SimpleSAML\\Module\\sanitycheck\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/simplesamlphp/simplesamlphp/modules/sanitycheck/lib',
+        ),
+        'SimpleSAML\\Module\\riak\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/simplesamlphp/simplesamlphp/modules/riak/lib',
+        ),
+        'SimpleSAML\\Module\\radius\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/simplesamlphp/simplesamlphp/modules/radius/lib',
+        ),
+        'SimpleSAML\\Module\\preprodwarning\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/simplesamlphp/simplesamlphp/modules/preprodwarning/lib',
+        ),
+        'SimpleSAML\\Module\\negotiate\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/simplesamlphp/simplesamlphp/modules/negotiate/lib',
+        ),
+        'SimpleSAML\\Module\\metarefresh\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/simplesamlphp/simplesamlphp/modules/metarefresh/lib',
+        ),
+        'SimpleSAML\\Module\\ldap\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/simplesamlphp/simplesamlphp/modules/ldap/lib',
+        ),
+        'SimpleSAML\\Module\\expirycheck\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/simplesamlphp/simplesamlphp/modules/expirycheck/lib',
+        ),
+        'SimpleSAML\\Module\\exampleattributeserver\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/simplesamlphp/simplesamlphp/modules/exampleattributeserver/lib',
+        ),
+        'SimpleSAML\\Module\\consent\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/simplesamlphp/simplesamlphp/modules/consent/lib',
+        ),
+        'SimpleSAML\\Module\\cdc\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/simplesamlphp/simplesamlphp/modules/cdc/lib',
+        ),
+        'SimpleSAML\\Module\\cas\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/simplesamlphp/simplesamlphp/modules/cas/lib',
+        ),
+        'SimpleSAML\\Module\\authwindowslive\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/simplesamlphp/simplesamlphp/modules/authwindowslive/lib',
+        ),
+        'SimpleSAML\\Module\\authtwitter\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/simplesamlphp/simplesamlphp/modules/authtwitter/lib',
+        ),
+        'SimpleSAML\\Module\\authorize\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/simplesamlphp/simplesamlphp/modules/authorize/lib',
+        ),
+        'SimpleSAML\\Module\\authfacebook\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/simplesamlphp/simplesamlphp/modules/authfacebook/lib',
+        ),
+        'SimpleSAML\\Module\\authcrypt\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/simplesamlphp/simplesamlphp/modules/authcrypt/lib',
+        ),
+        'SimpleSAML\\Module\\authX509\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/simplesamlphp/simplesamlphp/modules/authX509/lib',
+        ),
+        'SimpleSAML\\Module\\adfs\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/simplesamlphp/simplesamlphp/modules/adfs/lib',
+        ),
         'SimpleSAML\\' => 
         array (
             0 => __DIR__ . '/..' . '/simplesamlphp/simplesamlphp/lib/SimpleSAML',
+        ),
+        'SAML2\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/simplesamlphp/saml2/src/SAML2',
         ),
         'RobRichards\\XMLSecLibs\\' => 
         array (
@@ -284,6 +411,10 @@ class ComposerStaticInitf58dd9d2e64a825de7df7497c1354a33
         array (
             0 => __DIR__ . '/..' . '/psr/container/src',
         ),
+        'PHPMailer\\PHPMailer\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/phpmailer/phpmailer/src',
+        ),
         'OomphInc\\ComposerInstallersExtender\\' => 
         array (
             0 => __DIR__ . '/..' . '/oomphinc/composer-installers-extender/src',
@@ -291,10 +422,6 @@ class ComposerStaticInitf58dd9d2e64a825de7df7497c1354a33
         'Masterminds\\' => 
         array (
             0 => __DIR__ . '/..' . '/masterminds/html5/src',
-        ),
-        'JaimePerez\\TwigConfigurableI18n\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/jaimeperez/twig-configurable-i18n/src',
         ),
         'GuzzleHttp\\Psr7\\' => 
         array (
@@ -320,14 +447,6 @@ class ComposerStaticInitf58dd9d2e64a825de7df7497c1354a33
         array (
             0 => __DIR__ . '/..' . '/egulias/email-validator/EmailValidator',
         ),
-        'Drupal\\Driver\\' => 
-        array (
-            0 => __DIR__ . '/../..' . '/drivers/lib/Drupal/Driver',
-        ),
-        'Drupal\\Core\\' => 
-        array (
-            0 => __DIR__ . '/../..' . '/core/lib/Drupal/Core',
-        ),
         'Drupal\\Composer\\Plugin\\VendorHardening\\' => 
         array (
             0 => __DIR__ . '/..' . '/drupal/core-vendor-hardening',
@@ -339,10 +458,6 @@ class ComposerStaticInitf58dd9d2e64a825de7df7497c1354a33
         'Drupal\\Composer\\Plugin\\ProjectMessage\\' => 
         array (
             0 => __DIR__ . '/..' . '/drupal/core-project-message',
-        ),
-        'Drupal\\Component\\' => 
-        array (
-            0 => __DIR__ . '/../..' . '/core/lib/Drupal/Component',
         ),
         'Doctrine\\Common\\Lexer\\' => 
         array (
@@ -380,6 +495,10 @@ class ComposerStaticInitf58dd9d2e64a825de7df7497c1354a33
         array (
             0 => __DIR__ . '/..' . '/commerceguys/addressing/src',
         ),
+        'Basho\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/phpfastcache/riak-client/src',
+        ),
         'Asm89\\Stack\\' => 
         array (
             0 => __DIR__ . '/..' . '/asm89/stack-cors/src/Asm89/Stack',
@@ -404,9 +523,9 @@ class ComposerStaticInitf58dd9d2e64a825de7df7497c1354a33
             array (
                 0 => __DIR__ . '/..' . '/stack/builder/src',
             ),
-            'SAML2\\' => 
+            'SimpleSamlPhp\\Composer' => 
             array (
-                0 => __DIR__ . '/..' . '/simplesamlphp/saml2/src',
+                0 => __DIR__ . '/..' . '/simplesamlphp/composer-module-installer/src',
             ),
         ),
         'P' => 
@@ -458,13 +577,6 @@ class ComposerStaticInitf58dd9d2e64a825de7df7497c1354a33
         'ArithmeticError' => __DIR__ . '/..' . '/symfony/polyfill-php70/Resources/stubs/ArithmeticError.php',
         'AssertionError' => __DIR__ . '/..' . '/symfony/polyfill-php70/Resources/stubs/AssertionError.php',
         'DivisionByZeroError' => __DIR__ . '/..' . '/symfony/polyfill-php70/Resources/stubs/DivisionByZeroError.php',
-        'Drupal' => __DIR__ . '/../..' . '/core/lib/Drupal.php',
-        'Drupal\\Component\\Utility\\Timer' => __DIR__ . '/../..' . '/core/lib/Drupal/Component/Utility/Timer.php',
-        'Drupal\\Component\\Utility\\Unicode' => __DIR__ . '/../..' . '/core/lib/Drupal/Component/Utility/Unicode.php',
-        'Drupal\\Core\\Database\\Database' => __DIR__ . '/../..' . '/core/lib/Drupal/Core/Database/Database.php',
-        'Drupal\\Core\\DrupalKernel' => __DIR__ . '/../..' . '/core/lib/Drupal/Core/DrupalKernel.php',
-        'Drupal\\Core\\DrupalKernelInterface' => __DIR__ . '/../..' . '/core/lib/Drupal/Core/DrupalKernelInterface.php',
-        'Drupal\\Core\\Site\\Settings' => __DIR__ . '/../..' . '/core/lib/Drupal/Core/Site/Settings.php',
         'Error' => __DIR__ . '/..' . '/symfony/polyfill-php70/Resources/stubs/Error.php',
         'ParseError' => __DIR__ . '/..' . '/symfony/polyfill-php70/Resources/stubs/ParseError.php',
         'SessionUpdateTimestampHandlerInterface' => __DIR__ . '/..' . '/symfony/polyfill-php70/Resources/stubs/SessionUpdateTimestampHandlerInterface.php',

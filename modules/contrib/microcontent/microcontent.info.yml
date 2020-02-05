@@ -6,7 +6,7 @@ dependencies:
   - drupal:user
   - drupal:system
 
-# Information added by Drupal.org packaging script on 2019-12-04
-version: '8.x-1.0-alpha1'
+# Information added by Drupal.org packaging script on 2020-01-30
+version: '8.x-1.0-alpha3'
 project: 'microcontent'
-datestamp: 1575446587
+datestamp: 1580354241

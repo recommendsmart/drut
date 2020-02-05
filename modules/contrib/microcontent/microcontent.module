@@ -5,11 +5,47 @@
  * Contains main module functions.
  */
 
+use Drupal\Core\Render\Element;
+
 /**
  * Implements hook_preprocess_views_view().
  */
 function microcontent_preprocess_views_view(&$variables) {
   if ($variables['view']->id() === 'microcontent_browser') {
     $variables['view_array']['#attached']['library'][] = 'microcontent/entity-browser';
+  }
+}
+
+/**
+ * Implements hook_theme().
+ */
+function microcontent_theme() {
+  return [
+    'microcontent' => [
+      'render element' => 'elements',
+    ],
+  ];
+}
+
+/**
+ * Prepares variables for microcontent templates.
+ *
+ * Default template: micrcontent.html.twig.
+ *
+ * @param array $variables
+ *   An associative array containing:
+ *   - elements: An array of elements to display in view mode.
+ *   - microcontent: The microcontent item.
+ *   - name: The label for the microcontent item.
+ *   - view_mode: View mode; e.g., 'full', 'teaser', etc.
+ */
+function template_preprocess_microcontent(array &$variables) {
+  $variables['microcontent'] = $variables['elements']['#microcontent'];
+  $variables['view_mode'] = $variables['elements']['#view_mode'];
+  $variables['name'] = $variables['microcontent']->label();
+
+  // Helpful $content variable for templates.
+  foreach (Element::children($variables['elements']) as $key) {
+    $variables['content'][$key] = $variables['elements'][$key];
   }
 }

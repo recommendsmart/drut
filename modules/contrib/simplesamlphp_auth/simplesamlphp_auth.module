@@ -29,6 +29,8 @@
  *         notices.
  */
 
+use Drupal\Core\Session\AccountInterface;
+use Drupal\Core\Session\AnonymousUserSession;
 use Drupal\Core\Url;
 use Drupal\Core\Form\FormStateInterface;
 
@@ -48,19 +50,22 @@ function simplesamlphp_auth_help($route_name) {
 /**
  * Implements hook_user_logout().
  */
-function simplesamlphp_auth_user_logout($account) {
-
+function simplesamlphp_auth_user_logout(AccountInterface $account) {
   $logout_url = \Drupal::config('simplesamlphp_auth.settings')->get('logout_goto_url');
+  /** @var \Drupal\simplesamlphp_auth\Service\SimplesamlphpAuthManager $simplesaml */
   $simplesaml = \Drupal::service('simplesamlphp_auth.manager');
+  $session = \Drupal::service('session_manager');
 
   // Only interfere if this user was logged in through simplesaml.
-  if ($simplesaml->isAuthenticated()) {
+  if ($simplesaml->isActivated() && $simplesaml->isAuthenticated()) {
     // Have to destroy the session here as some configurations of
     // SimpleSAMLphp_auth can create infinite loops. By removing IdP auth before
     // Drupal auth, checks for local authentication will trigger before the
     // session is destroyed naturally. We must therefore destroy the session
     // manually here.
-    session_destroy();
+    // Copied from user.module method user_logout().
+    $session->destroy();
+    $account->setAccount(new AnonymousUserSession());
 
     if ($logout_url) {
       $simplesaml->logout($logout_url);
@@ -108,12 +113,12 @@ function simplesamlphp_auth_form_user_form_alter(&$form, FormStateInterface $for
 
   if ($saml_enabled) {
     $form['simplesamlphp_auth_user_enable']['#default_value'] = TRUE;
-    $form['account']['current_pass']['#access'] = FALSE;
 
     // If the user is a simplesamlphp_auth user and is NOT allowed to set their
     // Drupal password, remove the fields from the form.
     $config = \Drupal::config('simplesamlphp_auth.settings');
     if (!$config->get('allow.set_drupal_pwd')) {
+      $form['account']['current_pass']['#access'] = FALSE;
       $form['account']['pass']['#access'] = FALSE;
     }
   }
@@ -165,7 +170,7 @@ function simplesamlphp_auth_form_user_login_form_alter(&$form, FormStateInterfac
   // Return without executing if the functionality is not enabled.
   $config = \Drupal::config('simplesamlphp_auth.settings');
   \Drupal::service('renderer')->addCacheableDependency($form, $config);
-  if (!$config->get('activate')) {
+  if (!$config->get('activate') || !$config->get('login_link_show')) {
     return;
   }
 
