@@ -27,6 +27,7 @@
         "drupal/commerce_price": "^2.16",
         "drupal/commerce_recurring": "^1.0@beta",
         "drupal/commerce_store": "^2.16",
+        "drupal/core": "^8.8",
         "drupal/core-composer-scaffold": "^8.8",
         "drupal/core-project-message": "^8.8",
         "drupal/core-recommended": "^8.8",
@@ -48,9 +49,6 @@
         "drupal/responsive_tables_filter": "^1.4",
         "drupal/views_bulk_operations": "^3.3",
         "oomphinc/composer-installers-extender": "^1.1"
-    },
-	"replace": {
-        "drupal/core": "^8.8"
     },
     "require-dev": {
     },
