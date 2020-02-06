@@ -1,0 +1,9 @@
+{% extends "ds-2col.html.twig" %}
+{% set attributes = attributes.addClass('is-desktop') %}
+{%
+  set left_classes = [
+    'is-12-tablet',
+    'is-2-desktop',
+  ]
+%}
+{% set left_attributes = left_attributes.addClass(left_classes) %}

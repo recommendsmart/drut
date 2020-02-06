@@ -1,0 +1,7 @@
+global:
+  css:
+    theme:
+      assets/overrides.css: {}
+      assets/BULMA_SUBTHEME_MACHINE_NAME.style.css: {}
+  dependencies:
+    - bulma/global

@@ -1,0 +1,17 @@
+name: 'Drutopia User'
+description: 'Provides User related configuration.'
+type: module
+# core: 8.x
+dependencies:
+  - field
+  - file
+  - image
+  - path
+  - user
+package: Drutopia
+
+# Information added by Drupal.org packaging script on 2018-10-30
+version: '8.x-1.0-beta1'
+core: '8.x'
+project: 'drutopia_user'
+datestamp: 1540936684
