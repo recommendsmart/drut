@@ -245,7 +245,7 @@ class InvoiceEntity extends RevisionableContentEntityBase implements InvoiceEnti
           'ND' => t('Debit Note'),
         ],
       ])
-      ->setRequired(TRUE)
+      ->setRequired(FALSE)
       ->setDefaultValue('')
       ->setDisplayOptions('view', [
         'label' => 'inline',
