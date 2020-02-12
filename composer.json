@@ -12,7 +12,11 @@
         {
             "type": "composer",
             "url": "https://packages.drupal.org/8"
-        }
+        },
+		{
+        "type": "git",
+        "url": "https://github.com/recommendsmart/e_invoice_cr"
+    }
     ],
     "require": {
         "caseyamcl/php-marc21": "^1.0",
