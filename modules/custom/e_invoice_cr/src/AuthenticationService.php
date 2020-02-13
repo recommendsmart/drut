@@ -10,7 +10,7 @@ class AuthenticationService {
   /**
    * It gets the connection token.
    */
- /** public function getLoginToken() {
+  public function getLoginToken() {
     $settings = \Drupal::config('e_invoice_cr.settings');
     $username = $settings->get('username');
     $password = $settings->get('password');
@@ -59,6 +59,5 @@ class AuthenticationService {
     }
 
   }
-  */
 
 }

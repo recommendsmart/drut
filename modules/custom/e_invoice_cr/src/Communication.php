@@ -162,7 +162,7 @@ class Communication implements CommunicationInterface {
    * @return array
    *   Authorization array.
    */
-  private function getAuthArray() {
+  /*private function getAuthArray() {
     // Get authentication token for the API.
     $token = \Drupal::service('e_invoice_cr.authentication')->getLoginToken();
     // Set the headers data.
@@ -173,6 +173,6 @@ class Communication implements CommunicationInterface {
       ],
       // 'allow_redirects' => true.
     ];
-  }
+  }*/
 
 }
