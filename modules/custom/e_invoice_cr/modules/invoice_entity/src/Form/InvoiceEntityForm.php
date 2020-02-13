@@ -39,7 +39,7 @@ class InvoiceEntityForm extends ContentEntityForm {
     $settings = \Drupal::config('e_invoice_cr.settings');
     $empty = $settings->isNew();
     if ($empty || is_null($settings)) {
-      invoice_entity_config_error();
+      $message = t("If you're going to add a Reference please, fill all the fields in it.");
     }
 
   }
@@ -101,7 +101,7 @@ class InvoiceEntityForm extends ContentEntityForm {
       }
       $key = $type_of ? $invoice_service->getUniqueInvoiceKey($type_of) : $invoice_service->getUniqueInvoiceKey();
       if ($key == NULL) {
-        invoice_entity_config_error();
+        $invoice_service->updateValues();
       }
       else {
         $invoice_service->updateValues();
@@ -171,10 +171,10 @@ class InvoiceEntityForm extends ContentEntityForm {
     }
 
     // Send and return a boolean if it was or not successful.
-    $sent = $this->sendInvoice($form, $form_state);
+    /**$sent = $this->sendInvoice($form, $form_state);
 
     // If it was successful.
- /*   if ($sent) {
+	/**   if ($sent) {
       $status = parent::save($form, $form_state);
 
       switch ($status) {
@@ -195,7 +195,7 @@ class InvoiceEntityForm extends ContentEntityForm {
       $form_state->setRebuild();
       $form_state->setSubmitHandlers([]);
     }
-  }*/
+	}*/
 
   /**
    * Generate the xml document, sign it and send it to it's validation.
@@ -320,8 +320,8 @@ class InvoiceEntityForm extends ContentEntityForm {
     }
 
     return TRUE;
-  }
-*/
+  }*/
+  
   /**
    * Add the libraries.
    */
