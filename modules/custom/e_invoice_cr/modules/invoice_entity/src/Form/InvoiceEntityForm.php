@@ -192,8 +192,21 @@ class InvoiceEntityForm extends ContentEntityForm {
       $form_state->setRedirect('entity.invoice_entity.canonical', ['invoice_entity' => $entity->id()]);
     }
     else {
-      $form_state->setRebuild();
-      $form_state->setSubmitHandlers([]);
+      $status = parent::save($form, $form_state);
+
+      switch ($status) {
+        case SAVED_NEW:
+          drupal_set_message($this->t('Created the %label Invoice.', [
+            '%label' => $entity->label(),
+          ]));
+          break;
+
+        default:
+          drupal_set_message($this->t('Saved the %label Invoice.', [
+            '%label' => $entity->label(),
+          ]));
+      }
+      $form_state->setRedirect('entity.invoice_entity.canonical', ['invoice_entity' => $entity->id()]);
     }
   }
 
