@@ -166,24 +166,7 @@ class InvoiceEntityForm extends ContentEntityForm {
   /**
    * Add the libraries.
    */
-  public function addLibraries($form) {
-    // Get default theme libraries.
-    $theme_libraries = \Drupal::theme()->getActiveTheme()->getLibraries();
-    // Look for a custom library.
-    $custom_library = $this->searchCustomLibrary($theme_libraries);
-    if ($custom_library) {
-      // This a library from a theme.
-      $form['#attached']['library'][] = $custom_library;
-    }
-    else {
-      // This is the default library.
-      $form['#attached']['library'][] = 'invoice_entity/invoice-rows';
-    }
-    // Default js library.
-    $form['#attached']['library'][] = 'invoice_entity/invoice-rows-js';
-    return $form;
-  }
-
+ 
   /**
    * Search a custom library.
    */
@@ -191,7 +174,7 @@ class InvoiceEntityForm extends ContentEntityForm {
   /**
    * Validate if the fields inside of the reference information are need.
    */
-  public function checkReferenceInformationRequired(FormStateInterface $form_state) {
+  private function checkReferenceInformationRequired(FormStateInterface $form_state) {
     $message = t("If you're going to add a Reference please, fill all the fields in it.");
     $fields = [
       'ref_type_of',
