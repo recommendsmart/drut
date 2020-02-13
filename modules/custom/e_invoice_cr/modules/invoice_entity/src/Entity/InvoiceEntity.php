@@ -246,7 +246,7 @@ class InvoiceEntity extends RevisionableContentEntityBase implements InvoiceEnti
         ],
       ])
       ->setRequired(FALSE)
-      ->setDefaultValue('')
+      ->setDefaultValue('FE')
       ->setDisplayOptions('view', [
         'label' => 'inline',
         'type' => 'string',
