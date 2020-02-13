@@ -203,11 +203,11 @@ class InvoiceEntityForm extends ContentEntityForm {
    * @return bool
    *   Return true if did have no error.
    */
-  public function sendInvoice(array $form, FormStateInterface $form_state) {
+/*  public function sendInvoice(array $form, FormStateInterface $form_state) {
     $type_of = $this->entity->get('type_of')->getValue()[0]['value'];
 
     /** @var \Drupal\invoice_entity\InvoiceService $invoice_service */
-    /*$invoice_service = \Drupal::service('invoice_entity.service');
+   /* $invoice_service = \Drupal::service('invoice_entity.service');
     $invoice_service->setConsecutiveNumber($type_of);
     $this->entity->set('field_consecutive_number', $invoice_service->generateConsecutive($type_of));
 
@@ -231,7 +231,7 @@ class InvoiceEntityForm extends ContentEntityForm {
       $form_state->setRebuild();
       $form_state->setSubmitHandlers([]);
       return FALSE;
-    }*/
+    }
     else {
       // Add the key number to the invoice.
       $type_of = $this->entity->get('type_of')->value;
@@ -321,7 +321,7 @@ class InvoiceEntityForm extends ContentEntityForm {
 
     return TRUE;
   }
-
+*/
   /**
    * Add the libraries.
    */
