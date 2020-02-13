@@ -174,7 +174,7 @@ class InvoiceEntityForm extends ContentEntityForm {
     $sent = $this->sendInvoice($form, $form_state);
 
     // If it was successful.
-    if ($sent) {
+ /*   if ($sent) {
       $status = parent::save($form, $form_state);
 
       switch ($status) {
@@ -192,23 +192,10 @@ class InvoiceEntityForm extends ContentEntityForm {
       $form_state->setRedirect('entity.invoice_entity.canonical', ['invoice_entity' => $entity->id()]);
     }
     else {
-      $status = parent::save($form, $form_state);
-
-      switch ($status) {
-        case SAVED_NEW:
-          drupal_set_message($this->t('Created the %label Invoice.', [
-            '%label' => $entity->label(),
-          ]));
-          break;
-
-        default:
-          drupal_set_message($this->t('Saved the %label Invoice.', [
-            '%label' => $entity->label(),
-          ]));
-      }
-      $form_state->setRedirect('entity.invoice_entity.canonical', ['invoice_entity' => $entity->id()]);
+      $form_state->setRebuild();
+      $form_state->setSubmitHandlers([]);
     }
-  }
+  }*/
 
   /**
    * Generate the xml document, sign it and send it to it's validation.
