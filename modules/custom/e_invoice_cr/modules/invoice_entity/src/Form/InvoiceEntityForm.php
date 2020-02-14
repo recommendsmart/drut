@@ -171,30 +171,10 @@ class InvoiceEntityForm extends ContentEntityForm {
     }
 
     // Send and return a boolean if it was or not successful.
-    $sent = $this->sendInvoice($form, $form_state);
+    
 
     // If it was successful.
-    if ($sent) {
-      $status = parent::save($form, $form_state);
-
-      switch ($status) {
-        case SAVED_NEW:
-          drupal_set_message($this->t('Created the %label Invoice.', [
-            '%label' => $entity->label(),
-          ]));
-          break;
-
-        default:
-          drupal_set_message($this->t('Saved the %label Invoice.', [
-            '%label' => $entity->label(),
-          ]));
-      }
-      $form_state->setRedirect('entity.invoice_entity.canonical', ['invoice_entity' => $entity->id()]);
-    }
-    else {
-      $form_state->setRebuild();
-      $form_state->setSubmitHandlers([]);
-    }
+    
   }
 
   /**
@@ -203,124 +183,7 @@ class InvoiceEntityForm extends ContentEntityForm {
    * @return bool
    *   Return true if did have no error.
    */
-  public function sendInvoice(array $form, FormStateInterface $form_state) {
-    $type_of = $this->entity->get('type_of')->getValue()[0]['value'];
 
-    /** @var \Drupal\invoice_entity\InvoiceService $invoice_service */
-    $invoice_service = \Drupal::service('invoice_entity.service');
-    $invoice_service->setConsecutiveNumber($type_of);
-    $this->entity->set('field_consecutive_number', $invoice_service->generateConsecutive($type_of));
-
-    // Authentication.
-    try {
-      // Get authentication token for the API.
-      $token = \Drupal::service('e_invoice_cr.authentication')->getLoginToken();
-    }
-    catch (Exception $e) {
-      drupal_set_message(t('Error getting the authentication token.'), 'error');
-      $form_state->setRebuild();
-      $form_state->setSubmitHandlers([]);
-    }
-
-    $settingsFilled = $invoice_service->checkSettingsData();
-    if (!$token || !$settingsFilled) {
-      $error_message = !$token ?
-        $this->t('Error getting the authentication token.') :
-        $this->t('There is some missing configuration. Please go to: /admin/e-invoice-cr/settings');
-      drupal_set_message($error_message, 'error');
-      $form_state->setRebuild();
-      $form_state->setSubmitHandlers([]);
-      return FALSE;
-    }
-    else {
-      // Add the key number to the invoice.
-      $type_of = $this->entity->get('type_of')->value;
-      $this->entity->set('field_numeric_key', $invoice_service->generateInvoiceKey($type_of));
-
-      $user_current = \Drupal::currentUser();
-      $settings = \Drupal::config('e_invoice_cr.settings');
-      $datetime = new \DateTime('now', new \DateTimeZone($user_current->getTimezone()));
-      $date = $datetime->format('Y-m-dTH:i:s.u');
-      $date_text = \Drupal::service('date.formatter')->format(strtotime($date), 'date_text', 'c');
-      $this->entity->set('field_invoice_date', substr($date_text, 0, -6));
-      $client_id = $this->entity->get('field_client')->target_id;
-      $client = CustomerEntity::load($client_id);
-
-      // Create XML document.
-      // Generate the XML file with the invoice data.
-      $xml_generator = new XMLGenerator();
-      // Get the xml doc built.
-      $xml = $xml_generator->generateXmlByEntity($this->entity);
-      $xml->saveXML();
-      // Create dir.
-      $path = "public://xml/";
-      $user_current = \Drupal::currentUser();
-      $id_cons = $this->entity->get('field_consecutive_number')->value;
-      $doc_name = "document-" . $user_current->id() . "-" . $id_cons;
-      file_prepare_directory($path, FILE_CREATE_DIRECTORY);
-      $result = $xml->save('public://xml/' . $doc_name . ".xml", LIBXML_NOEMPTYTAG);
-
-      // Sign document.
-      $signature = new Signature();
-      $response = $signature->signDocument($doc_name);
-
-      // Look for possibles errors.
-      foreach ($response as $item) {
-        if ((strpos($item, 'Error') !== FALSE) || (strpos($item, 'Failed') !== FALSE)) {
-          $message = t('There were errors during the signature process, the signature could be wrong.');
-          drupal_set_message($message, 'warning');
-        }
-      }
-
-      // Send document to API.
-      $body_data = [
-        'key' => $this->entity->get('field_numeric_key')->value,
-        'date' => $date,
-        'e_type' => $settings->get('id_type'),
-        'e_number' => $settings->get('id'),
-        'c_type' => $client != NULL ? $client->get('field_type_id')->value : '',
-        'c_number' => $client != NULL ? $client->get('field_customer_id')->value : '',
-      ];
-      $communication = new Communication();
-      // Get the document.
-      $doc_uri = DRUPAL_ROOT . '/sites/default/files/xml_signed/' . $doc_name . 'segned.xml';
-      // Get the xml content.
-      $document = file_get_contents($doc_uri);
-      // Sent the document.
-      $response = $communication->sentDocument($document, $body_data, $token);
-
-      // Show a error message.
-      if (!is_null($response)) {
-        if ($response->getStatusCode() != 202 && $response->getStatusCode() != 200) {
-          // Reduce the consecutive.
-          $invoice_service->decreaseValues();
-          $message = t('The was a problem sending the electronic document.');
-          drupal_set_message($message, 'error');
-          $form_state->setRebuild();
-          $form_state->setSubmitHandlers([]);
-          return FALSE;
-        }
-        else {
-          // Show a success message.
-          $message = t('The electronic document was sent to its verification.');
-          drupal_set_message($message, 'status');
-          $invoice_service->increaseValues();
-        }
-        $invoice_service->updateValues();
-
-        $path = 'public://xml_signed/';
-        file_prepare_directory($path, FILE_CREATE_DIRECTORY);
-        $signed_file = file_save_data($document, $path . $doc_name . 'segned.xml', FILE_EXISTS_REPLACE);
-        $signed_file->setPermanent();
-        $signed_file->save();
-      }
-      else {
-        return FALSE;
-      }
-    }
-
-    return TRUE;
-  }
 
   /**
    * Add the libraries.
