@@ -164,7 +164,7 @@ class InvoiceEntityForm extends ContentEntityForm {
     }
 
     // Send and return a boolean if it was or not successful.
-    
+    $sent = $this->sendInvoice($form, $form_state);    
 
     // If it was successful.
     $status = parent::save($form, $form_state);
@@ -190,6 +190,87 @@ class InvoiceEntityForm extends ContentEntityForm {
    * @return bool
    *   Return true if did have no error.
    */
+  public function sendInvoice(array $form, FormStateInterface $form_state) {
+    $type_of = $this->entity->get('type_of')->getValue()[0]['value'];
+
+    /** @var \Drupal\invoice_entity\InvoiceService $invoice_service */
+    $invoice_service = \Drupal::service('invoice_entity.service');
+    $invoice_service->setConsecutiveNumber($type_of);
+    $this->entity->set('field_consecutive_number', $invoice_service->generateConsecutive($type_of));
+
+    // Authentication.
+    
+      // Get authentication token for the API.
+    
+    
+    $settingsFilled = $invoice_service->checkSettingsData();
+    if (!$token || !$settingsFilled) {
+      $message = t('The electronic document was not sent to its verification.');
+    }
+    else {
+      // Add the key number to the invoice.
+      $type_of = $this->entity->get('type_of')->value;
+      $this->entity->set('field_numeric_key', $invoice_service->generateInvoiceKey($type_of));
+
+      $user_current = \Drupal::currentUser();
+      $settings = \Drupal::config('e_invoice_cr.settings');
+      $datetime = new \DateTime('now', new \DateTimeZone($user_current->getTimezone()));
+      $date = $datetime->format('Y-m-dTH:i:s.u');
+      $date_text = \Drupal::service('date.formatter')->format(strtotime($date), 'date_text', 'c');
+      $this->entity->set('field_invoice_date', substr($date_text, 0, -6));
+      $client_id = $this->entity->get('field_client')->target_id;
+      $client = CustomerEntity::load($client_id);
+
+      // Sign document.
+      $signature = new Signature();
+      $response = $signature->signDocument($doc_name);
+
+      // Look for possibles errors.
+    
+      // Send document to API.
+      $body_data = [
+        'key' => $this->entity->get('field_numeric_key')->value,
+        'date' => $date,
+        'e_type' => $settings->get('id_type'),
+        'e_number' => $settings->get('id'),
+        'c_type' => $client != NULL ? $client->get('field_type_id')->value : '',
+        'c_number' => $client != NULL ? $client->get('field_customer_id')->value : '',
+      ];
+      $communication = new Communication();
+      // Get the document.
+    
+      // Get the xml content.
+      $document = file_get_contents($doc_uri);
+      // Sent the document.
+      $response = $communication->sentDocument($document, $body_data, $token);
+
+      // Show a error message.
+      if (!is_null($response)) {
+        if ($response->getStatusCode() != 202 && $response->getStatusCode() != 200) {
+          // Reduce the consecutive.
+          $invoice_service->decreaseValues();
+          $message = t('The was a problem sending the electronic document.');
+          drupal_set_message($message, 'error');
+          $form_state->setRebuild();
+          $form_state->setSubmitHandlers([]);
+          return FALSE;
+        }
+        else {
+          // Show a success message.
+          $message = t('The electronic document was sent to its verification.');
+          drupal_set_message($message, 'status');
+          $invoice_service->increaseValues();
+        }
+        $invoice_service->updateValues();
+
+        }
+      else {
+        return FALSE;
+      }
+    }
+
+    return TRUE;
+  }																			
 
 
   /**
