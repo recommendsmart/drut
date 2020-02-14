@@ -34,11 +34,7 @@ class InvoiceEntityForm extends ContentEntityForm {
    */
   public function __construct(EntityRepositoryInterface $entity_repository, EntityTypeBundleInfoInterface $entity_type_bundle_info = NULL, TimeInterface $time = NULL) {
     parent::__construct($entity_repository, $entity_type_bundle_info, $time);
-    $settings = \Drupal::config('e_invoice_cr.settings');
-    $empty = $settings->isNew();
-    if ($empty || is_null($settings)) {
-      invoice_entity_config_error();
-    }
+    
 
   }
 
