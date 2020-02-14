@@ -58,12 +58,6 @@ class InvoiceEntityForm extends ContentEntityForm {
     return $form;
   }
 
-
-
-
-
-
-
   /**
    * Give to the invoice form the structure need it.
    */
@@ -82,8 +76,13 @@ class InvoiceEntityForm extends ContentEntityForm {
     $form['#attached']['drupalSettings']['taxsObject'] = $tax_info;
 
     $form['field_consecutive_number']['#disabled'] = 'disabled';
-
-
+	$form['type_of']['widget']['#ajax'] = [
+      'callback' => [$this, 'changeConsecutiveNumber'],
+      'event' => 'change',
+      'wrapper' => 'edit-field-consecutive-number-wrapper',
+      'method' => 'replace',
+      'effect' => 'none',
+    ];
     
       // Generate the invoice keys.
       
@@ -315,6 +314,14 @@ class InvoiceEntityForm extends ContentEntityForm {
   /**
    * Gets document type from AJAX function and return the consecutive number.
    */
-
+public function changeConsecutiveNumber(array &$form, FormStateInterface &$form_state) {
+    $type_of = $form_state->getValue('type_of')[0]['value'];
+    $invoice_service = \Drupal::service('invoice_entity.service');
+    $invoice_service->setConsecutiveNumber($type_of);
+    $consecutive = $invoice_service->generateConsecutive($type_of);
+    $form['field_consecutive_number']['widget'][0]['value']['#value'] = $consecutive;
+    $form['field_consecutive_number']['#id'] = 'edit-field-consecutive-number-wrapper';
+    return $form['field_consecutive_number'];
+  }
 
 }
