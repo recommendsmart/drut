@@ -8,9 +8,6 @@ use Drupal\Component\Datetime\TimeInterface;
 use Drupal\Core\Entity\ContentEntityForm;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\customer_entity\Entity\CustomerEntity;
-use Drupal\e_invoice_cr\Communication;
-use Drupal\e_invoice_cr\Signature;									  
-use Drupal\e_invoice_cr\XMLGenerator;									 
 use Drupal\invoice_entity\Entity\InvoiceEntityInterface;
 use Drupal\tax_entity\Entity\TaxEntity;
 
@@ -36,6 +33,8 @@ class InvoiceEntityForm extends ContentEntityForm {
    */
   public function __construct(EntityRepositoryInterface $entity_repository, EntityTypeBundleInfoInterface $entity_type_bundle_info = NULL, TimeInterface $time = NULL) {
     parent::__construct($entity_repository, $entity_type_bundle_info, $time);
+    
+
   }
 
   /**
@@ -64,7 +63,7 @@ class InvoiceEntityForm extends ContentEntityForm {
    */
   private function invoiceFormStructure(array &$form, FormStateInterface $form_state) {
     /** @var \Drupal\invoice_entity\InvoiceService $invoice_service */
-    $invoice_service = \Drupal::service('invoice_entity.service');
+    
     // Add the libraries.
     $form = $this->addLibraries($form);
 
@@ -77,30 +76,11 @@ class InvoiceEntityForm extends ContentEntityForm {
     $form['#attached']['drupalSettings']['taxsObject'] = $tax_info;
 
     $form['field_consecutive_number']['#disabled'] = 'disabled';
-	$form['type_of']['widget']['#ajax'] = [
-      'callback' => [$this, 'changeConsecutiveNumber'],
-      'event' => 'change',
-      'wrapper' => 'edit-field-consecutive-number-wrapper',
-      'method' => 'replace',
-      'effect' => 'none',
-    ];
+
+
     
-	 if ($this->entity->isNew()) {							 
       // Generate the invoice keys.
-      $type_of = NULL;
-      if (!empty($form_state->getUserInput()['type_of'])) {
-        $type_of = $form_state->getUserInput()['type_of'];
-        $invoice_service->setConsecutiveNumber($type_of);
-        $form['field_consecutive_number']['widget'][0]['value']['#default_value'] = $invoice_service->generateConsecutive($type_of);
-      }
-      $key = $type_of ? $invoice_service->getUniqueInvoiceKey($type_of) : $invoice_service->getUniqueInvoiceKey();
-      if ($key == NULL) {
-        invoice_entity_config_error();
-      }
-      else {
-        $invoice_service->updateValues();
-      }
-    } 
+      
     $this->formatField($form['field_total_discount']['widget'][0]['value'], TRUE, TRUE);
     $this->formatField($form['field_net_sale']['widget'][0]['value'], TRUE, TRUE);
     $this->formatField($form['field_total_tax']['widget'][0]['value'], TRUE, TRUE);
@@ -165,7 +145,7 @@ class InvoiceEntityForm extends ContentEntityForm {
     }
 
     // Send and return a boolean if it was or not successful.
-    $sent = $this->sendInvoice($form, $form_state);    
+    
 
     // If it was successful.
     $status = parent::save($form, $form_state);
@@ -191,105 +171,6 @@ class InvoiceEntityForm extends ContentEntityForm {
    * @return bool
    *   Return true if did have no error.
    */
-  public function sendInvoice(array $form, FormStateInterface $form_state) {
-    $type_of = $this->entity->get('type_of')->getValue()[0]['value'];
-
-    /** @var \Drupal\invoice_entity\InvoiceService $invoice_service */
-    $invoice_service = \Drupal::service('invoice_entity.service');
-    $invoice_service->setConsecutiveNumber($type_of);
-    $this->entity->set('field_consecutive_number', $invoice_service->generateConsecutive($type_of));
-
-    // Authentication.
-    
-      // Get authentication token for the API.
-    
-    
-    $settingsFilled = $invoice_service->checkSettingsData();
-    if (!$token || !$settingsFilled) {
-      $message = t('The electronic document was not sent to its verification.');
-    }
-    else {
-      // Add the key number to the invoice.
-      $type_of = $this->entity->get('type_of')->value;
-      $this->entity->set('field_numeric_key', $invoice_service->generateInvoiceKey($type_of));
-
-      $user_current = \Drupal::currentUser();
-      $settings = \Drupal::config('e_invoice_cr.settings');
-      $datetime = new \DateTime('now', new \DateTimeZone($user_current->getTimezone()));
-      $date = $datetime->format('Y-m-dTH:i:s.u');
-      $date_text = \Drupal::service('date.formatter')->format(strtotime($date), 'date_text', 'c');
-      $this->entity->set('field_invoice_date', substr($date_text, 0, -6));
-      $client_id = $this->entity->get('field_client')->target_id;
-      $client = CustomerEntity::load($client_id);
-
-      // Create XML document.
-      // Generate the XML file with the invoice data.
-      $xml_generator = new XMLGenerator();
-      // Get the xml doc built.
-      $xml = $xml_generator->generateXmlByEntity($this->entity);
-      $xml->saveXML();
-      // Create dir.
-      $path = "public://xml/";
-      $user_current = \Drupal::currentUser();
-      $id_cons = $this->entity->get('field_consecutive_number')->value;
-      $doc_name = "document-" . $user_current->id() . "-" . $id_cons;
-      file_prepare_directory($path, FILE_CREATE_DIRECTORY);
-      $result = $xml->save('public://xml/' . $doc_name . ".xml", LIBXML_NOEMPTYTAG);
-      // Sign document.
-      $signature = new Signature();
-      $response = $signature->signDocument($doc_name);
-
-      // Look for possibles errors.
-    
-      // Send document to API.
-      $body_data = [
-        'key' => $this->entity->get('field_numeric_key')->value,
-        'date' => $date,
-        'e_type' => $settings->get('id_type'),
-        'e_number' => $settings->get('id'),
-        'c_type' => $client != NULL ? $client->get('field_type_id')->value : '',
-        'c_number' => $client != NULL ? $client->get('field_customer_id')->value : '',
-      ];
-      $communication = new Communication();
-      // Get the document.
-    $doc_uri = DRUPAL_ROOT . '/sites/default/files/xml_signed/' . $doc_name . 'segned.xml';
-      // Get the xml content.
-      $document = file_get_contents($doc_uri);
-      // Sent the document.
-      $response = $communication->sentDocument($document, $body_data, $token);
-
-      // Show a error message.
-      if (!is_null($response)) {
-        if ($response->getStatusCode() != 202 && $response->getStatusCode() != 200) {
-          // Reduce the consecutive.
-          $invoice_service->decreaseValues();
-          $message = t('The was a problem sending the electronic document.');
-          drupal_set_message($message, 'error');
-          $form_state->setRebuild();
-          $form_state->setSubmitHandlers([]);
-          return FALSE;
-        }
-        else {
-          // Show a success message.
-          $message = t('The electronic document was sent to its verification.');
-          drupal_set_message($message, 'status');
-          $invoice_service->increaseValues();
-        }
-        $invoice_service->updateValues();
-
-		$path = 'public://xml_signed/';
-        file_prepare_directory($path, FILE_CREATE_DIRECTORY);
-        $signed_file = file_save_data($document, $path . $doc_name . 'segned.xml', FILE_EXISTS_REPLACE);
-        $signed_file->setPermanent();
-        $signed_file->save();							   						 
-        }
-      else {
-        return FALSE;
-      }
-    }
-
-    return TRUE;
-  }																			
 
 
   /**
@@ -428,14 +309,6 @@ class InvoiceEntityForm extends ContentEntityForm {
   /**
    * Gets document type from AJAX function and return the consecutive number.
    */
-public function changeConsecutiveNumber(array &$form, FormStateInterface &$form_state) {
-    $type_of = $form_state->getValue('type_of')[0]['value'];
-    $invoice_service = \Drupal::service('invoice_entity.service');
-    $invoice_service->setConsecutiveNumber($type_of);
-    $consecutive = $invoice_service->generateConsecutive($type_of);
-    $form['field_consecutive_number']['widget'][0]['value']['#value'] = $consecutive;
-    $form['field_consecutive_number']['#id'] = 'edit-field-consecutive-number-wrapper';
-    return $form['field_consecutive_number'];
-  }
+
 
 }
