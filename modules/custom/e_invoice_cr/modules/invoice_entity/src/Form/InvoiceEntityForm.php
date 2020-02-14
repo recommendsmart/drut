@@ -30,9 +30,9 @@ class InvoiceEntityForm extends ContentEntityForm {
   /**
    * {@inheritdoc}
    */
-  public function __construct( EntityTypeBundleInfoInterface $entity_type_bundle_info = NULL, TimeInterface $time = NULL) {
-    parent::__construct($entity_type_bundle_info, $time);
-    
+  public function __construct(EntityTypeManagerInterface $entity_manager, EntityTypeBundleInfoInterface $entity_type_bundle_info, TimeInterface $time = NULL) {
+    parent::__construct($entity_manager, $entity_type_bundle_info, $time);
+    $this->entityManager = $entity_manager;
 
   }
 
