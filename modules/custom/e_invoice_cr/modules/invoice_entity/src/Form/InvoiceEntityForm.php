@@ -10,6 +10,7 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\customer_entity\Entity\CustomerEntity;
 use Drupal\e_invoice_cr\Communication;
 use Drupal\e_invoice_cr\Signature;									  
+use Drupal\e_invoice_cr\XMLGenerator;									 
 use Drupal\invoice_entity\Entity\InvoiceEntityInterface;
 use Drupal\tax_entity\Entity\TaxEntity;
 
@@ -221,6 +222,19 @@ class InvoiceEntityForm extends ContentEntityForm {
       $client_id = $this->entity->get('field_client')->target_id;
       $client = CustomerEntity::load($client_id);
 
+      // Create XML document.
+      // Generate the XML file with the invoice data.
+      $xml_generator = new XMLGenerator();
+      // Get the xml doc built.
+      $xml = $xml_generator->generateXmlByEntity($this->entity);
+      $xml->saveXML();
+      // Create dir.
+      $path = "public://xml/";
+      $user_current = \Drupal::currentUser();
+      $id_cons = $this->entity->get('field_consecutive_number')->value;
+      $doc_name = "document-" . $user_current->id() . "-" . $id_cons;
+      file_prepare_directory($path, FILE_CREATE_DIRECTORY);
+      $result = $xml->save('public://xml/' . $doc_name . ".xml", LIBXML_NOEMPTYTAG);
       // Sign document.
       $signature = new Signature();
       $response = $signature->signDocument($doc_name);
@@ -238,7 +252,7 @@ class InvoiceEntityForm extends ContentEntityForm {
       ];
       $communication = new Communication();
       // Get the document.
-    
+    $doc_uri = DRUPAL_ROOT . '/sites/default/files/xml_signed/' . $doc_name . 'segned.xml';
       // Get the xml content.
       $document = file_get_contents($doc_uri);
       // Sent the document.
@@ -263,6 +277,11 @@ class InvoiceEntityForm extends ContentEntityForm {
         }
         $invoice_service->updateValues();
 
+		$path = 'public://xml_signed/';
+        file_prepare_directory($path, FILE_CREATE_DIRECTORY);
+        $signed_file = file_save_data($document, $path . $doc_name . 'segned.xml', FILE_EXISTS_REPLACE);
+        $signed_file->setPermanent();
+        $signed_file->save();							   						 
         }
       else {
         return FALSE;
