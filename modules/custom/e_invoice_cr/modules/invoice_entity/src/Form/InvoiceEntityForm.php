@@ -81,13 +81,7 @@ class InvoiceEntityForm extends ContentEntityForm {
     $form['#attached']['drupalSettings']['taxsObject'] = $tax_info;
 
     $form['field_consecutive_number']['#disabled'] = 'disabled';
-    $form['type_of']['widget']['#ajax'] = [
-      'callback' => [$this, 'changeConsecutiveNumber'],
-      'event' => 'change',
-      'wrapper' => 'edit-field-consecutive-number-wrapper',
-      'method' => 'replace',
-      'effect' => 'none',
-    ];
+
 
     if ($this->entity->isNew()) {
       // Generate the invoice keys.
