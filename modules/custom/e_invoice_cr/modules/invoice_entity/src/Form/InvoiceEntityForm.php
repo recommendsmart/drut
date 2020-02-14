@@ -8,7 +8,6 @@ use Drupal\Component\Datetime\TimeInterface;
 use Drupal\Core\Entity\ContentEntityForm;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\customer_entity\Entity\CustomerEntity;
-use Drupal\e_invoice_cr\Communication;
 use Drupal\invoice_entity\Entity\InvoiceEntityInterface;
 use Drupal\tax_entity\Entity\TaxEntity;
 
@@ -64,7 +63,7 @@ class InvoiceEntityForm extends ContentEntityForm {
    */
   private function invoiceFormStructure(array &$form, FormStateInterface $form_state) {
     /** @var \Drupal\invoice_entity\InvoiceService $invoice_service */
-    $invoice_service = \Drupal::service('invoice_entity.service');
+    
     // Add the libraries.
     $form = $this->addLibraries($form);
 
