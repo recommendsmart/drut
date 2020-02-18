@@ -30,11 +30,11 @@
                 <img src="{{ emitter.logo_url }}">
               {% endif %}
             </div>
-            <div class="company-info">
-              <div class="main-name">{{ emitter.name }}</div>
-              <div>{{ emitter.commercial_name }}</div>
-              <div>{{ customer.id_label }}: {{ emitter.id }}</div>
-              <div>{{ emitter.address }}, {{ emitter.postal_code }}</div>
+            <div class="customer-info">
+              <div class="title">{{ "Customer's information:"|t }}</div>
+              <div class="customer-name">{{ customer.name }}</div>
+              <div>{{ customer.id_label }}: {{ customer.id }}</div>
+              <div>{{ customer.phone_label }}: {{ customer.phone }}</div>
             </div>
           </td>
           <td align="right">
