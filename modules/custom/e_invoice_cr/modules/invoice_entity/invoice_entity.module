@@ -148,6 +148,26 @@ function invoice_entity_preprocess_invoice_entity(&$variables, $hook) {
   $emitter['address'] = $config->get('address');
   $currency_code = $variables['elements']['#invoice_entity']->get('field_currency')->value;
   $emitter['currency'] = InvoiceEntityInterface::AVAILABLE_CURRENCY[$currency_code]['symbol'];
+  // emitter data.
+  if (isset($variables['elements']['field_emitter'][0]['#options']['entity'])) {
+    $entity = $variables['elements']['field_emitter'][0]['#options']['entity'];
+    if (!is_null($entity)) {
+      $emitter_id = $entity->id();
+      $emitter = CustomerEntity::load($emitter_id);
+      $customer['id'] = $emitter->get('field_customer_id')->value;
+      $customer['id_label'] = $emitter->getFieldDefinition('field_customer_id')->label();
+      $customer['name'] = $emitter->get('name')->value;
+      $customer['email'] = $emitter->get('field_email')->value;
+      $customer['email_label'] = $emitter->getFieldDefinition('field_email')->label();
+      $customer['phone'] = $emitter->get('field_phone')->value;
+      $customer['phone_label'] = $emitter->getFieldDefinition('field_phone')->label();
+      $address = $emitter->get('field_address')->getValue();
+      if (count($address) !== 0) {
+        $customer['address'] = $address[0]['province'] . ", " . $address[0]['canton'] . ", " . $address[0]['district'] . ".";
+      }
+      $customer['zipcode'] = $address[0]['zipcode'];
+    }
+  }
   // Client data.
   if (isset($variables['elements']['field_client'][0]['#options']['entity'])) {
     $entity = $variables['elements']['field_client'][0]['#options']['entity'];
