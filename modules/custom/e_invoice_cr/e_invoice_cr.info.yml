@@ -3,8 +3,7 @@ type: module
 description: This module provides an invoice system according to the costa rican regulations.
 core: 8.x
 package: other
-interface translation project: e_invoice_cr
-interface translation server pattern: modules/contrib/e_invoice_cr/translations/%language.po
+
 dependencies:
   - telephone
   - field_group
