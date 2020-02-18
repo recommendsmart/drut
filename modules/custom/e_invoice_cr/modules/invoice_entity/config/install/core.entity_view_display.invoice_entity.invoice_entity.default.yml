@@ -4,7 +4,6 @@ status: true
 dependencies:
   config:
     - field.field.invoice_entity.invoice_entity.field_client
-    - field.field.invoice_entity.invoice_entity.field_company
     - field.field.invoice_entity.invoice_entity.field_consecutive_number
     - field.field.invoice_entity.invoice_entity.field_credit_term
     - field.field.invoice_entity.invoice_entity.field_currency
@@ -43,14 +42,6 @@ content:
     third_party_settings: {  }
   field_client:
     weight: 7
-    label: above
-    settings:
-      link: true
-    third_party_settings: {  }
-    type: entity_reference_label
-    region: content
-  field_company:
-    weight: 22
     label: above
     settings:
       link: true
