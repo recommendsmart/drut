@@ -149,23 +149,24 @@ function invoice_entity_preprocess_invoice_entity(&$variables, $hook) {
   $emitter['address'] = $config->get('address');
   $currency_code = $variables['elements']['#invoice_entity']->get('field_currency')->value;
   $emitter['currency'] = InvoiceEntityInterface::AVAILABLE_CURRENCY[$currency_code]['symbol'];
-  // Provider data.
-  if (isset($variables['elements']['field_provider'][0]['#options']['entity'])) {
-    $entity = $variables['elements']['field_provider'][0]['#options']['entity'];
+  // Providers data.
+  if (isset($variables['elements']['field_providers'][0]['#options']['entity'])) {
+    $entity = $variables['elements']['field_providers'][0]['#options']['entity'];
     if (!is_null($entity)) {
-      $provider_id = $entity->id();
-      $provider['id'] = $provider->get('field_provider_id')->value;
-      $provider['id_label'] = $provider->getFieldDefinition('field_provider_id')->label();
-      $provider['name'] = $provider->get('name')->value;
-      $provider['email'] = $provider->get('field_email')->value;
-      $provider['email_label'] = $provider->getFieldDefinition('field_email')->label();
-      $provider['phone'] = $provider->get('field_phone')->value;
-      $provider['phone_label'] = $provider->getFieldDefinition('field_phone')->label();
+      $providers_id = $entity->id();
+      $providers = ProviderEntity::load($provider_id);
+      $providers['id'] = $provider->get('field_provider_id')->value;
+      $providers['id_label'] = $provider->getFieldDefinition('field_provider_id')->label();
+      $providers['name'] = $provider->get('name')->value;
+      $providers['email'] = $provider->get('field_email')->value;
+      $providers['email_label'] = $provider->getFieldDefinition('field_email')->label();
+      $providers['phone'] = $provider->get('field_phone')->value;
+      $providers['phone_label'] = $provider->getFieldDefinition('field_phone')->label();
       $address = $provider->get('field_address')->getValue();
       if (count($address) !== 0) {
-        $provider['address'] = $address[0]['province'] . ", " . $address[0]['canton'] . ", " . $address[0]['district'] . ".";
+        $providers['address'] = $address[0]['province'] . ", " . $address[0]['canton'] . ", " . $address[0]['district'] . ".";
       }
-      $provider['zipcode'] = $address[0]['zipcode'];
+      $providers['zipcode'] = $address[0]['zipcode'];
     }
   }
   // Client data.

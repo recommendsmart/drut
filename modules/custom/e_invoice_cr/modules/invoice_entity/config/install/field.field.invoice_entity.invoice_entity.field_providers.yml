@@ -2,15 +2,15 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.storage.invoice_entity.field_provider
+    - field.storage.invoice_entity.field_providers
   module:
     - invoice_entity
-id: invoice_entity.invoice_entity.field_provider
-field_name: field_provider
+id: invoice_entity.invoice_entity.field_providers
+field_name: field_providers
 entity_type: invoice_entity
 bundle: invoice_entity
-label: Provider
-description: 'Provider of the document.'
+label: Providers
+description: ''
 required: false
 translatable: false
 default_value: {  }
