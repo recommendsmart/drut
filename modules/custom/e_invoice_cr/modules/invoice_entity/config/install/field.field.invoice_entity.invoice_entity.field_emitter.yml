@@ -16,7 +16,7 @@ translatable: false
 default_value: {  }
 default_value_callback: ''
 settings:
-  handler: 'default:provider_entity'
+  handler: 'default:customer_entity'
   handler_settings:
     target_bundles: null
     sort:
