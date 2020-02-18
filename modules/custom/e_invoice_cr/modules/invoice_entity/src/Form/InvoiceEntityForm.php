@@ -198,14 +198,7 @@ class InvoiceEntityForm extends ContentEntityForm {
   /**
    * Search a custom library.
    */
-  private function searchCustomLibrary($libraries) {
-    foreach ($libraries as $index => $item) {
-      if (strpos($item, 'e-invoice-cr-form') !== FALSE) {
-        return $item;
-      }
-    }
-    return NULL;
-  }
+  
 
   /**
    * Validate if the fields inside of the reference information are need.

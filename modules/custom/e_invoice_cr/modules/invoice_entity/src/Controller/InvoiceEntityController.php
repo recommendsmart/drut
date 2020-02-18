@@ -187,8 +187,7 @@ class InvoiceEntityController extends ControllerBase implements ContainerInjecti
     $type_of = $entity->get('type_of')->getValue()[0]['value'];
 
     /** @var \Drupal\invoice_entity\InvoiceService $invoice_service */
-    $invoice_service = \Drupal::service('invoice_entity.service');
-    $result = $invoice_service->validateInvoiceEntity($entity);
+    
 
     // Verify the result of the invoice validation.
     if (is_null($result['response'])) {
@@ -203,7 +202,7 @@ class InvoiceEntityController extends ControllerBase implements ContainerInjecti
       }
       drupal_set_message(t('A validation request has been performed.'), 'status');
     }
-    return new RedirectResponse('/admin/structure/e-invoice-cr/invoice_entity');
+    return new RedirectResponse('/admin/structure/invoice_entity');
   }
 
   /**
@@ -215,31 +214,7 @@ class InvoiceEntityController extends ControllerBase implements ContainerInjecti
    * @return bool
    *   An array as expected by drupal_render().
    */
-  public function createZipFile($id) {
-    /** @var \Drupal\invoice_entity\Entity\InvoiceEntity $entity */
-    $entity = InvoiceEntity::load($id);
-
-    // Get all necessary data for invoice entities file names.
-    $user_id = $entity->get('user_id')->getValue()[0]['target_id'];
-    $consecutive = $entity->get('field_consecutive_number')->getValue()[0]['value'];
-
-    // Gets the documents of the invoice.
-    $pdf_file = File::load($this->searchFile('invoice_' . $id . '.pdf'));
-    
-
-    // Create a new zip file and save it in a temporary directory.
-    
-
-    // Attach files in the zip.
-    
-
-    // Downloads automatically the zip file in the device.
-    header('Content-type: application/octet-stream');
-    header('Content-disposition: attachment; filename=' . $uri);
-    readfile($uri);
-    unlink($uri);
-    return new RedirectResponse('/admin/structure/e-invoice-cr/invoice_entity');
-  }
+  
 
   /**
    * Returns the nid of a specific FileEntity.
@@ -250,10 +225,5 @@ class InvoiceEntityController extends ControllerBase implements ContainerInjecti
    * @return int
    *   A nid of a FileEntity node.
    */
-  private function searchFile($filename) {
-    $query = \Drupal::entityQuery('file')->condition('filename', $filename);
-    $id = $query->execute();
-    return intval(reset($id));
-  }
-
+  
 }
