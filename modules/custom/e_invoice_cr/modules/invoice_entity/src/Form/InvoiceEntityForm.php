@@ -7,6 +7,7 @@ use Drupal\Core\Entity\EntityTypeBundleInfoInterface;
 use Drupal\Component\Datetime\TimeInterface;
 use Drupal\Core\Entity\ContentEntityForm;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\provider_entity\Entity\ProviderEntity;
 use Drupal\customer_entity\Entity\CustomerEntity;
 use Drupal\invoice_entity\Entity\InvoiceEntityInterface;
 use Drupal\tax_entity\Entity\TaxEntity;
