@@ -154,7 +154,6 @@ function invoice_entity_preprocess_invoice_entity(&$variables, $hook) {
     $entity = $variables['elements']['field_provider'][0]['#options']['entity'];
     if (!is_null($entity)) {
       $provider_id = $entity->id();
-      $provider = ProviderEntity::load($provider_id);
       $provider['id'] = $provider->get('field_provider_id')->value;
       $provider['id_label'] = $provider->getFieldDefinition('field_provider_id')->label();
       $provider['name'] = $provider->get('name')->value;
