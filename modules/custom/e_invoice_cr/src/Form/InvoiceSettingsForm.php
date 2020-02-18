@@ -57,8 +57,6 @@ class InvoiceSettingsForm extends ConfigFormBase {
     $postal_code = $settings->get('postal_code');
     $address = $settings->get('address');
     $logo_file = $settings->get('invoice_logo_file');
-    $p12_cert = $settings->get('p12_cert');
-    $cert_password = $settings->get('cert_password');
     $email_text = $settings->get('email_text');
     $email_subject = $settings->get('email_subject');
     $email_copies = $settings->get('email_copies');
@@ -220,31 +218,8 @@ class InvoiceSettingsForm extends ConfigFormBase {
       '#required' => FALSE,
     ];
 
-    $form['settings_tab']['stuff']['cert_group'] = [
-      '#type' => 'details',
-      '#title' => $this->t('Certificate information.'),
-      '#collapsed' => FALSE,
-    ];
-
-    $validators = ['file_validate_extensions' => ['p12']];
-    $path = \Drupal::moduleHandler()->getModule('e_invoice_cr')->getPath();
-    $form['settings_tab']['stuff']['cert_group']['p12_cert'] = [
-      '#type' => 'managed_file',
-      '#name' => 'Certificate p12.',
-      '#title' => $this->t('Certificate p12.'),
-      '#description' => $this->t('Load the authentication certificate p12 to create the signature.'),
-      '#default_value' => $p12_cert,
-      '#upload_validators' => $validators,
-      '#upload_location' => 'public://certs/',
-      '#required' => TRUE,
-    ];
-
-    $form['settings_tab']['stuff']['cert_group']['cert_password'] = [
-      '#type' => 'password',
-      '#title' => $this->t('Password:'),
-      '#default_value' => $cert_password,
-      '#required' => TRUE,
-    ];
+    
+    
 
     return parent::buildForm($form, $form_state);
   }
@@ -318,15 +293,12 @@ class InvoiceSettingsForm extends ConfigFormBase {
       ->set('email', $tabs['taxpayer_group']['email'])
       ->set('postal_code', $tabs['taxpayer_group']['address_fieldset']['postal_code'])
       ->set('address', $tabs['taxpayer_group']['address_fieldset']['address'])
-      ->set('p12_cert', $tabs['cert_group']['p12_cert'])
-      ->set('cert_password', $tabs['cert_group']['cert_password'])
       ->set('invoice_logo_file', $tabs['email_text_group']['invoice_logo_file'])
       ->set('email_text', $tabs['email_text_group']['email_text'])
       ->set('email_subject', $tabs['email_text_group']['email_subject'])
       ->set('email_copies', $tabs['email_text_group']['email_copies'])
       ->save('file', $tabs['email_text_group']['invoice_logo_file']);
 
-    $this->saveSettingsFiles();
 
     parent::submitForm($form, $form_state);
   }
@@ -334,23 +306,9 @@ class InvoiceSettingsForm extends ConfigFormBase {
   /**
    * Function to store all the settings files.
    */
-  private function saveSettingsFiles() {
-    $settings = \Drupal::config('e_invoice_cr.settings');
-    $p12 = File::load(current($settings->get('p12_cert')));
-    $files = [
-      $p12,
-      File::load(current($settings->get('invoice_logo_file'))),
-      file_copy($p12, 'public://certs/cert.pfx', FILE_EXISTS_REPLACE),
-      file_copy($p12, 'public://certs/cert.p12', FILE_EXISTS_REPLACE),
-    ];
-
+  
     /** @var \Drupal\file\Entity\File $file */
-    foreach ($files as $file) {
-      if (!is_null($file)) {
-        $file->setPermanent();
-        $file->save();
-      }
-    }
+    
 
   }
 
