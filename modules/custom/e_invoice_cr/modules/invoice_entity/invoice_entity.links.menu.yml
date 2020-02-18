@@ -3,13 +3,13 @@
 entity.invoice_entity.manage:
   title: 'Invoice Entity'
   route_name: invoice_entity.settings
-  parent: e_envoice_cr.manage
+  parent: entity.invoice_entity.content
   weight: 101
 
 entity.invoice_entity.content:
   title: 'Invoice Entity'
   route_name: invoice_entity.options
-  parent: e_envoice_cr.content
+  parent: entity.invoice_entity.content
   weight: 101
 
 entity.invoice_entity.addnew:

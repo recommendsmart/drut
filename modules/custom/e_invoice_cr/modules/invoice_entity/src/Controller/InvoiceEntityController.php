@@ -214,7 +214,40 @@ class InvoiceEntityController extends ControllerBase implements ContainerInjecti
    * @return bool
    *   An array as expected by drupal_render().
    */
-  
+  public function createZipFile($id) {
+    /** @var \Drupal\invoice_entity\Entity\InvoiceEntity $entity */
+    $entity = InvoiceEntity::load($id);
+
+    // Get all necessary data for invoice entities file names.
+    $user_id = $entity->get('user_id')->getValue()[0]['target_id'];
+    $consecutive = $entity->get('field_consecutive_number')->getValue()[0]['value'];
+
+    // Gets the documents of the invoice.
+    $pdf_file = File::load($this->searchFile('invoice_' . $id . '.pdf'));
+    $signed_file = File::load($this->searchFile('document-' . $user_id . '-' . $consecutive . 'segned.xml'));
+    $confirmation_file = File::load($this->searchFile('document-' . $user_id . '-' . $consecutive . 'confirmation.xml'));
+
+    // Create a new zip file and save it in a temporary directory.
+    $zip = new \ZipArchive();
+    $uri = file_directory_temp() . '/invoice' . $id . '.zip';
+    $zip->open($uri, \ZipArchive::CREATE | \ZipArchive::OVERWRITE);
+
+    // Attach files in the zip.
+    $zip->addFile(\Drupal::service('file_system')->realpath($pdf_file->getFileUri()),
+      $pdf_file->getFilename());
+    $zip->addFile(\Drupal::service('file_system')->realpath($signed_file->getFileUri()),
+      $signed_file->getFilename());
+    $zip->addFile(\Drupal::service('file_system')->realpath($confirmation_file->getFileUri()),
+      $confirmation_file->getFilename());
+    $zip->close();
+
+    // Downloads automatically the zip file in the device.
+    header('Content-type: application/octet-stream');
+    header('Content-disposition: attachment; filename=' . $uri);
+    readfile($uri);
+    unlink($uri);
+    return new RedirectResponse('/admin/structure/invoice_entity');
+  }
 
   /**
    * Returns the nid of a specific FileEntity.
