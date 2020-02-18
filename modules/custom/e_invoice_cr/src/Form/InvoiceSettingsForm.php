@@ -311,5 +311,3 @@ class InvoiceSettingsForm extends ConfigFormBase {
     
 
   }
-
-}
