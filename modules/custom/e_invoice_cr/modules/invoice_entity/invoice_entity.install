@@ -77,24 +77,9 @@ function invoice_entity_update_8003() {
       }
 
       // The xml signed file data is obtained and saved in a File Entity.
-      $signed_path = $uri . 'xml_signed/';
-      $signed_content = file_get_contents($signed_path . $xml_doc_name . 'segned.xml');
-      file_prepare_directory($signed_path, FILE_MODIFY_PERMISSIONS);
-      if (!is_null($signed_content)) {
-        $signed_file = file_save_data($signed_content, $signed_path . $xml_doc_name . 'segned.xml', FILE_EXISTS_REPLACE);
-        $signed_file->setPermanent();
-        $signed_file->save();
-      }
-
+     
       // The xml confirmation file data is obtained and saved in a File Entity.
-      $confirmation_path = $uri . 'xml_confirmation/';
-      $confirmation_content = file_get_contents($confirmation_path . $xml_doc_name . 'confirmation.xml');
-      file_prepare_directory($signed_path, FILE_MODIFY_PERMISSIONS);
-      if (!is_null($confirmation_content)) {
-        $confirmation_file = file_save_data($confirmation_content, $confirmation_path . '/' . $xml_doc_name . 'confirmation.xml', FILE_EXISTS_REPLACE);
-        $confirmation_file->setPermanent();
-        $confirmation_file->save();
-      }
+
     }
   }
 }
