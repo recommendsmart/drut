@@ -181,15 +181,10 @@ class InvoiceEntityForm extends ContentEntityForm {
     // Get default theme libraries.
     $theme_libraries = \Drupal::theme()->getActiveTheme()->getLibraries();
     // Look for a custom library.
-    $custom_library = $this->searchCustomLibrary($theme_libraries);
-    if ($custom_library) {
-      // This a library from a theme.
-      $form['#attached']['library'][] = $custom_library;
-    }
-    else {
+    
       // This is the default library.
-      $form['#attached']['library'][] = 'invoice_entity/invoice-rows';
-    }
+    $form['#attached']['library'][] = 'invoice_entity/invoice-rows';
+    
     // Default js library.
     $form['#attached']['library'][] = 'invoice_entity/invoice-rows-js';
     return $form;
