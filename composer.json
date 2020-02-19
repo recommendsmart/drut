@@ -21,6 +21,7 @@
     "require": {
         "caseyamcl/php-marc21": "^1.0",
         "composer/installers": "^1.2",
+        "dompdf/dompdf": "0.8.0",
         "drupal/ala": "^1.5",
         "drupal/assembly": "1.x-dev",
         "drupal/auto_entitylabel": "^3.0",

@@ -8,8 +8,10 @@ $baseDir = dirname($vendorDir);
 return array(
     'Twig_Extensions_' => array($vendorDir . '/twig/extensions/lib'),
     'Twig_' => array($vendorDir . '/twig/twig/lib'),
+    'Svg\\' => array($vendorDir . '/phenx/php-svg-lib/src'),
     'Stack' => array($vendorDir . '/stack/builder/src'),
     'SimpleSamlPhp\\Composer' => array($vendorDir . '/simplesamlphp/composer-module-installer/src'),
+    'Sabberworm\\CSS' => array($vendorDir . '/sabberworm/php-css-parser/lib'),
     'PhpMarc' => array($vendorDir . '/caseyamcl/php-marc21/lib'),
     'PEAR' => array($vendorDir . '/pear/pear_exception'),
     'EasyRdf_' => array($vendorDir . '/easyrdf/easyrdf/lib'),

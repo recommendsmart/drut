@@ -130,7 +130,7 @@ function invoice_entity_preprocess_field(&$variables, $hook) {
 function invoice_entity_preprocess_invoice_entity(&$variables, $hook) {
   // Emitter data.
   $emitter = [];
-  $providers = [];
+  $provider = [];
   $customer = [];
   $invoice = [];
   $config = \Drupal::config('e_invoice_cr.settings');
@@ -221,7 +221,7 @@ function invoice_entity_preprocess_invoice_entity(&$variables, $hook) {
 
   // Send the data.
   $variables['emitter'] = $emitter;
-  $variables['providers'] = $providers;
+  $variables['providers'] = $provider;
   $variables['customer'] = $customer;
   $variables['invoice'] = $invoice;
   $variables['base_path'] = $moduel_path;
