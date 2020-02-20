@@ -30,8 +30,7 @@ interface InvoiceServiceInterface {
    * @return array
    *   Return an array with the operation result information.
    */
-  public function validateInvoiceEntity(InvoiceEntity $entity);
-
+ 
   /**
    * Check the current state of the InvoiceReceivedEntity.
    *
