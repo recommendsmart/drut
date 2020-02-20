@@ -2,7 +2,6 @@
 
 namespace Drupal\invoice_entity;
 
-use Drupal\e_invoice_cr\Communication;
 use Drupal\invoice_entity\Entity\InvoiceEntity;
 use Drupal\invoice_entity\Entity\InvoiceEntityInterface;
 use Drupal\invoice_email\InvoiceEmailEvent;
@@ -35,10 +34,7 @@ class InvoiceService implements InvoiceServiceInterface {
    * @return array|null|string
    *   Return the response from the api.
    */
-  public function responseForKey($key) {
-    $con = new Communication();
-    return $con->validateDocument($key);
-  }
+ 
 
   /**
    * Increase the current values by one.
