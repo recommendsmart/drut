@@ -80,7 +80,6 @@ function invoice_entity_cron() {
         /** @var \Drupal\invoice_entity\InvoiceService $invoice_service */
         $invoice_service = \Drupal::service('invoice_entity.service');
         $invoice_service->setConsecutiveNumber($type_of);
-        $invoice_service->validateInvoiceEntity($entity);
         // Show a notification massage.
         drupal_set_message(t("The invoices have been verified during the cron process."), 'status');
       }
