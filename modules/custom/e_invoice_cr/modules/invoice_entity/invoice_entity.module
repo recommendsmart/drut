@@ -37,55 +37,10 @@ function invoice_entity_config_error() {
 /**
  * Implements hook_entity_operation().
  */
-function invoice_entity_entity_operation(EntityInterface $entity) {
-  $type = $entity->getEntityType();
-  if ($type->id() === "invoice_entity") {
-    $status = $entity->get('moderation_state')->value;
-    if ($status === "draft") {
-      $key = $entity->get('field_numeric_key')->value;
-      $operations = [];
-      $operations['validate'] = [
-        'title' => t('Validate'),
-        'url' => Url::fromRoute("invoice_entity.validate", ["key" => $key, "id" => $entity->id()]),
-        'weight' => 0,
-      ];
-      return $operations;
-    }
-    if ($status === "published") {
-      $operations = [];
-      $operations['View'] = [
-        'title' => t('View'),
-        'url' => Url::fromRoute("entity.invoice_entity.canonical", ["invoice_entity" => $entity->id()]),
-        'weight' => 0,
-      ];
-      return $operations;
-    }
-  }
-}
 
 /**
  * Implements hook_cron().
  */
-function invoice_entity_cron() {
-  // Update the invoices states.
-  $query = \Drupal::entityQuery('invoice_entity');
-  $nids = $query->execute();
-  if (count($nids) > 0) {
-    $entity_manager = \Drupal::entityManager();
-    foreach ($nids as $index => $item) {
-      $entity = $entity_manager->getStorage('invoice_entity')->load($item);
-      if ($entity->get('moderation_state')->value === 'draft') {
-        $type_of = $entity->get('type_of')->getValue()[0]['value'];
-
-        /** @var \Drupal\invoice_entity\InvoiceService $invoice_service */
-        $invoice_service = \Drupal::service('invoice_entity.service');
-        $invoice_service->setConsecutiveNumber($type_of);
-        // Show a notification massage.
-        drupal_set_message(t("The invoices have been verified during the cron process."), 'status');
-      }
-    }
-  }
-}
 
 /**
  * Implements hook_preprocess_page().
