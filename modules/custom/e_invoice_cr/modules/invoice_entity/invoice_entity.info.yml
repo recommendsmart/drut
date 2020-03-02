@@ -3,8 +3,6 @@ type: module
 description: This module provides the invoice entity for e-invoice.
 core: 8.x
 package: other
-interface translation project: invoice_entity
 dependencies:
   - customer_entity
   - tax_entity
-  - address
