@@ -140,9 +140,9 @@ function invoice_entity_preprocess_invoice_entity(&$variables, $hook) {
       $customer['phone_label'] = $client->getFieldDefinition('field_phone')->label();
       $address = $client->get('field_address')->getValue();
       if (count($address) !== 0) {
-        $customer['address'] = $address[0]['province'] . ", " . $address[0]['canton'] . ", " . $address[0]['district'] . ".";
+        $customer['address'] = $address[0]['state'] . ", " . $address[0]['administrative_area'] . ", " . $address[0]['locality'] . ".";
       }
-      $customer['zipcode'] = $address[0]['zipcode'];
+      $customer['postal_code'] = $address[0]['postal_code'];
     }
   }
 
