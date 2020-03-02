@@ -7,3 +7,4 @@ interface translation project: invoice_entity
 dependencies:
   - customer_entity
   - tax_entity
+  - address
