@@ -120,9 +120,9 @@ function invoice_entity_preprocess_invoice_entity(&$variables, $hook) {
       $providers['phone_label'] = $provider->getFieldDefinition('field_phone')->label();
       $address = $provider->get('field_address')->getValue();
       if (count($address) !== 0) {
-        $providers['address'] = $address[0]['province'] . ", " . $address[0]['canton'] . ", " . $address[0]['district'] . ".";
+        $providers['address'] = $address[0]['address_line1'] . ", " . $address[0]['locality'] . ", " . $address[0]['state'] . ".";
       }
-      $providers['zipcode'] = $address[0]['zipcode'];
+      $providers['postal_code'] = $address[0]['postal_code'];
     }
   }
   // Client data.
@@ -140,7 +140,7 @@ function invoice_entity_preprocess_invoice_entity(&$variables, $hook) {
       $customer['phone_label'] = $client->getFieldDefinition('field_phone')->label();
       $address = $client->get('field_address')->getValue();
       if (count($address) !== 0) {
-        $customer['address'] = $address[0]['state'] . ", " . $address[0]['administrative_area'] . ", " . $address[0]['locality'] . ".";
+        $customer['address'] = $address[0]['address_line1'] . ", " . $address[0]['locality'] . ", " . $address[0]['state'] . ".";
       }
       $customer['postal_code'] = $address[0]['postal_code'];
     }
