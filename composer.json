@@ -27,6 +27,7 @@
         "drupal/auto_entitylabel": "^3.0",
         "drupal/chosen": "^2.9",
         "drupal/commerce": "^2.16",
+        "drupal/commerce_dashboard": "1.x-dev",
         "drupal/commerce_order": "^2.16",
         "drupal/commerce_payment": "^2.16",
         "drupal/commerce_price": "^2.16",

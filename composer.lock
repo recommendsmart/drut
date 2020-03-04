@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5ee6bdf71c86b19a9d9f59edf24380c8",
+    "content-hash": "ddbf067b1531cfaa5d8fc6b9b9b0c423",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -1537,6 +1537,49 @@
             "support": {
                 "source": "https://git.drupalcode.org/project/commerce"
             }
+        },
+        {
+            "name": "drupal/commerce_dashboard",
+            "version": "dev-1.x",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/commerce_dashboard.git",
+                "reference": "8165f2ba0a09c9a9047e0f7e245550bb82a93f93"
+            },
+            "require": {
+                "drupal/commerce": "*",
+                "drupal/core": "^8 || ^9"
+            },
+            "type": "drupal-module",
+            "extra": {
+                "branch-alias": {
+                    "dev-1.x": "1.x-dev"
+                },
+                "drupal": {
+                    "version": "8.x-1.x-dev",
+                    "datestamp": "1583252635",
+                    "security-coverage": {
+                        "status": "not-covered",
+                        "message": "Project has not opted into security advisory coverage!"
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Nikolai Fischer",
+                    "homepage": "https://www.drupal.org/user/317114"
+                }
+            ],
+            "description": "Provides a commerce reporting dashboard.",
+            "homepage": "https://www.drupal.org/project/commerce_dashboard",
+            "support": {
+                "source": "https://git.drupalcode.org/project/commerce_dashboard"
+            },
+            "time": "2020-03-04T06:58:51+00:00"
         },
         {
             "name": "drupal/commerce_number_pattern",
@@ -10626,6 +10669,7 @@
     "minimum-stability": "dev",
     "stability-flags": {
         "drupal/assembly": 20,
+        "drupal/commerce_dashboard": 20,
         "drupal/commerce_recurring": 10,
         "drupal/octavia": 10,
         "drupal/openbusiness": 20
