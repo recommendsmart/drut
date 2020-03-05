@@ -8,6 +8,7 @@ invoice_form:
   version: 1.x
   js:
     js/InvoiceForm.js: {}
+    js/invoice-rows.js: {}
   css:
     theme:
       css/InvoiceForm.css: {}
