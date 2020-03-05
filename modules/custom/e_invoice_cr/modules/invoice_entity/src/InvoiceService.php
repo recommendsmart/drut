@@ -2,7 +2,6 @@
 
 namespace Drupal\invoice_entity;
 
-use Drupal\e_invoice_cr\Communication;
 use Drupal\invoice_entity\Entity\InvoiceEntity;
 use Drupal\invoice_entity\Entity\InvoiceEntityInterface;
 use Drupal\invoice_email\InvoiceEmailEvent;
@@ -35,10 +34,7 @@ class InvoiceService implements InvoiceServiceInterface {
    * @return array|null|string
    *   Return the response from the api.
    */
-  public function responseForKey($key) {
-    $con = new Communication();
-    return $con->validateDocument($key);
-  }
+ 
 
   /**
    * Increase the current values by one.
@@ -88,44 +84,7 @@ class InvoiceService implements InvoiceServiceInterface {
   /**
    * {@inheritdoc}
    */
-  public function validateInvoiceEntity(InvoiceEntity $entity) {
-    $key = $entity->get('field_numeric_key')->value;
-    $result = $this->responseForKey($key);
-    $state = NULL;
-    if (!is_null($result)) {
-      $state = $result[2] === 'rechazado' ? 'rejected' : 'published';
-      $entity->set('moderation_state', $state);
-      $entity->save();
-      if ($state === 'published') {
-        if (isset($result[3])) {
-          $user_id = $entity->get('user_id')->getValue()[0]['target_id'];
-          $id_cons = $entity->get('field_consecutive_number')->value;
-          $doc_name = "document-" . $user_id . "-" . $id_cons . "confirmation";
-          $path = "public://xml_confirmation/";
-          file_prepare_directory($path, FILE_CREATE_DIRECTORY);
-          $result[3]->saveXML($path . $doc_name . ".xml");
-          $document = file_get_contents($path . $doc_name . '.xml');
-          $confirmation_file = file_save_data($document, $path . $doc_name . '.xml', FILE_EXISTS_REPLACE);
-          $confirmation_file->setPermanent();
-          $confirmation_file->save();
-        }
-        // Load the Symfony event dispatcher object through services.
-        $dispatcher = \Drupal::service('event_dispatcher');
-        // Creating our event class object.
-        $eid = "valid-" . $entity->id();
-        $event = new InvoiceEmailEvent($eid, $entity->id());
-        // Dispatching the event through the ‘dispatch’  method,
-        // Passing event name and event object ‘$event’ as parameters.
-        $dispatcher->dispatch(InvoiceEmailEvent::SUBMIT, $event);
-      }
-    }
-
-    return [
-      'state' => $state,
-      'response' => $result,
-    ];
-  }
-
+  
   /**
    * {@inheritdoc}
    */

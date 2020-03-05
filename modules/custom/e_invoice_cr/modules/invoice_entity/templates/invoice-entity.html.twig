@@ -61,7 +61,7 @@
               <div>{{ customer.phone_label }}: {{ customer.phone }}</div>
               <div>{{ customer.email_label }}: {{ customer.email }}</div>
               {% if customer.address %}
-                <div>{{ customer.address }} {{ customer.zipcode }}</div>
+                <div>{{ customer.address }} {{ customer.postal_code }}</div>
               {% endif %}
             </div>
           </td>
@@ -124,6 +124,6 @@
   {% endif %}
   {{ elements.entity_print_view_pdf }}
   <div class="pdf-only">
-    <p>{{ "This invoice was generated according to the resolution DGT-R-48-2016 4.2."|t }}</p>
+    <p>{{ "This invoice was generated according to the company specification."|t }}</p>
   </div>
 </div>

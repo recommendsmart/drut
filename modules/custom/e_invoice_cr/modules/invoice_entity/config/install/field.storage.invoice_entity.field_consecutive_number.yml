@@ -2,16 +2,14 @@ langcode: en
 status: true
 dependencies:
   module:
+    - field_token_value
     - invoice_entity
-    - serial
 id: invoice_entity.field_consecutive_number
 field_name: field_consecutive_number
 entity_type: invoice_entity
-type: serial
-settings:
-  start_value: '1'
-  init_existing_entities: '0'
-module: serial
+type: field_token_value
+settings: {  }
+module: field_token_value
 locked: false
 cardinality: 1
 translatable: true
