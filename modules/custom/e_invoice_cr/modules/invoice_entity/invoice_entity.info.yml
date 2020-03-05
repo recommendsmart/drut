@@ -1,4 +1,4 @@
-name: Invoice CR invoice entity
+name: Invoice entity
 type: module
 description: This module provides the invoice entity for e-invoice.
 core: 8.x
@@ -6,3 +6,5 @@ package: other
 dependencies:
   - customer_entity
   - tax_entity
+  - field_token_value
+  - serial

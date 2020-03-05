@@ -16,9 +16,9 @@ required: false
 translatable: false
 default_value:
   -
-    value: ''
+    value: '[invoice_entity:type_of:value]-[invoice_entity:id:value]'
 default_value_callback: ''
 settings:
-  field_value: '[invoice_entity:field_numeric_key:value]'
+  field_value: '[invoice_entity:type_of]-[invoice_entity:id:value]'
   remove_empty: 1
 field_type: field_token_value
