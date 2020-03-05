@@ -8,7 +8,6 @@ use Drupal\Component\Datetime\TimeInterface;
 use Drupal\Core\Entity\ContentEntityForm;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\customer_entity\Entity\CustomerEntity;
-use Drupal\e_invoice_cr\Communication;
 use Drupal\invoice_entity\Entity\InvoiceEntityInterface;
 use Drupal\tax_entity\Entity\TaxEntity;
 
@@ -34,11 +33,7 @@ class InvoiceEntityForm extends ContentEntityForm {
    */
   public function __construct(EntityRepositoryInterface $entity_repository, EntityTypeBundleInfoInterface $entity_type_bundle_info = NULL, TimeInterface $time = NULL) {
     parent::__construct($entity_repository, $entity_type_bundle_info, $time);
-    $settings = \Drupal::config('e_invoice_cr.settings');
-    $empty = $settings->isNew();
-    if ($empty || is_null($settings)) {
-      invoice_entity_config_error();
-    }
+    
 
   }
 
@@ -68,7 +63,7 @@ class InvoiceEntityForm extends ContentEntityForm {
    */
   private function invoiceFormStructure(array &$form, FormStateInterface $form_state) {
     /** @var \Drupal\invoice_entity\InvoiceService $invoice_service */
-    $invoice_service = \Drupal::service('invoice_entity.service');
+    
     // Add the libraries.
     $form = $this->addLibraries($form);
 
@@ -153,7 +148,21 @@ class InvoiceEntityForm extends ContentEntityForm {
     
 
     // If it was successful.
-    
+    $status = parent::save($form, $form_state);
+
+      switch ($status) {
+        case SAVED_NEW:
+          drupal_set_message($this->t('Created the %label Invoice.', [
+            '%label' => $entity->label(),
+          ]));
+          break;
+
+        default:
+          drupal_set_message($this->t('Saved the %label Invoice.', [
+            '%label' => $entity->label(),
+          ]));
+      }
+      $form_state->setRedirect('entity.invoice_entity.canonical', ['invoice_entity' => $entity->id()]);
   }
 
   /**
@@ -300,14 +309,6 @@ class InvoiceEntityForm extends ContentEntityForm {
   /**
    * Gets document type from AJAX function and return the consecutive number.
    */
-  public function changeConsecutiveNumber(array &$form, FormStateInterface &$form_state) {
-    $type_of = $form_state->getValue('type_of')[0]['value'];
-    $invoice_service = \Drupal::service('invoice_entity.service');
-    $invoice_service->setConsecutiveNumber($type_of);
-    $consecutive = $invoice_service->generateConsecutive($type_of);
-    $form['field_consecutive_number']['widget'][0]['value']['#value'] = $consecutive;
-    $form['field_consecutive_number']['#id'] = 'edit-field-consecutive-number-wrapper';
-    return $form['field_consecutive_number'];
-  }
+
 
 }
