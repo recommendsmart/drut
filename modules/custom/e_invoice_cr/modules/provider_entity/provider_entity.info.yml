@@ -1,4 +1,4 @@
-name: Invoice CR provider entity
+name: Provider entity
 type: module
 description: This module provides the provider entity for e-invoice.
 core: 8.x
