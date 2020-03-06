@@ -2,6 +2,7 @@ langcode: en
 status: true
 dependencies:
   config:
+    - field.field.customer_entity.customer_entity.field_address
     - field.field.customer_entity.customer_entity.field_commercial_name
     - field.field.customer_entity.customer_entity.field_customer_foreign_id
     - field.field.customer_entity.customer_entity.field_customer_id
@@ -10,16 +11,16 @@ dependencies:
     - field.field.customer_entity.customer_entity.field_phone
     - field.field.customer_entity.customer_entity.field_type_id
   module:
+    - address
     - customer_entity
     - field_group
     - telephone
 third_party_settings:
   field_group:
     group_location:
-      children:
-        - field_address
+      children: {  }
       parent_name: ''
-      weight: 8
+      weight: 11
       format_type: fieldset
       format_settings:
         id: ''
@@ -27,13 +28,20 @@ third_party_settings:
         description: ''
         required_fields: true
       label: Location
+      region: hidden
 id: customer_entity.customer_entity.default
 targetEntityType: customer_entity
 bundle: customer_entity
 mode: default
 content:
+  field_address:
+    type: address_default
+    weight: 9
+    region: content
+    settings: {  }
+    third_party_settings: {  }
   field_commercial_name:
-    weight: 4
+    weight: 5
     settings:
       size: 60
       placeholder: ''
@@ -41,7 +49,7 @@ content:
     type: string_textfield
     region: content
   field_customer_foreign_id:
-    weight: 2
+    weight: 3
     settings:
       size: 60
       placeholder: ''
@@ -57,7 +65,7 @@ content:
     type: string_textfield
     region: content
   field_email:
-    weight: 7
+    weight: 8
     settings:
       size: 60
       placeholder: ''
@@ -65,14 +73,14 @@ content:
     type: email_default
     region: content
   field_fax:
-    weight: 6
+    weight: 7
     settings:
       placeholder: ''
     third_party_settings: {  }
     type: telephone_default
     region: content
   field_phone:
-    weight: 5
+    weight: 6
     settings:
       placeholder: ''
     third_party_settings: {  }
@@ -93,7 +101,7 @@ content:
     third_party_settings: {  }
   name:
     type: string_textfield
-    weight: 3
+    weight: 4
     region: content
     settings:
       size: 60
@@ -101,7 +109,7 @@ content:
     third_party_settings: {  }
   user_id:
     type: entity_reference_autocomplete
-    weight: 9
+    weight: 10
     settings:
       match_operator: CONTAINS
       size: 60
