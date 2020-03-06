@@ -54,8 +54,6 @@ class InvoiceSettingsForm extends ConfigFormBase {
     $phone = $settings->get('phone');
     $fax = $settings->get('fax');
     $email = $settings->get('email');
-    $postal_code = $settings->get('postal_code');
-    $address = $settings->get('address');
     $logo_file = $settings->get('invoice_logo_file');
     $email_text = $settings->get('email_text');
     $email_subject = $settings->get('email_subject');
@@ -159,23 +157,6 @@ class InvoiceSettingsForm extends ConfigFormBase {
       '#default_value' => $email,
       '#required' => TRUE,
     ];
-    $form['settings_tab']['stuff']['taxpayer_group']['address_fieldset'] = [
-      '#type' => 'fieldset',
-      '#title' => $this->t('Location.'),
-    ];
-    $form['settings_tab']['stuff']['taxpayer_group']['address_fieldset']['postal_code'] = [
-      '#type' => 'textfield',
-      '#title' => $this->t('Zip code:'),
-      '#default_value' => $postal_code,
-      '#required' => TRUE,
-    ];
-    $form['settings_tab']['stuff']['taxpayer_group']['address_fieldset']['address'] = [
-      '#type' => 'textfield',
-      '#title' => $this->t('Others:'),
-      '#default_value' => $address,
-      '#required' => TRUE,
-    ];
-
     $form['settings_tab']['stuff']['email_text_group'] = [
       '#type' => 'details',
       '#title' => $this->t('Email notifications.'),
@@ -213,7 +194,7 @@ class InvoiceSettingsForm extends ConfigFormBase {
     $form['settings_tab']['stuff']['email_text_group']['email_copies'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Send always copy to'),
-      '#description' => $this->t("Insert email addresses to send always a copy, separate the emails using a comma, example: test@test.com, test2@test2.com."),
+      '#description' => $this->t("Insert email  to send always a copy, separate the emails using a comma, example: test@test.com, test2@test2.com."),
       '#default_value' => $email_copies,
       '#required' => FALSE,
     ];
@@ -291,8 +272,6 @@ class InvoiceSettingsForm extends ConfigFormBase {
       ->set('phone', $tabs['taxpayer_group']['phone'])
       ->set('fax', $tabs['taxpayer_group']['fax'])
       ->set('email', $tabs['taxpayer_group']['email'])
-      ->set('postal_code', $tabs['taxpayer_group']['address_fieldset']['postal_code'])
-      ->set('address', $tabs['taxpayer_group']['address_fieldset']['address'])
       ->set('invoice_logo_file', $tabs['email_text_group']['invoice_logo_file'])
       ->set('email_text', $tabs['email_text_group']['email_text'])
       ->set('email_subject', $tabs['email_text_group']['email_subject'])
