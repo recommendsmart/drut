@@ -10,20 +10,7 @@ use Drupal\invoice_received_entity\Entity\InvoiceReceivedEntity;
  */
 interface InvoiceServiceInterface {
 
-
-  /**
-   * Check the current state of the InvoiceReceivedEntity.
-   *
-   * @param \Drupal\invoice_received_entity\Entity\InvoiceReceivedEntity $entity
-   *   Entity to eval.
-   *
-   * @return array
-   *   Return an array with the operation result information.
-   */
-  public function validateInvoiceReceivedEntity(InvoiceReceivedEntity $entity);
-
-
-  /**
+   /**
    * Generate the invoice consecutive number.
    *
    * @param string $type
