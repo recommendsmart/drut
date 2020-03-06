@@ -107,25 +107,6 @@ class InvoiceService implements InvoiceServiceInterface {
   /**
    * {@inheritdoc}
    */
-  public function generateInvoiceKey($type, $received = FALSE) {
-    // Get date information.
-    $day = date("d");
-    $mouth = date("m");
-    $year = date("y");
-    // The id user.
-    $settings = \Drupal::config('e_invoice_cr.settings');
-    $id_user = $settings->get('id');
-    $id_user = str_pad($id_user, 12, '0', STR_PAD_LEFT);
-    if (is_null($id_user)) {
-      return NULL;
-    }
-    else {
-      $consecutive = $received ? $this->generateMessageConsecutive($type) : $this->generateConsecutive($type);
-      // Join the key.
-      $key = '506' . $day . $mouth . $year . $id_user . $consecutive . '1' . self::$secureCode;
-      return $key;
-    }
-  }
 
   /**
    * {@inheritdoc}
@@ -156,23 +137,6 @@ class InvoiceService implements InvoiceServiceInterface {
   /**
    * {@inheritdoc}
    */
-  public function getUniqueInvoiceKey($type = 'FE', $received = FALSE) {
-    $current_key = $this->generateInvoiceKey($type, $received);
-
-    if ($current_key != NULL) {
-      // Check if the generated key is already use it.
-      if ($this->checkInvoiceKey($current_key)) {
-        // If is already in use. Increase values and try again.
-        $this->increaseValues();
-        return $this->getUniqueInvoiceKey($type);
-      }
-      else {
-        return $current_key;
-      }
-    }
-
-    return $current_key;
-  }
 
   /**
    * {@inheritdoc}

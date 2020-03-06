@@ -53,7 +53,6 @@ interface InvoiceServiceInterface {
    * @return string
    *   Return the generated key.
    */
-  public function generateInvoiceKey($type, $received = FALSE);
 
   /**
    * Generate the invoice consecutive number.
