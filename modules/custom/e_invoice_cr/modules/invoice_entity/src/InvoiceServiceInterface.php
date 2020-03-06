@@ -3,25 +3,11 @@
 namespace Drupal\invoice_entity;
 
 use Drupal\invoice_entity\Entity\InvoiceEntity;
-use Drupal\invoice_received_entity\Entity\InvoiceReceivedEntity;
 
 /**
  * Interface InvoiceServiceInterface.
  */
 interface InvoiceServiceInterface {
-
-  /**
-   * Generate and check if the generated key is already used.
-   *
-   * @param string $type
-   *   The type of the invoice.
-   * @param bool $received
-   *   If the document is a received invoice.
-   *
-   * @return string
-   *   Return the new unique key.
-   */
-  public function getUniqueInvoiceKey($type = 'FE', $received = FALSE);
 
   /**
    * Set variable value.

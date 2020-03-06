@@ -51,13 +51,6 @@ class InvoiceService implements InvoiceServiceInterface {
   /**
    * {@inheritdoc}
    */
-  private function generateConsecutiveDoc($code) {
-    return '00100001' . $code . self::$invoiceNumber;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
   public static function setInvoiceVariable($variable_name, $value) {
     $config = \Drupal::service('config.factory')->getEditable('invoice_entity.settings');
     $config->set($variable_name, $value)->save();
