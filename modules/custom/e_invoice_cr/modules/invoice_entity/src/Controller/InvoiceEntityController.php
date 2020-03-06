@@ -172,12 +172,6 @@ class InvoiceEntityController extends ControllerBase implements ContainerInjecti
 
   /**
    * Validate a invoice.
-   *
-   * @param string $key
-   *   A Invoice  object.
-   * @param string $id
-   *   A Invoice Id.
-   *
    * @return bool
    *   An array as expected by drupal_render().
    */
@@ -188,19 +182,9 @@ class InvoiceEntityController extends ControllerBase implements ContainerInjecti
   }
 
   /**
-   * Create a zip file with the invoice document files.
-   *
-   * @param int $id
-   *   An invoice entity id.
-   *
-   * @return bool
    *   An array as expected by drupal_render().
    */
   public function createZipFile($id) {
-    /** @var \Drupal\invoice_entity\Entity\InvoiceEntity $entity */
-    $entity = InvoiceEntity::load($id);
-    
-    // Downloads automatically the zip file in the device.
     return new RedirectResponse('/admin/structure/invoice_entity');
   }
  
