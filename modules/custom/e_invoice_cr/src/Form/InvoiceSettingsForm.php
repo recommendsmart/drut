@@ -36,19 +36,10 @@ class InvoiceSettingsForm extends ConfigFormBase {
       "1" => $this->t("Production"),
       "2" => $this->t("Sandbox"),
     ];
-    $options_id_type = [
-      "01" => $this->t("Physical person id"),
-      "02" => $this->t("Company id"),
-      "03" => $this->t("DIMEX"),
-      "04" => $this->t("NITE"),
-    ];
     $settings = \Drupal::config('e_invoice_cr.settings');
     // Get default values.
     $environment = $settings->get('environment');
     $username = $settings->get('username');
-    $password = $settings->get('password');
-    $id_type = $settings->get('id_type');
-    $id = $settings->get('id');
     $logo_file = $settings->get('invoice_logo_file');
 
 
@@ -81,36 +72,10 @@ class InvoiceSettingsForm extends ConfigFormBase {
       '#default_value' => $username,
       '#required' => TRUE,
     ];
-
-    $form['settings_tab']['stuff']['auth_group']['password'] = [
-      '#type' => 'password',
-      '#title' => $this->t('Password:'),
-      '#default_value' => $password,
-      '#required' => TRUE,
-    ];
-
     $form['settings_tab']['stuff']['taxpayer_group'] = [
       '#type' => 'details',
       '#title' => $this->t('Taxpayer information.'),
       '#collapsed' => FALSE,
-    ];
-
-    $form['settings_tab']['stuff']['taxpayer_group']['id_type'] = [
-      '#type' => 'select',
-      '#title' => $this->t('Id type.'),
-      '#default_value' => $id_type,
-      '#required' => TRUE,
-      '#options' => $options_id_type,
-      '#description' => $this->t("Select the taxpayer's id type."),
-      '#validated' => TRUE,
-    ];
-    $form['settings_tab']['stuff']['taxpayer_group']['id'] = [
-      '#type' => 'textfield',
-      '#title' => $this->t('Id number:'),
-      '#default_value' => $id,
-      '#required' => TRUE,
-      '#size' => 12,
-      '#maxlength' => 12,
     ];
     $form['settings_tab']['stuff']['email_text_group'] = [
       '#type' => 'details',
@@ -139,41 +104,6 @@ class InvoiceSettingsForm extends ConfigFormBase {
   /**
    * {@inheritdoc}
    */
-  public function validateForm(array &$form, FormStateInterface $form_state) {
-    $values = $form_state->getValues();
-    $tabs = $values['settings_tab']['stuff'];
-    $id_type = $tabs['taxpayer_group']['id_type'];
-    switch ($id_type) {
-      case "01":
-        if (strlen($tabs['taxpayer_group']['id']) !== 9) {
-          $form_state->setErrorByName('id', $this->t("The id should have 9 characters, add zeros at the start if it's necessary."));
-        }
-        break;
-
-      case "02":
-        if (strlen($tabs['taxpayer_group']['id']) !== 10) {
-          $form_state->setErrorByName('id', $this->t("The id should have 10 characters, add zeros at the start if it's necessary."));
-        }
-        break;
-
-      case "03":
-        if (strlen($tabs['taxpayer_group']['id']) < 11 || strlen($tabs['taxpayer_group']['id']) > 12) {
-          $form_state->setErrorByName('id', $this->t("The id should have 11 or 12 characters, add zeros at the start if it's necessary."));
-        }
-        break;
-
-      case "04":
-        if (strlen($form_state->getValue('id')) !== 10) {
-          $form_state->setErrorByName('id', $this->t("The id should have 10 characters, add zeros at the start if it's necessary."));
-        }
-        break;
-
-    }
-    if (!is_numeric($tabs['taxpayer_group']['id'])) {
-      $form_state->setErrorByName('id', $this->t('This field should only have numbers. No spaces or special characters.'));
-    }
-
-  }
 
   /**
    * {@inheritdoc}
@@ -186,9 +116,6 @@ class InvoiceSettingsForm extends ConfigFormBase {
       // Set the submitted configuration setting.
       ->set('environment', $form_state->getValue('environment'))
       ->set('username', $tabs['auth_group']['username'])
-      ->set('password', $tabs['auth_group']['password'])
-      ->set('id_type', $tabs['taxpayer_group']['id_type'])
-      ->set('id', $tabs['taxpayer_group']['id'])
       ->set('invoice_logo_file', $tabs['email_text_group']['invoice_logo_file'])
       ->save('file', $tabs['email_text_group']['invoice_logo_file']);
 
