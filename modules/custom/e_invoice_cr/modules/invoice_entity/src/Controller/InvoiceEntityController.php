@@ -183,8 +183,6 @@ class InvoiceEntityController extends ControllerBase implements ContainerInjecti
    */
   public function validateInvoice($id) {
     /** @var \Drupal\invoice_entity\Entity\InvoiceEntity $entity */
-    $entity = \Drupal::entityManager()->getStorage('invoice_entity')->load($id);
-
     // Verify the result of the invoice validation.
     return new RedirectResponse('/admin/structure/invoice_entity');
   }
