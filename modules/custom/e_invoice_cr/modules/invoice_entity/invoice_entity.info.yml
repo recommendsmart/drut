@@ -8,3 +8,8 @@ dependencies:
   - tax_entity
   - field_token_value
   - serial
+  - telephone
+  - field_group
+  - paragraphs
+  - entity_print
+  - twig_field_value

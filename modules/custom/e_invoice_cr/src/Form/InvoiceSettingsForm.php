@@ -49,8 +49,6 @@ class InvoiceSettingsForm extends ConfigFormBase {
     $password = $settings->get('password');
     $id_type = $settings->get('id_type');
     $id = $settings->get('id');
-    $name = $settings->get('name');
-    $email = $settings->get('email');
     $logo_file = $settings->get('invoice_logo_file');
 
 
@@ -113,18 +111,6 @@ class InvoiceSettingsForm extends ConfigFormBase {
       '#required' => TRUE,
       '#size' => 12,
       '#maxlength' => 12,
-    ];
-    $form['settings_tab']['stuff']['taxpayer_group']['name'] = [
-      '#type' => 'textfield',
-      '#title' => $this->t('Name:'),
-      '#default_value' => $name,
-      '#required' => TRUE,
-    ];
-    $form['settings_tab']['stuff']['taxpayer_group']['email'] = [
-      '#type' => 'email',
-      '#title' => $this->t('Email:'),
-      '#default_value' => $email,
-      '#required' => TRUE,
     ];
     $form['settings_tab']['stuff']['email_text_group'] = [
       '#type' => 'details',
@@ -203,8 +189,6 @@ class InvoiceSettingsForm extends ConfigFormBase {
       ->set('password', $tabs['auth_group']['password'])
       ->set('id_type', $tabs['taxpayer_group']['id_type'])
       ->set('id', $tabs['taxpayer_group']['id'])
-      ->set('name', $tabs['taxpayer_group']['name'])
-      ->set('email', $tabs['taxpayer_group']['email'])
       ->set('invoice_logo_file', $tabs['email_text_group']['invoice_logo_file'])
       ->save('file', $tabs['email_text_group']['invoice_logo_file']);
 
