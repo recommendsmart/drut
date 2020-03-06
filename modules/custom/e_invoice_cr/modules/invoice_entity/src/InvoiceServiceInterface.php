@@ -10,17 +10,6 @@ use Drupal\invoice_received_entity\Entity\InvoiceReceivedEntity;
  */
 interface InvoiceServiceInterface {
 
-   /**
-   * Generate the invoice consecutive number.
-   *
-   * @param string $type
-   *   Type of document.
-   *
-   * @return string
-   *   The consecutive number.
-   */
-  public function generateConsecutive($type);
-
   /**
    * Generate the message document's consecutive number.
    *
