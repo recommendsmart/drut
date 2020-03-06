@@ -39,9 +39,7 @@ class InvoiceSettingsForm extends ConfigFormBase {
     $settings = \Drupal::config('e_invoice_cr.settings');
     // Get default values.
     $environment = $settings->get('environment');
-    $username = $settings->get('username');
     $logo_file = $settings->get('invoice_logo_file');
-
 
     $form['environment'] = [
       '#type' => 'select',
@@ -58,31 +56,11 @@ class InvoiceSettingsForm extends ConfigFormBase {
       '#prefix' => '<div id="settings-invoice-wrapper">',
       '#suffix' => '</div>',
     ];
-
-    $form['settings_tab']['stuff']['auth_group'] = [
-      '#type' => 'details',
-      '#title' => $this->t('API login information.'),
-      '#description' => t('This module does the API login through the Oauth 2.0 token.'),
-      '#collapsed' => FALSE,
-    ];
-
-    $form['settings_tab']['stuff']['auth_group']['username'] = [
-      '#type' => 'textfield',
-      '#title' => $this->t('Username:'),
-      '#default_value' => $username,
-      '#required' => TRUE,
-    ];
-    $form['settings_tab']['stuff']['taxpayer_group'] = [
-      '#type' => 'details',
-      '#title' => $this->t('Taxpayer information.'),
-      '#collapsed' => FALSE,
-    ];
     $form['settings_tab']['stuff']['email_text_group'] = [
       '#type' => 'details',
       '#title' => $this->t('Email notifications.'),
       '#collapsed' => FALSE,
     ];
-
     $form['settings_tab']['stuff']['email_text_group']['invoice_logo_file'] = [
       '#title' => $this->t('Company Logo'),
       '#type' => 'managed_file',
@@ -105,9 +83,6 @@ class InvoiceSettingsForm extends ConfigFormBase {
    * {@inheritdoc}
    */
 
-  /**
-   * {@inheritdoc}
-   */
   public function submitForm(array &$form, FormStateInterface $form_state) {
     $values = $form_state->getValues();
     $tabs = $values['settings_tab']['stuff'];
@@ -115,19 +90,8 @@ class InvoiceSettingsForm extends ConfigFormBase {
     \Drupal::configFactory()->getEditable('e_invoice_cr.settings')
       // Set the submitted configuration setting.
       ->set('environment', $form_state->getValue('environment'))
-      ->set('username', $tabs['auth_group']['username'])
       ->set('invoice_logo_file', $tabs['email_text_group']['invoice_logo_file'])
       ->save('file', $tabs['email_text_group']['invoice_logo_file']);
-
-
     parent::submitForm($form, $form_state);
-  }
-
-  /**
-   * Function to store all the settings files.
-   */
-  
-    /** @var \Drupal\file\Entity\File $file */
-    
-
-  }
+  } 
+}
