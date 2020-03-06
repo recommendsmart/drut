@@ -114,6 +114,5 @@ interface InvoiceServiceInterface {
    * @return bool
    *   Return true if all the information is filled.
    */
-  public function checkSettingsData();
 
 }
