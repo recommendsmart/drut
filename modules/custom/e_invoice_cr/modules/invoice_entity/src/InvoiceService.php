@@ -16,26 +16,6 @@ class InvoiceService implements InvoiceServiceInterface {
   /**
    * Update the configuration values.
    */
-  public function updateValues() {
-    $this->setInvoiceVariable(self::$consecutiveName, self::$invoiceNumber);
-  }
- 
-  /**
-   * {@inheritdoc}
-   */
-  public static function setInvoiceVariable($variable_name, $value) {
-    $config = \Drupal::service('config.factory')->getEditable('invoice_entity.settings');
-    $config->set($variable_name, $value)->save();
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function getInvoiceVariable($variable_name) {
-    $config = \Drupal::config('invoice_entity.settings');
-    $value = $config->get($variable_name);
-    return $value;
-  }
 
   /**
    * {@inheritdoc}
