@@ -2,16 +2,14 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.field.customer_entity.customer_entity.field_email
-    - field.field.customer_entity.customer_entity.field_address
-    - field.field.customer_entity.customer_entity.field_fax
-    - field.field.customer_entity.customer_entity.field_customer_id
-    - field.field.customer_entity.customer_entity.field_customer_foreign_id
     - field.field.customer_entity.customer_entity.field_commercial_name
+    - field.field.customer_entity.customer_entity.field_customer_foreign_id
+    - field.field.customer_entity.customer_entity.field_customer_id
+    - field.field.customer_entity.customer_entity.field_email
+    - field.field.customer_entity.customer_entity.field_fax
     - field.field.customer_entity.customer_entity.field_phone
     - field.field.customer_entity.customer_entity.field_type_id
   module:
-    - addressfield_cr
     - customer_entity
     - field_group
     - telephone
@@ -29,36 +27,13 @@ third_party_settings:
         description: ''
         required_fields: true
       label: Location
-_core:
-  default_config_hash: Nb8wyMqwQedKsBJJpPqbh-sB6pZhTKtvoiVlWHvYjYI
 id: customer_entity.customer_entity.default
 targetEntityType: customer_entity
 bundle: customer_entity
 mode: default
 content:
-  field_email:
-    weight: 7
-    settings:
-      size: 60
-      placeholder: ''
-    third_party_settings: {  }
-    type: email_default
-    region: content
-  field_address:
-    weight: 31
-    settings: {  }
-    third_party_settings: {  }
-    type: addressfield_cr_default
-    region: content
-  field_fax:
-    weight: 6
-    settings:
-      placeholder: ''
-    third_party_settings: {  }
-    type: telephone_default
-    region: content
-  field_customer_id:
-    weight: 1
+  field_commercial_name:
+    weight: 4
     settings:
       size: 60
       placeholder: ''
@@ -73,13 +48,28 @@ content:
     third_party_settings: {  }
     type: string_textfield
     region: content
-  field_commercial_name:
-    weight: 4
+  field_customer_id:
+    weight: 1
     settings:
       size: 60
       placeholder: ''
     third_party_settings: {  }
     type: string_textfield
+    region: content
+  field_email:
+    weight: 7
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: email_default
+    region: content
+  field_fax:
+    weight: 6
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+    type: telephone_default
     region: content
   field_phone:
     weight: 5
@@ -94,6 +84,13 @@ content:
     third_party_settings: {  }
     type: options_select
     region: content
+  langcode:
+    type: language_select
+    weight: 2
+    region: content
+    settings:
+      include_locked: true
+    third_party_settings: {  }
   name:
     type: string_textfield
     weight: 3
@@ -109,6 +106,7 @@ content:
       match_operator: CONTAINS
       size: 60
       placeholder: ''
+      match_limit: 10
     region: content
     third_party_settings: {  }
 hidden: {  }
