@@ -186,22 +186,7 @@ class InvoiceEntityController extends ControllerBase implements ContainerInjecti
     $entity = \Drupal::entityManager()->getStorage('invoice_entity')->load($id);
     $type_of = $entity->get('type_of')->getValue()[0]['value'];
 
-    /** @var \Drupal\invoice_entity\InvoiceService $invoice_service */
-    
-
     // Verify the result of the invoice validation.
-    if (is_null($result['response'])) {
-      drupal_set_message(t("Status Unknown. The state couldn't be validated."), 'error');
-    }
-    else {
-      if ($result['state'] === "rejected") {
-        drupal_set_message(t("Status Rejected. @text", ["@text" => $result['response'][3]->DetalleMensaje]), 'error');
-      }
-      elseif ($result['state'] === "published") {
-        drupal_set_message(t("Status Accepted. @text", ["@text" => $result['response'][3]->DetalleMensaje]), 'status');
-      }
-      drupal_set_message(t('A validation request has been performed.'), 'status');
-    }
     return new RedirectResponse('/admin/structure/invoice_entity');
   }
 
