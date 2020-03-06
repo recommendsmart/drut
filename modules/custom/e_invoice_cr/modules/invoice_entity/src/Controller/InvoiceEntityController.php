@@ -181,10 +181,9 @@ class InvoiceEntityController extends ControllerBase implements ContainerInjecti
    * @return bool
    *   An array as expected by drupal_render().
    */
-  public function validateInvoice($key, $id) {
+  public function validateInvoice($id) {
     /** @var \Drupal\invoice_entity\Entity\InvoiceEntity $entity */
     $entity = \Drupal::entityManager()->getStorage('invoice_entity')->load($id);
-    $type_of = $entity->get('type_of')->getValue()[0]['value'];
 
     // Verify the result of the invoice validation.
     return new RedirectResponse('/admin/structure/invoice_entity');
