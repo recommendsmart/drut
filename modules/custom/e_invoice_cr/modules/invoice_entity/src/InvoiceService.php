@@ -26,17 +26,6 @@ class InvoiceService implements InvoiceServiceInterface {
   }
 
   /**
-   * Call the validateDocument from Communication and return its result.
-   *
-   * @param string $key
-   *   Key to eval.
-   *
-   * @return array|null|string
-   *   Return the response from the api.
-   */
- 
-
-  /**
    * Increase the current values by one.
    */
   public function increaseValues() {
@@ -58,33 +47,7 @@ class InvoiceService implements InvoiceServiceInterface {
   public function updateValues() {
     $this->setInvoiceVariable(self::$consecutiveName, self::$invoiceNumber);
   }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function checkInvoiceKey($key) {
-    $result = $this->responseForKey($key);
-    if (is_null($result)) {
-      return FALSE;
-    }
-    else {
-      if ($result[2] != 'aceptado') {
-        $messages = explode("\n-", $result[3]->DetalleMensaje);
-        $messages = array_filter($messages, function ($val) {
-          $code = substr($val, 0, 2);
-          return $code == '29' || $code == '99';
-        });
-
-        return !empty($messages);
-      }
-      return TRUE;
-    }
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  
+ 
   /**
    * {@inheritdoc}
    */
@@ -103,10 +66,6 @@ class InvoiceService implements InvoiceServiceInterface {
       'response' => $result,
     ];
   }
-
-  /**
-   * {@inheritdoc}
-   */
 
   /**
    * {@inheritdoc}
@@ -133,10 +92,6 @@ class InvoiceService implements InvoiceServiceInterface {
   private function generateConsecutiveDoc($code) {
     return '00100001' . $code . self::$invoiceNumber;
   }
-
-  /**
-   * {@inheritdoc}
-   */
 
   /**
    * {@inheritdoc}
@@ -207,9 +162,5 @@ class InvoiceService implements InvoiceServiceInterface {
       $this->updateValues();
     }
   }
-
-  /**
-   * {@inheritdoc}
-   */
 
 }
