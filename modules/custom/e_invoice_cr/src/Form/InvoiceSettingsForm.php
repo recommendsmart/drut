@@ -50,18 +50,9 @@ class InvoiceSettingsForm extends ConfigFormBase {
     $id_type = $settings->get('id_type');
     $id = $settings->get('id');
     $name = $settings->get('name');
-    $fax = $settings->get('fax');
     $email = $settings->get('email');
     $logo_file = $settings->get('invoice_logo_file');
-    $email_text = $settings->get('email_text');
-    $email_subject = $settings->get('email_subject');
-    $email_copies = $settings->get('email_copies');
-    if (is_null($email_text)) {
-      $email_text = "Find attached an Electronic Invoice with Key Number @invoice_id issued by @company on @date at @hour.\nYou can also download it at @url\n\nThis is an automatic notification, please do not reply this email.";
-    }
-    if (is_null($email_subject)) {
-      $email_subject = "Electronic invoice issued by @company.";
-    }
+
 
     $form['environment'] = [
       '#type' => 'select',
@@ -129,13 +120,6 @@ class InvoiceSettingsForm extends ConfigFormBase {
       '#default_value' => $name,
       '#required' => TRUE,
     ];
-    $form['settings_tab']['stuff']['taxpayer_group']['fax'] = [
-      '#type' => 'tel',
-      '#title' => $this->t('Fax number:'),
-      '#default_value' => $fax,
-      '#description' => $this->t('Please add the country code to the beginning. This field should only have numbers. No spaces or special characters.'),
-      '#required' => FALSE,
-    ];
     $form['settings_tab']['stuff']['taxpayer_group']['email'] = [
       '#type' => 'email',
       '#title' => $this->t('Email:'),
@@ -162,30 +146,6 @@ class InvoiceSettingsForm extends ConfigFormBase {
       '#upload_location' => 'public://',
       '#required' => FALSE,
     ];
-    $form['settings_tab']['stuff']['email_text_group']['email_subject'] = [
-      '#type' => 'textfield',
-      '#title' => $this->t('Email subject'),
-      '#description' => $this->t("Add a subject text that it will be printed on the email invoice notifications. Use @company to print your company name."),
-      '#default_value' => $email_subject,
-      '#required' => TRUE,
-    ];
-    $form['settings_tab']['stuff']['email_text_group']['email_text'] = [
-      '#title' => $this->t('Email notifications text'),
-      '#type' => 'textarea',
-      '#description' => $this->t("Add a text that it will be printed on the email invoice notifications sent to the clients.\nUse @company to print your company name, @invoice_id to print the invoice id, @date to print the invoice date, @hour to print the hour and @url to print the pdf invoice link."),
-      '#default_value' => $email_text,
-      '#required' => TRUE,
-    ];
-    $form['settings_tab']['stuff']['email_text_group']['email_copies'] = [
-      '#type' => 'textfield',
-      '#title' => $this->t('Send always copy to'),
-      '#description' => $this->t("Insert email  to send always a copy, separate the emails using a comma, example: test@test.com, test2@test2.com."),
-      '#default_value' => $email_copies,
-      '#required' => FALSE,
-    ];
-
-    
-    
 
     return parent::buildForm($form, $form_state);
   }
@@ -227,12 +187,6 @@ class InvoiceSettingsForm extends ConfigFormBase {
       $form_state->setErrorByName('id', $this->t('This field should only have numbers. No spaces or special characters.'));
     }
 
-
-    if (strlen($tabs['taxpayer_group']['fax']) > 0) {
-      if (!is_numeric($form_state->getValue('fax'))) {
-        $form_state->setErrorByName('fax', $this->t('This field should only have numbers. No spaces or special characters.'));
-      }
-    }
   }
 
   /**
@@ -250,12 +204,8 @@ class InvoiceSettingsForm extends ConfigFormBase {
       ->set('id_type', $tabs['taxpayer_group']['id_type'])
       ->set('id', $tabs['taxpayer_group']['id'])
       ->set('name', $tabs['taxpayer_group']['name'])
-      ->set('fax', $tabs['taxpayer_group']['fax'])
       ->set('email', $tabs['taxpayer_group']['email'])
       ->set('invoice_logo_file', $tabs['email_text_group']['invoice_logo_file'])
-      ->set('email_text', $tabs['email_text_group']['email_text'])
-      ->set('email_subject', $tabs['email_text_group']['email_subject'])
-      ->set('email_copies', $tabs['email_text_group']['email_copies'])
       ->save('file', $tabs['email_text_group']['invoice_logo_file']);
 
 
