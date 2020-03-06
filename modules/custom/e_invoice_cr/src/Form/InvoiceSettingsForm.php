@@ -50,8 +50,6 @@ class InvoiceSettingsForm extends ConfigFormBase {
     $id_type = $settings->get('id_type');
     $id = $settings->get('id');
     $name = $settings->get('name');
-    $commercial_name = $settings->get('commercial_name');
-    $phone = $settings->get('phone');
     $fax = $settings->get('fax');
     $email = $settings->get('email');
     $logo_file = $settings->get('invoice_logo_file');
@@ -129,19 +127,6 @@ class InvoiceSettingsForm extends ConfigFormBase {
       '#type' => 'textfield',
       '#title' => $this->t('Name:'),
       '#default_value' => $name,
-      '#required' => TRUE,
-    ];
-    $form['settings_tab']['stuff']['taxpayer_group']['commercial_name'] = [
-      '#type' => 'textfield',
-      '#title' => $this->t('Tradename:'),
-      '#default_value' => $commercial_name,
-      '#required' => TRUE,
-    ];
-    $form['settings_tab']['stuff']['taxpayer_group']['phone'] = [
-      '#type' => 'tel',
-      '#title' => $this->t('Phone number:'),
-      '#default_value' => $phone,
-      '#description' => $this->t('Please add the country code to the beginning. This field should only have numbers. No spaces or special characters.'),
       '#required' => TRUE,
     ];
     $form['settings_tab']['stuff']['taxpayer_group']['fax'] = [
@@ -242,9 +227,6 @@ class InvoiceSettingsForm extends ConfigFormBase {
       $form_state->setErrorByName('id', $this->t('This field should only have numbers. No spaces or special characters.'));
     }
 
-    if (!is_numeric($tabs['taxpayer_group']['phone'])) {
-      $form_state->setErrorByName('phone', $this->t('This field should only have numbers. No spaces or special characters.'));
-    }
 
     if (strlen($tabs['taxpayer_group']['fax']) > 0) {
       if (!is_numeric($form_state->getValue('fax'))) {
@@ -268,8 +250,6 @@ class InvoiceSettingsForm extends ConfigFormBase {
       ->set('id_type', $tabs['taxpayer_group']['id_type'])
       ->set('id', $tabs['taxpayer_group']['id'])
       ->set('name', $tabs['taxpayer_group']['name'])
-      ->set('commercial_name', $tabs['taxpayer_group']['commercial_name'])
-      ->set('phone', $tabs['taxpayer_group']['phone'])
       ->set('fax', $tabs['taxpayer_group']['fax'])
       ->set('email', $tabs['taxpayer_group']['email'])
       ->set('invoice_logo_file', $tabs['email_text_group']['invoice_logo_file'])
