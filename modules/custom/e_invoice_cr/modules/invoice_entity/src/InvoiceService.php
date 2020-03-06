@@ -4,9 +4,6 @@ namespace Drupal\invoice_entity;
 
 use Drupal\invoice_entity\Entity\InvoiceEntity;
 use Drupal\invoice_entity\Entity\InvoiceEntityInterface;
-use Drupal\invoice_email\InvoiceEmailEvent;
-use Drupal\invoice_received_entity\Entity\InvoiceReceivedEntity;
-use Drupal\invoice_received_entity\Entity\InvoiceReceivedEntityInterface;
 
 /**
  * Class InvoiceService.
@@ -22,22 +19,6 @@ class InvoiceService implements InvoiceServiceInterface {
    */
   public function __construct() {
     // It gets a random number.
-    self::$secureCode = str_pad(intval(rand(1, 99999999)), 8, '0', STR_PAD_LEFT);
-  }
-
-  /**
-   * Increase the current values by one.
-   */
-  public function increaseValues() {
-    self::$invoiceNumber = str_pad(intval(self::$invoiceNumber) + 1, 10, '0', STR_PAD_LEFT);
-    self::$secureCode = str_pad(intval(rand(1, 99999999)), 8, '0', STR_PAD_LEFT);
-  }
-
-  /**
-   * Decrease the current values by one.
-   */
-  public function decreaseValues() {
-    self::$invoiceNumber = str_pad(intval(self::$invoiceNumber) - 1, 10, '0', STR_PAD_LEFT);
     self::$secureCode = str_pad(intval(rand(1, 99999999)), 8, '0', STR_PAD_LEFT);
   }
 
@@ -63,13 +44,6 @@ class InvoiceService implements InvoiceServiceInterface {
     $config = \Drupal::config('invoice_entity.settings');
     $value = $config->get($variable_name);
     return $value;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function getDocumentNumber() {
-    return self::$invoiceNumber;
   }
 
   /**
