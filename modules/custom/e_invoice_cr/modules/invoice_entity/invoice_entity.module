@@ -82,28 +82,13 @@ function invoice_entity_preprocess_field(&$variables, $hook) {
  * Implements hook_preprocess_invoice_entity().
  */
 function invoice_entity_preprocess_invoice_entity(&$variables, $hook) {
-  // Emitter data.
-  $emitter = [];
+  // Emit data.
   $provider = [];
   $customer = [];
   $invoice = [];
-  $config = \Drupal::config('e_invoice_cr.settings');
-  $file = $config->get('invoice_logo_file');
-  if (!is_null($file) && count($file) !== 0) {
-    $file_uri = File::load($file[0])->getFileUri();
-    $logo_path = file_url_transform_relative(file_create_url($file_uri));
-    $emitter['logo_url'] = $logo_path;
-  }
-  $emitter['name'] = $config->get('name');
-  $emitter['commercial_name'] = $config->get('commercial_name');
-  $emitter['id'] = $config->get('id');
-  $emitter['email'] = $config->get('email');
-  $emitter['phone'] = $config->get('phone');
-  $emitter['fax'] = $config->get('fax');
-  $emitter['postal_code'] = $config->get('postal_code');
-  $emitter['address'] = $config->get('address');
-  $currency_code = $variables['elements']['#invoice_entity']->get('field_currency')->value;
-  $emitter['currency'] = InvoiceEntityInterface::AVAILABLE_CURRENCY[$currency_code]['symbol'];
+ 
+  
+  
   
   // Providers data.
   if (isset($variables['elements']['field_providers'][0]['#options']['entity'])) {
@@ -174,7 +159,7 @@ function invoice_entity_preprocess_invoice_entity(&$variables, $hook) {
   $moduel_path = $module_handler->getModule('invoice_entity')->getPath();
 
   // Send the data.
-  $variables['emitter'] = $emitter;
+
   $variables['providers'] = $provider;
   $variables['customer'] = $customer;
   $variables['invoice'] = $invoice;
