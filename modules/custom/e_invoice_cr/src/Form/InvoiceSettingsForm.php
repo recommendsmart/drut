@@ -33,8 +33,7 @@ class InvoiceSettingsForm extends ConfigFormBase {
   public function buildForm(array $form, FormStateInterface $form_state) {
     $base_url = $host = \Drupal::request()->getHost();
     $options_env = [
-      "1" => $this->t("Production"),
-      "2" => $this->t("Sandbox"),
+      "1" => $this->t("Production"), 
     ];
     $options_id_type = [
       "01" => $this->t("Physical person id"),
@@ -50,18 +49,13 @@ class InvoiceSettingsForm extends ConfigFormBase {
     $id_type = $settings->get('id_type');
     $id = $settings->get('id');
     $name = $settings->get('name');
-    $commercial_name = $settings->get('commercial_name');
-    $phone = $settings->get('phone');
-    $fax = $settings->get('fax');
     $email = $settings->get('email');
-    $postal_code = $settings->get('postal_code');
-    $address = $settings->get('address');
     $logo_file = $settings->get('invoice_logo_file');
     $email_text = $settings->get('email_text');
     $email_subject = $settings->get('email_subject');
     $email_copies = $settings->get('email_copies');
     if (is_null($email_text)) {
-      $email_text = "Find attached an Electronic Invoice with Key Number @invoice_id issued by @company on @date at @hour.\nYou can also download it at @url\n\nThis is an automatic notification, please do not reply this email.";
+      $email_text = "Find attached an Electronic Invoice, please do not reply this email.";
     }
     if (is_null($email_subject)) {
       $email_subject = "Electronic invoice issued by @company.";
@@ -73,7 +67,7 @@ class InvoiceSettingsForm extends ConfigFormBase {
       '#default_value' => $environment,
       '#required' => TRUE,
       '#options' => $options_env,
-      '#description' => $this->t('Select "Production" to set the production mode or "Sandbox" to set the tests mode.'),
+      '#description' => $this->t('Select "Production" to set the production mode.'),
       '#validated' => TRUE,
     ];
     $form['settings_tab'] = [
@@ -94,14 +88,14 @@ class InvoiceSettingsForm extends ConfigFormBase {
       '#type' => 'textfield',
       '#title' => $this->t('Username:'),
       '#default_value' => $username,
-      '#required' => TRUE,
+      '#required' => FALSE,
     ];
 
     $form['settings_tab']['stuff']['auth_group']['password'] = [
       '#type' => 'password',
       '#title' => $this->t('Password:'),
       '#default_value' => $password,
-      '#required' => TRUE,
+      '#required' => FALSE,
     ];
 
     $form['settings_tab']['stuff']['taxpayer_group'] = [
@@ -133,59 +127,21 @@ class InvoiceSettingsForm extends ConfigFormBase {
       '#default_value' => $name,
       '#required' => TRUE,
     ];
-    $form['settings_tab']['stuff']['taxpayer_group']['commercial_name'] = [
-      '#type' => 'textfield',
-      '#title' => $this->t('Tradename:'),
-      '#default_value' => $commercial_name,
-      '#required' => TRUE,
-    ];
-    $form['settings_tab']['stuff']['taxpayer_group']['phone'] = [
-      '#type' => 'tel',
-      '#title' => $this->t('Phone number:'),
-      '#default_value' => $phone,
-      '#description' => $this->t('Please add the country code to the beginning. This field should only have numbers. No spaces or special characters.'),
-      '#required' => TRUE,
-    ];
-    $form['settings_tab']['stuff']['taxpayer_group']['fax'] = [
-      '#type' => 'tel',
-      '#title' => $this->t('Fax number:'),
-      '#default_value' => $fax,
-      '#description' => $this->t('Please add the country code to the beginning. This field should only have numbers. No spaces or special characters.'),
-      '#required' => FALSE,
-    ];
-    $form['settings_tab']['stuff']['taxpayer_group']['email'] = [
+	$form['settings_tab']['stuff']['taxpayer_group']['email'] = [
       '#type' => 'email',
       '#title' => $this->t('Email:'),
       '#default_value' => $email,
       '#required' => TRUE,
     ];
-    $form['settings_tab']['stuff']['taxpayer_group']['address_fieldset'] = [
-      '#type' => 'fieldset',
-      '#title' => $this->t('Location.'),
-    ];
-    $form['settings_tab']['stuff']['taxpayer_group']['address_fieldset']['postal_code'] = [
-      '#type' => 'textfield',
-      '#title' => $this->t('Zip code:'),
-      '#default_value' => $postal_code,
-      '#required' => TRUE,
-    ];
-    $form['settings_tab']['stuff']['taxpayer_group']['address_fieldset']['address'] = [
-      '#type' => 'textfield',
-      '#title' => $this->t('Others:'),
-      '#default_value' => $address,
-      '#required' => TRUE,
-    ];
-
     $form['settings_tab']['stuff']['email_text_group'] = [
       '#type' => 'details',
       '#title' => $this->t('Email notifications.'),
       '#collapsed' => FALSE,
     ];
-
     $form['settings_tab']['stuff']['email_text_group']['invoice_logo_file'] = [
       '#title' => $this->t('Company Logo'),
       '#type' => 'managed_file',
-      '#description' => $this->t('Add a company logo that it will be print on the invoice documents.'),
+      '#description' => $this->t('Add a company logo.'),
       '#upload_validators' => [
         'file_validate_extensions' => ['png jpg jpeg'],
         'file_validate_image_resolution' => ["300x300", ""],
@@ -261,14 +217,6 @@ class InvoiceSettingsForm extends ConfigFormBase {
       $form_state->setErrorByName('id', $this->t('This field should only have numbers. No spaces or special characters.'));
     }
 
-    if (!is_numeric($tabs['taxpayer_group']['phone'])) {
-      $form_state->setErrorByName('phone', $this->t('This field should only have numbers. No spaces or special characters.'));
-    }
-
-    if (strlen($tabs['taxpayer_group']['fax']) > 0) {
-      if (!is_numeric($form_state->getValue('fax'))) {
-        $form_state->setErrorByName('fax', $this->t('This field should only have numbers. No spaces or special characters.'));
-      }
     }
   }
 
@@ -287,12 +235,7 @@ class InvoiceSettingsForm extends ConfigFormBase {
       ->set('id_type', $tabs['taxpayer_group']['id_type'])
       ->set('id', $tabs['taxpayer_group']['id'])
       ->set('name', $tabs['taxpayer_group']['name'])
-      ->set('commercial_name', $tabs['taxpayer_group']['commercial_name'])
-      ->set('phone', $tabs['taxpayer_group']['phone'])
-      ->set('fax', $tabs['taxpayer_group']['fax'])
-      ->set('email', $tabs['taxpayer_group']['email'])
-      ->set('postal_code', $tabs['taxpayer_group']['address_fieldset']['postal_code'])
-      ->set('address', $tabs['taxpayer_group']['address_fieldset']['address'])
+      ->set('email', $tabs['taxpayer_group']['email'])  
       ->set('invoice_logo_file', $tabs['email_text_group']['invoice_logo_file'])
       ->set('email_text', $tabs['email_text_group']['email_text'])
       ->set('email_subject', $tabs['email_text_group']['email_subject'])
