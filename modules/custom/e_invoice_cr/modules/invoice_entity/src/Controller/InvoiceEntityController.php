@@ -202,19 +202,8 @@ class InvoiceEntityController extends ControllerBase implements ContainerInjecti
   public function createZipFile($id) {
     /** @var \Drupal\invoice_entity\Entity\InvoiceEntity $entity */
     $entity = InvoiceEntity::load($id);
-
-    // Get all necessary data for invoice entities file names.
-    $user_id = $entity->get('user_id')->getValue()[0]['target_id'];
-
-           
-    // Attach files in the zip.
     
-
     // Downloads automatically the zip file in the device.
-    header('Content-type: application/octet-stream');
-    header('Content-disposition: attachment; filename=' . $uri);
-    readfile($uri);
-    unlink($uri);
     return new RedirectResponse('/admin/structure/invoice_entity');
   }
  
