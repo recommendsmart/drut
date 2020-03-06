@@ -7,8 +7,6 @@ package: other
 dependencies:
   - telephone
   - field_group
-  - addressfield_cr
   - paragraphs
   - entity_print
-  - content_moderation
   - twig_field_value
