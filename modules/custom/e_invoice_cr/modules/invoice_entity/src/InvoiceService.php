@@ -11,16 +11,7 @@ use Drupal\invoice_entity\Entity\InvoiceEntityInterface;
 class InvoiceService implements InvoiceServiceInterface {
 
   protected static $invoiceNumber;
-  protected static $secureCode;
   protected static $consecutiveName;
-
-  /**
-   * Constructs a new InvoiceService object.
-   */
-  public function __construct() {
-    // It gets a random number.
-    self::$secureCode = str_pad(intval(rand(1, 99999999)), 8, '0', STR_PAD_LEFT);
-  }
 
   /**
    * Update the configuration values.
