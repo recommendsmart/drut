@@ -4,6 +4,7 @@ namespace Drupal\commerce_dashboard\Plugin\rest\resource;
 
 use Drupal\rest\Plugin\ResourceBase;
 use Drupal\rest\ResourceResponse;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Provides the dashboard data Resource.
@@ -17,6 +18,30 @@ use Drupal\rest\ResourceResponse;
  * )
  */
 class CommerceDashboardResource extends ResourceBase {
+
+  /**
+   * The current active database's master connection.
+   *
+   * @var \Drupal\Core\Database\Connection
+   */
+  protected $database;
+
+  /**
+   * An entity type manager service instance.
+   *
+   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
+   */
+  protected $entityTypeManager;
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
+    $instance = parent::create($container, $configuration, $plugin_id, $plugin_definition);
+    $instance->database = $container->get('database');
+    $instance->entityTypeManager = $container->get('entity_type.manager');
+    return $instance;
+  }
 
   /**
    * Responds to entity GET requests.
@@ -40,12 +65,12 @@ class CommerceDashboardResource extends ResourceBase {
    * {@inheritdoc}
    */
   public function getSalesData() {
-    $query = \Drupal::entityQuery('commerce_order');
+    $order_storage = $this->entityTypeManager->getStorage('commerce_order');
+    $query = $order_storage->getQuery();
     $query->condition('state', 'completed');
     $query->condition('placed', strtotime('now -14 days'), '>=');
     $query->accessCheck(FALSE);
     $order_ids = $query->execute();
-    $order_storage = \Drupal::entityTypeManager()->getStorage('commerce_order');
     $order_storage = $order_storage->loadMultiple($order_ids);
     $totals = [
       'today' => 0,
@@ -104,11 +129,10 @@ class CommerceDashboardResource extends ResourceBase {
    * {@inheritdoc}
    */
   public function getTopProducts() {
-    $database = \Drupal::database();
-    $query = $database->select('commerce_order', 'commerce_order');
+    $query = $this->database->select('commerce_order', 'commerce_order');
     $query->addJoin('LEFT', 'commerce_order_item', 'order_item', 'order_item.order_id = commerce_order.order_id');
     $query->fields('order_item', ['title', 'purchased_entity', 'total_price__number', 'quantity']);
-    $query->condition('commerce_order.placed', strtotime('now -7 days'), '>=');
+    $query->condition('commerce_order.placed', strtotime('now -14 days'), '>=');
     $results = $query->execute();
     $top_products = [];
     foreach ($results as $record) {
@@ -123,12 +147,12 @@ class CommerceDashboardResource extends ResourceBase {
    * {@inheritdoc}
    */
   public function getCarts() {
-    $query = \Drupal::entityQuery('commerce_order');
+    $order_storage = $this->entityTypeManager->getStorage('commerce_order');
+    $query = $order_storage->getQuery();
     $query->condition('state', 'draft');
     $query->accessCheck(FALSE);
     $query->sort('changed', 'DESC');
     $order_ids = $query->execute();
-    $order_storage = \Drupal::entityTypeManager()->getStorage('commerce_order');
     $order_storage = $order_storage->loadMultiple($order_ids);
     $carts = [];
     foreach ($order_storage as $order) {

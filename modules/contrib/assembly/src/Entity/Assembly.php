@@ -267,7 +267,8 @@ class Assembly extends RevisionableContentEntityBase implements AssemblyInterfac
       ])
       ->setDisplayConfigurable('form', TRUE)
       ->setRevisionable(TRUE)
-      ->setDefaultValue(TRUE);
+      ->setDefaultValue(TRUE)
+      ->setTranslatable(TRUE);
 
     $fields['visual_styles'] = BaseFieldDefinition::create('list_string')
       ->setLabel(t('Visual styles'))

@@ -16,7 +16,7 @@ use Drupal\user\EntityOwnerTrait;
  *   handlers = {
  *     "view_builder" = "Drupal\microcontent\EntityHandlers\MicrocontentViewBuilder",
  *     "list_builder" = "Drupal\microcontent\EntityHandlers\MicrocontentListBuilder",
- *     "views_data" = "Drupal\views\EntityViewsData",
+ *     "views_data" = "Drupal\microcontent\EntityHandlers\MicrocontentViewsData",
  *     "form" = {
  *       "default" = "Drupal\microcontent\Form\MicroContentForm",
  *       "add" = "Drupal\microcontent\Form\MicroContentForm",

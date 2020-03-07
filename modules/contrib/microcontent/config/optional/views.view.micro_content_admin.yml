@@ -8,13 +8,12 @@ dependencies:
     - microcontent
     - user
 id: micro_content_admin
-label: 'Micro-content'
+label: Micro-content
 module: views
 description: 'Provides the micro-content admin view'
 tag: ''
 base_table: microcontent_field_data
 base_field: id
-core: 8.x
 display:
   default:
     display_plugin: default
@@ -25,7 +24,7 @@ display:
       access:
         type: perm
         options:
-          perm: 'administer micro-content'
+          perm: 'administer microcontent'
       cache:
         type: tag
         options: {  }
@@ -522,15 +521,7 @@ display:
             remember_roles:
               authenticated: authenticated
               anonymous: '0'
-              uq_staff: '0'
-              uq_student: '0'
-              author: '0'
-              reviewer: '0'
-              editor: '0'
-              site_builder: '0'
-              site_coordinator: '0'
               administrator: '0'
-              super_administrator: '0'
             placeholder: ''
           is_grouped: false
           group_info:
@@ -573,15 +564,7 @@ display:
             remember_roles:
               authenticated: authenticated
               anonymous: '0'
-              uq_staff: '0'
-              uq_student: '0'
-              author: '0'
-              reviewer: '0'
-              editor: '0'
-              site_builder: '0'
-              site_coordinator: '0'
               administrator: '0'
-              super_administrator: '0'
             reduce: false
           is_grouped: false
           group_info:
@@ -605,11 +588,8 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
-          operator: '='
-          value:
-            min: ''
-            max: ''
-            value: ''
+          operator: in
+          value: {  }
           group: 1
           exposed: true
           expose:
@@ -627,15 +607,7 @@ display:
             remember_roles:
               authenticated: authenticated
               anonymous: '0'
-              uq_staff: '0'
-              uq_student: '0'
-              author: '0'
-              reviewer: '0'
-              editor: '0'
-              site_builder: '0'
-              site_coordinator: '0'
               administrator: '0'
-              super_administrator: '0'
             placeholder: ''
             min_placeholder: ''
             max_placeholder: ''
@@ -707,7 +679,7 @@ display:
           entity_field: status
           plugin_id: boolean
       sorts: {  }
-      title: 'Micro-content'
+      title: Micro-content
       header: {  }
       footer: {  }
       empty:
@@ -735,12 +707,7 @@ display:
         - url
         - url.query_args
         - user.permissions
-      tags:
-        - 'config:core.entity_view_display.microcontent.career_outcome.default'
-        - 'config:core.entity_view_display.microcontent.person_card.default'
-        - 'config:core.entity_view_display.microcontent.rating.default'
-        - 'config:core.entity_view_display.microcontent.rating.preview'
-        - 'config:core.entity_view_display.microcontent.testimonial.default'
+      tags: { }
   page_1:
     display_plugin: page
     id: page_1
@@ -757,9 +724,4 @@ display:
         - url
         - url.query_args
         - user.permissions
-      tags:
-        - 'config:core.entity_view_display.microcontent.career_outcome.default'
-        - 'config:core.entity_view_display.microcontent.person_card.default'
-        - 'config:core.entity_view_display.microcontent.rating.default'
-        - 'config:core.entity_view_display.microcontent.rating.preview'
-        - 'config:core.entity_view_display.microcontent.testimonial.default'
+      tags: { }
