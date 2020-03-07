@@ -12,6 +12,7 @@ invoice_form:
   css:
     theme:
       css/InvoiceForm.css: {}
+      css/invoice-form.css: {}
 
 invoice_view:
   version: 1.x
