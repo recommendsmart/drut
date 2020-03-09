@@ -1,0 +1,41 @@
+uuid: 0dade323-f6eb-440f-acb1-39e2ba75cdac
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.profile.geolocation_geocoded
+    - profile.type.crm_org
+  module:
+    - geocoder_field
+    - geofield
+third_party_settings:
+  geocoder_field:
+    method: source
+    weight: 0
+    geocode_field: crm_org_address
+    reverse_geocode_field: ''
+    hidden: false
+    disabled: false
+    plugins:
+      - googlemaps
+    dumper: wkt
+    delta_handling: default
+    failure:
+      handling: empty
+      status_message: true
+      log: true
+_core:
+  default_config_hash: eQiyfBq6q8rG5nIZ6NSRIQLIge6BXIENe9OoDxydo3I
+id: profile.crm_org.geolocation_geocoded
+field_name: geolocation_geocoded
+entity_type: profile
+bundle: crm_org
+label: Geo-location
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  backend: geofield_backend_default
+field_type: geofield

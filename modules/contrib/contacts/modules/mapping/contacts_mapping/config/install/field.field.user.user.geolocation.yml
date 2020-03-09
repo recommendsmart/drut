@@ -1,0 +1,22 @@
+uuid: 6e0405f5-ef4b-45ab-b7d4-aff57b00edfe
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.user.geolocation
+  module:
+    - geofield
+    - user
+id: user.user.geolocation
+field_name: geolocation
+entity_type: user
+bundle: user
+label: Geolocation
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  backend: geofield_backend_default
+field_type: geofield_override

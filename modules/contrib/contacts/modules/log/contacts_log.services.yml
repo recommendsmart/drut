@@ -1,0 +1,8 @@
+services:
+  contacts_log.profile_logger:
+    class: Drupal\contacts_log\ProfileLogger
+    arguments: ['@entity_type.manager']
+
+  contacts_log.user_logger:
+    class: Drupal\contacts_log\UserLogger
+    arguments: ['@entity_type.manager']

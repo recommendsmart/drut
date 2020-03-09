@@ -1,0 +1,13 @@
+name: CRM User Dashboard
+description: "Useful features for building CRM User Dashboard."
+package: Tool
+type: module
+core: 8.x
+
+dependencies:
+  - contacts:contacts
+
+# Information added by Drupal.org packaging script on 2020-03-03
+version: '8.x-1.x-dev'
+project: 'contacts'
+datestamp: 1583237969

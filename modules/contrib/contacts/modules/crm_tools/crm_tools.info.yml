@@ -1,0 +1,13 @@
+name: CRM Tools
+description: "Useful features for building CRM."
+package: Tool
+type: module
+core: 8.x
+
+dependencies:
+  - color_field:color_field (>=8.x-2.0-rc1)
+
+# Information added by Drupal.org packaging script on 2020-03-03
+version: '8.x-1.x-dev'
+project: 'contacts'
+datestamp: 1583237969

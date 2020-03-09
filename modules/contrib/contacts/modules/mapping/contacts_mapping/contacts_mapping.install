@@ -1,0 +1,33 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for the contacts_mapping module.
+ */
+
+/**
+ * Implements hook_install().
+ */
+function contacts_mapping_install() {
+  $config_factory = \Drupal::configFactory();
+
+  // Adds Contacts Mapping block to the contacts dashboard.
+  if ($config_factory->get('contacts.contact_tab.summary')) {
+    $contacts_config = $config_factory->getEditable('contacts.contact_tab.summary');
+    $contacts_blocks = $contacts_config->get('blocks');
+    $contacts_blocks['contacts_geofield_map_user_user'] = [
+      "id" => "contacts_geofield_map:user:user",
+      "name" => "contacts_geofield_map_user_user",
+      "label" => "Contacts Location",
+      "provider" => "contacts_mapping",
+      "label_display" => "visible",
+      "geo_field" => "geolocation",
+      "region" => "left",
+      "weight" => 2,
+      "context_mapping" => [
+        "entity" => "user",
+      ],
+    ];
+    $contacts_config->set('blocks', $contacts_blocks)->save();
+  }
+}

@@ -1,0 +1,10 @@
+uuid: 1f86520d-9a08-4d30-ac1b-691f34c8f091
+langcode: en
+status: true
+dependencies:
+  module:
+    - user
+id: user.contacts_dashboard_restricted
+label: 'Contacts Dashboard Restricted'
+targetEntityType: user
+cache: true

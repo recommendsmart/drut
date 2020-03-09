@@ -1,0 +1,80 @@
+<?php
+
+/**
+ * @file
+ * Contains Contacts Mapping.
+ */
+
+use Drupal\Core\Entity\EntityInterface;
+
+/**
+ * Implements hook_ENTITY_TYPE_insert() for profile.
+ */
+function contacts_mapping_profile_insert(EntityInterface $entity) {
+  contacts_mapping_profile_postsave($entity);
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_update() for profile.
+ */
+function contacts_mapping_profile_update(EntityInterface $entity) {
+  contacts_mapping_profile_postsave($entity);
+}
+
+/**
+ * Post save operation for profile entity.
+ *
+ * @see contacts_mapping_profile_insert()
+ * @see contacts_mapping_profile_update()
+ */
+function contacts_mapping_profile_postsave(EntityInterface $entity) {
+  /* @var \Drupal\profile\Entity\Profile $entity */
+  if (!$entity->hasField('geolocation_geocoded')) {
+    return;
+  }
+
+  // If we have the original entity check for changes.
+  $original = $entity->original;
+  if ($original && $entity->geolocation_geocoded->value == $original->geolocation_geocoded->value) {
+    return;
+  }
+
+  // If the field is empty and there is no original value do nothing.
+  if (!$original && $entity->get('geolocation_geocoded')->isEmpty()) {
+    return;
+  }
+
+  // Fetch geo data from source fields.
+  $user = $entity->getOwner();
+  /* @var \Drupal\contacts_mapping\Plugin\Field\FieldType\GeofieldItemList $geofield */
+  $geofield = $user->get('geolocation');
+  if ($geofield->updateGeoFromSource()) {
+    $user->save();
+  }
+}
+
+/**
+ * Implements hook_field_formatter_info_alter().
+ *
+ * Allow all geofield formatters to be used by geofield_override.
+ */
+function contacts_mapping_field_formatter_info_alter(array &$info) {
+  foreach ($info as &$type) {
+    if (in_array('geofield', $type['field_types'])) {
+      $type['field_types'][] = 'geofield_override';
+    }
+  }
+}
+
+/**
+ * Implements hook_field_widget_info_alter().
+ *
+ * Allow all geofield widgets to be used by geofield_override.
+ */
+function contacts_mapping_field_widget_info_alter(array &$info) {
+  foreach ($info as &$type) {
+    if (in_array('geofield', $type['field_types'])) {
+      $type['field_types'][] = 'geofield_override';
+    }
+  }
+}

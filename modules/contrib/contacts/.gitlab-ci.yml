@@ -1,0 +1,129 @@
+image: yanniboi/drupal
+
+variables:
+  MYSQL_USER: root
+  MYSQL_PASSWORD: password
+  MYSQL_DATABASE: db
+  COMPOSER_CACHE_DIR: "$CI_PROJECT_DIR/.cache/composer"
+  COMPOSER_ALLOW_SUPERUSER: '1'
+  COMPOSER_EXIT_ON_PATCH_FAILURE: '1'
+  COMPOSER_MEMORY_LIMIT: '-1'
+  DRUPAL_BUILD_ROOT: "$CI_BUILDS_DIR/drupal"
+  # Default Drupal version type.
+  DRUPAL_VERSION_TYPE: 'supported'
+
+cache:
+  paths:
+    - .cache
+  key: "$CI_JOB_NAME"
+
+# General set up of our environment and code.
+before_script:
+  - composer self-update
+  - composer global require hirak/prestissimo
+
+# Streamlined coder for speed run using the latest version.
+coder:
+  # Don't run coder on schedules
+  except:
+    refs:
+      - schedules
+  script:
+    - composer global require drupal/coder:^8.3.1 dealerdirect/phpcodesniffer-composer-installer
+    - ~/.composer/vendor/bin/phpcs --standard=Drupal -p --colors .
+
+# General definitions for the PHP Unit tests.
+.phpunit:
+  script:
+    - ./.gitlab-ci/setup.sh
+    - cd "$DRUPAL_BUILD_ROOT/web"
+    - $CI_PROJECT_DIR/.gitlab-ci/phpunit.sh
+  variables:
+    SIMPLETEST_BASE_URL: "http://localhost:8888"
+    SIMPLETEST_DB: "mysql://$MYSQL_USER:$MYSQL_PASSWORD@127.0.0.1:3306/$MYSQL_DATABASE"
+    MINK_DRIVER_ARGS_WEBDRIVER: '["chrome", {"browserName":"chrome","chromeOptions":{"args":["--disable-gpu","--headless","--disable-dev-shm-usage","--no-sandbox","--lang=en-GB"]}}, "http://localhost:9515"]'
+    BROWSERTEST_OUTPUT_DIRECTORY: "$TEMP/browser_output"
+  artifacts:
+    name: 'test-output'
+    paths:
+      - test-output/
+    expire_in: 1 week
+    when: always
+
+# The default PHP Unit test is supported.
+#drupal-supported:
+#  extends: .phpunit
+
+# Also run for the current security release (back 1 minor version).
+drupal-security:
+  extends: .phpunit
+  variables:
+    DRUPAL_VERSION_TYPE: 'security'
+
+# On schedule and master, run for the dev branch of the supported for early
+# visibility of upstream changes. Do not allow this to fail as these changes
+# will hit a release imminently.
+#drupal-supported-dev:
+#  extends: .phpunit
+#  only:
+#    refs:
+#      - master
+#      - schedules
+#  variables:
+#    DRUPAL_VERSION_TYPE: 'supported-dev'
+
+# On schedule and master, run for the dev branch of the next release for early
+# visibility of upstream changes. Allow this to fail as this is not actually
+# supported yet.
+drupal-dev:
+  extends: .phpunit
+  only:
+    refs:
+      - master
+      - schedules
+  allow_failure: true
+  variables:
+    DRUPAL_VERSION_TYPE: 'dev'
+
+# Automatically push protected branches and tags to drupal.org.
+.drupalorg:
+  cache: {}
+  image:
+    name: alpine/git:latest
+    entrypoint: [""]
+  stage: deploy
+  variables:
+    GIT_STRATEGY: clone
+  except:
+    - schedules
+  before_script:
+    - mkdir -p ~/.ssh
+    - chmod 0700 ~/.ssh
+    - echo "$DRUPAL_ORG_SSH_KEY" | tr -d '\r' > ~/.ssh/id_rsa
+    - chmod 600 ~/.ssh/id_rsa
+    - echo "$DRUPAL_ORG_HOSTKEYS" > ~/.ssh/known_hosts
+    - chmod 644 ~/.ssh/known_hosts
+
+drupalorg_branch:
+  extends: .drupalorg
+  # Have a 5 minute delay for branches so there is time to fix mistakes.
+  when: delayed
+  start_in: 5 minutes
+  only:
+    - /^[0-9]\.x-[0-9]\.x$/
+  script:
+    - git remote add drupal git@git.drupal.org:project/$CI_PROJECT_NAME.git
+    - git checkout -t origin/$CI_COMMIT_REF_NAME
+    - git push drupal $CI_COMMIT_REF_NAME
+
+drupalorg_tags:
+  extends: .drupalorg
+  # Have a 1 minute delay for tags so there is time to fix mistakes.
+  when: delayed
+  start_in: 1 minutes
+  only:
+    - tags
+  script:
+    - git remote add drupal git@git.drupal.org:project/$CI_PROJECT_NAME.git
+    - git fetch --tags
+    - git push drupal $CI_COMMIT_REF_NAME

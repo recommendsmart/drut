@@ -1,0 +1,21 @@
+uuid: 55c51b50-9f93-4016-9bbf-d6a68b721f47
+langcode: en
+status: true
+dependencies:
+  module:
+    - contacts_mapping
+    - geofield
+    - user
+id: user.geolocation
+field_name: geolocation
+entity_type: user
+type: geofield_override
+settings:
+  backend: geofield_backend_default
+module: contacts_mapping
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

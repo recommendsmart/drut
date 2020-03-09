@@ -1,0 +1,23 @@
+langcode: en
+status: true
+dependencies: {  }
+id: log
+label: Log
+path: log
+layout: contacts_tab_content.stacked
+weight: null
+relationships: {  }
+blocks:
+  views_block_contacts_log_messages_block_1:
+    name: views_block_contacts_log_messages_block_1
+    id: 'views_block:contacts_log_messages-block_1'
+    weight: 0
+    region: top
+    label: 'Log'
+    provider: views
+    label_display: visible
+    views_label: 'Log'
+    items_per_page: '0'
+    context_mapping:
+      contact_target_id: user
+roles: {  }
