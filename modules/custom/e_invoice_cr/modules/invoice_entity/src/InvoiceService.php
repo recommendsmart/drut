@@ -59,18 +59,6 @@ class InvoiceService implements InvoiceServiceInterface {
         self::$consecutiveName = 'electronic_ticket_consecutive';
         break;
 
-      case '1':
-        self::$consecutiveName = 'invoice_accepted_consecutive';
-        break;
-
-      case '2':
-        self::$consecutiveName = 'invoice_partial_accepted_consecutive';
-        break;
-
-      case '3':
-        self::$consecutiveName = 'invoice_rejected_consecutive';
-        break;
-
       default:
         self::$consecutiveName = 'electronic_bill_consecutive';
         break;
