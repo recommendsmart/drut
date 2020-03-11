@@ -41,7 +41,7 @@ class GeofieldItemList extends FieldItemList {
     }
 
     /* @var \Drupal\profile\Entity\ProfileInterface $profile */
-    if (!$profile->hasField('geolocation_geocoded')) {
+    if (!$profile || !$profile->hasField('geolocation_geocoded')) {
       return FALSE;
     }
 

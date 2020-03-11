@@ -7,7 +7,7 @@ package: 'Contacts'
 dependencies:
   - group:group (>=8.x-1.0-rc2)
 
-# Information added by Drupal.org packaging script on 2020-03-03
+# Information added by Drupal.org packaging script on 2020-03-09
 version: '8.x-1.x-dev'
 project: 'contacts'
-datestamp: 1583237969
+datestamp: 1583789014
