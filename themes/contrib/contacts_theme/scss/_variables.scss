@@ -1,0 +1,51 @@
+// Our overrides of Bootstrap's variables.
+$brand-primary: #5bc0de; // Teal, but variable replacement is too late.
+
+// Import Bootstrap's variables.
+@import "../node_modules/bootstrap/scss/variables";
+
+// Our variable based overrides.
+$body-bg: $gray-lightest;
+
+$btn-primary-bg: $green;
+$btn-primary-border: $btn-primary-bg;
+
+$btn-secondary-color: #fff;
+$btn-secondary-bg: #5bc0de;
+$btn-secondary-border: $btn-secondary-bg;
+
+$table-border-color: $thumbnail-border-color;
+
+// Our additional variables.
+$app-breakpoint: lg;
+$sidebar-width: 300px;
+
+$inverse-bg: $gray-light;
+
+$content-padding-parts: (
+  y: map_get(map_get($spacers, 3), y) * 1.5,
+  x: map_get(map_get($spacers, 3), x) * 1.5
+);
+$content-padding: if(map_get($content-padding-parts, y) == map_get($content-padding-parts, x), map_get($content-padding-parts, y), map_get($content-padding-parts, y) map_get($content-padding-parts, x));
+
+// Header image is 100x100 px + 1px border + $thumbnail-padding.
+$header-image-size: (
+  y: unquote("102px + #{$thumbnail-padding * 2}"),
+  x: unquote("102px + #{$thumbnail-padding * 2}")
+);
+
+$inverse-link-color: $white !default;
+$inverse-link-hover-color: darken($inverse-link-color, 15%) !default;
+
+
+// Facets
+
+$facet-padding-y:             .5rem;
+$facet-link-color:            $white !default;
+$facet-link-hover-color:      darken($gray-dark, 5%) !default;
+$facet-link-hover-bg:         $gray-lightest !default;
+$facet-link-active-color:     $component-active-color !default;
+$facet-link-active-bg:        $component-active-bg !default;
+$facet-link-disabled-color:   $gray-light !default;
+$facet-item-padding-x:        1.5rem !default;
+$facet-header-color:          $gray-light !default;

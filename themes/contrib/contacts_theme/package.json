@@ -1,0 +1,16 @@
+{
+  "name": "contacts_theme",
+  "version": "1.0.0",
+  "repository": {
+    "type": "git",
+    "url": "https://git.drupal.org/project/contacts_theme"
+  },
+  "devDependencies": {
+    "bootstrap": "4.0.0-alpha.6",
+    "grunt": "~0",
+    "grunt-contrib-sass": "~0",
+    "grunt-contrib-watch": "~0",
+    "grunt-contrib-copy": "^1.0.0",
+    "grunt-autoprefixer": "~0"
+  }
+}

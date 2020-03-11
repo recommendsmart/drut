@@ -1,0 +1,15 @@
+{% for type, messages in message_list %}
+  {%
+    set classes = [
+      'alert',
+      'alert-' ~ type_classes[type],
+    ]
+  %}
+  {% for message in messages %}
+    <div role="alert" aria-label="{{ status_headings[type] }}"{{ attributes.addClass(classes)|without('role', 'aria-label') }}>
+      {{ message }}
+    </div>
+  {% endfor %}
+  {# Remove type specific classes. #}
+  {% set attributes = attributes.removeClass(classes) %}
+{% endfor %}

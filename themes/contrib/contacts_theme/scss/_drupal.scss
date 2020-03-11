@@ -1,0 +1,24 @@
+.view-result-header {
+  color: $figure-caption-color;
+  font-size: $figure-caption-font-size;
+  text-align: right;
+  margin-bottom: map_get(map_get($spacers, 2), y);
+}
+
+/* Fields */
+.field {
+  margin-bottom: $spacer-y;
+}
+.field-title {
+  margin-bottom: 0;
+  font-weight: bold;
+}
+
+// Ensure dialog buttons don't have a box shadow as it still shows even when
+// they are hidden.
+.ui-dialog .form-actions {
+   input[type=submit],
+   a.button {
+     box-shadow: none !important;
+   }
+}

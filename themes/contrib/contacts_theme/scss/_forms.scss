@@ -1,0 +1,14 @@
+@import "../node_modules/bootstrap/scss/forms";
+
+label:not(.form-check-label) {
+  font-weight: bold;
+}
+
+.form-composite {
+  @extend .form-group;
+
+  & > legend {
+    font-size: inherit;
+    @extend label;
+  }
+}

@@ -1,0 +1,45 @@
+.contacts-tabs-content {
+  position: relative;
+  padding: 1.5rem;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-top-width: 0;
+  -ms-flex: 1 0 300px;
+      flex: 1 0 300px;
+  overflow-y: auto; }
+  .contacts-tabs-content::after {
+    display: block;
+    content: "";
+    clear: both; }
+  .contacts-tabs-content:after {
+    padding-bottom: 1.5rem; }
+
+.contact-summary {
+  padding-bottom: 0;
+  margin-bottom: 1rem; }
+  .contact-summary .contact-id,
+  .contact-summary .contact-user-dashboard {
+    float: right;
+    clear: right; }
+
+.contacts-dash-block {
+  margin: 0 -1.5rem 1rem;
+  padding: 0 1.5rem;
+  border: 0 solid #ddd;
+  border-bottom-width: 1px; }
+  @media (min-width: 768px) {
+    .contacts-dash-block {
+      margin: 0 0 1rem;
+      padding: 1.5rem;
+      border-width: 1px;
+      border-radius: 0.25rem; } }
+
+.contacts-dash-edit {
+  text-align: right; }
+  @media (min-width: 576px) {
+    .contacts-dash-edit {
+      position: absolute;
+      right: 1.5rem;
+      z-index: 1; } }
+
+/*# sourceMappingURL=contact.css.map */

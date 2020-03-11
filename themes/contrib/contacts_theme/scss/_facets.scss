@@ -1,0 +1,86 @@
+// The facet wrapper (`<div>`).
+.facet {
+  position: relative;
+}
+
+.facet-toggle {
+  display: flex;
+  cursor: pointer;
+
+  // Generate the caret automatically.
+  &:after {
+    display: inline-block;
+    width: 0;
+    height: 0;
+    margin-left: auto;
+    vertical-align: middle;
+    content: "";
+    border-top: $caret-width solid;
+    border-right: $caret-width solid transparent;
+    border-left: $caret-width solid transparent;
+    align-self: center;
+
+    transition: transform 0.5s;
+    transform: rotate(0deg);
+  }
+
+  &.collapsed:after {
+    transform: rotate(180deg);
+  }
+
+  // Prevent the focus on the facet toggle when closing facets.
+  &:focus {
+    outline: 0;
+  }
+}
+
+// Links and more within the facet menu.
+.facet-item {
+  display: block;
+  padding: 3px $facet-item-padding-x;
+  clear: both;
+  font-weight: $font-weight-normal;
+  color: $facet-link-color !important;
+  white-space: nowrap; // prevent links from randomly breaking onto new lines.
+
+  @include hover-focus {
+    text-decoration: none;
+    background-color: $facet-link-hover-bg;
+
+    &:not(.active) {
+      color: $facet-link-hover-color !important;
+    }
+  }
+
+  &.active,
+  &:active {
+    color: $facet-link-active-color;
+    text-decoration: none;
+    background-color: $facet-link-active-bg;
+  }
+
+  &.disabled,
+  &:disabled {
+    color: $facet-link-disabled-color;
+    cursor: $cursor-disabled;
+    background-color: transparent;
+  }
+}
+
+// Open state for the facet.
+.show {
+  // Remove the outline when :focus is triggered.
+  > a {
+    outline: 0;
+  }
+}
+
+// Facet section headers.
+.facet-header {
+  display: block;
+  padding: $facet-padding-y $facet-item-padding-x;
+  margin-bottom: 0;
+  font-size: $font-size-sm;
+  color: $facet-header-color;
+  white-space: nowrap;
+}

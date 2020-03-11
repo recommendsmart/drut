@@ -1,0 +1,9 @@
+{% if content %}
+  <div{{ content_attributes.addClass('layout-content') }}>
+    {{ content.content }}
+  </div>
+
+  <aside{{ sidebar_first_attributes.addClass('layout-sidebar-first')|without('role') }} role="complementary">
+    {{ content.sidebar }}
+  </aside>
+{% endif %}

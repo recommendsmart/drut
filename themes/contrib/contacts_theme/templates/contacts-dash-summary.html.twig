@@ -1,0 +1,6 @@
+<div class="contact-summary wrap-header-image clearfix">
+  <small class="contact-id">ID: {{ user.id }}</small>
+  {% if user_dashboard %}<div class="contact-user-dashboard">{{ user_dashboard }}</div>{% endif %}
+  {% if email %}<div class="contact-email">{{ email }}</div>{% endif %}
+  {% if phone %}<div class="contact-phone">{{ phone }}</div>{% endif %}
+</div>

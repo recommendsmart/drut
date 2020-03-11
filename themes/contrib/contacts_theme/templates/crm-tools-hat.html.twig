@@ -1,0 +1,11 @@
+{% set classes = [] %}
+{% if not hide_button %}
+    {% set classes = [ 'btn', 'btn-outline-secondary', 'btn-sm'] %}
+{% endif %}
+
+<span {{ attributes.addClass(classes).setAttribute('title', label) }}>
+    {{ icon }}
+    {% if not hide_label %}
+        {{ label }}
+    {%  endif %}
+</span>

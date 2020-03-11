@@ -1,0 +1,130 @@
+@import "../variables";
+@import "../mixins";
+
+.drag-area {
+  min-height: 100px;
+  padding: 20px;
+  margin: 10px 0;
+  border: 3px lightblue dashed;
+}
+
+.btn.dnd-manage,
+.btn.dnd-manage:hover {
+  background-color: #636c72;
+  border-color: #636c72;
+  position: absolute;
+  left: -65px;
+  box-shadow: none !important;
+}
+
+.contacts-ajax-tabs {
+  &:not(.editing) {
+    .add-tab {
+      display: none;
+    }
+  }
+
+  .add-tab .nav-link {
+    background: lightblue;
+    color: #fff;
+    font-weight: bold;
+  }
+
+  &.editing {
+    .nav-link:hover,
+    .nav-link {
+      border: 1px dashed lightblue;
+      margin: 0 5px;
+      border-bottom: 0;
+    }
+  }
+
+  .nav-item.add-tab .nav-link:before,
+  .nav-item.add-tab .nav-link:after {
+    display: none;
+  }
+
+  .tab-area-placeholder {
+    width: 40px;
+    max-height: 35px;
+    line-height: 1.2em;
+    background-color: beige;
+    margin-bottom: 20px;
+    border-color: blue !important;
+    
+    &:before,
+    &:after {
+      background-image: none !important;
+    }
+  }
+}
+
+.list-group.collapse {
+  display: none;
+}
+
+.drag-area.show.highlighted {
+  border: 3px blue dashed;
+  background: beige;
+}
+
+.draggable {
+
+  &.card {
+    margin-bottom: 20px;
+  }
+
+  .display-select {
+    display:none;
+  }
+
+  .card-header.editing .display-select {
+    display: inherit;
+  }
+
+  .card-header input[disabled] {
+    max-width: 140px;
+    background: none;
+    border: 0;
+    font-weight: bold;
+  }
+
+  .card-header:before {
+    height: 15px;
+    width: 25px;
+    background-position: 0px -2px;
+    background-size: 20px;
+    margin-bottom: -2px;
+  }
+}
+
+.drag-area-placeholder {
+  height: 40px;
+  line-height: 1.2em;
+  background-color: #ccc;
+  margin-bottom: 20px;
+}
+
+.draggable-active {
+  background-color: #f5f5f5;
+  margin-bottom: 20px;
+
+  .dnd-content {
+    max-height: 85px;
+    overflow: hidden;
+
+    .field {
+      height: 10px;
+      width: 93%;
+      background-color: #ccc;
+      font-size: 0;
+      padding: 0;
+      margin: 15px auto;
+      overflow: hidden;
+      max-width: 93%;
+      flex: 0 0 85%;
+      display: block;
+    }
+  }
+
+}

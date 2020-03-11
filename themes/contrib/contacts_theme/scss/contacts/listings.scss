@@ -1,0 +1,41 @@
+@import "../variables";
+@import "../mixins";
+
+.views-view-contacts-dashboard-indexed {
+  > .view-content {
+    border: $nav-tabs-border-width solid $table-border-color;
+    @include border-radius();
+    background: $white;
+    @include colour-reset;
+
+    & + nav > .pagination {
+      margin-top: -1px;
+
+      @if $enable-rounded {
+        .page-item {
+          &:first-child {
+            .page-link {
+              border-top-left-radius: 0;
+            }
+          }
+          &:last-child {
+            .page-link {
+              border-top-right-radius: 0;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.contacts-row {
+  border-color: $table-border-color;
+  padding: 0;
+
+  > * {
+    $spacing: map_get($spacers, 2);
+    padding: map_get($spacing, y) 0;
+    margin: 0 map_get($spacing, x);
+  }
+}

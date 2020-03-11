@@ -1,0 +1,53 @@
+@import "../variables";
+@import "../mixins";
+
+.contacts-tabs-content {
+  position: relative;
+  padding: $content-padding;
+  background: $nav-tabs-active-link-hover-bg;
+  border: $nav-tabs-border-width solid $nav-tabs-border-color;
+  border-top-width: 0;
+
+  @include flex-fill(y, 300px);
+
+  @include clearfix();
+
+  &:after {
+    padding-bottom: map_get($content-padding-parts, y);
+  }
+}
+
+.contact-summary {
+  padding-bottom: 0;
+  margin-bottom: $spacer-y;
+
+  .contact-id,
+  .contact-user-dashboard {
+    float: right;
+    clear: right;
+  }
+}
+
+.contacts-dash-block {
+  margin: 0 -#{map_get($content-padding-parts, x)} $spacer-y;
+  padding: 0 #{map_get($content-padding-parts, x)};
+  border: 0 solid $table-border-color;
+  border-bottom-width: 1px;
+
+  @include media-breakpoint-up(md) {
+    margin: 0 0 $spacer-y;
+    padding: $content-padding;
+    border-width: 1px;
+    @include border-radius();
+  }
+}
+
+.contacts-dash-edit {
+  text-align: right;
+
+  @include media-breakpoint-up(sm) {
+    position: absolute;
+    right: map_get($content-padding-parts, x);
+    z-index: 1;
+  }
+}

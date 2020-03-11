@@ -1,0 +1,21 @@
+{#
+/**
+ * @file
+ * Theme override for the facet item list.
+ */
+#}
+{% if items or empty %}
+  {%- if title is not empty -%}
+    <h5>{{ title }}</h5>
+  {%- endif -%}
+
+  {%- if items -%}
+    <{{ list_type }}{{ attributes.addClass('list-unstyled') }}>
+    {%- for item in items -%}
+      <li>{{ item.value }}</li>
+    {%- endfor -%}
+    </{{ list_type }}>
+  {%- else -%}
+    {{- empty -}}
+  {%- endif -%}
+{%- endif %}

@@ -1,0 +1,26 @@
+<div {{ attributes.addClass('row') }}>
+  {%  if content.top %}
+    <div class="col-12">
+      <div {{ region_attributes.top.setAttribute('data-contacts-manage-region-id', 'top') }}>
+        {{ content.top }}
+      </div>
+    </div>
+  {% endif %}
+  <div class="col-md-6">
+    <div {{ region_attributes.left.setAttribute('data-contacts-manage-region-id', 'left') }}>
+      {{ content.left }}
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div {{ region_attributes.right.setAttribute('data-contacts-manage-region-id', 'right') }}>
+      {{ content.right }}
+    </div>
+  </div>
+  {%  if content.bottom %}
+    <div class="col-12">
+      <div {{ region_attributes.bottom.setAttribute('data-contacts-manage-region-id', 'bottom') }}>
+        {{ content.bottom }}
+      </div>
+    </div>
+  {% endif %}
+</div>

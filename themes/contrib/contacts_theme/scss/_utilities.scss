@@ -1,0 +1,36 @@
+@import "../node_modules/bootstrap/scss/utilities";
+
+@include media-breakpoint-up($app-breakpoint) {
+  .app-flex {
+    display: flex !important;
+  }
+
+  .flex-fill {
+    @include flex-fill();
+  }
+
+  .flex-fill-scroll {
+    @include flex-fill(y);
+  }
+
+  .view-fill-scroll {
+    display: flex;
+    flex-direction: column;
+    &, & > .view-content {
+      @include flex-fill(y);
+    }
+  }
+}
+
+.highlight {
+  @include colour-invert($teal);
+
+  .layout-sidebar-first > & {
+    padding: $content-padding;
+    margin: 0 -#{map_get($content-padding-parts, x)} map_get($content-padding-parts, y);
+
+    &:first-child, & + .highlight {
+      margin-top: -#{map_get($content-padding-parts, y)};
+    }
+  }
+}

@@ -1,0 +1,22 @@
+{%
+set header = page.header|without('contacts_theme_local_actions', 'contacts_theme_primary_tabs', 'contacts_theme_page_title')
+%}
+<header class="layout-header clearfix{% if header_image %} with-header-image{% endif %}">
+  <div class="layout-logo">
+    {% if logo %}
+      <a href="{{ front_page }}" title="{{ 'Home'|t }}" rel="home" id="logo">
+        <img src="{{ logo }}" alt="{{ 'Home'|t }}" class="img-fluid" />
+      </a>
+    {% endif %}
+  </div>
+  <div class="layout-heading">
+    {{ page.header.contacts_theme_page_title }}
+    {% if header_image %}<div class="contacts-header-image">{{ header_image }}</div>{% endif %}
+    {{ page.header.contacts_theme_primary_tabs }}
+    {{ page.header.contacts_theme_local_actions }}
+    <div class="header-spacer"></div>
+    {% if header|without('#sorted', '#theme_wrappers', '#region')|length > 0 %}
+      <div class="region-header">{{ header }}</div>
+    {% endif %}
+  </div>
+</header>

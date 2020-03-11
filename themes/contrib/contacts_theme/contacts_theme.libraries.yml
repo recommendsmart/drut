@@ -1,0 +1,47 @@
+global:
+  version: VERSION
+  css:
+    theme:
+      css/style.css: {}
+
+# Bootstrap libraries.
+bootstrap.util:
+  js:
+    js/util.js: {}
+
+bootstrap.dropdown:
+  js:
+    js/dropdown.js: {}
+  dependencies:
+    - contacts_theme/bootstrap.util
+
+bootstrap.collapse:
+  js:
+    js/collapse.js: {}
+  dependencies:
+    - contacts_theme/bootstrap.util
+
+# Styling for the listings.
+listings:
+  css:
+    theme:
+      css/contacts/listings.css: {}
+
+# Styling for the contact page.
+contact:
+  css:
+    theme:
+      css/contacts/contact.css: {}
+
+# Styling for grouped local actions.
+action.group:
+  css:
+    state:
+      css/contacts/action-group.css: {}
+  dependencies:
+    - contacts_theme/bootstrap.dropdown
+
+drag_n_drop:
+  css:
+    state:
+      css/contacts_theme/drag-n-drop.css: {}

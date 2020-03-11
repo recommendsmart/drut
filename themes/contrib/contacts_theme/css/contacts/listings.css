@@ -1,0 +1,24 @@
+.views-view-contacts-dashboard-indexed > .view-content {
+  border: 1px solid #ddd;
+  border-radius: 0.25rem;
+  background: #fff;
+  color: #292b2c; }
+  .views-view-contacts-dashboard-indexed > .view-content a:not(.btn), .views-view-contacts-dashboard-indexed > .view-content .btn-link {
+    color: #5bc0de; }
+    .views-view-contacts-dashboard-indexed > .view-content a:not(.btn):focus, .views-view-contacts-dashboard-indexed > .view-content a:not(.btn):hover, .views-view-contacts-dashboard-indexed > .view-content .btn-link:focus, .views-view-contacts-dashboard-indexed > .view-content .btn-link:hover {
+      color: #28a1c5; }
+  .views-view-contacts-dashboard-indexed > .view-content + nav > .pagination {
+    margin-top: -1px; }
+    .views-view-contacts-dashboard-indexed > .view-content + nav > .pagination .page-item:first-child .page-link {
+      border-top-left-radius: 0; }
+    .views-view-contacts-dashboard-indexed > .view-content + nav > .pagination .page-item:last-child .page-link {
+      border-top-right-radius: 0; }
+
+.contacts-row {
+  border-color: #ddd;
+  padding: 0; }
+  .contacts-row > * {
+    padding: 0.5rem 0;
+    margin: 0 0.5rem; }
+
+/*# sourceMappingURL=listings.css.map */

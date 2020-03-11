@@ -1,0 +1,14 @@
+{#
+/**
+ * @file
+ * Theme override for the facet result item.
+ */
+#}
+<span>{{ value }}</span>
+{% if show_count %}
+  {% if is_active %}
+    <span class="ml-auto align-self-center facet-item__count badge badge-pill badge-default">{{ count }}</span>
+  {% else %}
+    <span class="ml-auto align-self-center facet-item__count badge badge-pill badge-primary">{{ count }}</span>
+  {% endif %}
+{% endif %}

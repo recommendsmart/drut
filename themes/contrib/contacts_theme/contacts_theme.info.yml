@@ -1,0 +1,37 @@
+name: Contacts Admin Theme
+type: theme
+# base theme: seven
+description: Admin theme for contacts dashboard
+package: Contacts
+core: 8.x
+libraries:
+  - contacts_theme/global
+
+regions:
+  header: 'Header'
+  breadcrumb: 'Breadcrumb'
+  help: 'Help'
+  pre_content: 'Pre-content'
+  content: 'Content'
+  sidebar_first: 'Sidebar'
+
+regions_hidden:
+  - highlighted
+
+libraries-override:
+  contacts/dashboard.layout: false
+  contacts/contact: contacts_theme/contact
+  contacts/action.group:
+    js:
+      js/action-group.js: false
+
+libraries-extend:
+  contacts/listings:
+    - contacts_theme/listings
+  contacts/action.group:
+    - contacts_theme/action.group
+
+# Information added by Drupal.org packaging script on 2019-11-07
+version: '8.x-1.x-dev'
+project: 'contacts_theme'
+datestamp: 1573128487

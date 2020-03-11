@@ -1,0 +1,40 @@
+@import "../variables";
+@import "../mixins";
+
+.action-group-wrapper {
+  display: inline;
+
+  .action-group-icon {
+    @include border-top-radius(0);
+    $font-size: $font-size-base * 1.5;
+    $font-size-diff: ($font-size - $font-size-base);
+    $padding-y: $btn-padding-y - $font-size-diff;
+    $padding-x: $btn-padding-x - $font-size-diff;
+    padding: $padding-y $padding-x;
+    font-size: $font-size;
+
+    &.btn-lg {
+      $font-size: $font-size-lg * 1.5;
+      $font-size-diff: ($font-size - $font-size-lg);
+      $padding-y: $btn-padding-y-lg - $font-size-diff;
+      $padding-x: $btn-padding-x-lg - $font-size-diff;
+      padding: $padding-y $padding-x;
+      font-size: $font-size;
+    }
+    &.btn-sm {
+      $font-size: $font-size-sm * 1.5;
+      $font-size-diff: ($font-size - $font-size-sm);
+      $padding-y: $btn-padding-y-sm - $font-size-diff;
+      $padding-x: $btn-padding-x-sm - $font-size-diff;
+      padding: $padding-y $padding-x;
+      font-size: $font-size;
+    }
+  }
+
+  @include media-breakpoint-up(md) {
+    & > .btn,
+    & > .action-group-icon > .btn {
+      @include border-top-radius(0);
+    }
+  }
+}

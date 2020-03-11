@@ -1,0 +1,18 @@
+@import "../node_modules/bootstrap/scss/nav";
+
+.nav-tabs-primary {
+  border-bottom: none;
+
+  .nav-item {
+    margin-bottom: 0;
+  }
+
+  .nav-link {
+    border: none;
+  }
+
+  .nav-link.active,
+  .nav-item.show .nav-link {
+    background-color: $body-bg;
+  }
+}

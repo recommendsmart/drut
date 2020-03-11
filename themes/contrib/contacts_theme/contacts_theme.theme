@@ -1,0 +1,86 @@
+<?php
+
+/**
+ * @file
+ * Functions to support theming in the contacts_theme theme.
+ */
+
+use Drupal\Core\Entity\EntityTypeInterface;
+use Drupal\Core\Entity\FieldableEntityInterface;
+use Drupal\Core\Asset\AttachedAssetsInterface;
+
+include 'includes/utils.inc';
+include 'includes/forms.theme.inc';
+include 'includes/page.theme.inc';
+include 'includes/media.theme.inc';
+include 'includes/forms.inc';
+include 'includes/widgets.inc';
+include 'includes/entity.theme.inc';
+include 'includes/fields.theme.inc';
+include 'includes/views.inc';
+include 'includes/blocks.theme.inc';
+include 'includes/contacts.theme.inc';
+
+/**
+ * Implements hook_element_info_alter().
+ */
+function contacts_theme_element_info_alter(array &$info) {
+  // Change the default date part order.
+  $info['datelist']['#date_part_order'] = ['day', 'month', 'year', 'hour', 'minute'];
+
+  // Prevent the composite fieldset.
+  $info['radios']['#pre_render'] = ['contacts_theme_composite_pre_render'];
+  $info['radios']['#theme_wrappers'][] = 'form_element';
+  $info['checkboxes']['#pre_render'] = ['contacts_theme_composite_pre_render'];
+  $info['checkboxes']['#theme_wrappers'][] = 'form_element';
+
+  // Add preprocessors for actions.
+  $info['actions']['#pre_render'][] = 'contacts_theme_pre_render_actions';
+  $info['actions']['#pre_render'][] = 'contacts_theme_pre_render_ignore_empty';
+
+  // Add a preprocess for container.
+  $info['container']['#pre_render'][] = 'contacts_theme_pre_render_ignore_empty';
+}
+
+/**
+ * Implements hook_js_settings_alter().
+ */
+function contacts_theme_js_settings_alter(array &$settings, AttachedAssetsInterface $assets) {
+  if (in_array('contacts/tabs', $assets->getLibraries())) {
+    $settings['contacts']['tabs']['activeClass'] = 'active';
+  }
+}
+
+/**
+ * Implement hook_preprocess().
+ */
+function contacts_theme_preprocess(&$variables, $hook) {
+  static $entity_types;
+
+  // Prime our list of entity types.
+  if (!isset($entity_types)) {
+    $entity_types = array_keys(array_map(function(EntityTypeInterface $type) {
+      if (is_subclass_of($type->getClass(), FieldableEntityInterface::class)) {
+        return $type->id();
+      }
+      return FALSE;
+    }, \Drupal::entityTypeManager()->getDefinitions()), TRUE);
+  }
+
+  // If this is an entity type, pass on to our relevant preprocess.
+  if (in_array($hook, $entity_types)) {
+    _contacts_theme_preprocess_entity($variables, $hook);
+  }
+}
+
+/**
+ * Implement hook_preprocess_HOOK() for HTML document templates.
+ */
+function contacts_theme_preprocess_html(array &$variables) {
+  // Our theme doesn't automatically add the "path-admin" css as by default
+  // the "path-" classes are generated in the template from the "classy" theme
+  // and our theme doesn't use classy as a base theme.
+  // We need the path-admin class as this is what ensures that the
+  // "Back to site" button is shown in the UI.
+  $variables['attributes']['class'][] = 'path-admin';
+}
