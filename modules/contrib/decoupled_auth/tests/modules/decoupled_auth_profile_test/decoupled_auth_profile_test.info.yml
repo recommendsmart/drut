@@ -1,0 +1,11 @@
+name: 'Decoupled Auth Profile tests'
+type: module
+description: 'Support module for profile testing.'
+package: Testing
+core: 8.x
+hidden: true
+
+# Information added by Drupal.org packaging script on 2019-09-04
+version: '8.x-1.0-alpha13'
+project: 'decoupled_auth'
+datestamp: 1567591991
