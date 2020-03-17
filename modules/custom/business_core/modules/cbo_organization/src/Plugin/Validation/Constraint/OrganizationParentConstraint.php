@@ -44,7 +44,18 @@ protected $context;
     }
 
     $entity = $items->getEntity();
-    
+    if ($id = $entity->id()) {
+      if ($item->value == $id) {
+        $this->context->addViolation('Parent organization could not be refer to itself.');
+      }
+      else {
+        $children = \Drupal::entityTypeManager()->getStorage('organization')
+          ->loadAllChildren($entity->id());
+        if (in_array($item->value, array_keys($children))) {
+          $this->context->addViolation("Parent organization could not be refer to it's children.");
+        }
+      }
+    }
   }
 
 }
