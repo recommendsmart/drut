@@ -54,6 +54,9 @@ class Organization extends ContentEntityBase implements OrganizationInterface {
   /**
    * {@inheritdoc}
    */
+  public function getParent() {
+    return $this->get('parent')->entity;
+  }
 
   /**
    * {@inheritdoc}

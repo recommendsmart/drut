@@ -15,6 +15,6 @@ interface OrganizationInterface extends ContentEntityInterface {
    * @return \Drupal\cbo_organization\OrganizationInterface|null
    *   The parent organization.
    */
-
+  public function getParent();
 
 }
