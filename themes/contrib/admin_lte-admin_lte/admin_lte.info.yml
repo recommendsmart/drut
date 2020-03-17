@@ -1,0 +1,30 @@
+name: admin_lte
+description: The AdminLte theme.
+screenshot: screenshot.png
+# core: 8.x
+type: theme
+base theme: radix
+
+regions:
+  navbar_branding: 'Navbar branding'
+  navbar_right: 'Navbar right'
+  content: Content
+  footer: Footer
+  header: 'Top Bar'
+  highlighted: 'Highlighted'
+  help: 'Help'
+  sidebar_first: 'Primary'
+  sidebar_second: 'Secondary'
+
+libraries:
+  - admin_lte/base
+
+libraries-override:
+  radix/bootstrap: false
+  radix/style: false
+
+# Information added by Drupal.org packaging script on 2018-11-28
+version: '8.x-1.0-alpha1'
+core: '8.x'
+project: 'admin_lte'
+datestamp: 1543427584

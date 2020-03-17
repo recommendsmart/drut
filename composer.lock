@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ddbf067b1531cfaa5d8fc6b9b9b0c423",
+    "content-hash": "fffa6e997f0143b0223e1a1c89ab7a8e",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -921,6 +921,56 @@
             }
         },
         {
+            "name": "drupal/admin_lte-admin_lte",
+            "version": "1.0.0-alpha1",
+            "source": {
+                "type": "git",
+                "url": "https://git.drupalcode.org/project/admin_lte.git",
+                "reference": "8.x-1.0-alpha1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://ftp.drupal.org/files/projects/admin_lte-8.x-1.0-alpha1.zip",
+                "reference": "8.x-1.0-alpha1",
+                "shasum": "c167e1685cd1c981d77674ed787e662dc97ff833"
+            },
+            "require": {
+                "drupal/core": "~8.0"
+            },
+            "type": "drupal-theme",
+            "extra": {
+                "branch-alias": {
+                    "dev-1.x": "1.x-dev"
+                },
+                "drupal": {
+                    "version": "8.x-1.0-alpha1",
+                    "datestamp": "1543427580",
+                    "security-coverage": {
+                        "status": "not-covered",
+                        "message": "Alpha releases are not covered by Drupal security advisories."
+                    }
+                }
+            },
+            "notification-url": "https://packages.drupal.org/8/downloads",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "jian he",
+                    "homepage": "https://www.drupal.org/user/39155"
+                },
+                {
+                    "name": "jungle",
+                    "homepage": "https://www.drupal.org/user/2919723"
+                }
+            ],
+            "homepage": "https://www.drupal.org/project/admin_lte",
+            "support": {
+                "source": "https://git.drupalcode.org/project/admin_lte"
+            }
+        },
+        {
             "name": "drupal/advancedqueue",
             "version": "1.0.0-rc1",
             "source": {
@@ -1111,8 +1161,7 @@
             "support": {
                 "source": "http://cgit.drupalcode.org/assembly",
                 "issues": "https://www.drupal.org/project/issues/assembly"
-            },
-            "time": "2020-02-17T18:28:46+00:00"
+            }
         },
         {
             "name": "drupal/auto_entitylabel",
@@ -1587,8 +1636,7 @@
             "support": {
                 "source": "https://git.drupalcode.org/project/commerce_dashboard",
                 "issues": "https://www.drupal.org/project/issues/commerce_dashboard"
-            },
-            "time": "2020-03-05T07:02:56+00:00"
+            }
         },
         {
             "name": "drupal/commerce_number_pattern",
@@ -4919,8 +4967,7 @@
             "homepage": "https://www.drupal.org/project/openbusiness",
             "support": {
                 "source": "https://git.drupalcode.org/project/openbusiness"
-            },
-            "time": "2020-03-02T09:15:06+00:00"
+            }
         },
         {
             "name": "drupal/paragraphs",
