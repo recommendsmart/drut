@@ -15,7 +15,7 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  *   label = @Translation("Organization parent validate")
  * )
  */
-class OrganizationParentConstraint extends Constraint implements ConstraintValidatorInterface {
+class OrganizationParent extends Constraint implements ConstraintValidatorInterface {
 
   /**
    * @var \Symfony\Component\Validator\ExecutionContextInterface
