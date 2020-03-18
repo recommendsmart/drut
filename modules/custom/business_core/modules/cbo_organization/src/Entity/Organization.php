@@ -96,7 +96,6 @@ class Organization extends ContentEntityBase implements OrganizationInterface {
     $fields['parent'] = BaseFieldDefinition::create('entity_reference')
       ->setLabel(t('Parent'))
       ->setSetting('target_type', 'organization')
-      ->addConstraint('OrganizationParent')
       ->setDisplayOptions('view', [
         'type' => 'entity_reference_label',
         'weight' => -3,
