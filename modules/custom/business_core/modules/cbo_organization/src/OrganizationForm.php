@@ -21,11 +21,9 @@ class OrganizationForm extends ContentEntityForm {
     
 
     if ($insert) {
-      $this->logger('organization')->notice('Organization: added %title.', $context);
       drupal_set_message($this->t('Organization %title has been created.', $t_args));
     }
     else {
-      $this->logger('organization')->notice('Organization: updated %title.', $context);
       drupal_set_message($this->t('Organization %title has been updated.', $t_args));
     }
   }
