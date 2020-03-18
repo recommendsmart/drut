@@ -4,6 +4,7 @@ namespace Drupal\cbo_organization\Plugin\Validation\Constraint;
 
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidatorInterface;
+use Symfony\Component\Validator\ConstraintViolation;
 use Symfony\Component\Validator\ExecutionContextInterface;
 
 /**
@@ -25,7 +26,7 @@ protected $context;
    * {@inheritdoc}
    */
   public function initialize(ExecutionContextInterface $context){
- 
+    $this->context = $context;
   }
 
   /**
@@ -39,7 +40,7 @@ protected $context;
    * {@inheritdoc}
    */
  public function validate($items, Constraint $constraint) {
-    if (!$item = $items->first()) {
+    if (!$item = $items->second()) {
       return;
     }
 
