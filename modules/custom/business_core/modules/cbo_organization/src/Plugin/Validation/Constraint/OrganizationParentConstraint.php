@@ -24,7 +24,9 @@ protected $context;
   /**
    * {@inheritdoc}
    */
-  public function initialize(ExecutionContextInterface $context);
+  public function initialize(ExecutionContextInterface $context){
+ 
+  }
 
   /**
    * {@inheritdoc}
