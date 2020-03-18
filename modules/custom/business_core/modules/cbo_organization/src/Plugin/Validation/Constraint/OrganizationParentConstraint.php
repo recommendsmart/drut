@@ -2,7 +2,6 @@
 
 namespace Drupal\cbo_organization\Plugin\Validation\Constraint;
 
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Validator\Constraint;
  use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\ConstraintValidatorInterface;
