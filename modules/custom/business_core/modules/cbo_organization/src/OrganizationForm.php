@@ -18,8 +18,7 @@ class OrganizationForm extends ContentEntityForm {
     $insert = $organization->isNew();
     $organization->save();
     $organization_link = $organization->link($this->t('View'));
-    $context = ['%title' => $organization->label(), 'link' => $organization_link];
-    $t_args = ['%title' => $organization->link($organization->label())];
+    
 
     if ($insert) {
       $this->logger('organization')->notice('Organization: added %title.', $context);
