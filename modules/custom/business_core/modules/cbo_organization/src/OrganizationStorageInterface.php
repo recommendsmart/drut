@@ -17,7 +17,8 @@ interface OrganizationStorageInterface {
    *   An array of organization objects which are the children of the
    *   organization $oid.
    */
- 
+  public function loadAllChildren($oid);
+
   /**
    * Finds all parents of a given organization ID.
    *
@@ -27,6 +28,6 @@ interface OrganizationStorageInterface {
    * @return \Drupal\cbo_organization\OrganizationInterface[]
    *   An array of organization objects which are the parents of the organization $tid.
    */
- 
+  public function loadParents($oid);
 
 }

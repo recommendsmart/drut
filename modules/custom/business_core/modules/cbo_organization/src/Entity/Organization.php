@@ -93,7 +93,26 @@ class Organization extends ContentEntityBase implements OrganizationInterface {
       ])
       ->setDisplayConfigurable('form', TRUE);
 
- 
+    $fields['parent'] = BaseFieldDefinition::create('entity_reference')
+      ->setLabel(t('Parent'))
+      ->setSetting('target_type', 'organization')
+      ->addConstraint('OrganizationParent')
+      ->setDisplayOptions('view', [
+        'type' => 'entity_reference_label',
+        'weight' => -3,
+      ])
+      ->setDisplayConfigurable('view', TRUE)
+      ->setDisplayOptions('form', [
+        'type' => 'entity_reference_autocomplete',
+        'weight' => -3,
+        'settings' => [
+          'match_operator' => 'CONTAINS',
+          'size' => '60',
+          'placeholder' => '',
+        ],
+      ])
+      ->setDisplayConfigurable('form', TRUE);
+
     $fields['location'] = BaseFieldDefinition::create('entity_reference')
       ->setLabel(t('Location'))
       ->setSetting('target_type', 'location')
