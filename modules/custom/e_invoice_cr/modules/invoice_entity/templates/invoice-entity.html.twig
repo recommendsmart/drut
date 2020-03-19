@@ -28,10 +28,10 @@
 
             </div>
             <div class="company-info">
-              <div class="main-name">{{ customer.name }}</div>
-              <div>{{ customer.commercial_name }}</div>
-              <div>{{ customer.id_label }}: {{ customer.id }}</div>
-              <div>{{ customer.address }}, {{ customer.postal_code }}</div>
+              <div class="main-name">{{ provider.name }}</div>
+              <div>{{ provider.commercial_name }}</div>
+              <div>{{ provider.id_label }}: {{ provider.id }}</div>
+              <div>{{ provider.address }}, {{ provider.postal_code }}</div>
             </div>
           </td>
           <td align="right">
@@ -39,11 +39,11 @@
               <div class="background-gray">
                 <div>
                   <span class="circle"><img src="/{{ base_path }}/images/phone-icon.svg"></span>
-                  {{ customer.phone }}
+                  {{ provider.phone }}
                 </div>
                 <div>
                   <span class="circle"><img src="/{{ base_path }}/images/email-icon.svg"></span>
-                  {{ customer.email }}
+                  {{ provider.email }}
                 </div>
               </div>
             </div>

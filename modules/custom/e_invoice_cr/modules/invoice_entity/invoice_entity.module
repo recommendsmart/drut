@@ -86,28 +86,25 @@ function invoice_entity_preprocess_invoice_entity(&$variables, $hook) {
   $provider = [];
   $customer = [];
   $invoice = [];
- 
   
-  
-  
-  // Providers data.
-  if (isset($variables['elements']['field_providers'][0]['#options']['entity'])) {
-    $entity = $variables['elements']['field_providers'][0]['#options']['entity'];
+  // Supplier data.
+  if (isset($variables['elements']['field_supplier'][0]['#options']['entity'])) {
+    $entity = $variables['elements']['field_supplier'][0]['#options']['entity'];
     if (!is_null($entity)) {
-      $providers_id = $entity->id();
-      $providers = ProviderEntity::load($provider_id);
-      $providers['id'] = $provider->get('field_provider_id')->value;
-      $providers['id_label'] = $provider->getFieldDefinition('field_provider_id')->label();
-      $providers['name'] = $provider->get('name')->value;
-      $providers['email'] = $provider->get('field_email')->value;
-      $providers['email_label'] = $provider->getFieldDefinition('field_email')->label();
-      $providers['phone'] = $provider->get('field_phone')->value;
-      $providers['phone_label'] = $provider->getFieldDefinition('field_phone')->label();
-      $address = $provider->get('field_address')->getValue();
+      $supplier_id = $entity->id();
+      $supplier = ProviderEntity::load($supplier_id);
+      $provider['id'] = $supplier->get('field_provider_id')->value;
+      $provider['id_label'] = $supplier->getFieldDefinition('field_provider_id')->label();
+      $provider['name'] = $supplier->get('name')->value;
+      $provider['email'] = $supplier->get('field_email')->value;
+      $provider['email_label'] = $supplier->getFieldDefinition('field_email')->label();
+      $provider['phone'] = $supplier->get('field_phone')->value;
+      $provider['phone_label'] = $supplier->getFieldDefinition('field_phone')->label();
+      $address = $supplier->get('field_address')->getValue();
       if (count($address) !== 0) {
-        $providers['address'] = $address[0]['address_line1'] . ", " . $address[0]['locality'] . ", " . $address[0]['administrative_area'] . ".";
+        $provider['address'] = $address[0]['address_line1'] . ", " . $address[0]['locality'] . ", " . $address[0]['administrative_area'] . ".";
       }
-      $providers['postal_code'] = $address[0]['postal_code'];
+      $provider['postal_code'] = $address[0]['postal_code'];
     }
   }
   // Client data.
@@ -160,7 +157,7 @@ function invoice_entity_preprocess_invoice_entity(&$variables, $hook) {
 
   // Send the data.
 
-  $variables['providers'] = $provider;
+  $variables['provider'] = $provider;
   $variables['customer'] = $customer;
   $variables['invoice'] = $invoice;
   $variables['base_path'] = $moduel_path;

@@ -101,7 +101,7 @@ class ProviderEntityForm extends ContentEntityForm {
     });
 
     $count = count($filled_fields);
-    if ($count > 0 && $count < 5) {
+    if ($count > 0 && $count < 1) {
       $form_state->setErrorByName($address, $this->t('If you are going to add the address information, please fill all the fields relate it.'));
     }
 
